@@ -3,13 +3,18 @@ module.exports = {
 	async execute(interaction) {
 
         const fetch = require("node-fetch");
+        const { MessageEmbed } = require('discord.js');
     async function getData(url) {
          const resp = await (await fetch(url)).text();
          return resp.trim().split("\n");
     }
 
-    async function getPictures() {
+    async function getLunaPictures() {
         return getData("https://raw.githubusercontent.com/twisttaan/AxolotlBotAPI/main/luna.txt");
+    }
+
+    async function getEviePictures() {
+        return getData("https://raw.githubusercontent.com/twisttaan/AxolotlBotAPI/main/evie.txt");
     }
 
     function getRandomFromList(list) {
@@ -22,16 +27,42 @@ module.exports = {
 
                 //lunar
 
-                //interaction.channel.send('lunar')
-                await interaction.channel.send(getRandomFromList(await getPictures()));
-            } else
+                const lunaEmbed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Hey :)')
+                .setDescription('Hey, ' + interaction.user.toString())
+                .addFields(
+                    { name: 'Fun Fact', value: "I have no fun facts.... ETHANNNNNNNN" },
+                )
+                .setImage(getRandomFromList(await getLunaPictures()))
+                .setTimestamp()
+                .setFooter('Axolotl | by tristan#0005');
+
+                await interaction.channel.send({ embeds: [lunaEmbed] });
+
+            }
+
+            if(interaction.values == "evie"){
 
             //evie
 
-            interaction.channel.send('evie')
+
+            const evieEmbed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Hey :)')
+            .setDescription('Hey, ' + interaction.user.toString())
+            .addFields(
+                { name: 'Fun Fact', value: "I have no fun facts.... TRISTANNNNNNN" },
+            )
+            .setImage(getRandomFromList(await getEviePictures()))
+            .setTimestamp()
+            .setFooter('Axolotl | by tristan#0005');
+
+            await interaction.channel.send({ embeds: [evieEmbed] });
 
 
-            interaction.message.delete();
+            
+            }   
         }
 	},
 };

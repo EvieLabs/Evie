@@ -3,6 +3,7 @@ const { Client, Intents, Collection } = require('discord.js');
 const fs = require('fs');
 const { MessageEmbed } = require('discord.js');
 const { MessageActionRow, MessageButton } = require('discord.js');
+const { token } = require('./config.json');
 var getJSON = require('get-json')
 
 // create a new Discord client
@@ -95,4 +96,4 @@ for (const file of commandFiles) {
 }
 
 // login to Discord with your app's token
-client.login('ODY5NTExNjU3MzM0OTI3Mzcw.YP_R1Q.YoptUdumB4wrSKN3e2UcAP24x_I');
+client.login(token);

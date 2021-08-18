@@ -14,8 +14,10 @@
     "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
     "get-json": "^1.0.1",
+    "imgur": "^1.0.2",
     "jquery": "^3.6.0",
     "jquery-migrate": "^3.3.2",
+    "minecraft-server-util": "^3.6.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {

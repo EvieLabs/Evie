@@ -31,12 +31,12 @@ module.exports = {
 					.addOptions([
 						{
 							label: 'Evie',
-							description: 'Tristans Dog',
+							description: "Tristan's Dog",
 							value: 'evie',
 						},
 						{
 							label: 'Luna',
-							description: 'Ethans Dog',
+							description: "Ethan's Dog",
 							value: 'luna',
 						},
 					]),
