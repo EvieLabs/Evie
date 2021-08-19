@@ -15,12 +15,18 @@ module.exports = {
         .setDescription('Replies with Minecraft Server Stats!')
 		.addStringOption(option =>
 			option.setName('input')
-				.setDescription('Minecraft Java Server Address')
-				.setRequired(true)),
+				.setDescription('Minecraft Java Server Address (If empty it will pull up TristanSMP Info')
+				.setRequired(false)),
     async execute(interaction) {
+
+        if(interaction.options.getString('input') == undefined){
+            var realInput = "play.proximity.tk";
+        }
+        if(!interaction.options.getString('input') == undefined){
+            var realInput = interaction.options.getString('input');
+        }
 		
-		var serverAddress = interaction.options.getString('input');
-        util.status(serverAddress) // port is default 25565
+        util.status(realInput) // port is default 25565
             .then((response) => {
 				interaction.deferReply()
                 const data = response.favicon; // your image data	
@@ -36,7 +42,7 @@ module.exports = {
                         const exampleEmbed = new MessageEmbed()
                             .setColor('#0099ff')
                             .setTitle('Server Stats')
-                            .setDescription('**Server Address**: ' + "`"+serverAddress+"`")
+                            .setDescription('**Server Address**: ' + "`"+realInput+"`")
                             .addFields({
                                 name: 'Online Players',
                                 value: response.onlinePlayers.toString() + "/" + response.maxPlayers.toString()

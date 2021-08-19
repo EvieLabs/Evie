@@ -2,6 +2,11 @@ module.exports = {
 	name: 'ready',
 	once: true,
 	execute(client) {
+
+        client.user.setPresence({
+            status: `dnd`,
+          });
+
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 
         const { REST } = require('@discordjs/rest');
@@ -16,6 +21,7 @@ module.exports = {
         // Place your client and guild ids here
         const clientId = '869511657334927370';
         const guildId = '800977362757091329';
+        const Proximity = '819106797028769844';
         
         for (const file of commandFiles) {
             const command = require(`../commands/${file}`);
@@ -29,7 +35,8 @@ module.exports = {
                 console.log('Started refreshing application (/) commands.');
         
                 await rest.put(
-                    Routes.applicationGuildCommands(clientId, guildId),
+                    //Routes.applicationGuildCommands(clientId, guildId),
+                    Routes.applicationGuildCommands(clientId, Proximity),
                     //Routes.applicationCommands(clientId),
                     { body: commands },
                 );

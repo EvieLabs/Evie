@@ -1,0 +1,93 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+var getJSON = require('get-json');
+var ms = require('ms');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('playerstats')
+		.setDescription('Replies with stats for a Minecraft Player')
+        .addStringOption(option =>
+			option.setName('username')
+				.setDescription('The Minecraft Java Username')
+				.setRequired(true)),
+	async execute(interaction, client) {
+
+		await interaction.reply("<a:loading:877782934696919040> Fetching Info")
+		var url = "http://192.168.0.203:8804/player/"+interaction.options.getString('username')+"/raw";
+
+
+		try{getJSON(url, function(error, response){
+
+			var username = interaction.options.getString('username');
+			var url = "http://192.168.0.203:8804/player/"+username+"/raw";
+			var uuid = "ec4b0c12-484e-4544-8346-cc1f1bdd10df";
+			var whyjavalol = "com.djrapitops.plan.gathering.domain.WorldTimes"
+
+			var currentChannel = interaction.currentChannel;
+     
+			console.log(error);
+			// undefined
+		 
+			//console.log("D1: "+response.per_server_data["ec4b0c12-484e-4544-8346-cc1f1bdd10df"].sessions[0].extraData.data["com.djrapitops.plan.gathering.domain.WorldTimes"].times.world.times.SURVIVAL);
+			//
+			//console.log("D1: "+response.world_times.times.world.times.SURVIVAL);
+
+			urlthing = response.url;
+
+			//SKIN STUFF HERE
+
+			if (response.BASE_USER == undefined) {
+				throw ('DBNOEXIST');
+			 }
+
+			var uuid = response.BASE_USER.uuid;
+			var faceUrl = "https://crafatar.com/renders/body/"+uuid;
+
+			var skinDL = "https://crafatar.com/skins/"+uuid;
+
+			var applySkin = "https://www.minecraft.net/profile/skin/remote?url="+skinDL+".png&model=slim";
+
+		   // interaction.reply(response.url);
+			const exampleEmbed = new MessageEmbed()
+			.setColor('#0099ff')
+			.setTitle('Player Stats on TristanSMP for '+ username)
+			.setDescription('Hey, ' + interaction.user.toString() + " heres a list of stats for " + username)
+			.addFields(
+				{ name: 'Play Time', value: "Overworld: " + "```"+ms(response.world_times.times.world.times.SURVIVAL, { long: true })+ "```" +
+				 "Nether: " + "```"+ms(response.world_times.times.world_nether.times.SURVIVAL, { long: true })+ "```" +
+				  "End: " + "```"+ms(response.world_times.times.world_the_end.times.SURVIVAL, { long: true })+ "```"},
+			    { name: 'Player Deaths', value: "```"+response.death_count+"```" },
+			    { name: 'Skin', value: "[Download]("+skinDL+")" + " | "+ "[Apply Skin]("+applySkin+")" },
+			)
+			.setImage(faceUrl)
+			.setImage(faceUrl)
+			.setTimestamp()
+			.setFooter('Axolotl | by tristan#0005');
+		
+			interaction.editReply({ embeds: [exampleEmbed] });
+		});
+		
+	
+	}
+	catch(err) {
+		console.log("ERROR TRYING TO LOAD PLAYERSTATS: " + err)
+		if(err == "ReferenceError: url is not defined"){
+			await interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to play.proximity.tk atleast once"+"```")
+		}
+		else {
+			await interaction.editReply("```"+"ERROR TRYING TO LOAD PLAYERSTATS"+"```")
+		}
+	  }
+
+	  process.on('uncaughtException', function (err) {
+
+		if(err == 'DBNOEXIST'){
+			interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to play.proximity.tk at least once"+"```")
+		}
+		console.log(err);
+	  })
+		
+
+	},
+};

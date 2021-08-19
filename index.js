@@ -1,10 +1,8 @@
 // require the needed discord.js classes
 const { Client, Intents, Collection } = require('discord.js');
 const fs = require('fs');
-const { MessageEmbed } = require('discord.js');
-const { MessageActionRow, MessageButton } = require('discord.js');
 const { token } = require('./config.json');
-var getJSON = require('get-json')
+
 
 // create a new Discord client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -23,52 +21,19 @@ for (const file of eventFiles) {
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
 client.once('ready', () => {
-	console.log('Ready!');
+    setInterval(() => {
+        const activities_list = [
+            "tristan's code",
+            `${client.users.cache.size} users`,
+            `ur slash commands`,
+            //``
+        ];
+        const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+        client.user.setActivity((activities_list[index]), { type: 'LISTENING' });
+    }, 50000); //Timer
 });
 
-// client.on('interactionCreate', interaction => {
-
-// });
-
-client.on('interactionCreate', interaction => {
-	if (!interaction.isButton()) return;
-	console.log("button"+interaction);
-    if(interaction.customId == "anotheraxo"){
-        getJSON('https://axoltlapi.herokuapp.com', function(error, response){
- 
-            console.log(error);
-            // undefined
-         
-            console.log(response.url);
-
-            urlthing = response.url
-
-           // interaction.reply(response.url);
-            const exampleEmbed = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Hey :)')
-            .setDescription('Hey, ' + interaction.user.toString())
-            .addFields(
-                { name: 'Fun Fact', value: response.facts },
-            )
-            .setImage(response.url)
-            .setTimestamp()
-            .setFooter('Axolotl | by tristan#0005');
-
-            const more = new MessageActionRow()
-			.addComponents(
-				new MessageButton()
-					.setCustomId('anotheraxo')
-					.setLabel('Another One?')
-					.setStyle('PRIMARY'),
-			);
-        
-            interaction.reply({ embeds: [exampleEmbed], components: [more] });
-        });
-    }
-});
-
-
+//Error Message for Commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
