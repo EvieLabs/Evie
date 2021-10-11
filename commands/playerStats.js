@@ -14,13 +14,13 @@ module.exports = {
 	async execute(interaction, client) {
 
 		await interaction.reply("<a:loading:877782934696919040> Fetching Info")
-		var url = "http://192.168.0.203:8804/player/"+interaction.options.getString('username')+"/raw";
+		var url = "http://202.131.88.29:25571/player/"+interaction.options.getString('username')+"/raw";
 
 
 		try{getJSON(url, function(error, response){
 
 			var username = interaction.options.getString('username');
-			var url = "http://192.168.0.203:8804/player/"+username+"/raw";
+			var url = "http://202.131.88.29:25571/player/"+username+"/raw";
 			var uuid = "ec4b0c12-484e-4544-8346-cc1f1bdd10df";
 			var whyjavalol = "com.djrapitops.plan.gathering.domain.WorldTimes"
 
@@ -64,6 +64,8 @@ module.exports = {
 			.setImage(faceUrl)
 			.setTimestamp()
 			.setFooter('Axolotl | by tristan#0005');
+
+			interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 		
 			interaction.editReply({ embeds: [exampleEmbed] });
 		});
@@ -73,7 +75,7 @@ module.exports = {
 	catch(err) {
 		console.log("ERROR TRYING TO LOAD PLAYERSTATS: " + err)
 		if(err == "ReferenceError: url is not defined"){
-			await interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to play.proximity.tk atleast once"+"```")
+			await interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to tristansmp.com atleast once"+"```")
 		}
 		else {
 			await interaction.editReply("```"+"ERROR TRYING TO LOAD PLAYERSTATS"+"```")
@@ -83,7 +85,7 @@ module.exports = {
 	  process.on('uncaughtException', function (err) {
 
 		if(err == 'DBNOEXIST'){
-			interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to play.proximity.tk at least once"+"```")
+			interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to tristansmp.com at least once"+"```")
 		}
 		console.log(err);
 	  })

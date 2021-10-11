@@ -5,7 +5,7 @@ const { token } = require('./config.json');
 
 
 // create a new Discord client
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] }, { shardCount: 'auto' });
 client.commands = new Collection();
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
@@ -13,27 +13,28 @@ for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
-	} else {
+	}
+	else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
 
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
-client.once('ready', () => {
-    setInterval(() => {
-        const activities_list = [
-            "tristan's code",
-            `${client.users.cache.size} users`,
-            `ur slash commands`,
-            //``
-        ];
-        const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
-        client.user.setActivity((activities_list[index]), { type: 'LISTENING' });
-    }, 50000); //Timer
-});
+// client.once('ready', () => {
+//     setInterval(() => {
+//         const activities_list = [
+//             "tristan's code",
+//             `${client.users.cache.size} users`,
+//             `ur slash commands`,
+//             //``
+//         ];
+//         const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+//         client.user.setActivity((activities_list[index]), { type: 'LISTENING' });
+//     }, 50000); //Timer
+// });
 
-//Error Message for Commands
+// Error Message for Commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -43,13 +44,14 @@ client.on('interactionCreate', async interaction => {
 
 	try {
 		await command.execute(interaction);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 
-//Load Commands
+// Load Commands
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 

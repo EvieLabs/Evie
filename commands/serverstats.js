@@ -12,7 +12,7 @@ var serverIconLink = null;
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('serverstats')
-        .setDescription('Replies with Minecraft Server Stats!')
+        .setDescription('Replies with Minecraft Server Stats!') // well what else would a command like /serverstats do smh
 		.addStringOption(option =>
 			option.setName('input')
 				.setDescription('Minecraft Java Server Address (If empty it will pull up TristanSMP Info')
@@ -20,7 +20,7 @@ module.exports = {
     async execute(interaction) {
 
         if(interaction.options.getString('input') == undefined){
-            var realInput = "play.proximity.tk";
+            var realInput = "tristansmp.com";
         }
         if(!interaction.options.getString('input') == undefined){
             var realInput = interaction.options.getString('input');

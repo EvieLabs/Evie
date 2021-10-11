@@ -19,9 +19,9 @@ module.exports = {
         const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
         
         // Place your client and guild ids here
-        const clientId = '869511657334927370';
+        const clientId = '895808586742124615';
         const guildId = '800977362757091329';
-        const Proximity = '819106797028769844';
+        const TSMP = '819106797028769844';
         
         for (const file of commandFiles) {
             const command = require(`../commands/${file}`);
@@ -36,7 +36,7 @@ module.exports = {
         
                 await rest.put(
                     //Routes.applicationGuildCommands(clientId, guildId),
-                    Routes.applicationGuildCommands(clientId, Proximity),
+                    Routes.applicationGuildCommands(clientId, TSMP),
                     //Routes.applicationCommands(clientId),
                     { body: commands },
                 );
