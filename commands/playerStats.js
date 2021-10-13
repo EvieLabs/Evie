@@ -13,8 +13,10 @@ module.exports = {
 				.setRequired(true)),
 	async execute(interaction, client) {
 
-		await interaction.reply("<a:loading:877782934696919040> Fetching Info")
+		await interaction.reply("<a:loading:877782934696919040> Fetching Info `(This will hang if "+interaction.options.getString('username')+" hasn't visited the End and the Nether and died atleast once)`")
 		var url = "http://202.131.88.29:25571/player/"+interaction.options.getString('username')+"/raw";
+
+		
 
 
 		try{getJSON(url, function(error, response){
@@ -37,9 +39,21 @@ module.exports = {
 
 			//SKIN STUFF HERE
 
-			if (response.BASE_USER == undefined) {
+			if (response.BASE_USER === 'undefined') {
 				throw ('DBNOEXIST');
-			 }
+			}
+			if (response.world_times.times.world.times.SURVIVAL === 'undefined') {
+				throw ('DIM');
+			}
+			if (response.world_times.times.world_nether.times.SURVIVAL === 'undefined') {
+				throw ('DIM');
+			}			
+			if (response.world_times.times.world_the_end.times.SURVIVAL === 'undefined') {
+				throw ('DIM');
+			}
+			if (response.death_count === 'undefined') {
+				throw ('DIE');
+			}			
 
 			var uuid = response.BASE_USER.uuid;
 			var faceUrl = "https://crafatar.com/renders/body/"+uuid;
@@ -86,6 +100,12 @@ module.exports = {
 
 		if(err == 'DBNOEXIST'){
 			interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to tristansmp.com at least once"+"```")
+		}
+		if(err == 'DIM'){
+			interaction.editReply("```"+"Player Hasn't Visted Every Dimension, They need to atleast visit every dimension once on tristansmp.com"+"```")
+		}
+		if(err == 'DIE'){
+			interaction.editReply("```"+"Player Hasn't Died Before, They need to atleast die once on tristansmp.com for me to pull up stats as deaths is a stat"+"```")
 		}
 		console.log(err);
 	  })

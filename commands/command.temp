@@ -1,0 +1,30 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('stats')
+		.setDescription('Stats about Axolotl and TristanSMP'),
+	async execute(interaction) {
+
+		// Axolotl Fetching Mechanic
+		await interaction.reply('<a:loading:877782934696919040> Fetching Info');
+
+		// Make an embed
+
+		const exampleEmbed = new MessageEmbed()
+			.setTitle('Axolotl Stats')
+			.setColor('#0099ff')
+			.setTimestamp();
+
+		// Fetched!
+
+		interaction.editReply('Fetched <:applesparkle:841615919428141066>');
+
+		// Send Embed
+
+		interaction.editReply({ embeds: [exampleEmbed] });
+
+
+	},
+};

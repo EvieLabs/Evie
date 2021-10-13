@@ -5,7 +5,7 @@ const { token } = require('./config.json');
 
 
 // create a new Discord client
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] }, { shardCount: 'auto' });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, "GUILD_MESSAGES"] }, { shardCount: 'auto' });
 client.commands = new Collection();
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 

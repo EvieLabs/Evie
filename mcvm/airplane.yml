@@ -1,0 +1,23 @@
+# Airplane Configuration
+# Read https://blog.airplane.gg/ to find out more about Airplane
+# Join our Discord to receive support & optimization help: https://discord.gg/3gtc45q
+info:
+  version: '1.0'
+# Optimizes projectile settings
+projectile:
+  max-loads-per-tick: 10
+  max-loads-per-projectile: 10
+# Configures Flare, the built-in profiler
+flare:
+  url: https://flare.airplane.gg
+# Optimizes entity brains when
+# they're far away from the player
+dab:
+  enabled: true
+  start-distance: 12
+  max-tick-freq: 20
+  activation-dist-mod: 8
+  blacklisted-entities: []
+# Options for connecting to Airplane's online utilities
+web-services:
+  token: ''
