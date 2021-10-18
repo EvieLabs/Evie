@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 var getJSON = require('get-json');
 var ms = require('ms');
+const { axo } = require('../axologs')
+const ee = require("../botconfig/embed.json");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -27,8 +29,14 @@ module.exports = {
 			var whyjavalol = "com.djrapitops.plan.gathering.domain.WorldTimes"
 
 			var currentChannel = interaction.currentChannel;
+
+			if(error === null){
+				axo.log("Fetched JSON for "+username)
+			} else{
+				axo.err("[Player Stats, Get JSON] "+error);
+			}
      
-			console.log(error);
+			
 			// undefined
 		 
 			//console.log("D1: "+response.per_server_data["ec4b0c12-484e-4544-8346-cc1f1bdd10df"].sessions[0].extraData.data["com.djrapitops.plan.gathering.domain.WorldTimes"].times.world.times.SURVIVAL);
@@ -77,7 +85,7 @@ module.exports = {
 			.setImage(faceUrl)
 			.setImage(faceUrl)
 			.setTimestamp()
-			.setFooter('Axolotl | by tristan#0005');
+			.setFooter(ee.footertext, ee.footericon);
 
 			interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 		
@@ -87,7 +95,7 @@ module.exports = {
 	
 	}
 	catch(err) {
-		console.log("ERROR TRYING TO LOAD PLAYERSTATS: " + err)
+		axo.err("ERROR TRYING TO LOAD PLAYERSTATS: " + err)
 		if(err == "ReferenceError: url is not defined"){
 			await interaction.editReply("```"+"Player Doesn't Exist On Database, They need to login to tristansmp.com atleast once"+"```")
 		}
@@ -107,7 +115,7 @@ module.exports = {
 		if(err == 'DIE'){
 			interaction.editReply("```"+"Player Hasn't Died Before, They need to atleast die once on tristansmp.com for me to pull up stats as deaths is a stat"+"```")
 		}
-		console.log(err);
+		axo.err(err);
 	  })
 		
 

@@ -8,11 +8,15 @@ const {
     Channel
 } = require('discord.js');
 const imgur = require('imgur');
+const { axo } = require('../axologs');
+const ee = require("../botconfig/embed.json");
+
+
 var serverIconLink = null;
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('serverstats')
-        .setDescription('Replies with Minecraft Server Stats!') // well what else would a command like /serverstats do smh
+        .setDescription('Replies with Minecraft Server Stats!')
 		.addStringOption(option =>
 			option.setName('input')
 				.setDescription('Minecraft Java Server Address (If empty it will pull up TristanSMP Info')
@@ -36,7 +40,7 @@ module.exports = {
                     .then((json) => {
 
 
-                        console.log(json.link);
+                        axo.log("[SERVER STATS CACHE] "+json.link);
                         serverIconLink = json.link;
 
                         const exampleEmbed = new MessageEmbed()
@@ -59,18 +63,18 @@ module.exports = {
                             }, )
                             .setImage(serverIconLink)
                             .setTimestamp()
-                            .setFooter('Axolotl | by tristan#0005');
+                            .setFooter(ee.footertext, ee.footericon);
 
                         interaction.editReply({
                             embeds: [exampleEmbed]
                         });
                     })
                     .catch((error) => {
-                        console.error(error.message);
+                        axo.err(error.message);
                     });
             })
             .catch((err) => {
-                console.error(err.message);
+                axo.err(err.message);
             });
 
 

@@ -20,7 +20,7 @@ module.exports = {
 
 		const client = interaction.client;
 
-		if(interaction.user.toString() == '<@97470053615673344>' || interaction.user.toString() == '<@794485891740729344>') {
+		if(interaction.user.toString() == '<@97470053615673344>') {
 			client.user.setPresence({ status: interaction.options.getString('status') });
 
 			const activity = interaction.options.getString('activity');

@@ -5,13 +5,14 @@
 
 // Include discord.js ShardingManger
 const { ShardingManager } = require('discord.js');
+const { token } = process.env.PORT
 
 // Create your ShardingManger instance
 const manager = new ShardingManager('index.js', {
 	// for ShardingManager options see:
 	// https://discord.js.org/#/docs/main/v12/class/ShardingManager
 	totalShards: 'auto',
-	token: 'ODk1ODA4NTg2NzQyMTI0NjE1.YV98wg.L0G6V6EpOUTIg2R5ulJ3BvsOxVo',
+	token: token,
 });
 
 // Emitted when a shard is created

@@ -77,3 +77,4 @@ typings/
 shard.js
 shard.js
 config.json
+.env
