@@ -1,34 +1,42 @@
 // require the needed discord.js classes
-const { Client, Intents, Collection } = require('discord.js');
-const fs = require('fs');
+const { Client, Intents, Collection } = require("discord.js");
+const fs = require("fs");
 require("dotenv").config();
 const DisTube = require("distube").default;
 const voice = require("@discordjs/voice");
 const ffmpeg = require("ffmpeg-static");
 
-
-
 // Create a new Player (you don't need any API Key)
-
 
 // create a new Discord client
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, "GUILD_MESSAGES", "GUILD_MEMBERS", Intents.FLAGS.GUILD_VOICE_STATES] }, { shardCount: 'auto' });
-client.tristan = "Hey, This is a test!"
+const client = new Client(
+  {
+    intents: [
+      Intents.FLAGS.GUILDS,
+      "GUILD_MESSAGES",
+      "GUILD_MEMBERS",
+      Intents.FLAGS.GUILD_VOICE_STATES,
+    ],
+  },
+  { shardCount: "auto" }
+);
+client.tristan = "Hey, This is a test!";
 client.allEmojis = require("./botconfig/emojis.json");
 client.commands = new Collection();
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+const eventFiles = fs
+  .readdirSync("./events")
+  .filter((file) => file.endsWith(".js"));
 
 // Load Events
 
 for (const file of eventFiles) {
-	const event = require(`./events/${file}`);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	}
-	else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
+  const event = require(`./events/${file}`);
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
+  }
 }
 
 // discord-music-player
@@ -36,67 +44,69 @@ for (const file of eventFiles) {
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 client.distube = new DisTube(client, {
-    emitNewSongOnly: false,
-    leaveOnEmpty: false,
-    leaveOnFinish: false,
-    leaveOnStop: false,
-    savePreviousSongs: true,
-    emitAddSongWhenCreatingQueue: false,
-    //emitAddListWhenCreatingQueue: false,
-    searchSongs: 0,
-   // youtubeCookie: config.youtubeCookie,     //Comment this line if you dont want to use a youtube Cookie 
-   // nsfw: true, //Set it to false if u want to disable nsfw songs
-    emptyCooldown: 25,
-    ytdlOptions: {
-      //requestOptions: {
-      //  agent //ONLY USE ONE IF YOU KNOW WHAT YOU DO!
-      //},
-      highWaterMark: 1024 * 1024 * 64,
-      quality: "highestaudio",
-      format: "audioonly",
-      liveBuffer: 60000,
-      dlChunkSize: 1024 * 1024 * 64,
-    },
-    youtubeDL: true,
-    updateYouTubeDL: true,
+  emitNewSongOnly: false,
+  leaveOnEmpty: false,
+  leaveOnFinish: false,
+  leaveOnStop: false,
+  savePreviousSongs: true,
+  emitAddSongWhenCreatingQueue: false,
+  //emitAddListWhenCreatingQueue: false,
+  searchSongs: 0,
+  // youtubeCookie: config.youtubeCookie,     //Comment this line if you dont want to use a youtube Cookie
+  // nsfw: true, //Set it to false if u want to disable nsfw songs
+  emptyCooldown: 25,
+  ytdlOptions: {
+    //requestOptions: {
+    //  agent //ONLY USE ONE IF YOU KNOW WHAT YOU DO!
+    //},
+    highWaterMark: 1024 * 1024 * 64,
+    quality: "highestaudio",
+    format: "audioonly",
+    liveBuffer: 60000,
+    dlChunkSize: 1024 * 1024 * 64,
+  },
+  youtubeDL: true,
+  updateYouTubeDL: true,
   //  customFilters: filters,
-    plugins: [
-      //new SpotifyPlugin(spotifyoptions),
-      new SoundCloudPlugin()
-    ]
-  })
-
-
+  plugins: [
+    //new SpotifyPlugin(spotifyoptions),
+    new SoundCloudPlugin(),
+  ],
+});
 
 // Error Message for Commands
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
+  const command = client.commands.get(interaction.commandName);
 
-	if (!command) return;
+  if (!command) return;
 
-	try {
-		await command.execute(interaction);
-	}
-	catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'Something went wrong! Please alert this to staff in <#884223699778150400>', ephemeral: true });
-	}
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content:
+        "Something went wrong! Please alert this to staff in <#884223699778150400>",
+      ephemeral: true,
+    });
+  }
 });
 
 // Load Commands
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".js"));
 
 // LEGACY METHOD
 
-
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	// set a new item in the Collection
-	// with the key as the command name and the value as the exported module
-	client.commands.set(command.data.name, command);
+  const command = require(`./commands/${file}`);
+  // set a new item in the Collection
+  // with the key as the command name and the value as the exported module
+  client.commands.set(command.data.name, command);
 }
 
 // SHINY NEW WAY!
@@ -114,6 +124,5 @@ for (const file of commandFiles) {
 // login to Discord with your app's token
 
 //some useless vars
-
 
 client.login(process.env.CLIENT_TOKEN);

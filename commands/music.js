@@ -1,51 +1,53 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('rand')
-		.setDescription('This is a Test Command to test multi folder'),
-	async execute(interaction) {
+  data: new SlashCommandBuilder()
+    .setName("rand")
+    .setDescription("This is a Test Command to test multi folder"),
+  async execute(interaction) {
+    // Axolotl Fetching Mechanic
+    await interaction.reply(
+      "<a:loading:877782934696919040> Pinging Someone `i think`"
+    );
 
-		// Axolotl Fetching Mechanic
-		await interaction.reply('<a:loading:877782934696919040> Pinging Someone `i think`');
+    // Make an embed
 
-		// Make an embed
+    const exampleEmbed = new MessageEmbed()
+      .setTitle(`You've been chosen! yay`)
+      .setColor("#0099ff")
+      .setTimestamp();
 
-		const exampleEmbed = new MessageEmbed()
-			.setTitle(`You've been chosen! yay`)
-			.setColor('#0099ff')
-			.setTimestamp();
+    // get stuff
 
-		// get stuff
+    const randUser = interaction.guild.members.cache.random();
 
-		const randUser = interaction.guild.members.cache.random()
+    await interaction.guild.members
+      .fetch()
+      .then((data) =>
+        exampleEmbed.setDescription(
+          `Hey! ${randUser} You win litreally nothing`
+        )
+      )
+      .catch((error) => axo.err(error));
 
-		await interaction.guild.members.fetch()
-		 .then(data => exampleEmbed.setDescription(`Hey! ${randUser} You win litreally nothing`))
-		 .catch(error => axo.err(error));
+    // Embed it!
 
-        // Embed it!
+    // Fetched!
 
+    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 
-		// Fetched!
+    // Send Embed
 
-		interaction.editReply('Fetched <:applesparkle:841615919428141066>');
+    interaction.editReply({ embeds: [exampleEmbed] });
+    let tempPing = await interaction.channel.send(randUser + "test");
+    await sleep(15);
+    tempPing.message.delete();
 
-		// Send Embed
-
-		interaction.editReply({ embeds: [exampleEmbed] });
-		let tempPing = await interaction.channel.send(randUser + 'test')
-		await sleep(15)
-		tempPing.message.delete()
-
-		function sleep(ms) {
-            return new Promise((resolve) => {
-              setTimeout(resolve, ms);
-            });
-          }
-
-
-	},
-	
+    function sleep(ms) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      });
+    }
+  },
 };
