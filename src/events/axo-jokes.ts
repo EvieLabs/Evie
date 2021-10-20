@@ -1,5 +1,5 @@
-const { MessageEmbed } = require("discord.js");
-const { axo } = require("../axologs");
+import { MessageEmbed } from "discord.js";
+import { axo } from "../axologs";
 
 module.exports = {
   name: "messageCreate",
@@ -24,6 +24,18 @@ module.exports = {
         message.reply({ embeds: [exampleEmbed], ephemeral: true });
       } catch (error) {
         console.log(error);
+      }
+    }
+
+    if (msg === "!ts") {
+      exampleEmbed.setTitle("Typescript Test Command");
+      exampleEmbed.setDescription(
+        "If this sent it means Evie can now load TS files"
+      );
+      try {
+        message.reply({ embeds: [exampleEmbed] });
+      } catch (error) {
+        axo.log(error);
       }
     }
 

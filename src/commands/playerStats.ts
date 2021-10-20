@@ -47,8 +47,6 @@ module.exports = {
         //
         //console.log("D1: "+response.world_times.times.world.times.SURVIVAL);
 
-        urlthing = response.url;
-
         //SKIN STUFF HERE
 
         if (response.BASE_USER === "undefined") {
@@ -72,7 +70,7 @@ module.exports = {
           throw "DIE";
         }
 
-        var uuid = response.BASE_USER.uuid;
+        var uuid: string = response.BASE_USER.uuid;
         var faceUrl = "https://crafatar.com/renders/body/" + uuid;
 
         var skinDL = "https://crafatar.com/skins/" + uuid;
@@ -156,21 +154,21 @@ module.exports = {
     }
 
     process.on("uncaughtException", function (err) {
-      if (err == "DBNOEXIST") {
+      if (err.toString() == "DBNOEXIST") {
         interaction.editReply(
           "```" +
             "Player Doesn't Exist On Database, They need to login to tristansmp.com at least once" +
             "```"
         );
       }
-      if (err == "DIM") {
+      if (err.toString() == "DIM") {
         interaction.editReply(
           "```" +
             "Player Hasn't Visted Every Dimension, They need to atleast visit every dimension once on tristansmp.com" +
             "```"
         );
       }
-      if (err == "DIE") {
+      if (err.toString() == "DIE") {
         interaction.editReply(
           "```" +
             "Player Hasn't Died Before, They need to atleast die once on tristansmp.com for me to pull up stats as deaths is a stat" +

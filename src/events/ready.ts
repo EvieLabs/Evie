@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
 module.exports = {
   name: "ready",
@@ -58,7 +58,7 @@ module.exports = {
     const token = process.env.CLIENT_TOKEN;
     const fs = require("fs");
 
-    const commands = [];
+    const commands: string[] = [];
     const none = [];
     const commandFiles = fs
       .readdirSync("./commands")

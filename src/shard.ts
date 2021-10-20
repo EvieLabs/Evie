@@ -5,7 +5,7 @@
 
 // Include discord.js ShardingManger
 const { ShardingManager } = require('discord.js');
-const { token } = process.env.PORT
+const token = process.env.PORT
 
 // Create your ShardingManger instance
 const manager = new ShardingManager('index.js', {

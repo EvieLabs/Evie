@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
 module.exports = {
   name: "ready",
@@ -14,11 +14,18 @@ module.exports = {
 
     await client.distube.playVoiceChannel(
       client.channels.cache.get("897433283921580062"),
+      "https://www.youtube.com/watch?v=F2lk4jRl2xA",
+      options
+    );
+
+    await client.distube.playVoiceChannel(
+      client.channels.cache.get("897433283921580062"),
       "https://www.youtube.com/playlist?list=PL4pro5D7LdbirRYxvctFXEuk8tTz8fdut",
       options
     );
 
-    newQueue = client.distube.getQueue("819106797028769844");
+    let newQueue = client.distube.getQueue("819106797028769844");
+
     newQueue.shuffle();
     await newQueue.setRepeatMode(2);
 
