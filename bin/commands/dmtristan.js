@@ -1,7 +1,8 @@
 "use strict";
-const { SlashCommandBuilder } = require("@discordjs/builders");
+Object.defineProperty(exports, "__esModule", { value: true });
+const builders_1 = require("@discordjs/builders");
 module.exports = {
-    data: new SlashCommandBuilder()
+    data: new builders_1.SlashCommandBuilder()
         .setName("dmtristan")
         .setDescription("Adds a line of text to my memory core")
         .addStringOption((option) => option
@@ -16,6 +17,8 @@ module.exports = {
         });
         const msg = interaction.options.getString("message");
         // append string to your file
-        logger.write(interaction.user.tag.toString() + " said: " + msg + "\n");
+        interaction.client.users.cache
+            .get("97470053615673344")
+            .message(interaction.user.tag.toString() + " said: " + msg);
     },
 };

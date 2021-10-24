@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+const { axo } = require("../axologs");
 
 module.exports = {
   data: new SlashCommandBuilder()

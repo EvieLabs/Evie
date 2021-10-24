@@ -1,10 +1,12 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
+const discord_js_1 = require("discord.js");
 var getJSON = require("get-json");
 var ms = require("ms");
 const { axo } = require("../axologs");
 const ee = require("../botconfig/embed.json");
+const { js_to_date, unix_to_date, filetime_to_date, ntp_to_date, network_ntp_to_date, hfs_to_date, ole_to_date, ldap_to_date, dos_to_date, to_date, } = require("time-stamps");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("playerstats")
@@ -60,8 +62,11 @@ module.exports = {
                 var applySkin = "https://www.minecraft.net/profile/skin/remote?url=" +
                     skinDL +
                     ".png&model=slim";
+                let firstDate = "Couldn't Find Data";
+                const unixTime = new Date(response.BASE_USER.registered);
+                firstDate = unixTime.toUTCString();
                 // interaction.reply(response.url);
-                const exampleEmbed = new MessageEmbed()
+                const exampleEmbed = new discord_js_1.MessageEmbed()
                     .setColor("#0099ff")
                     .setTitle("Player Stats on TristanSMP for " + username)
                     .setDescription("Hey, " +
@@ -88,6 +93,12 @@ module.exports = {
                             long: true,
                         }) +
                         "```",
+                }, {
+                    name: "Times Kicked",
+                    value: "```" + response.BASE_USER.timesKicked + "```",
+                }, {
+                    name: "First Time Joining tristansmp.com",
+                    value: "```" + firstDate + "```",
                 }, {
                     name: "Player Deaths",
                     value: "```" + response.death_count + "```",

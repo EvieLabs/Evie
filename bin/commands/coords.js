@@ -1,8 +1,9 @@
 "use strict";
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
+Object.defineProperty(exports, "__esModule", { value: true });
+const builders_1 = require("@discordjs/builders");
+const discord_js_1 = require("discord.js");
 module.exports = {
-    data: new SlashCommandBuilder()
+    data: new builders_1.SlashCommandBuilder()
         .setName("coords")
         .setDescription("Spits a random set of coords on tristansmp.com"),
     async execute(interaction) {
@@ -23,7 +24,7 @@ module.exports = {
             "Ice Spike Monument at `-58863 73 -7940`",
             // ``
         ];
-        const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+        const exampleEmbed = new discord_js_1.MessageEmbed().setColor("#0099ff").setTimestamp();
         const index = Math.floor(Math.random() * (idk_msg.length - 1) + 1);
         interaction.editReply("Fetched <:applesparkle:841615919428141066>");
         exampleEmbed.addField("Here's a random landmark in the overworld on `tristansmp.com`", "theres " + idk_msg[index]);

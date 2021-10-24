@@ -16,19 +16,25 @@ module.exports = {
             });
         }
         // Bot  Playground warning
-        setInterval(() => {
-            client.channels.cache
-                .get("877795126615879750")
-                .send("**We strongly recommend you mute this channel! So you don't get pinged by others using commands on you!**");
-            client.channels.cache
-                .get("877795126615879750")
-                .send("https://cdn.discordapp.com/attachments/885135206435151872/899155614700298330/IG7P2NlKjz.gif");
-        }, 900000);
-        setInterval(() => {
-            client.channels.cache
-                .get("877795126615879750")
-                .send("For help on commands on `Tristan's Discord` Check out <#894819677136633856>");
-        }, 600000);
+        // setInterval(() => {
+        //   client.channels.cache
+        //     .get("877795126615879750")
+        //     .send(
+        //       "**We strongly recommend you mute this channel! So you don't get pinged by others using commands on you!**"
+        //     );
+        //   client.channels.cache
+        //     .get("877795126615879750")
+        //     .send(
+        //       "https://cdn.discordapp.com/attachments/885135206435151872/899155614700298330/IG7P2NlKjz.gif"
+        //     );
+        // }, 900000);
+        // setInterval(() => {
+        //   client.channels.cache
+        //     .get("877795126615879750")
+        //     .send(
+        //       "For help on commands on `Tristan's Discord` Check out <#894819677136633856>"
+        //     );
+        // }, 600000);
         // Night night console!
         console.clear();
         // Login
@@ -46,7 +52,9 @@ module.exports = {
             .filter((file) => file.endsWith(".js"));
         // Place your client and guild ids here
         const clientId = "895808586742124615";
+        const betaid = "900875807969406987";
         const TSMP = "819106797028769844";
+        const jambl = "807927235478421534";
         for (const file of commandFiles) {
             const command = require(`../commands/${file}`);
             commands.push(command.data.toJSON());
@@ -65,7 +73,7 @@ module.exports = {
                 // Actually put commands
                 await rest.put(
                 // Routes.applicationGuildCommands(clientId, guildId),
-                Routes.applicationGuildCommands(clientId, TSMP), 
+                Routes.applicationGuildCommands(betaid, jambl), 
                 // Routes.applicationCommands(clientId),
                 { body: commands });
                 axo.startupMsg("Successfully reloaded application (/) commands.");

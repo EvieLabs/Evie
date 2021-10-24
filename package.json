@@ -4,7 +4,8 @@
   "description": "",
   "main": "bin/index.js",
   "scripts": {
-    "start": "tsc && cd ./bin/ && pm2 start index.js",
+    "start": "tsc && cd ./bin/ && node index.js",
+    "docker": "tsc && cd ./bin/ && pm2-runtime start index.js",
     "stop": "pm2 stop index"
   },
   "keywords": [],
@@ -18,6 +19,7 @@
     "@distube/soundcloud": "^0.2.2",
     "@distube/spotify": "^0.6.3",
     "@types/node": "^16.10.9",
+    "currency-system": "^2.6.22",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.2.0",
     "distube": "^3.0.0-beta.37",
@@ -38,6 +40,7 @@
     "node-events": "^0.0.2",
     "node-fetch": "^3.0.0",
     "systeminformation": "^5.9.7",
+    "time-stamps": "^1.0.0",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
