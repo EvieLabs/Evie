@@ -25,7 +25,7 @@ module.exports = {
         }
         else {
             await interaction.reply({
-                content: "ummm your not tristan",
+                content: "Hey! Your not Tristan! This command skips the current song playing on the 24/7 lofi radio here https://discord.gg/bCsWkXQAVn",
                 ephemeral: true,
             });
         }

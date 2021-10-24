@@ -10,9 +10,9 @@ module.exports = {
             leaveOnEmpty: false,
         };
         try {
-            await client.distube.playVoiceChannel(client.channels.cache.get("901631152278888508"), "https://www.youtube.com/watch?v=F2lk4jRl2xA", options);
-            await client.distube.playVoiceChannel(client.channels.cache.get("901631152278888508"), "https://www.youtube.com/playlist?list=PL4pro5D7LdbirRYxvctFXEuk8tTz8fdut", options);
-            let newQueue = client.distube.getQueue("901631152278888508");
+            await client.distube.playVoiceChannel(client.channels.cache.get("897433283921580062"), "https://www.youtube.com/watch?v=F2lk4jRl2xA", options);
+            await client.distube.playVoiceChannel(client.channels.cache.get("897433283921580062"), "https://www.youtube.com/playlist?list=PL4pro5D7LdbirRYxvctFXEuk8tTz8fdut", options);
+            let newQueue = client.distube.getQueue("897433283921580062");
             newQueue.shuffle();
             await newQueue.setRepeatMode(2);
         }
