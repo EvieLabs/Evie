@@ -60,7 +60,7 @@ module.exports = {
 
     const Ecommands: string[] = [];
     const EcommandFiles = fs
-      .readdirSync("./commands")
+      .readdirSync("./Ecommands")
       .filter((file) => file.endsWith(".js"));
 
     const commands: string[] = [];
@@ -107,6 +107,13 @@ module.exports = {
           Routes.applicationGuildCommands(clientId, TSMP),
           // Routes.applicationCommands(clientId),
           { body: Ecommands }
+        );
+
+        await rest.put(
+          // Routes.applicationGuildCommands(clientId, guildId),
+          Routes.applicationGuildCommands(clientId, TSMP),
+          // Routes.applicationCommands(clientId),
+          { body: commands }
         );
 
         await rest.put(Routes.applicationCommands(clientId), {

@@ -45,19 +45,27 @@ module.exports = {
         require("dotenv").config();
         const token = process.env.CLIENT_TOKEN;
         const fs = require("fs");
+        const Ecommands = [];
+        const EcommandFiles = fs
+            .readdirSync("./Ecommands")
+            .filter((file) => file.endsWith(".js"));
         const commands = [];
         const none = [];
         const commandFiles = fs
             .readdirSync("./commands")
             .filter((file) => file.endsWith(".js"));
         // Place your client and guild ids here
-        const clientId = "895808586742124615";
+        const clientId = "807543126424158238";
         const betaid = "900875807969406987";
         const TSMP = "819106797028769844";
         const jambl = "807927235478421534";
         for (const file of commandFiles) {
             const command = require(`../commands/${file}`);
             commands.push(command.data.toJSON());
+        }
+        for (const file of EcommandFiles) {
+            const Ecommand = require(`../Ecommands/${file}`);
+            Ecommands.push(Ecommand.data.toJSON());
         }
         const rest = new REST({ version: "9" }).setToken(token);
         (async () => {
@@ -73,9 +81,17 @@ module.exports = {
                 // Actually put commands
                 await rest.put(
                 // Routes.applicationGuildCommands(clientId, guildId),
-                Routes.applicationGuildCommands(betaid, jambl), 
+                Routes.applicationGuildCommands(clientId, TSMP), 
+                // Routes.applicationCommands(clientId),
+                { body: Ecommands });
+                await rest.put(
+                // Routes.applicationGuildCommands(clientId, guildId),
+                Routes.applicationGuildCommands(clientId, TSMP), 
                 // Routes.applicationCommands(clientId),
                 { body: commands });
+                await rest.put(Routes.applicationCommands(clientId), {
+                    body: commands,
+                });
                 axo.startupMsg("Successfully reloaded application (/) commands.");
                 axo.startupMsg("------------------------------------------------");
                 axo.startupMsg('"Ready to do my job on Discord" -Evie by tristan');
