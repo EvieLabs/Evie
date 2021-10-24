@@ -74,6 +74,23 @@ client.distube = new DisTube(client, {
   ],
 });
 
+// Money
+
+const CurrencySystem = require("currency-system");
+const cs = new CurrencySystem();
+CurrencySystem.cs.on("debug", (debug, error) => {
+  console.log(debug);
+  if (error) console.error(error);
+});
+
+cs.setMongoURL(
+  "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/mongoeconomy"
+);
+//sets default wallet amount when ever new user is created.
+cs.setDefaultWalletAmount(100);
+//sets default bank amount when ever new user is created.
+cs.setDefaultBankAmount(1000);
+
 // Error Message for Commands
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;

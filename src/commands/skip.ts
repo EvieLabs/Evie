@@ -1,3 +1,4 @@
+export {};
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const ee = require("../botconfig/embed.json");
 const { MessageEmbed } = require("discord.js");
@@ -10,7 +11,7 @@ module.exports = {
     const client = interaction.client;
 
     if (interaction.user.toString() == "<@97470053615673344>") {
-      newQueue = client.distube.getQueue(`819106797028769844`);
+      const newQueue = client.distube.getQueue(`819106797028769844`);
 
       await newQueue.skip();
 

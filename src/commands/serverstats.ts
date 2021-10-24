@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const util = require("minecraft-server-util");
-const { MessageEmbed, Discord, Channel } = require("discord.js");
-const imgur = require("imgur");
-const { axo } = require("../axologs");
-const ee = require("../botconfig/embed.json");
+import { SlashCommandBuilder } from "@discordjs/builders";
+import util from "minecraft-server-util";
+import { MessageEmbed, Channel } from "discord.js";
+import imgur from "imgur";
+import { axo } from "../axologs";
+import ee from "../botconfig/embed.json";
 
 var serverIconLink = null;
 module.exports = {
@@ -19,25 +19,27 @@ module.exports = {
         .setRequired(false)
     ),
   async execute(interaction) {
+    let realInput: string = "tristansmp.com";
+
     if (interaction.options.getString("input") == undefined) {
-      var realInput = "tristansmp.com";
+      realInput == "tristansmp.com";
     }
+
     if (!interaction.options.getString("input") == undefined) {
-      var realInput = interaction.options.getString("input");
+      realInput == interaction.options.getString("input");
     }
 
     util
       .status(realInput) // port is default 25565
       .then((response) => {
         interaction.deferReply();
-        const data = response.favicon; // your image data
-        var base64Data = data.replace(/^data:image\/png;base64,/, "");
+        let data = response.favicon; // your image data
+        var base64Data = data!.replace(/^data:image\/png;base64,/, "");
         imgur
           .uploadBase64(base64Data)
           .then((json) => {
             axo.log("[SERVER STATS CACHE] " + json.link);
-            serverIconLink = json.link;
-
+            const serverIconLink = json.link;
             const exampleEmbed = new MessageEmbed()
               .setColor("#0099ff")
               .setTitle("Server Stats")
@@ -46,15 +48,15 @@ module.exports = {
                 {
                   name: "Online Players",
                   value:
-                    response.onlinePlayers.toString() +
+                    response.onlinePlayers!.toString() +
                     "/" +
-                    response.maxPlayers.toString(),
+                    response.maxPlayers!.toString(),
                 },
                 {
                   name: "Motd",
                   value:
                     "```" +
-                    response.description.descriptionText.toString() +
+                    response.description!.descriptionText.toString() +
                     "```",
                 },
                 {

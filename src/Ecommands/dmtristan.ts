@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -20,6 +20,8 @@ module.exports = {
 
     const msg = interaction.options.getString("message");
     // append string to your file
-    logger.write(interaction.user.tag.toString() + " said: " + msg + "\n");
+    interaction.client.users.cache
+      .get("97470053615673344")
+      .message(interaction.user.tag.toString() + " said: " + msg);
   },
 };

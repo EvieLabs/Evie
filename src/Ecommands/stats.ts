@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
-const { os } = require("os");
-const si = require("systeminformation");
-const axoJokes = require("../events/axo-jokes");
-const { axo } = require("../axologs");
+export {};
+
+import { SlashCommandBuilder } from "@discordjs/builders";
+import { MessageEmbed } from "discord.js";
+import si from "systeminformation";
+import { axo } from "../axologs";
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -15,7 +15,7 @@ module.exports = {
 
     // Make an embed
 
-    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+    let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
 
     // Vars
 

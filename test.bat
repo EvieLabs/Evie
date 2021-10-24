@@ -1,1 +1,1 @@
-docker run -e CLIENT_TOKEN=ODk1ODA4NTg2NzQyMTI0NjE1.YV98wg.CPS_dBZFHixkli38uNSv20Si1PE -d twisttaan/evie-bot
+docker run -e CLIENT_TOKEN=ODk1ODA4NTg2NzQyMTI0NjE1.YV98wg.688zIy4AD-j-ee5GI_q5og2EgfY -d twisttaan/evie-bot
