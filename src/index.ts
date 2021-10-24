@@ -6,9 +6,8 @@ const DisTube = require("distube").default;
 const voice = require("@discordjs/voice");
 const ffmpeg = require("ffmpeg-static");
 import * as config from "./botconfig/emojis.json";
-import * as config1 from "./botconfig/config.json";
-import * as config2 from "./botconfig/embed.json";
 import * as config3 from "./botconfig/filters.json";
+import * as config2 from "./botconfig/embed.json";
 import * as config4 from "./botconfig/settings.json";
 
 // Create a new Player (you don't need any API Key)
