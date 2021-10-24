@@ -5,7 +5,7 @@
     "bassboost": "bass=g=8,dynaudnorm=f=200",
     "custombassboost": "bass=g=1,dynaudnorm=f=200",
     "customspeed": "atempo=1.0",
-    "purebass": "bass=g=20,dynaudnorm=f=200,asubboost",    
+    "purebass": "bass=g=20,dynaudnorm=f=200,asubboost",
     "8d": "apulsator=hz=0.08",
     "vaporwave": "aresample=48000,asetrate=48000*0.8",
     "nightcore": "aresample=48000,asetrate=48000*1.25",
@@ -43,4 +43,4 @@
     "bassboost18": "bass=g=18,dynaudnorm=f=200",
     "bassboost19": "bass=g=19,dynaudnorm=f=200",
     "bassboost20": "bass=g=20,dynaudnorm=f=200"
-  }
+}
