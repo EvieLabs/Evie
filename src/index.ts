@@ -116,25 +116,6 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-// Error Message for ECommands
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const Ecommand = client.Ecommands.get(interaction.commandName);
-
-  if (Ecommand) return;
-
-  try {
-    await Ecommand.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content:
-        "Something went wrong! Please alert this to staff in <#884223699778150400>",
-      ephemeral: true,
-    });
-  }
-});
 
 // Load Commands
 
