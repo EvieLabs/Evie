@@ -28,6 +28,7 @@ const client = new Client(
 client.tristan = "Hey, This is a test!";
 client.allEmojis = require("./botconfig/emojis.json");
 client.commands = new Collection();
+client.Ecommands = new Collection();
 const eventFiles = fs
   .readdirSync("./events")
   .filter((file) => file.endsWith(".js"));
@@ -109,6 +110,26 @@ client.on("interactionCreate", async (interaction) => {
     console.error(error);
     await interaction.reply({
       content:
+        "Something went wrong! Please alert this to staff in <#884223699778150400> on https://discord.gg/SQhdgXV3rh",
+      ephemeral: true,
+    });
+  }
+});
+
+// Error Message for ECommands
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  const Ecommand = client.Ecommands.get(interaction.commandName);
+
+  if (Ecommand) return;
+
+  try {
+    await Ecommand.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content:
         "Something went wrong! Please alert this to staff in <#884223699778150400>",
       ephemeral: true,
     });
@@ -121,13 +142,22 @@ const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
 
-// LEGACY METHOD
-
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   // set a new item in the Collection
   // with the key as the command name and the value as the exported module
   client.commands.set(command.data.name, command);
+}
+
+const EcommandFiles = fs
+  .readdirSync("./Ecommands")
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of EcommandFiles) {
+  const command = require(`./Ecommands/${file}`);
+  // set a new item in the Collection
+  // with the key as the command name and the value as the exported module
+  client.Ecommands.set(command.data.name, command);
 }
 
 // SHINY NEW WAY!
