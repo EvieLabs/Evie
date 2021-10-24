@@ -3,7 +3,7 @@ name: publish
 on: [push]
 
 jobs:
-  publish-hello-world-image:
+  build-and-push-evie:
     runs-on: ubuntu-latest
 
     steps:
