@@ -9,6 +9,17 @@ module.exports = {
 
     let msg = message.content.toString().toLowerCase();
 
+    try {
+      if (message.content.startsWith("j!")) {
+        message.reply(
+          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot"
+        );
+        console.log("JUST SAID MY MESSAGE!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     //
     // Time Savers
     //
