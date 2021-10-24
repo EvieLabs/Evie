@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // require the needed discord.js classes
 const { Client, Intents, Collection } = require("discord.js");
 const fs = require("fs");
