@@ -24,10 +24,8 @@ module.exports = {
         options
       );
 
-      let newQueue = client.distube.getQueue("897433283921580062");
-
-      newQueue.shuffle();
-      await newQueue.setRepeatMode(2);
+      await client.distube.getQueue(`897433283921580062`).shuffle();
+      await client.distube.getQueue(`897433283921580062`).setRepeatMode(2);
     } catch (error) {
       console.log(error);
     }
