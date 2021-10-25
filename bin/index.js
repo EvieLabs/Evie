@@ -129,15 +129,4 @@ for (const file of EcommandFiles) {
     // with the key as the command name and the value as the exported module
     client.Ecommands.set(Ecommand.data.name, Ecommand);
 }
-// SHINY NEW WAY!
-// fs.readdirSync('./commands').forEach(dirs => {
-//     const commands = fs.readdirSync(`./commands/${dirs}`).filter(files => files.endsWith('.js'));
-//     for (const file of commands) {
-//         const command = require(`./commands/${dirs}/${file}`);
-//         console.log(`Loading command ${file}`);
-//         client.commands.set(command.data.name, command);
-//     };
-// });
-// login to Discord with your app's token
-//some useless vars
 client.login(process.env.CLIENT_TOKEN);
