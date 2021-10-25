@@ -18,7 +18,8 @@ module.exports = {
     switch (subcommand) {
       case "skip":
         if (interaction.user.toString() == "<@97470053615673344>") {
-          const newQueue = client.distube.getQueue(`897433283921580062`);
+          const newQueue =
+            interaction.client.distube.getQueue(`897433283921580062`);
 
           await newQueue.skip();
 
