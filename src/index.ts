@@ -88,6 +88,23 @@ CurrencySystem.cs.on("debug", (debug, error) => {
   if (error) console.error(error);
 });
 
+// Status
+
+client.once("ready", () => {
+  setInterval(() => {
+    const activities_list = [
+      `${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.memberCount,
+        0
+      )} users`,
+      `ur slash commands`,
+      //``
+    ];
+    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+    client.user.setActivity(activities_list[index], { type: "LISTENING" });
+  }, 50000); //Timer
+});
+
 cs.setMongoURL(
   "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/mongoeconomy"
 );
@@ -116,7 +133,6 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-
 // Load Commands
 
 const commandFiles = fs
@@ -135,26 +151,10 @@ const EcommandFiles = fs
   .filter((file) => file.endsWith(".js"));
 
 for (const file of EcommandFiles) {
-  const command = require(`./Ecommands/${file}`);
+  const Ecommand = require(`./Ecommands/${file}`);
   // set a new item in the Collection
   // with the key as the command name and the value as the exported module
-  client.Ecommands.set(command.data.name, command);
+  client.Ecommands.set(Ecommand.data.name, Ecommand);
 }
-
-// SHINY NEW WAY!
-
-// fs.readdirSync('./commands').forEach(dirs => {
-//     const commands = fs.readdirSync(`./commands/${dirs}`).filter(files => files.endsWith('.js'));
-
-//     for (const file of commands) {
-//         const command = require(`./commands/${dirs}/${file}`);
-//         console.log(`Loading command ${file}`);
-//         client.commands.set(command.data.name, command);
-//     };
-// });
-
-// login to Discord with your app's token
-
-//some useless vars
 
 client.login(process.env.CLIENT_TOKEN);

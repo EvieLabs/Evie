@@ -47,17 +47,21 @@ module.exports = {
         var newQueue = client.distube.getQueue(queue.id);
         var newTrack = track;
         // Change Status and Console it
-        client.user.setActivity(
-          `${track.name} by ${track.uploader.name
-            .toString()
-            .replace(" - Topic", "")}`,
-          { type: "LISTENING" }
-        );
-        console.log(
-          `${track.name} by ${track.uploader.name
-            .toString()
-            .replace(" - Topic", "")}`
-        );
+
+        // Set Status
+
+        // client.user.setActivity(
+        //   `${track.name} by ${track.uploader.name
+        //     .toString()
+        //     .replace(" - Topic", "")}`,
+        //   { type: "LISTENING" }
+        // );
+        // console.log(
+        //   `${track.name} by ${track.uploader.name
+        //     .toString()
+        //     .replace(" - Topic", "")}`
+        // );
+
         // Change Channel Name
         //   client.channels.cache.get('897433283921580062').edit({ name: `🎵︱${track.name} by ${track.uploader.name.toString().replace(" - Topic", "")}` })
         //   .then(console.log)

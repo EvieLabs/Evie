@@ -20,6 +20,7 @@ const client = new Client({
 client.tristan = "Hey, This is a test!";
 client.allEmojis = require("./botconfig/emojis.json");
 client.commands = new Collection();
+client.Ecommands = new Collection();
 const eventFiles = fs
     .readdirSync("./events")
     .filter((file) => file.endsWith(".js"));
@@ -74,6 +75,18 @@ CurrencySystem.cs.on("debug", (debug, error) => {
     if (error)
         console.error(error);
 });
+// Status
+client.once("ready", () => {
+    setInterval(() => {
+        const activities_list = [
+            `${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)} users`,
+            `ur slash commands`,
+            //``
+        ];
+        const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+        client.user.setActivity(activities_list[index], { type: "LISTENING" });
+    }, 50000); //Timer
+});
 cs.setMongoURL("mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/mongoeconomy");
 //sets default wallet amount when ever new user is created.
 cs.setDefaultWalletAmount(100);
@@ -92,7 +105,7 @@ client.on("interactionCreate", async (interaction) => {
     catch (error) {
         console.error(error);
         await interaction.reply({
-            content: "Something went wrong! Please alert this to staff in <#884223699778150400>",
+            content: "Something went wrong! Please alert this to staff in <#884223699778150400> on https://discord.gg/SQhdgXV3rh",
             ephemeral: true,
         });
     }
@@ -101,12 +114,20 @@ client.on("interactionCreate", async (interaction) => {
 const commandFiles = fs
     .readdirSync("./commands")
     .filter((file) => file.endsWith(".js"));
-// LEGACY METHOD
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
     client.commands.set(command.data.name, command);
+}
+const EcommandFiles = fs
+    .readdirSync("./Ecommands")
+    .filter((file) => file.endsWith(".js"));
+for (const file of EcommandFiles) {
+    const Ecommand = require(`./Ecommands/${file}`);
+    // set a new item in the Collection
+    // with the key as the command name and the value as the exported module
+    client.Ecommands.set(Ecommand.data.name, Ecommand);
 }
 // SHINY NEW WAY!
 // fs.readdirSync('./commands').forEach(dirs => {
