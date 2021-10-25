@@ -117,19 +117,36 @@ cs.setDefaultBankAmount(1000);
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  const command = client.commands.get(interaction.commandName);
-
-  if (!command) return;
-
   try {
-    await command.execute(interaction);
+    const command = client.commands.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({
+        content:
+          "Something went wrong! Please alert this to staff in <#884223699778150400> on https://discord.gg/SQhdgXV3rh",
+        ephemeral: true,
+      });
+    }
   } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content:
-        "Something went wrong! Please alert this to staff in <#884223699778150400> on https://discord.gg/SQhdgXV3rh",
-      ephemeral: true,
-    });
+    const Ecommand = client.Ecommands.get(interaction.commandName);
+
+    if (!Ecommand) return;
+
+    try {
+      await Ecommand.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({
+        content:
+          "Something went wrong! Please alert this to staff in <#884223699778150400>",
+        ephemeral: true,
+      });
+    }
   }
 });
 
