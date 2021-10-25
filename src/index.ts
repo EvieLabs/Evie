@@ -91,18 +91,27 @@ CurrencySystem.cs.on("debug", (debug, error) => {
 // Status
 
 client.once("ready", () => {
-  setInterval(() => {
-    const activities_list = [
-      `${client.guilds.cache.reduce(
-        (acc, guild) => acc + guild.memberCount,
-        0
-      )} users`,
-      `ur slash commands`,
-      //``
-    ];
-    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
-    client.user.setActivity(activities_list[index], { type: "LISTENING" });
-  }, 50000); //Timer
+  try {
+    setInterval(() => {
+      const activities_list = [
+        `my ${client.guilds.cache.reduce(
+          (acc, guild) => acc + guild.memberCount,
+          0
+        )} users`,
+        `my ${client.guilds.cache.reduce(
+          (acc, guild) => acc + guild.memberCount,
+          0
+        )} users`,
+        //``
+      ];
+      const index = Math.floor(
+        Math.random() * (activities_list.length - 1) + 1
+      );
+      client.user.setActivity(activities_list[index], { type: "LISTENING" });
+    }, 50000); //Timer
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 cs.setMongoURL(
