@@ -14,13 +14,14 @@ module.exports = {
     ),
   async execute(interaction) {
     const client = interaction.client;
+
+    const newQue = client.distube.getQueue(`897433283921580062`);
+
     const subcommand = interaction.options.getSubcommand();
     switch (subcommand) {
       case "skip":
         if (interaction.user.toString() == "<@97470053615673344>") {
-          await interaction.client.distube
-            .getQueue(`897433283921580062`)
-            .skip();
+          await newQue.skip();
 
           await interaction.reply({
             embeds: [
