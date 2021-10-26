@@ -32,7 +32,7 @@ module.exports = {
       const announceChannel = client.channels.cache.get("902455135609970698");
 
       let result = await cs.addMoney({
-        user: votedUser,
+        user: votedUser.id.toString(),
         amount: voteAmount,
         wheretoPutMoney: "wallet",
       });
