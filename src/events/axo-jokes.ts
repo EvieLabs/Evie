@@ -55,11 +55,15 @@ module.exports = {
       if (message.guild.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Member System");
         exampleEmbed.setDescription(
-          "Here on Tristan's Discord we have our very own SMP called `Tristan SMP` anyways to un-hide the channels for `Tristan SMP` you can either get the <@&895074861737734185> role from <#865796591574319134> or if your already a <@&878074525223378974>"
+          "Here on Tristan's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
         );
         exampleEmbed.addField(
           "How do I apply?",
-          "Once you have the channels un hidden you can apply [here](https://forms.gle/bat6SHnaBupnSXQUA) for <@&878074525223378974> so you can actually build/break instead of just exploring!"
+          "You can simply fill out the application [here](https://forms.gle/bat6SHnaBupnSXQUA) for <@&878074525223378974> so you can actually build/break instead of just exploring!"
+        );
+        exampleEmbed.addField(
+          "How do I Join",
+          "You can refer to the join instructions [here](https://discord.com/channels/819106797028769844/819446614568599582/884646964074020905)"
         );
         message.channel.send({ embeds: [exampleEmbed] });
         // message.delete()
