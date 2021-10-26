@@ -14,7 +14,10 @@ module.exports = {
 
     const dbl = new DBL(
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwNzU0MzEyNjQyNDE1ODIzOCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjM1MjMxOTkwfQ.n3yvmVcTBqkgtiE_i3Dl9IBITwNzhFrZr6O_udG35Ec",
-      { webhookPort: 5000, webhookAuth: "password" }
+      {
+        webhookPort: 5000,
+        webhookAuth: "weewoothisismyamazingpasswordokthx4398%*(5",
+      }
     );
 
     dbl.webhook.on("ready", (hook) => {
