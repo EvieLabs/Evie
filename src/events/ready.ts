@@ -69,11 +69,21 @@ module.exports = {
       .readdirSync("./commands")
       .filter((file) => file.endsWith(".js"));
 
-    // Place your client and guild ids here
-    const clientId = "807543126424158238";
+    let clientId = "";
     const betaid = "900875807969406987";
-    const TSMP = "819106797028769844";
+    let TSMP = "819106797028769844";
     const jambl = "807927235478421534";
+
+    // Place your client and guild ids here
+    if (client.user.id == betaid) {
+      axo.startupMsg("RUNNING IN BETA MODE");
+      clientId = betaid;
+      TSMP = "901426442242498650";
+    } else {
+      axo.startupMsg("RUNNING IN PROD MODE");
+      clientId = "807543126424158238";
+      TSMP = "819106797028769844";
+    }
 
     for (const file of commandFiles) {
       const command = require(`../commands/${file}`);

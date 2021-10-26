@@ -16,11 +16,17 @@ module.exports = {
     let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
     try {
       exampleEmbed.setTitle(`Random User`);
-      client.guilds.cache.reduce((acc, guild) =>
-        exampleEmbed.setDescription(
-          `The user I randomly chose was ${interaction.guild.members.cache.random}`
+
+      await interaction.guild.members
+        .fetch()
+        .then((data) =>
+          exampleEmbed.setDescription(
+            `The user I randomly chose was ${interaction.guild.members.cache.random(
+              1
+            )}`
+          )
         )
-      );
+        .catch((error) => axo.err(error));
 
       exampleEmbed.setThumbnail(
         `https://cdn.discordapp.com/attachments/887532552481566770/900888795040317440/Evie_Bot-modified.png`

@@ -13,11 +13,6 @@ module.exports = {
   async execute(interaction) {
     await interaction.reply({ content: "Sent!", ephemeral: true });
 
-    const fs = require("fs");
-    const logger = fs.createWriteStream("dmtristan.txt", {
-      flags: "a",
-    });
-
     const msg = interaction.options.getString("message");
     // append string to your file
     interaction.client.users.cache
