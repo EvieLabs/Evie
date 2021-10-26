@@ -27,12 +27,13 @@ module.exports = {
     });
     dbl.webhook.on("vote", async (vote) => {
       console.log(`User with ID ${vote.user} just voted!`);
-      const votedUser = client.users.cache.get(`${vote.user}`);
+      const votedUser = await client.users.fetch(`${vote.user}`);
       const voteAmount = 45000;
+
       const announceChannel = client.channels.cache.get("902455135609970698");
 
       let result = await cs.addMoney({
-        user: votedUser.id.toString(),
+        user: votedUser,
         amount: voteAmount,
         wheretoPutMoney: "wallet",
       });

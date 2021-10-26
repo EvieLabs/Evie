@@ -15,8 +15,13 @@ module.exports = {
 
     const msg = interaction.options.getString("message");
     // append string to your file
-    interaction.client.users.cache
-      .get("97470053615673344")
-      .send(interaction.user.tag.toString() + " said: " + msg);
+    await interaction.guild.members
+      .fetch()
+      .then((data) =>
+        interaction.client.users.cache
+          .get("97470053615673344")
+          .send(interaction.user.tag.toString() + " said: " + msg)
+      )
+      .catch((error) => console.log(error));
   },
 };
