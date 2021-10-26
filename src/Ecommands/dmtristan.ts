@@ -17,6 +17,6 @@ module.exports = {
     // append string to your file
     interaction.client.users.cache
       .get("97470053615673344")
-      .message(interaction.user.tag.toString() + " said: " + msg);
+      .send(interaction.user.tag.toString() + " said: " + msg);
   },
 };
