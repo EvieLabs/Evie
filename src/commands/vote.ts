@@ -18,7 +18,7 @@ module.exports = {
 
     exampleEmbed.setTitle(`Want some free $EVIE?`);
     exampleEmbed.setDescription(
-      `By [voting](https://top.gg/bot/807543126424158238/vote) for me over at [top.gg](https://top.gg/bot/807543126424158238/vote) you can get a free <:eviecoin:900886713096888371> 45,000 Evie Coins`
+      `By [voting](https://top.gg/bot/807543126424158238/vote) for me over at [top.gg](https://top.gg/bot/807543126424158238/vote) you can get a free <:eviecoin:900886713096888371> 45,000 $EVIE`
     );
     exampleEmbed.setThumbnail(
       `https://cdn.discordapp.com/attachments/887532552481566770/900888795040317440/Evie_Bot-modified.png`

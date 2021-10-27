@@ -33,7 +33,9 @@ module.exports = {
     exampleEmbed.setThumbnail(
       `https://cdn.discordapp.com/attachments/887532552481566770/900888795040317440/Evie_Bot-modified.png`
     );
-    exampleEmbed.setFooter(`this list only shows users that are [cached]()`);
+    exampleEmbed.setFooter(
+      `this list only shows users that are [cached](https://eviebot.rocks/cache)`
+    );
 
     // Fetched!
 
