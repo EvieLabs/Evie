@@ -152,7 +152,7 @@ client.on("interactionCreate", async (interaction) => {
       console.error(error);
       await interaction.reply({
         content:
-          "Something went wrong! Please alert this to staff in <#884223699778150400>",
+          "Something went wrong! Please alert this to staff in <#884223699778150400> on https://discord.gg/SQhdgXV3rh",
         ephemeral: true,
       });
     }
