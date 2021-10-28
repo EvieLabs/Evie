@@ -1,5 +1,5 @@
 // require the needed discord.js classes
-const { Client, Intents, Collection } = require("discord.js");
+const { Client, Intents, Collection, Permissions } = require("discord.js");
 const fs = require("fs");
 require("dotenv").config();
 const DisTube = require("distube").default;

@@ -1,22 +1,30 @@
 name: publish
 
-on: [push]
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-push-evie:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and Push Evie to GHCR
-      run: |
-        docker build . --tag ghcr.io/twisttaan/evie:latest
-        docker push ghcr.io/twisttaan/evie:latest
+      - name: Build and Push Evie to GHCR
+        run: |
+          docker build . --tag ghcr.io/twisttaan/evie:latest
+          docker push ghcr.io/twisttaan/evie:latest
