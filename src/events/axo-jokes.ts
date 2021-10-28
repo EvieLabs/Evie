@@ -30,7 +30,7 @@ module.exports = {
       if (message.guild.id == "819106797028769844") {
         exampleEmbed.setTitle("Fun Fact:");
         exampleEmbed.setDescription(
-          "You can vote for `Tristan's Discord` on more places then disboard, you just have to do it not from a Discord bot but rather these sites [top.gg](https://top.gg/servers/819106797028769844/vote) and [discordservers.com](https://discordservers.com/panel/819106797028769844/bump)"
+          "You can vote for `Evie's Discord` on more places then disboard, you just have to do it not from a Discord bot but rather these sites [top.gg](https://top.gg/servers/819106797028769844/vote) and [discordservers.com](https://discordservers.com/panel/819106797028769844/bump)"
         );
         try {
           message.reply({ embeds: [exampleEmbed], ephemeral: true });
@@ -55,7 +55,7 @@ module.exports = {
       if (message.guild.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Member System");
         exampleEmbed.setDescription(
-          "Here on Tristan's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
+          "Here on Evie's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
         );
         exampleEmbed.addField(
           "How do I apply?",

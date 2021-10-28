@@ -25,6 +25,8 @@ module.exports = {
       );
     }
 
+    exampleEmbed.setTitle(`Shop Items`);
+    exampleEmbed.setDescription("Use `/buy <itemid>` to buy items!");
     // Fetched!
 
     interaction.editReply("Fetched <:applesparkle:841615919428141066>");

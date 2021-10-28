@@ -1,7 +1,7 @@
 export {};
 import { SlashCommandBuilder } from "@discordjs/builders";
 const ee = require("../botconfig/embed.json");
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 const CurrencySystem = require("currency-system");
 const cs = new CurrencySystem();
 
@@ -32,7 +32,7 @@ module.exports = {
         let exampleEmbed = new MessageEmbed()
           .setColor("#0099ff")
           .setTimestamp()
-          .setDescription("empty");
+          .setDescription("Error!");
 
         let result = await cs.getUserItems({
           user: interaction.user,
@@ -40,15 +40,11 @@ module.exports = {
 
         let inv = result.inventory;
         async function noHas() {
-          console.log("HE NO HAS THE STUFF");
-          console.log(result.inventory);
-
+          exampleEmbed.setTitle("Hey you don't have a `Baisc Oven`");
+          exampleEmbed.setDescription("You can buy one in the `/shop`");
           // Fetched!
-
           interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
           // Send Embed
-
           await interaction.editReply({ embeds: [exampleEmbed] });
         }
 
@@ -61,11 +57,10 @@ module.exports = {
           } else {
             return noHas();
           }
-
           async function has() {
-            console.log("HE HAS THE STUFF");
-            console.log(result.inventory);
-
+            exampleEmbed.setDescription(
+              `**⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯**\n**┃**\n**┃**\n**┃**\n**┃**\n**┃**`
+            );
             // Fetched!
 
             interaction.editReply("Fetched <:applesparkle:841615919428141066>");
