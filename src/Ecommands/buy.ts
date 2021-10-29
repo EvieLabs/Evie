@@ -26,6 +26,11 @@ module.exports = {
       return interaction.editReply(
         "Please provide item number! check the `/shop`"
       );
+    if ((thing = 2)) {
+      return interaction.editReply(
+        "Sorry but you can't buy a `Muffin` instead buy a `Basic Oven` and bake them using `/bake muffin`"
+      );
+    }
     let result = await cs.buy({
       user: interaction.user,
       item: thing,

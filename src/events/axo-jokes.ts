@@ -12,9 +12,19 @@ module.exports = {
     try {
       if (message.content.startsWith("j!")) {
         message.reply(
-          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot"
+          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot and if you need more help checkout https://discord.gg/PYdASSE2gr"
         );
         console.log("JUST SAID MY MESSAGE!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      if (message.content.startsWith("<@807543126424158238>")) {
+        message.reply(
+          "Hey do you need help with my commands? If so you can find a list like this "
+        );
       }
     } catch (error) {
       console.log(error);
