@@ -67,11 +67,14 @@ module.exports = {
             return noHas();
           }
           async function has() {
-            const muffin = "<:evmuffin:903163714495213658>";
+            await bake(`muffin`)
+              .then((data) =>
+                exampleEmbed.setDescription(
+                  `${os}${dial}${scr1}${scr2}${scr3}${os}\n${os}${c1}${cmid}${cmid}${c3}${os}\n${os}${data}${os}\n${os}${empty}${empty}${empty}${empty}${os}\n${os}${os}${os}${os}${os}${os}`
+                )
+              )
+              .catch((error) => console.log(error));
 
-            exampleEmbed.setDescription(
-              `${os}${dial}${scr1}${scr2}${scr3}${os}\n${os}${c1}${cmid}${c3}${os}\n${os}${"COMMAND IN BETA"}${os}\n${os}${empty}${empty}${empty}${empty}${os}\n${empty}${empty}${empty}${empty}${empty}${empty}`
-            );
             // Fetched!
 
             interaction.editReply("Fetched <:applesparkle:841615919428141066>");
@@ -87,7 +90,6 @@ module.exports = {
     }
   },
 };
-
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -96,9 +98,12 @@ function sleep(ms) {
 
 async function bake(food: string) {
   try {
+    const empty = "<:ovencb:903162812912771082>";
     if ((food = "muffin")) {
+      const muffin = "<:evmuffin:903163714495213658>";
+      return `${muffin}${empty}${empty}${empty}`;
       // Start Baking Timer
-      await sleep(1000);
+      await sleep(120000); // 2 min baking timer
     }
   } catch (error) {
     console.log(error);
