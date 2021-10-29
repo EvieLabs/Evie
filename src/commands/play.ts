@@ -92,7 +92,10 @@ module.exports = {
             await search.collection[0].permalink_url.toString();
           console.log(search);
           if (search) {
-            if (search.collection[0].monetization_model == "BLACKBOX") {
+            if (
+              search.collection[0].monetization_model == "BLACKBOX" ||
+              search.collection[0].monetization_model == "NOT_APPLICABLE"
+            ) {
               let queue = interaction.client.distube.getQueue(guildId);
               //Edit the reply
               if (!queue)
