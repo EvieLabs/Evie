@@ -195,12 +195,24 @@ async function bakeIt(food: string, interaction: any) {
   try {
     if ((food = "muffin")) {
       // Start Baking Timer
-      await sleep(10000); // 2 min baking timer
+      await sleep(120000); // 2 min baking timer
+
+      await cs.addMoney({
+        user: interaction.user,
+        amount: 10000,
+        wheretoPutMoney: "wallet",
+      });
+      await cs.buy({
+        user: interaction.user,
+        item: 2,
+      });
+
       let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+      let c = "`";
 
       exampleEmbed.setTitle(`Baked!`);
       exampleEmbed.setDescription(
-        `Hey ${interaction.user.username}! I pulled your muffins out the oven cause they were finished!`
+        `Hey ${interaction.user.username}! I pulled your muffins out the oven cause they were finished! You should sell them now with ${c}/sell 2${c} (2 is the item id for muffins)`
       );
       exampleEmbed.setThumbnail(
         `https://cdn.discordapp.com/attachments/885135206435151872/903557876986052658/chocolate-chip-muffins-featured.jpg`

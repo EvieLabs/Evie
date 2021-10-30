@@ -23,9 +23,7 @@ module.exports = {
 
     const thing: Number = interaction.options.getInteger("itemid");
     if (thing == 1) {
-      return interaction.editReply(
-        "Sorry but you can only sell a `Muffin` instead buy a `Basic Oven` and bake them using `/bake muffin`"
-      );
+      return interaction.editReply("Sorry but you can only buy a `Basic Oven`");
     }
     if (!thing)
       return interaction.editReply(
