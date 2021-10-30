@@ -24,7 +24,7 @@ module.exports = {
       if (!interaction.client.users.cache.get(e.userID)) return;
       exampleEmbed.addField(
         `${pos} - **${interaction.client.users.cache.get(e.userID).username}**`,
-        `**Wallet:** <:eviecoin:900886713096888371> ${e.wallet} - **Bank:** <:eviecoin:900886713096888371> ${e.bank}`,
+        `**$EVIE Wallet:** <:eviecoin:900886713096888371> ${e.wallet}`,
         false
       );
     });
@@ -33,7 +33,7 @@ module.exports = {
     exampleEmbed.setThumbnail(
       `https://cdn.discordapp.com/attachments/887532552481566770/900888795040317440/Evie_Bot-modified.png`
     );
-    exampleEmbed.setFooter(
+    exampleEmbed.setDescription(
       `this list only shows users that are [cached](https://eviebot.rocks/cache)`
     );
 

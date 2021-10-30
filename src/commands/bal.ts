@@ -33,13 +33,8 @@ module.exports = {
 
     exampleEmbed.setTitle(`${target.username}'s Balance`);
     exampleEmbed.addField(
-      `**Wallet:**`,
+      `**$EVIE Wallet:**`,
       `<:eviecoin:900886713096888371> ${result.wallet}`,
-      true
-    );
-    exampleEmbed.addField(
-      `**Bank:**`,
-      `<:eviecoin:900886713096888371> ${result.bank}`,
       true
     );
     exampleEmbed.setThumbnail(

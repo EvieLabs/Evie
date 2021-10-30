@@ -1,32 +1,26 @@
-exports.axo = (function() {
-    let axo = {};
-    let title = "Axo's inbuilt toolset for JS";
-  
-    axo.startupMsg = function (startupMsg){
-        console.log('\x1b[34m[Startup] \x1b[0m' + startupMsg)
-        return
-    }
-  
-    axo.log = function (msg){
-        console.log('\x1b[36m[Evie] \x1b[0m' + msg)
-        return
-    }
+exports.axo = (function () {
+  let axo = {};
+  let title = "Axo's inbuilt toolset for JS";
 
-    axo.err = function(err){
-        console.log('\x1b[31m[ERROR] \x1b[0m' + err)
-        return
-    }
+  axo.startupMsg = function (startupMsg) {
+    console.log("\x1b[34m[Startup] \x1b[0m" + startupMsg);
+    return;
+  };
 
-    axo.i = function(i){
-        console.log('\x1b[36m[Interaction] \x1b[0m' + i)
-        return
-    }
+  axo.log = function (msg) {
+    console.log("\x1b[36m[Evie] \x1b[0m" + msg);
+    return;
+  };
 
-    return axo;
-  })();
-  
-  
+  axo.err = function (err) {
+    console.log("\x1b[31m[ERROR] \x1b[0m" + err);
+    return;
+  };
 
+  axo.i = function (i) {
+    console.log("\x1b[36m[Interaction] \x1b[0m" + i);
+    return;
+  };
 
-
-
+  return axo;
+})();

@@ -20,11 +20,17 @@ module.exports = {
       console.log(error);
     }
 
+    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+
     try {
-      if (message.content.startsWith("<@807543126424158238>")) {
-        message.reply(
-          "Hey do you need help with my commands? If so you can find a list like this "
+      if (msg.includes("807543126424158238")) {
+        exampleEmbed.setDescription(
+          `Hey do you need help with my commands? If so you can find a list by doing this`
         );
+        exampleEmbed.setImage(
+          `https://cdn.discordapp.com/attachments/885135206435151872/903570072675692555/RqivnDqPvH.gif`
+        );
+        message.reply({ embeds: [exampleEmbed] });
       }
     } catch (error) {
       console.log(error);
@@ -33,8 +39,6 @@ module.exports = {
     //
     // Time Savers
     //
-
-    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
 
     if (msg === "!d bump") {
       if (message.guild.id == "819106797028769844") {
@@ -94,10 +98,6 @@ module.exports = {
     //
     // Evie Flushed
     //
-
-    if (msg.includes("<@!895808586742124615>")) {
-      message.react("<:appleflushed:853840463638691840>");
-    }
 
     if (msg.includes("don't say his name...")) {
       if (message.author.toString() == "<@897660138347982858>") {

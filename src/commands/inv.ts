@@ -16,7 +16,7 @@ module.exports = {
     let exampleEmbed = new MessageEmbed()
       .setColor("#0099ff")
       .setTimestamp()
-      .setDescription("Your Inventory in Empty!");
+      .setDescription("Your Inventory is Empty!");
 
     let result = await cs.getUserItems({
       user: interaction.user,
@@ -29,7 +29,7 @@ module.exports = {
         `**${inv[key].name}:**`,
         `Amount: ${inv[key].amount}`
       );
-      exampleEmbed.setDescription("Your Inventory!");
+      exampleEmbed.setDescription(`${interaction.user.username}'s Inventory!`);
     }
 
     // Fetched!

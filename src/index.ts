@@ -118,9 +118,9 @@ cs.setMongoURL(
   "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/mongoeconomy"
 );
 //sets default wallet amount when ever new user is created.
-cs.setDefaultWalletAmount(100);
+cs.setDefaultWalletAmount(1000);
 //sets default bank amount when ever new user is created.
-cs.setDefaultBankAmount(1000);
+cs.setDefaultBankAmount(0);
 
 // Error Message for Commands
 client.on("interactionCreate", async (interaction) => {
