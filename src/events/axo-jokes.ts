@@ -12,9 +12,25 @@ module.exports = {
     try {
       if (message.content.startsWith("j!")) {
         message.reply(
-          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot"
+          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot and if you need more help checkout https://discord.gg/PYdASSE2gr"
         );
         console.log("JUST SAID MY MESSAGE!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+
+    try {
+      if (msg.includes("807543126424158238")) {
+        exampleEmbed.setDescription(
+          `Hey do you need help with my commands? If so you can find a list by doing this`
+        );
+        exampleEmbed.setImage(
+          `https://cdn.discordapp.com/attachments/885135206435151872/903570072675692555/RqivnDqPvH.gif`
+        );
+        message.reply({ embeds: [exampleEmbed] });
       }
     } catch (error) {
       console.log(error);
@@ -24,13 +40,11 @@ module.exports = {
     // Time Savers
     //
 
-    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
-
     if (msg === "!d bump") {
       if (message.guild.id == "819106797028769844") {
         exampleEmbed.setTitle("Fun Fact:");
         exampleEmbed.setDescription(
-          "You can vote for `Tristan's Discord` on more places then disboard, you just have to do it not from a Discord bot but rather these sites [top.gg](https://top.gg/servers/819106797028769844/vote) and [discordservers.com](https://discordservers.com/panel/819106797028769844/bump)"
+          "You can vote for `Evie's Discord` on more places then disboard, you just have to do it not from a Discord bot but rather these sites [top.gg](https://top.gg/servers/819106797028769844/vote) and [discordservers.com](https://discordservers.com/panel/819106797028769844/bump)"
         );
         try {
           message.reply({ embeds: [exampleEmbed], ephemeral: true });
@@ -55,7 +69,7 @@ module.exports = {
       if (message.guild.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Member System");
         exampleEmbed.setDescription(
-          "Here on Tristan's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
+          "Here on Evie's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
         );
         exampleEmbed.addField(
           "How do I apply?",
@@ -84,10 +98,6 @@ module.exports = {
     //
     // Evie Flushed
     //
-
-    if (msg.includes("<@!895808586742124615>")) {
-      message.react("<:appleflushed:853840463638691840>");
-    }
 
     if (msg.includes("don't say his name...")) {
       if (message.author.toString() == "<@897660138347982858>") {
