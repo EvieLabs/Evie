@@ -6,8 +6,8 @@ import Soundcloud from "soundcloud.ts";
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("play")
-    .setDescription("Plays a song!")
+    .setName("skip")
+    .setDescription("Skips a song!")
     .addStringOption((option) =>
       option
         .setName("song")

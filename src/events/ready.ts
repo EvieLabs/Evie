@@ -8,7 +8,7 @@ module.exports = {
 
     // Evie Doesn't Have time for you ;)
 
-    const anyNewCommands: Boolean = true;
+    const anyNewCommands: Boolean = false;
 
     client.user.setPresence({
       status: "dnd",
