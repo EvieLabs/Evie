@@ -17,10 +17,11 @@ module.exports = {
 
     let result = await cs.getShopItems({});
     let inv = result.inventory;
+    let c = "`";
 
     for (let key in inv) {
       exampleEmbed.addField(
-        `**ItemID** ${parseInt(key) + 1} - **${inv[key].name}:**`,
+        `**ItemID** ${c}${parseInt(key) + 1}${c} - **${inv[key].name}:**`,
         `Price: ${inv[key].price}`
       );
     }

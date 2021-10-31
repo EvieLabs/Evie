@@ -94,14 +94,11 @@ client.once("ready", () => {
   try {
     setInterval(() => {
       const activities_list = [
-        `my ${client.guilds.cache.reduce(
-          (acc, guild) => acc + guild.memberCount,
-          0
-        )} users`,
-        `my ${client.guilds.cache.reduce(
-          (acc, guild) => acc + guild.memberCount,
-          0
-        )} users`,
+        `your slash commands`,
+        `eviebot.rocks`,
+        `/help`,
+        `your feedback in https://discord.gg/jfmXDxtN3U`,
+        `you hopefully running /vote`,
         //``
       ];
       const index = Math.floor(
