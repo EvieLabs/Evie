@@ -26,7 +26,7 @@ module.exports = {
 
     for (let key in inv) {
       exampleEmbed.addField(
-        `**${inv[key].name}:**`,
+        `**ItemID** ${parseInt(key) + 1} - **${inv[key].name}:**`,
         `Amount: ${inv[key].amount}`
       );
       exampleEmbed.setDescription(`${interaction.user.username}'s Inventory!`);

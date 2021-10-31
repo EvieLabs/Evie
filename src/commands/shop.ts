@@ -20,7 +20,7 @@ module.exports = {
 
     for (let key in inv) {
       exampleEmbed.addField(
-        `${parseInt(key) + 1} - **${inv[key].name}:**`,
+        `**ItemID** ${parseInt(key) + 1} - **${inv[key].name}:**`,
         `Price: ${inv[key].price}`
       );
     }

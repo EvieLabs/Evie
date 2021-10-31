@@ -8,6 +8,8 @@ module.exports = {
 
     // Evie Doesn't Have time for you ;)
 
+    const anyNewCommands: Boolean = false;
+
     client.user.setPresence({
       status: "dnd",
     });
@@ -111,19 +113,20 @@ module.exports = {
         // );
 
         // Actually put commands
+        if (anyNewCommands == true) {
+          await rest.put(
+            // Routes.applicationGuildCommands(clientId, guildId),
+            Routes.applicationGuildCommands(clientId, TSMP),
+            // Routes.applicationCommands(clientId),
+            { body: Ecommands }
+          );
 
-        await rest.put(
-          // Routes.applicationGuildCommands(clientId, guildId),
-          Routes.applicationGuildCommands(clientId, TSMP),
-          // Routes.applicationCommands(clientId),
-          { body: Ecommands }
-        );
+          await rest.put(Routes.applicationCommands(clientId), {
+            body: commands,
+          });
 
-        await rest.put(Routes.applicationCommands(clientId), {
-          body: commands,
-        });
-
-        axo.startupMsg("Successfully reloaded application (/) commands.");
+          axo.startupMsg("Successfully reloaded application (/) commands.");
+        }
         axo.startupMsg("------------------------------------------------");
         axo.startupMsg('"Ready to do my job on Discord" -Evie by tristan');
         axo.startupMsg(

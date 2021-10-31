@@ -22,13 +22,6 @@ module.exports = {
     let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
 
     const thing: Number = interaction.options.getInteger("itemid");
-    if (thing == 1) {
-      return interaction.editReply("Sorry but you can only buy a `Basic Oven`");
-    }
-    if (!thing)
-      return interaction.editReply(
-        "Please provide a valid item number! Check your inventory using `/inventory`"
-      );
     let result = await cs.removeUserItem({
       user: interaction.user,
       item: thing,
