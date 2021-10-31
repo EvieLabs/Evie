@@ -2,15 +2,22 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import { MessageEmbed } from "discord.js";
 const ee = require("../botconfig/embed.json");
 const distube = require("../index");
+import Soundcloud from "soundcloud.ts";
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("stop")
-    .setDescription("Stops the current song")
-    .setDefaultPermission(true),
+    .setName("play")
+    .setDescription("Plays a song!")
+    .addStringOption((option) =>
+      option
+        .setName("song")
+        .setDescription("The search query")
+        .setRequired(true)
+    ),
   async execute(interaction) {
-    const client = interaction.client;
     try {
+      //console.log(interaction, StringOption)
+
       //things u can directly access in an interaction!
       const {
         member,
@@ -55,43 +62,32 @@ module.exports = {
       }
       try {
         let newQueue = interaction.client.distube.getQueue(guildId);
-        if (!newQueue)
-          if (!newQueue || !newQueue.songs || newQueue.songs.length == 0)
-            return interaction.reply({
-              embeds: [
-                new MessageEmbed()
-                  .setColor(ee.wrongcolor)
-                  .setTitle(`:x: **I'm Playing right now!**`),
-              ],
-            });
-        await newQueue.stop();
-        //Reply with a Message
+        if (!newQueue || !newQueue.songs || newQueue.songs.length == 0)
+          return interaction.reply({
+            embeds: [
+              new MessageEmbed()
+                .setColor(ee.wrongcolor)
+                .setTitle(`:x: **I am Playing nothing right now!**`),
+            ],
+          });
+        await newQueue.skip();
         interaction.reply({
           embeds: [
             new MessageEmbed()
               .setColor(ee.color)
               .setTimestamp()
-              .setTitle(`⏹ **Stopped playing and left the Channel!**`)
+              .setTitle(`⏭ **Skipped to the next Song!**`)
               .setFooter(
                 `💢 Action by: ${member.user.tag}`,
                 member.user.displayAvatarURL({ dynamic: true })
               ),
           ],
         });
-        return;
       } catch (e) {
-        console.log(e.stack ? e.stack : e);
-        interaction.reply({
-          content: `${client.allEmojis.x} | Error: `,
-          embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setDescription(`\`\`\`${e}\`\`\``),
-          ],
-        });
+        console.log(e.stack);
       }
     } catch (e) {
-      console.log(String(e.stack));
+      console.log(e.stack);
     }
   },
 };

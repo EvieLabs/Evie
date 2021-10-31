@@ -44,7 +44,7 @@ module.exports = {
       });
     } else {
       await interaction.reply({
-        content: "ummm your not tristan",
+        content: "Hey! Your not one of my Devs!",
         ephemeral: true,
       });
     }
