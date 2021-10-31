@@ -212,7 +212,7 @@ async function bakeIt(food: string, interaction: any) {
 
       exampleEmbed.setTitle(`Baked!`);
       exampleEmbed.setDescription(
-        `Hey ${interaction.user.username}! I pulled your muffins out the oven cause they were finished! You should sell them now with ${c}/sell 2${c} (2 is the item id for muffins)`
+        `Hey ${interaction.user.username}! I pulled your muffins out the oven cause they were finished! You should sell them now with ${c}/sell <item id>${c} (Find the item id out with ${c}/inventory${c})`
       );
       exampleEmbed.setThumbnail(
         `https://cdn.discordapp.com/attachments/885135206435151872/903557876986052658/chocolate-chip-muffins-featured.jpg`

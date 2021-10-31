@@ -27,11 +27,11 @@ module.exports = {
       item: thing,
     });
     if (result.error) {
-      if (result.type === "No-Item")
+      if (result.type === "Invalid-Item-Number")
         return interaction.editReply(
           "Please provide valid item number check your `/inventory`"
         );
-      if (result.type === "Invalid-Item")
+      if (result.type === "Unknown-Item")
         return interaction.editReply(
           "item does not exist.... check your `/inventory`"
         );
