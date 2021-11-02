@@ -22,7 +22,7 @@ Icon list fontawesom
   cursor: pointer;
   line-height: 60px;
   white-space: nowrap;
-  color: #67757c; }
+  color: #fff; }
   .icon-list-demo div:hover {
     color: #263238; }
   .icon-list-demo div p {
@@ -36,13 +36,9 @@ Icon list fontawesom
   font-size: 18px;
   margin: 0 15px 0 10px;
   text-align: left;
-  -o-transition: all 0.2s;
   transition: all 0.2s;
-  -o-transition: font-size .2s;
   transition: font-size .2s;
   vertical-align: middle;
-  -webkit-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s; }
 
 .icon-list-demo .col-md-4, .icon-list-demo .col-3 {

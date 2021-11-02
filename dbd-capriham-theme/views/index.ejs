@@ -8,74 +8,63 @@
       <meta name="author" content="">
       <link rel="icon" type="image/png" sizes="16x16" href="<%=themeConfig.iconURL%>">
       <link rel="stylesheet" type="text/css" href="https://assistants.ga/purecookie.css" />
-      <title><%=themeConfig.websiteName%></title>
+      <title><%=themeConfig.websiteName%> - Manage Guilds</title>
       <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <link href="assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
-      <link href="assets/node_modules/morrisjs/morris.css" rel="stylesheet">
-      <link href="assets/node_modules/c3-master/c3.min.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
-      <link href="css/pages/dashboard1.css" rel="stylesheet">
       <link href="css/colors/default.css" id="theme" rel="stylesheet">
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
-      <style>
-         br {
-         display: inline !important;
-         }
-      </style>
    </head>
-   <body class="fix-header fix-sidebar card-no-border">
+   <body class="fix-header card-no-border fix-sidebar">
       <%-include('partials/preloader.ejs')%>
       <div id="main-wrapper">
          <%-include('partials/topbar.ejs', {req:req})%>
-         <%-include('partials/header.ejs', {now:'index'})%>
+         <%-include('partials/header.ejs', {now:'manage'})%>
          <div class="page-wrapper">
             <div class="container-fluid">
                <div class="row page-titles">
                   <div class="col-md-5 align-self-center">
-                     <h3 class="text-themecolor">Dashboard</h3>
-                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                     </ol>
+                     <h3 class="text-themecolor">Manage Guilds</h3>
                   </div>
                </div>
                <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-12">
                      <div class="card">
-                        <div class="up-img" style="background-image:url('<%=themeConfig.index.card.image || "https://assistants.ga/img/banner/home-banner.jpg"%>')"></div>
                         <div class="card-body">
-                           <h5 class=" card-title"><%-themeConfig.index.card.title || "config.index.card.title"%></h5>
-                           <p class="m-b-0 m-t-20" id="index_cardDescription"><%-themeConfig.index.card.description || "config.index.card.description"%></p>
-                           <div class="d-flex m-t-20">
+                           <div class="table-responsive no-wrap">
+                              <table class="table vm no-th-brd pro-of-month">
+                                 <tbody>
+                                    <%
+                                       for(var i in req.session.guilds){%>
+                                    <%if((req.session.guilds[i].permissions & 0x00000020) == 0x00000020){%> 
+                                    <%if(!bot.guilds.cache.get(req.session.guilds[i].id)){
+                                       %>
+                                    <tr>
+                                       <td style="width:50px;"><img class="media-object round" onerror="this.src = 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png';" src="https://cdn.discordapp.com/icons/<%=req.session.guilds[i].id%>/<%=req.session.guilds[i].icon%>.png" alt="..."></td>
+                                       <td>
+                                          <h6><%=req.session.guilds[i].name%></h6>
+                                          <small class="text-muted">Not in the server</small>
+                                       </td>
+                                       <td><a href="/invite" role="button" style="margin-left: 10px;" class="btn-small">Invite bot</a></td>
+                                    </tr>
+                                    <%}else{%>
+                                    <tr>
+                                       <td style="width:50px;"><img class="media-object round" onerror="this.src = 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png';" src="https://cdn.discordapp.com/icons/<%=req.session.guilds[i].id%>/<%=req.session.guilds[i].icon%>.png" alt="..."></td>
+                                       <td>
+                                          <h6><%=req.session.guilds[i].name%></h6>
+                                          <small class="text-muted">In the server</small>
+                                       </td>
+                                       <td><a href="/guild/<%=req.session.guilds[i].id%>" role="button" style="margin-left: 10px;" class="btn-small">Manage bot</a></td>
+                                    </tr>
+                                    <%}%>
+                                    <%}%>
+                                    <%}%>
+                                 </tbody>
+                              </table>
+                              <p class="text-themecolor">Can't see your server? <a class="text-themecolor" href="/discord?r=/manage">Try logging in again!</a></p>
                            </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-lg-6">
-                     <div class="card">
-                        <div class="card-body">
-                           <h5 class="card-title"><%-themeConfig.index.information.title || "config.index.information.title"%></h5>
-                           <p><%-themeConfig.index.information.description || "config.index.information.description"%></p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-lg-6">
-                     <div class="card">
-                        <div class="card-body">
-                           <h5 class="card-title"><%=themeConfig.index.feeds.title%></h5>
-                           <ul class="feeds">
-                              <%themeConfig.index.feeds.list.forEach(f=>{%>
-                              <li>
-                                 <div class="<%=f.bg%>"><i class="<%=f.icon%>"></i></div>
-                                 <%-f.text%> <span class="text-muted"><%-f.timeText%></span>
-                              <li>
-                                 <%})%>
-                           </ul>
                         </div>
                      </div>
                   </div>
@@ -91,11 +80,6 @@
       <script src="js/waves.js"></script>
       <script src="js/sidebarmenu.js"></script>
       <script src="js/custom.min.js"></script>
-      <script src="assets/node_modules/raphael/raphael-min.js"></script>
-      <script src="assets/node_modules/morrisjs/morris.min.js"></script>
-      <script src="assets/node_modules/d3/d3.min.js"></script>
-      <script src="assets/node_modules/c3-master/c3.min.js"></script>
-      <script src="js/dashboard1.js"></script>
       <script src="https://assistants.ga/purecookie.js"></script>
    </body>
 </html>

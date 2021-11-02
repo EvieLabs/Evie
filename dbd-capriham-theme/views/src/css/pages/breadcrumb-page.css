@@ -20,7 +20,7 @@ Breadcrumb
  ============================================================== */
 .bc-colored .breadcrumb-item,
 .bc-colored .breadcrumb-item a {
-  color: #ffffff; }
+  color: #2c2f33; }
   .bc-colored .breadcrumb-item.active,
   .bc-colored .breadcrumb-item a.active {
     opacity: 0.7; }

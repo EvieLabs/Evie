@@ -49,10 +49,7 @@ chat application Page
       .chat-main-box .chat-left-aside .chat-left-inner .form-control {
         height: 60px;
         padding: 15px;
-        background-image: -webkit-gradient(linear, left top, left bottom, from(#398bf7), to(#398bf7)), -webkit-gradient(linear, left top, left bottom, from(rgba(120, 130, 140, 0.13)), to(rgba(120, 130, 140, 0.13)));
-        background-image: -webkit-linear-gradient(#398bf7, #398bf7), -webkit-linear-gradient(rgba(120, 130, 140, 0.13), rgba(120, 130, 140, 0.13));
-        background-image: -o-linear-gradient(#398bf7, #398bf7), -o-linear-gradient(rgba(120, 130, 140, 0.13), rgba(120, 130, 140, 0.13));
-        background-image: linear-gradient(#398bf7, #398bf7), linear-gradient(rgba(120, 130, 140, 0.13), rgba(120, 130, 140, 0.13)); }
+        background-image: linear-gradient(#7289da, #7289da), linear-gradient(rgba(120, 130, 140, 0.13), rgba(120, 130, 140, 0.13)); }
       .chat-main-box .chat-left-aside .chat-left-inner .style-none {
         padding: 0px; }
         .chat-main-box .chat-left-aside .chat-left-inner .style-none li {
@@ -89,5 +86,5 @@ chat application Page
         right: 20px;
         bottom: 10px; }
         .chat-main-box .chat-right-aside .send-chat-box .custom-send .cst-icon {
-          color: #67757c;
+          color: #fff;
           margin-right: 10px; }

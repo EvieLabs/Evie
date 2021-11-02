@@ -21,11 +21,12 @@ FAQs Page
 .minimal-faq .card {
   border: 0px; }
   .minimal-faq .card .card-header {
-    background: #ffffff;
+    background: #4e5d94;
     padding: 20px 0;
     margin-top: 10px; }
   .minimal-faq .card .card-body {
-    padding: 15px 0px; }
+    padding: 15px 0px;
+    background: #4e5d94; }
 
 /*******************
 Seach listing Page
@@ -41,11 +42,11 @@ Seach listing Page
       margin: 0px;
       font-size: 18px; }
       .search-listing li h3 a {
-        color: #398bf7; }
+        color: #7289da; }
         .search-listing li h3 a:hover {
           text-decoration: underline; }
     .search-listing li a {
-      color: #06d79c; }
+      color: #24d2b5; }
 
 /*******************
 Gridstack Dragable portlet
@@ -66,17 +67,17 @@ Grid page
   margin-bottom: 10px;
   padding: 0 15px; }
 
-.show-grid [class^=col-] {
+.show-grid [class^="col-"] {
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 1px solid #b1b8bb;
-  background-color: #e9edf2; }
+  border: 1px solid #2c2f33;
+  background-color: #2c2f33; }
 
 /*******************
 Date paginator page
 ******************/
 .dp-selected[style] {
-  background-color: #398bf7 !important; }
+  background-color: #fff !important; }
 
 .datepaginator-sm .pagination li a,
 .datepaginator-lg .pagination li a,
@@ -91,20 +92,20 @@ Date paginator page
 Notification page Jquery toaster
 ******************/
 .jq-icon-info {
-  background-color: #398bf7;
-  color: #ffffff; }
+  background-color: #7289da;
+  color: #2c2f33; }
 
 .jq-icon-success {
-  background-color: #06d79c;
-  color: #ffffff; }
+  background-color: #24d2b5;
+  color: #2c2f33; }
 
 .jq-icon-error {
-  background-color: #ef5350;
-  color: #ffffff; }
+  background-color: #ff5c6c;
+  color: #2c2f33; }
 
 .jq-icon-warning {
-  background-color: #ffb22b;
-  color: #ffffff; }
+  background-color: #ff9041;
+  color: #2c2f33; }
 
 .alert-rounded {
   border-radius: 60px; }
@@ -113,16 +114,16 @@ Notification page Jquery toaster
 list and media
 ******************/
 .list-group a.list-group-item:hover {
-  background: #e9edf2; }
+  background: #2c2f33; }
 
 .list-group-item.active,
 .list-group .list-group-item.active:hover {
-  background: #398bf7;
-  border-color: #398bf7; }
+  background: #fff;
+  border-color: #fff; }
 
 .list-group-item.disabled {
-  color: #99abb4;
-  background: #e9edf2; }
+  color: #bcc3d3;
+  background: #2c2f33; }
 
 .media {
   border: 1px solid rgba(120, 130, 140, 0.13);

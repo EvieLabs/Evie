@@ -4,52 +4,50 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@import '../variable';
-$themecolor: #20aee3;
-$themecolor-dark: #028ee1;
-$topbar: #ffffff;
+@import "../variable";
+$themecolor: #7289da;
+$themecolor-dark: #7289da;
+$topbar: #2c2f33;
 $themecolor-alt: #26c6da;
-$topbar-alt: #ffffff;
-$sidebar-icons: #787f91; 
+$topbar-alt: #7289da;
+$sidebar-icons: #787f91;
 /*******************
 /*Top bar
 *******************/
 
 .topbar {
-    background: $topbar;
-    .navbar-header{
-        background: $topbar-alt;
+  background: $topbar;
+  .navbar-header {
+    background: $topbar-alt;
+  }
+  .top-navbar .navbar-header .navbar-brand .light-logo {
+    display: none;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .navbar-light .navbar-nav .nav-item > {
+    a.nav-link {
+      color: rgba(0, 0, 0, 0.7) !important;
+      &:hover,
+      &:focus {
+        color: rgba(0, 0, 0, 1) !important;
+      }
     }
-    .top-navbar .navbar-header .navbar-brand .light-logo{
-        display: none;
-        color:rgba(0, 0, 0, 0.7);
-    }
-    .navbar-light .navbar-nav .nav-item > {
-        a.nav-link {
-           
-            color: rgba(0, 0, 0, 0.7)!important;
-            &:hover,
-            &:focus {
-                 color: rgba(0, 0, 0, 1)!important;
-            }
-        }
-    }
+  }
 }
-
 
 /*******************
 /*General Elements
 *******************/
 
 a.link {
-    &:hover,
-    &:focus {
-        color: $themecolor!important;
-    }
+  &:hover,
+  &:focus {
+    color: $themecolor !important;
+  }
 }
 
 .bg-theme {
-    background-color: $themecolor !important;
+  background-color: $themecolor !important;
 }
 
 .pagination > .active > a,
@@ -58,42 +56,41 @@ a.link {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-    background-color: $themecolor;
-    border-color: $themecolor;
+  background-color: $themecolor;
+  border-color: $themecolor;
 }
 
 .right-sidebar {
-    .rpanel-title {
-        background: $themecolor;
-    }
+  .rpanel-title {
+    background: $themecolor;
+  }
 }
 
 .stylish-table {
-    tbody tr {
-        &:hover,
-        &.active {
-            border-left: 4px solid $themecolor;
-        }
+  tbody tr {
+    &:hover,
+    &.active {
+      border-left: 4px solid $themecolor;
     }
+  }
 }
-.text-themecolor{
-    color:$themecolor!important;
+.text-themecolor {
+  color: $themecolor !important;
 }
 .profile-tab,
 .customtab {
-    li {
-        a.nav-link {
-            &.active {
-                border-bottom: 2px solid $themecolor;
-                color: $themecolor;
-            }
-            &:hover {
-                color: $themecolor;
-            }
-        }
+  li {
+    a.nav-link {
+      &.active {
+        border-bottom: 2px solid $themecolor;
+        color: $themecolor;
+      }
+      &:hover {
+        color: $themecolor;
+      }
     }
+  }
 }
-
 
 /*******************
 /*Buttons
@@ -101,46 +98,45 @@ a.link {
 
 .btn-themecolor,
 .btn-themecolor.disabled {
+  background: $themecolor;
+  color: $white;
+  border: 1px solid $themecolor;
+  &:hover {
     background: $themecolor;
-    color: $white;
+    opacity: 0.7;
     border: 1px solid $themecolor;
-    &:hover {
-        background: $themecolor;
-        opacity: 0.7;
-        border: 1px solid $themecolor;
-    }
-    &.active,
-    &:focus {
-        background: $themecolor-dark;
-    }
+  }
+  &.active,
+  &:focus {
+    background: $themecolor-dark;
+  }
 }
-
 
 /*******************
 /*sidebar navigation
 *******************/
 
-.label-themecolor{
-    background:$themecolor; 
+.label-themecolor {
+  background: $themecolor;
 }
 
-.sidebar-nav>ul>li.active>a {
+.sidebar-nav > ul > li.active > a {
+  color: $themecolor;
+  border-color: $themecolor;
+  i {
     color: $themecolor;
-    border-color: $themecolor;
-    i {
-       color: $themecolor; 
-    }
+  }
 }
 
 .sidebar-nav ul li a {
-    &.active,
-    &:hover {
+  &.active,
+  &:hover {
+    color: $themecolor;
+    i {
       color: $themecolor;
-      i {
-        color: $themecolor;
-      }  
     }
+  }
 }
-.sidebar-nav>ul>li>a i{
-    color:$sidebar-icons;
+.sidebar-nav > ul > li > a i {
+  color: $sidebar-icons;
 }

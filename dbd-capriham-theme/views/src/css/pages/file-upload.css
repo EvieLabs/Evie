@@ -39,7 +39,7 @@ File upload
 .fileinput .input-group-addon {
   border: none;
   border-bottom: 1px solid rgba(120, 130, 140, 0.13);
-  background: #ffffff;
+  background: #2c2f33;
   margin-bottom: 1px; }
 
 .fileinput .form-control {

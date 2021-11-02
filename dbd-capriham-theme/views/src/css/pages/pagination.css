@@ -36,7 +36,7 @@ Pagination
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  background-color: #e9edf2; }
+  background-color: #2c2f33; }
 
 .pagination-split li {
   margin-left: 5px;
@@ -57,8 +57,8 @@ Pagination
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background-color: #398bf7;
-  border-color: #398bf7; }
+  background-color: #fff;
+  border-color: #fff; }
 
 .pager li > a,
 .pager li > span {
@@ -71,21 +71,21 @@ Pagination
 Pagination
 ******************/
 .pagination-circle li.active a {
-  background: #06d79c; }
+  background: #24d2b5; }
 
 .pagination-circle li a {
   width: 40px;
   height: 40px;
-  background: #e9edf2;
+  background: #2c2f33;
   border: 0px;
   text-align: center;
   border-radius: 100%; }
   .pagination-circle li a:first-child, .pagination-circle li a:last-child {
     border-radius: 100%; }
   .pagination-circle li a:hover {
-    background: #06d79c;
-    color: #ffffff; }
+    background: #24d2b5;
+    color: #2c2f33; }
 
 .pagination-circle li.disabled a {
-  background: #e9edf2;
+  background: #2c2f33;
   color: rgba(120, 130, 140, 0.13); }

@@ -112,3 +112,16 @@ File: scss
 
 .ps:hover > .ps__scrollbar-y-rail:hover > .ps__scrollbar-y {
   background-color: rgba(0, 0, 0, 0.2); }
+
+#slimtest3.ps .ps__scrollbar-y-rail {
+  left: 3px;
+  right: auto; }
+
+#slimtest4.ps > .ps__scrollbar-y-rail > .ps__scrollbar-y {
+  background-color: #7289da; }
+
+#slimtest4.ps:hover.ps--in-scrolling.ps--y > .ps__scrollbar-y-rail > .ps__scrollbar-y {
+  background-color: #7289da; }
+
+#slimtest4.ps:hover > .ps__scrollbar-y-rail:hover > .ps__scrollbar-y {
+  background-color: #7289da; }

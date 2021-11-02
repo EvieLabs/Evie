@@ -36,23 +36,23 @@ Form icheck
 
 .icolors > li.active:after {
   content: "\2713 ";
-  color: #ffffff;
+  color: #2c2f33;
   line-height: 30px; }
 
 .icolors > li:first-child {
   margin-left: 0; }
 
 .icolors > li.orange {
-  background: #ef5350; }
+  background: #ff5c6c; }
 
 .icolors > li.yellow {
-  background: #ffb22b; }
+  background: #ff9041; }
 
 .icolors > li.info {
-  background: #398bf7; }
+  background: #7289da; }
 
 .icolors > li.green {
-  background: #06d79c; }
+  background: #24d2b5; }
 
 .icolors > li.red {
   background: #fb3a3a; }

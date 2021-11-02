@@ -42,8 +42,6 @@ Easy pie chart
   right: 0;
   text-align: center;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
 .chart > span > img {
@@ -55,8 +53,6 @@ Easy pie chart
   top: 50%;
   width: 60%;
   height: 60%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   margin: 0 auto; }
 

@@ -25,28 +25,28 @@ File: scss
   color: rgba(255, 255, 255, 0.65); }
 
 .card-default .card-header {
-  background: #ffffff;
+  background: #2c2f33;
   border-bottom: 0px; }
 
 .card-success {
-  background: #06d79c;
-  border-color: #06d79c; }
+  background: #24d2b5;
+  border-color: #24d2b5; }
 
 .card-danger {
-  background: #ef5350;
-  border-color: #ef5350; }
+  background: #ff5c6c;
+  border-color: #ff5c6c; }
 
 .card-warning {
-  background: #ffb22b;
-  border-color: #ffb22b; }
+  background: #ff9041;
+  border-color: #ff9041; }
 
 .card-info {
-  background: #398bf7;
-  border-color: #398bf7; }
+  background: #7289da;
+  border-color: #7289da; }
 
 .card-primary {
-  background: #745af2;
-  border-color: #745af2; }
+  background: #6772e5;
+  border-color: #6772e5; }
 
 .card-dark {
   background: #2f3d4a;
@@ -63,7 +63,7 @@ File: scss
   float: right; }
   .card-actions a {
     cursor: pointer;
-    color: #67757c;
+    color: #fff;
     opacity: 0.7;
     padding-left: 7px;
     font-size: 13px; }
@@ -74,23 +74,22 @@ File: scss
   margin-bottom: 20px; }
 
 .collapsing {
-  -webkit-transition: height .08s ease;
-  -o-transition: height .08s ease;
-  transition: height .08s ease; }
+  -webkit-transition: height 0.08s ease;
+  transition: height 0.08s ease; }
 
 .card-info {
-  background: #398bf7;
-  border-color: #398bf7; }
+  background: #7289da;
+  border-color: #7289da; }
 
 .card-primary {
-  background: #745af2;
-  border-color: #745af2; }
+  background: #6772e5;
+  border-color: #6772e5; }
 
 .card-outline-info {
-  border-color: #398bf7; }
+  border-color: #7289da; }
   .card-outline-info .card-header {
-    background: #398bf7;
-    border-color: #398bf7; }
+    background: #7289da;
+    border-color: #7289da; }
 
 .card-outline-inverse {
   border-color: #2f3d4a; }
@@ -99,25 +98,25 @@ File: scss
     border-color: #2f3d4a; }
 
 .card-outline-warning {
-  border-color: #ffb22b; }
+  border-color: #ff9041; }
   .card-outline-warning .card-header {
-    background: #ffb22b;
-    border-color: #ffb22b; }
+    background: #ff9041;
+    border-color: #ff9041; }
 
 .card-outline-success {
-  border-color: #06d79c; }
+  border-color: #24d2b5; }
   .card-outline-success .card-header {
-    background: #06d79c;
-    border-color: #06d79c; }
+    background: #24d2b5;
+    border-color: #24d2b5; }
 
 .card-outline-danger {
-  border-color: #ef5350; }
+  border-color: #ff5c6c; }
   .card-outline-danger .card-header {
-    background: #ef5350;
-    border-color: #ef5350; }
+    background: #ff5c6c;
+    border-color: #ff5c6c; }
 
 .card-outline-primary {
-  border-color: #745af2; }
+  border-color: #6772e5; }
   .card-outline-primary .card-header {
-    background: #745af2;
-    border-color: #745af2; }
+    background: #6772e5;
+    border-color: #6772e5; }

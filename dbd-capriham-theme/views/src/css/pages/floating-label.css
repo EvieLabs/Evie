@@ -27,30 +27,29 @@ File: scss
   border: none;
   font-family: "Montserrat", sans-serif;
   border-radius: 0px;
-  border-bottom: 1px solid #e9edf2; }
+  border-bottom: 1px solid #2c2f33; }
 
 .floating-labels select.form-control > option {
   font-size: 14px; }
 
 .floating-labels .has-error .form-control {
-  border-bottom: 1px solid #ef5350; }
+  border-bottom: 1px solid #ff5c6c; }
 
 .floating-labels .has-warning .form-control {
-  border-bottom: 1px solid #ffb22b; }
+  border-bottom: 1px solid #ff9041; }
 
 .floating-labels .has-success .form-control {
-  border-bottom: 1px solid #06d79c; }
+  border-bottom: 1px solid #24d2b5; }
 
 .floating-labels .form-control:focus {
   outline: none;
   border: none; }
 
 .floating-labels label {
-  color: #67757c;
+  color: #fff;
   position: absolute;
   cursor: auto;
   top: 5px;
-  -o-transition: 0.2s ease all;
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all; }
@@ -71,8 +70,7 @@ File: scss
   width: 0;
   bottom: 1px;
   position: absolute;
-  background: #398bf7;
-  -o-transition: 0.2s ease all;
+  background: #fff;
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all; }
@@ -106,45 +104,45 @@ File: scss
 
 .has-warning .bar:before,
 .has-warning .bar:after {
-  background: #ffb22b; }
+  background: #ff9041; }
 
 .has-success .bar:before,
 .has-success .bar:after {
-  background: #06d79c; }
+  background: #24d2b5; }
 
 .has-error .bar:before,
 .has-error .bar:after {
-  background: #ef5350; }
+  background: #ff5c6c; }
 
 .has-warning .form-control:focus ~ label,
 .has-warning .form-control:valid ~ label {
-  color: #ffb22b; }
+  color: #ff9041; }
 
 .has-success .form-control:focus ~ label,
 .has-success .form-control:valid ~ label {
-  color: #06d79c; }
+  color: #24d2b5; }
 
 .has-error .form-control:focus ~ label,
 .has-error .form-control:valid ~ label {
-  color: #ef5350; }
+  color: #ff5c6c; }
 
 .has-feedback label ~ .t-0 {
   top: 0; }
 
 .form-group.error input, .form-group.error select, .form-group.error textarea {
-  border: 1px solid #ef5350; }
+  border: 1px solid #ff5c6c; }
 
 .form-group.validate input, .form-group.validate select, .form-group.validate textarea {
-  border: 1px solid #06d79c; }
+  border: 1px solid #24d2b5; }
 
 .form-group.error .help-block ul {
   padding: 0px;
-  color: #ef5350; }
+  color: #ff5c6c; }
   .form-group.error .help-block ul li {
     list-style: none; }
 
 .form-group.issue .help-block ul {
   padding: 0px;
-  color: #ffb22b; }
+  color: #ff9041; }
   .form-group.issue .help-block ul li {
     list-style: none; }

@@ -36,9 +36,9 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown u-pro">
                     <%if(req.session.user){%>
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<%=req.session.user.avatarURL || "https://w5fc.org/wp-content/uploads/2021/05/s9biyhs4lix61.jpg"%>" alt="user" class="" /><span class="profile-pic"><b><%=req.session.user.username%> </b><span style="cursor:pointer;color:blue;" onclick="window.location = '/discord/logout'"> &nbsp;&nbsp;Log out</span> &nbsp;&nbsp;</span></a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<%=req.session.user.avatarURL || "https://w5fc.org/wp-content/uploads/2021/05/s9biyhs4lix61.jpg"%>" alt="user" class="" /><span class="profile-pic"><b><%=req.session.user.username%> </b><span style="cursor:pointer;color:#7289da;" onclick="window.location = '/discord/logout'"> &nbsp;&nbsp;Log out</span> &nbsp;&nbsp;</span></a>
                     <%}else{%>
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="https://w5fc.org/wp-content/uploads/2021/05/s9biyhs4lix61.jpg" alt="user" class="" /> <span class="profile-pic">  </b><span style="cursor:pointer;color:blue;" onclick="window.location = '/discord'">Log in</span> &nbsp;&nbsp;</span></a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="https://w5fc.org/wp-content/uploads/2021/05/s9biyhs4lix61.jpg" alt="user" class="" /> <span class="profile-pic">  </b><span style="cursor:pointer;color:#7289da;" onclick="window.location = '/discord'">Log in</span> &nbsp;&nbsp;</span></a>
                     <%}%>
                 </li>
             </ul>
