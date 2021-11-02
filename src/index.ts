@@ -11,7 +11,7 @@ import * as config2 from "./botconfig/embed.json";
 import * as config4 from "./botconfig/settings.json";
 
 const DBD = require("discord-dashboard");
-const CaprihamTheme = require("../dbd-capriham-theme ");
+const CaprihamTheme = require("../dbd-capriham-theme");
 
 let langsSettings = {};
 
