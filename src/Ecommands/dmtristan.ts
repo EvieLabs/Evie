@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { getLang } from "../index";
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,6 +12,9 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
+    const langdb = getLang();
+    const guildID = interaction.guild.id.toString();
+    console.log(langdb);
     await interaction.reply({ content: "Sent!", ephemeral: true });
 
     const msg = interaction.options.getString("message");

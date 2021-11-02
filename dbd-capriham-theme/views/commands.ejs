@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="https://assistants.ga/purecookie.css" />
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" type="image/png" sizes="16x16" href="<%=themeConfig.iconURL%>">
+      <title><%=themeConfig.websiteName%> - Commands List</title>
+      <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+      <link href="css/colors/default.css" id="theme" rel="stylesheet">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+   </head>
+   <body class="fix-header card-no-border fix-sidebar">
+      <%-include('partials/preloader.ejs')%>
+      <div id="main-wrapper">
+         <%-include('partials/topbar.ejs', {req:req})%>
+         <%-include('partials/header.ejs', {now:'commands'})%>
+         <div class="page-wrapper">
+            <div class="container-fluid">
+               <div class="row page-titles">
+                  <div class="col-md-5 align-self-center">
+                     <h3 class="text-themecolor"><%=themeConfig.commands.pageTitle || "config.commands.pageTitle"%></h3>
+                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Commands</li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <div class="card">
+                        <div class="card-body">
+                           <h4 class="card-title"><%=themeConfig.commands.table.title || "config.commands.table.title"%></h4>
+                           <h6 class="card-subtitle"><%=themeConfig.commands.table.subTitle || "config.commands.table.subTitle"%></h6>
+                           <div class="table-responsive">
+                              <table class="table">
+                                 <thead>
+                                    <tr>
+                                       <th width="20%">Command Name</th>
+                                       <th width="30%">Usage</th>
+                                       <th width="50%">Description</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <%themeConfig.commands.table.list.forEach((item)=>{%>
+                                    <tr>
+                                       <td><%=item.commandName%></td>
+                                       <td><code><%=item.commandUsage%></code></td>
+                                       <td><%=item.commandDescription%></td>
+                                    </tr>
+                                    <%})%>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <%-include('partials/footer.ejs')%>
+         </div>
+      </div>
+      <script src="assets/node_modules/jquery/jquery.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/popper.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+      <script src="js/perfect-scrollbar.jquery.min.js"></script>
+      <script src="js/waves.js"></script>
+      <script src="js/sidebarmenu.js"></script>
+      <script src="js/custom.min.js"></script>
+      <script src="assets/node_modules/peity/jquery.peity.min.js"></script>
+      <script src="assets/node_modules/peity/jquery.peity.init.js"></script>
+      <script src="https://assistants.ga/purecookie.js"></script>
+   </body>
+</html>

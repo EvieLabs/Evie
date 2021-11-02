@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="stylesheet" type="text/css" href="https://assistants.ga/purecookie.css" />
+      <link rel="icon" type="image/png" sizes="16x16" href="<%=themeConfig.iconURL%>">
+      <title><%=themeConfig.websiteName%> - Manage <%=bot.guilds.cache.get(req.params.id).name%></title>
+      <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+      <link href="css/colors/default.css" id="theme" rel="stylesheet">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      <style>
+         input[type=color]{
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 40px;
+            background: none;
+            padding: 0px !important;
+         }
+         input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+         }
+         input[type="color"]::-webkit-color-swatch {
+            border: solid 1px #000; /*change color of the swatch border here*/
+            border-radius: 40px;
+         }
+         .form-check {
+         margin-bottom: -38px;
+         }
+         input, textarea, select {
+         border-radius: 15px;padding-left: 20px;padding-right: 10px;background: #f9f9ff;border-color: #f9f9ff;
+         }
+         label {
+         position: absolute;
+         left: 3px;
+         top: 13px;
+         width: 20px;
+         height: 20px;
+         }
+         .form-check-label {
+         padding-left: 0 !important;
+         }
+         .primary-checkbox {
+         width: 16px;
+         height: 16px;
+         border-radius: 3px;
+         background: #fff;
+         position: relative;
+         cursor: pointer; }
+         .primary-checkbox input {
+         position: absolute;
+         left: 0;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         width: 100%;
+         height: 100%;
+         opacity: 0; }
+         .primary-checkbox input + label {
+         position: absolute;
+         left: 0;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         border-radius: 3px;
+         cursor: pointer;
+         border: 1px solid #f9f9ff; }
+         .primary-checkbox input:checked + label {
+         background: url('https://cdn.assistants.ga/kqwh15kg') no-repeat center center/cover;
+         border: none; }
+         button[type=submit] {
+         background-color: #636394;
+         border: none;
+         color: white;
+         padding: 10px 25px;
+         text-decoration: none;
+         margin: 4px 2px;
+         cursor: pointer;
+         }
+      </style>
+   </head>
+   <body class="fix-header card-no-border fix-sidebar">
+      <%-include('partials/preloader.ejs')%>
+      <div id="main-wrapper">
+         <%-include('partials/topbar.ejs', {req:req})%>
+         <%-include('partials/header.ejs', {now:'manage'})%>
+         <div class="page-wrapper">
+            <div class="container-fluid">
+               <div class="row page-titles">
+                  <div class="col-md-5 align-self-center">
+                     <h3 class="text-themecolor">Manage <%=bot.guilds.cache.get(req.params.id).name%></h3>
+                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Guild</li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <div class="card">
+                        <div class="card-body">
+                           <div class="table-responsive no-wrap">
+                              <nav>
+                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <%
+                                       let i22 = 0;
+                                       settings.forEach(s=>{
+                                       i22++;%>
+                                    <a class="nav-item nav-link<%if(i22==1){%> active<%}%>" id="<%=s.categoryId%>-tab" data-toggle="tab" href="#<%=s.categoryId%>" role="tab" aria-controls="<%=s.categoryId%>" aria-selected="true"><%=s.categoryName%></a>
+                                    <%})
+                                       %>
+                                 </div>
+                              </nav>
+                              <%if(req.query.success){%>
+                              <div id="alert_success" style="padding-top: 5px;">
+                                 <div class="alert alert-dismissible alert-success" onclick="document.getElementById('alert_success').innerHTML=''">
+                                    <strong>Success!</strong> All changes saved! <u>Click to close</u>
+                                 </div>
+                              </div>
+                              <%}%>
+                              <div class="tab-content" id="nav-tabContent">
+                                 <%
+                                    let i222 = 0;
+                                    settings.forEach(s=>{
+                                    i222++;%>
+                                 <div class="tab-pane fade<%if(i222==1){%> show active<%}%>" id="<%=s.categoryId%>" role="tabpanel" aria-labelledby="<%=s.categoryId%>-tab">
+                                    <form method="POST" action="/settings/update/<%=req.params.id%>/<%=s.categoryId%>">
+                                       <%
+                                          s.categoryOptionsList.forEach(option=>{%>
+                                       <br><br>
+                                       <%
+                                          if(option.optionType.type == "select"){%>
+                                       <h4><%=option.optionName%></h4>
+                                       <%=option.optionDescription%><br>
+                                       <select class="col-md-12" <%if(option.optionType.disabled){%>disabled<%}%> name="<%=option.optionId%>" class="col-md-12" style="height:30px;">
+                                          <%
+                                             let ioo = 0;
+                                               option.optionType.data.values.forEach(value=>{%>
+                                          <option value="<%=value%>" <%if(actual[s.categoryId][option.optionId] == value){%>selected<%}%>><%=option.optionType.data.keys[ioo]%></option>
+                                          <%
+                                             ioo++;
+                                             })%>
+                                       </select>
+                                       <%}else if(option.optionType.type == "input"){
+                                          %>
+                                       <h4><%=option.optionName%></h4>
+                                       <%=option.optionDescription%><br>
+                                       <input style="border:none;height:30px;" class="col-md-12" name="<%=option.optionId%>" <%if(option.optionType.required){%>required<%}%> <%if(option.optionType.disabled){%>disabled<%}%> placeholder="<%=option.optionType.data%>" <%if(actual[s.categoryId][option.optionId]){%>value="<%=actual[s.categoryId][option.optionId]%>"<%}%> <%if(option.optionType.min){%>minlength="<%=option.optionType.min%>"<%}%> <%if(option.optionType.max){%>maxlength="<%=option.optionType.max%>"<%}%>/>
+                                       <%} else if(option.optionType.type == "textarea"){%>
+                                       <h4><%=option.optionName%></h4>
+                                       <%=option.optionDescription%><br>
+                                       <textarea name="<%=option.optionId%>" <%if(option.optionType.required){%>required<%}%> <%if(option.optionType.disabled){%>disabled<%}%> placeholder="<%=option.optionType.data%>" <%if(actual[s.categoryId][option.optionId]){%>value="<%=actual[s.categoryId][option.optionId]%>"<%}%> <%if(option.optionType.min){%>minlength="<%=option.optionType.min%>"<%}%> <%if(option.optionType.max){%>maxlength="<%=option.optionType.max%>"<%}%> rows="4" class="col-md-12"><%if(actual[s.categoryId][option.optionId]){%><%=actual[s.categoryId][option.optionId]%><%}%></textarea>
+                                       <%}else if(option.optionType.type == "switch"){%>
+                                       <h4><%=option.optionName%></h4>
+                                       <%=option.optionDescription%><br>
+                                       <div class="primary-checkbox " style="align-items: center;">
+                                          <%if(actual[s.categoryId][option.optionId] == null || actual[s.categoryId][option.optionId] == undefined){%>
+                                          <%if(option.optionType.data == false && !option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" name="<%=option.optionId%>" />
+                                          <%} else if(option.optionType.data == true && !option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" name="<%=option.optionId%>" checked />
+                                          <%} else if(option.optionType.data == true && option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" checked disabled />
+                                          <%} else if(option.optionType.data == false && option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" disabled />
+                                          <%}%>
+                                          <%}else{%>
+                                          <%if(actual[s.categoryId][option.optionId] == false && !option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" name="<%=option.optionId%>" />
+                                          <%} else if(actual[s.categoryId][option.optionId] == true && !option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" name="<%=option.optionId%>" checked />
+                                          <%} else if(actual[s.categoryId][option.optionId] == true && option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" checked disabled />
+                                          <%} else if(actual[s.categoryId][option.optionId] == false && option.optionType.disabled){%>
+                                          <input type="checkbox" id="<%=option.optionId%>" disabled />
+                                          <%}%>
+                                          <%}%>
+                                          <label class="form-check-label" for="<%=option.optionId%>" style="padding-left: 0 !important;top:13px;left:3px;background-color: rgb(199, 199, 199);">
+                                          </label>
+                                       </div>
+                                       <%}else if(option.optionType.type == "channelsSelect"){%>
+                                       <h4><%=option.optionName%></h4>
+                                       <%=option.optionDescription%><br>
+                                       <select <%if(option.optionType.disabled){%>disabled<%}%> name="<%=option.optionId%>" class="col-md-12" style="height:30px;">
+                                          <%
+                                             let ioooooo = 0;
+                                             let functiona = option.optionType.function(bot, guildid);
+                                             functiona.values.forEach(value=>{%>
+                                          <option value="<%=value%>" <%if(actual[s.categoryId][option.optionId] == value){%>selected<%}%>><%=functiona.keys[ioooooo]%></option>
+                                          <%
+                                             ioooooo++;
+                                             })%>
+                                       </select>
+                                       <%}else if(option.optionType.type =="rolesSelect"){%>
+                                       <h4><%=option.optionName%></h4>
+                                       <%=option.optionDescription%><br>
+                                       <select <%if(option.optionType.disabled){%>disabled<%}%> name="<%=option.optionId%>" class="col-md-12" style="height:30px;">
+                                          <%
+                                             let iooooooo = 0;
+                                             let functiona = option.optionType.function(bot, guildid);
+                                             functiona.values.forEach(value=>{%>
+                                          <option value="<%=value%>" <%if(actual[s.categoryId][option.optionId] == value){%>selected<%}%>><%=functiona.keys[iooooooo]%></option>
+                                          <%
+                                             iooooooo++;
+                                             })%>
+                                       </select>
+                                       <%}else if(option.optionType.type =="colorSelect"){%>
+                                          <h4><%=option.optionName%></h4>
+                                          <%=option.optionDescription%><br>
+                                          <input type="color" id="<%=option.optionId%>" name="<%=option.optionId%>"
+                                          value="<%=actual[s.categoryId][option.optionId] || option.optionType.data || "#ffffff"%>" <%if(option.optionType.disabled){%>disabled<%}%>>
+                                        <%}%>
+                                       <%})
+                                          %>
+                                       <br><br>
+                                       <button type="submit">Submit</button>
+                                    </form>
+                                 </div>
+                                 <%})
+                                    %>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="right-sidebar">
+                  <div class="slimscrollright">
+                     <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                     <div class="r-panel-body">
+                        <ul id="themecolors" class="m-t-20">
+                           <li><b>With Light sidebar</b></li>
+                           <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                           <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                           <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                           <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme">4</a></li>
+                           <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                           <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                           <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                           <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme working">7</a></li>
+                           <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                           <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                           <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                           <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                           <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                        </ul>
+                        <ul class="m-t-20 chatonline">
+                           <li><b>Chat option</b></li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                           </li>
+                           <li>
+                              <a href="javascript:void(0)"><img src="assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <%-include('partials/footer.ejs')%>
+         </div>
+      </div>
+      <script src="assets/node_modules/jquery/jquery.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/popper.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+      <script src="js/perfect-scrollbar.jquery.min.js"></script>
+      <script src="js/waves.js"></script>
+      <script src="js/sidebarmenu.js"></script>
+      <script src="js/custom.min.js"></script>
+      <script>
+         function removeAllChildNodes(parent) {
+             for(let i in [0,1,2,3]){
+                 parent.removeChild(parent.firstChild);
+             }
+         }
+         const container = document.getElementById('removeDiv');
+         removeAllChildNodes(container);
+      </script>
+            <script src="https://assistants.ga/purecookie.js"></script>
+   </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" type="image/png" sizes="16x16" href="<%=themeConfig.iconURL%>">
+      <link rel="stylesheet" type="text/css" href="https://assistants.ga/purecookie.css" />
+      <title><%=themeConfig.websiteName%></title>
+      <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+      <link href="assets/node_modules/morrisjs/morris.css" rel="stylesheet">
+      <link href="assets/node_modules/c3-master/c3.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+      <link href="css/pages/dashboard1.css" rel="stylesheet">
+      <link href="css/colors/default.css" id="theme" rel="stylesheet">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      <style>
+         br {
+         display: inline !important;
+         }
+      </style>
+   </head>
+   <body class="fix-header fix-sidebar card-no-border">
+      <%-include('partials/preloader.ejs')%>
+      <div id="main-wrapper">
+         <%-include('partials/topbar.ejs', {req:req})%>
+         <%-include('partials/header.ejs', {now:'index'})%>
+         <div class="page-wrapper">
+            <div class="container-fluid">
+               <div class="row page-titles">
+                  <div class="col-md-5 align-self-center">
+                     <h3 class="text-themecolor">Dashboard</h3>
+                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="card">
+                        <div class="up-img" style="background-image:url('<%=themeConfig.index.card.image || "https://assistants.ga/img/banner/home-banner.jpg"%>')"></div>
+                        <div class="card-body">
+                           <h5 class=" card-title"><%-themeConfig.index.card.title || "config.index.card.title"%></h5>
+                           <p class="m-b-0 m-t-20" id="index_cardDescription"><%-themeConfig.index.card.description || "config.index.card.description"%></p>
+                           <div class="d-flex m-t-20">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="card">
+                        <div class="card-body">
+                           <h5 class="card-title"><%-themeConfig.index.information.title || "config.index.information.title"%></h5>
+                           <p><%-themeConfig.index.information.description || "config.index.information.description"%></p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                     <div class="card">
+                        <div class="card-body">
+                           <h5 class="card-title"><%=themeConfig.index.feeds.title%></h5>
+                           <ul class="feeds">
+                              <%themeConfig.index.feeds.list.forEach(f=>{%>
+                              <li>
+                                 <div class="<%=f.bg%>"><i class="<%=f.icon%>"></i></div>
+                                 <%-f.text%> <span class="text-muted"><%-f.timeText%></span>
+                              <li>
+                                 <%})%>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <%-include('partials/footer.ejs')%>
+         </div>
+      </div>
+      <script src="assets/node_modules/jquery/jquery.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/popper.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+      <script src="js/perfect-scrollbar.jquery.min.js"></script>
+      <script src="js/waves.js"></script>
+      <script src="js/sidebarmenu.js"></script>
+      <script src="js/custom.min.js"></script>
+      <script src="assets/node_modules/raphael/raphael-min.js"></script>
+      <script src="assets/node_modules/morrisjs/morris.min.js"></script>
+      <script src="assets/node_modules/d3/d3.min.js"></script>
+      <script src="assets/node_modules/c3-master/c3.min.js"></script>
+      <script src="js/dashboard1.js"></script>
+      <script src="https://assistants.ga/purecookie.js"></script>
+   </body>
+</html>

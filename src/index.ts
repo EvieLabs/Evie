@@ -11,13 +11,17 @@ import * as config2 from "./botconfig/embed.json";
 import * as config4 from "./botconfig/settings.json";
 
 const DBD = require("discord-dashboard");
-const CaprihamTheme = require("dbd-capriham-theme");
+const CaprihamTheme = require("../dbd-capriham-theme");
 
 let langsSettings = {};
 
 let currencyNames = {};
 
 let botNicknames = {};
+
+export function getLang() {
+  return langsSettings;
+}
 
 // create a new Discord client
 
@@ -55,22 +59,26 @@ for (const file of eventFiles) {
 const Dashboard = new DBD.Dashboard({
   port: 80,
   client: {
-    id: "clientId",
-    secret: "clientSecret",
+    id: process.env.CLIENT_ID,
+    secret: process.env.CLIENT_SECRET,
+  },
+  invite: {
+    redirectUri: "http://localhost/manage/",
+    permissions: "518855707712",
+    scopes: ["bot", "applications.commands", "identify"],
   },
   redirectUri: "http://localhost/discord/callback",
   domain: "http://localhost",
   bot: client,
   theme: CaprihamTheme({
-    websiteName: "Assistants",
-    iconURL: "https://assistants.ga/ac_logo_v6.png",
+    websiteName: "Evie✨",
+    iconURL: "https://eviebot.rocks/assets/EvieHead.svg",
     index: {
       card: {
-        title: "Assistants - The center of everything",
+        title: "Evie✨",
         description:
-          "Assistants Discord Bot management panel. Assistants Bot was created to give others the ability to do what they want. Just.<br>That's an example text.<br><br><b><i>Feel free to use HTML</i></b>",
-        image:
-          "https://www.geeklawblog.com/wp-content/uploads/sites/528/2018/12/liprofile-656x369.png",
+          "Evie is a public moderation/music/fun/economy/utility bot for Discord, designed with modern Discord features like slash commands.",
+        image: "https://i.imgur.com/htBQda9.gif",
       },
       information: {
         title: "Information",
@@ -91,25 +99,6 @@ const Dashboard = new DBD.Dashboard({
             text: "Server issues",
             timeText: "3 minutes ago",
             bg: "bg-light-danger",
-          },
-        ],
-      },
-    },
-    commands: {
-      pageTitle: "Commands",
-      table: {
-        title: "List",
-        subTitle: "All Assistants' commands",
-        list: [
-          {
-            commandName: "Test command",
-            commandUsage: "prefix.test <arg> [op]",
-            commandDescription: "Lorem ipsum dolor sth",
-          },
-          {
-            commandName: "2nd command",
-            commandUsage: "oto.nd <arg> <arg2> [op]",
-            commandDescription: "Lorem ipsum dolor sth, arg sth arg2 stuff",
           },
         ],
       },

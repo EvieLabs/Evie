@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" type="image/png" sizes="16x16" href="<%=themeConfig.iconURL%>">
+      <link rel="stylesheet" type="text/css" href="https://assistants.ga/purecookie.css" />
+      <title><%=themeConfig.websiteName%> - Manage Guilds</title>
+      <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+      <link href="css/colors/default.css" id="theme" rel="stylesheet">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+   </head>
+   <body class="fix-header card-no-border fix-sidebar">
+      <%-include('partials/preloader.ejs')%>
+      <div id="main-wrapper">
+         <%-include('partials/topbar.ejs', {req:req})%>
+         <%-include('partials/header.ejs', {now:'manage'})%>
+         <div class="page-wrapper">
+            <div class="container-fluid">
+               <div class="row page-titles">
+                  <div class="col-md-5 align-self-center">
+                     <h3 class="text-themecolor">Manage Guilds</h3>
+                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Guilds</li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <div class="card">
+                        <div class="card-body">
+                           <div class="table-responsive no-wrap">
+                              <table class="table vm no-th-brd pro-of-month">
+                                 <thead>
+                                    <tr>
+                                       <th colspan="2">Guild</th>
+                                       <th>Action</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <%
+                                       for(var i in req.session.guilds){%>
+                                    <%if((req.session.guilds[i].permissions & 0x00000020) == 0x00000020){%> 
+                                    <%if(!bot.guilds.cache.get(req.session.guilds[i].id)){
+                                       %>
+                                    <tr>
+                                       <td style="width:50px;"><img class="media-object round" onerror="this.src = 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png';" src="https://cdn.discordapp.com/icons/<%=req.session.guilds[i].id%>/<%=req.session.guilds[i].icon%>.png" alt="..."></td>
+                                       <td>
+                                          <h6><%=req.session.guilds[i].name%></h6>
+                                          <small class="text-muted">Not in the server</small>
+                                       </td>
+                                       <td><a href="/invite" role="button" style="margin-left: 10px;" class="btn-small">Invite bot</a></td>
+                                    </tr>
+                                    <%}else{%>
+                                    <tr>
+                                       <td style="width:50px;"><img class="media-object round" onerror="this.src = 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png';" src="https://cdn.discordapp.com/icons/<%=req.session.guilds[i].id%>/<%=req.session.guilds[i].icon%>.png" alt="..."></td>
+                                       <td>
+                                          <h6><%=req.session.guilds[i].name%></h6>
+                                          <small class="text-muted">In the server</small>
+                                       </td>
+                                       <td><a href="/guild/<%=req.session.guilds[i].id%>" role="button" style="margin-left: 10px;" class="btn-small">Manage bot</a></td>
+                                    </tr>
+                                    <%}%>
+                                    <%}%>
+                                    <%}%>
+                                 </tbody>
+                              </table>
+                              <p>Can't see your server? <a href="/discord?r=/manage">Try logging in again!</a></p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <%-include('partials/footer.ejs')%>
+         </div>
+      </div>
+      <script src="assets/node_modules/jquery/jquery.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/popper.min.js"></script>
+      <script src="assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+      <script src="js/perfect-scrollbar.jquery.min.js"></script>
+      <script src="js/waves.js"></script>
+      <script src="js/sidebarmenu.js"></script>
+      <script src="js/custom.min.js"></script>
+      <script src="https://assistants.ga/purecookie.js"></script>
+   </body>
+</html>

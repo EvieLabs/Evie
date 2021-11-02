@@ -1,0 +1,47 @@
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <!-- Logo icon --><b>
+                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                    <!-- Dark Logo icon -->
+                    <img src="<%=themeConfig.iconURL || "https://designshack.net/wp-content/uploads/placeholder-image.png"%>" width="40" height="40" alt="homepage" class="dark-logo" />
+                    <!-- Light Logo icon -->
+                    <img src="<%=themeConfig.iconURL || "https://designshack.net/wp-content/uploads/placeholder-image.png"%>" width="40" height="40" alt="homepage" class="light-logo" />
+                </b>
+                <!--End Logo icon -->
+                <!-- Logo text --><span>
+                 <!-- dark Logo text -->
+                 <b alt="homepage" class="dark-logo"><%=themeConfig.websiteName || "themeConfig.websiteName"%></b>
+                 <!-- Light Logo text -->   
+                 <b alt="homepage" class="light-logo"><%=themeConfig.websiteName || "themeConfig.websiteName"%></b></span> </a>
+        </div>
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
+                <!-- ============================================================== -->
+                <!-- Search -->
+                <!-- ============================================================== -->
+                <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><b></b></a>
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- ============================================================== -->
+                <!-- Profile -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown u-pro">
+                    <%if(req.session.user){%>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<%=req.session.user.avatarURL || "https://w5fc.org/wp-content/uploads/2021/05/s9biyhs4lix61.jpg"%>" alt="user" class="" /><span class="profile-pic"><b><%=req.session.user.username%> </b><span style="cursor:pointer;color:blue;" onclick="window.location = '/discord/logout'"> &nbsp;&nbsp;Log out</span> &nbsp;&nbsp;</span></a>
+                    <%}else{%>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="https://w5fc.org/wp-content/uploads/2021/05/s9biyhs4lix61.jpg" alt="user" class="" /> <span class="profile-pic">  </b><span style="cursor:pointer;color:blue;" onclick="window.location = '/discord'">Log in</span> &nbsp;&nbsp;</span></a>
+                    <%}%>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
