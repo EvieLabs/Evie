@@ -11,7 +11,7 @@ import * as config2 from "./botconfig/embed.json";
 import * as config4 from "./botconfig/settings.json";
 
 const DBD = require("discord-dashboard");
-const CaprihamTheme = require("../dbd-capriham-theme");
+const Evie = require("../eviebot");
 
 let langsSettings = {};
 
@@ -70,7 +70,7 @@ const Dashboard = new DBD.Dashboard({
   redirectUri: "http://localhost/discord/callback",
   domain: "http://localhost",
   bot: client,
-  theme: CaprihamTheme({
+  theme: Evie({
     websiteName: "Evie✨",
     iconURL: "https://eviebot.rocks/assets/EvieHead.svg",
     index: {
