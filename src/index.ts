@@ -6,6 +6,7 @@ const DisTube = require("distube").default;
 const voice = require("@discordjs/voice");
 const ffmpeg = require("ffmpeg-static");
 const mongoose = require("mongoose");
+import * as evie from "./tools";
 import * as config from "./botconfig/emojis.json";
 import * as config3 from "./botconfig/filters.json";
 import * as config2 from "./botconfig/embed.json";
@@ -26,7 +27,7 @@ export function getLang() {
 
 // create a new Discord client
 
-const client = new Client(
+export const client = new Client(
   {
     intents: [
       Intents.FLAGS.GUILDS,
@@ -67,6 +68,7 @@ const Schema = mongoose.Schema;
 const embedColour = new Schema({
   serverid: String,
   color: String,
+  bannedWordList: String,
 });
 
 export const eModel = mongoose.model("EColor", embedColour);
@@ -129,20 +131,11 @@ const Dashboard = new DBD.Dashboard({
         {
           optionId: "embedcolor",
           optionName: "Embed Colour",
-          optionDescription: "Change what colour Evie uses for embeds",
+          optionDescription:
+            "Change what colour Evie uses for embeds in your server",
           optionType: DBD.formTypes.colorSelect(),
           getActualSet: async ({ guild }) => {
-            const result = eModel.find({
-              serverid: guild.id,
-            });
-            let colour = "#7289DA";
-            if (typeof result[0] == "undefined") {
-              colour = "#7289DA";
-            } else {
-              colour = result[0].color;
-            }
-
-            return colour || false;
+            return (await evie.getEC(guild)) || false;
           },
           setNew: async ({ guild, newData }) => {
             await eModel.findOneAndUpdate(
@@ -163,39 +156,60 @@ const Dashboard = new DBD.Dashboard({
         {
           optionId: "nickname",
           optionName: "Nickname",
-          optionDescription: "Bot's nickname on the guild",
-          optionType: DBD.formTypes.input("Bot username", 1, 16, false, true),
+          optionDescription:
+            "Change Evie's Nickname on your server! (personally evie likes her own name fyi)",
+          optionType: DBD.formTypes.input("Evie", 1, 16, false, true),
           getActualSet: async ({ guild }) => {
-            return botNicknames[guild.id] || false;
+            try {
+              const nick = guild.me.nickname;
+              return nick || false;
+            } catch (error) {
+              return "Evie✨" || false;
+            }
           },
           setNew: async ({ guild, newData }) => {
-            botNicknames[guild.id] = newData;
+            const actualGuild = await client.guilds.cache.get(guild.id);
+            await actualGuild.members
+              .fetch()
+              .then((data) =>
+                actualGuild.me.setNickname(
+                  newData.toString(),
+                  "Changed my nickname due to an admin changing it via the Dashboard"
+                )
+              )
+              .catch((error) => console.log(error));
             return;
           },
         },
       ],
     },
     {
-      categoryId: "eco",
-      categoryName: "Economy",
-      categoryDescription: "Economy Module Settings",
+      categoryId: "mod",
+      categoryName: "Moderation",
+      categoryDescription: "Evie's Moderation Settings",
       categoryOptionsList: [
         {
-          optionId: "currency_name",
-          optionName: "Currency name",
-          optionDescription: "Economy module Guild currency name",
-          optionType: DBD.formTypes.input(
-            "Currency name",
-            null,
-            10,
-            false,
-            true
-          ),
+          optionId: "banwordlist",
+          optionName: "Banned Words",
+          optionDescription:
+            "Words here will automatically get deleted and I'll let them know not to do it again!",
+          optionType: DBD.formTypes.textarea(),
           getActualSet: async ({ guild }) => {
-            return currencyNames[guild.id] || null;
+            return (await evie.getBL(guild)) || false;
           },
           setNew: async ({ guild, newData }) => {
-            currencyNames[guild.id] = newData;
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                bannedWordList: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
             return;
           },
         },
