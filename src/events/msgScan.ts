@@ -24,7 +24,7 @@ module.exports = {
         );
         try {
           await message.delete();
-          await sleep(2500);
+          await sleep(1500);
           await yell.delete();
         } catch (error) {
           message.channel.send(
