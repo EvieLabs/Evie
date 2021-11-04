@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
 
 module.exports = {
   data: new SlashCommandBuilder()

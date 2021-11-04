@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import { getLang } from "../index";
 
 module.exports = {

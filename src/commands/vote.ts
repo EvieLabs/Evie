@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import { MessageEmbed } from "discord.js";
 import { axo } from "../axologs";
 const CurrencySystem = require("currency-system");
@@ -14,7 +16,7 @@ module.exports = {
 
     await interaction.reply("<a:loading:877782934696919040> Fetching Query");
 
-    let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+    let exampleEmbed = await embed(interaction.guild);
 
     exampleEmbed.setTitle(`Want some free $EVIE?`);
     exampleEmbed.setDescription(

@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import { MessageEmbed } from "discord.js";
 import { axo } from "../axologs";
 const CurrencySystem = require("currency-system");
@@ -29,7 +31,7 @@ module.exports = {
       user: target,
     });
 
-    let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+    let exampleEmbed = await embed(interaction.guild);
 
     exampleEmbed.setTitle(`${target.username}'s Balance`);
     exampleEmbed.addField(

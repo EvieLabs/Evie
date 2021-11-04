@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 const { axo } = require("../axologs");
 
 module.exports = {

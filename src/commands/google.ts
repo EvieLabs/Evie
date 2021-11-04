@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 const googleIt = require("google-it");
 const { MessageEmbed } = require("discord.js");
 

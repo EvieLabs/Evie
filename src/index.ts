@@ -5,6 +5,7 @@ require("dotenv").config();
 const DisTube = require("distube").default;
 const voice = require("@discordjs/voice");
 const ffmpeg = require("ffmpeg-static");
+const mongoose = require("mongoose");
 import * as config from "./botconfig/emojis.json";
 import * as config3 from "./botconfig/filters.json";
 import * as config2 from "./botconfig/embed.json";
@@ -54,6 +55,21 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
+
+// Databases
+
+mongoose.connect(
+  "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/evie"
+);
+
+const Schema = mongoose.Schema;
+
+const embedColour = new Schema({
+  serverid: String,
+  color: String,
+});
+
+export const eModel = mongoose.model("EColor", embedColour);
 
 // Dashboard
 const Dashboard = new DBD.Dashboard({
@@ -108,22 +124,39 @@ const Dashboard = new DBD.Dashboard({
     {
       categoryId: "setup",
       categoryName: "Setup",
-      categoryDescription: "Setup your bot with default settings!",
+      categoryDescription: "Change Evie's configuration for your server",
       categoryOptionsList: [
         {
-          optionId: "lang",
-          optionName: "Language",
-          optionDescription: "Change bot's language easily",
-          optionType: DBD.formTypes.select({
-            Polish: "pl",
-            English: "en",
-            French: "fr",
-          }),
+          optionId: "embedcolor",
+          optionName: "Embed Colour",
+          optionDescription: "Change what colour Evie uses for embeds",
+          optionType: DBD.formTypes.colorSelect(),
           getActualSet: async ({ guild }) => {
-            return langsSettings[guild.id] || null;
+            const result = eModel.find({
+              serverid: guild.id,
+            });
+            let colour = "#7289DA";
+            if (typeof result[0] == "undefined") {
+              colour = "#7289DA";
+            } else {
+              colour = result[0].color;
+            }
+
+            return colour || false;
           },
           setNew: async ({ guild, newData }) => {
-            langsSettings[guild.id] = newData;
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                color: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
             return;
           },
         },

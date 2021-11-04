@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import { MessageEmbed } from "discord.js";
 const ee = require("../botconfig/embed.json");
 const distube = require("../index");

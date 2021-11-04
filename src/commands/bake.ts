@@ -1,5 +1,7 @@
 export {};
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 const ee = require("../botconfig/embed.json");
 import { Interaction, MessageEmbed } from "discord.js";
 const CurrencySystem = require("currency-system");
@@ -42,10 +44,7 @@ module.exports = {
 
         // Send Embed w/ Embed
 
-        let exampleEmbed = new MessageEmbed()
-          .setColor("#0099ff")
-          .setTimestamp()
-          .setDescription("Error!");
+        let exampleEmbed = await embed(interaction.guild);
 
         exampleEmbed.setTitle(`Are you sure?`);
         exampleEmbed.setDescription(
@@ -126,10 +125,7 @@ async function bakeMuffin(interaction) {
   const c3 = "<:ovenc3:903162523954593815>";
   const empty = "<:ovencb:903162812912771082>";
 
-  let exampleEmbed = new MessageEmbed()
-    .setColor("#0099ff")
-    .setTimestamp()
-    .setDescription("Error!");
+  let exampleEmbed = await embed(interaction.guild);
 
   let result = await cs.getUserItems({
     user: interaction.user,
@@ -207,7 +203,7 @@ async function bakeIt(food: string, interaction: any) {
         item: 2,
       });
 
-      let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+      let exampleEmbed = await embed(interaction.guild);
       let c = "`";
 
       exampleEmbed.setTitle(`Baked!`);
