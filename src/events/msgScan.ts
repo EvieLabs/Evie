@@ -11,8 +11,14 @@ module.exports = {
         setTimeout(resolve, ms);
       });
     }
+    let BannedWords: Array<String> = [];
+    if (await evie.getDBL(message.guild)) {
+      BannedWords = [...(await evie.getBL(message.guild)), ...evie.badwords];
+      console.log(BannedWords);
+    } else {
+      BannedWords = await evie.getBL(message.guild);
+    }
 
-    const BannedWords = await evie.getBL(message.guild);
     if (message.author.id !== message.guild.me.id) {
       if (
         BannedWords.some((word) =>

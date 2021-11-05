@@ -69,9 +69,10 @@ const embedColour = new Schema({
   serverid: String,
   color: String,
   bannedWordList: String,
+  defaultBannedWordList: Boolean,
 });
 
-export const eModel = mongoose.model("EColor", embedColour);
+export const eModel = mongoose.model("guildSettings", embedColour);
 
 // Dashboard
 const Dashboard = new DBD.Dashboard({
@@ -91,36 +92,6 @@ const Dashboard = new DBD.Dashboard({
   theme: Evie({
     websiteName: "Evie✨",
     iconURL: "https://eviebot.rocks/assets/EvieHead.svg",
-    index: {
-      card: {
-        title: "Evie✨",
-        description:
-          "Evie is a public moderation/music/fun/economy/utility bot for Discord, designed with modern Discord features like slash commands.",
-        image: "https://i.imgur.com/htBQda9.gif",
-      },
-      information: {
-        title: "Information",
-        description:
-          "To manage your bot, go to the <a href='/manage'>Server Management page</a>.<br><br>For a list of commands, go to the <a href='/commands'>Commands page</a>.<br><br><b><i>You can use HTML there</i></b>",
-      },
-      feeds: {
-        title: "Feeds",
-        list: [
-          {
-            icon: "fa fa-user",
-            text: "New user registered",
-            timeText: "Just now",
-            bg: "bg-light-info",
-          },
-          {
-            icon: "fa fa-server",
-            text: "Server issues",
-            timeText: "3 minutes ago",
-            bg: "bg-light-danger",
-          },
-        ],
-      },
-    },
   }),
   settings: [
     {
@@ -192,8 +163,10 @@ const Dashboard = new DBD.Dashboard({
           optionId: "banwordlist",
           optionName: "Banned Words",
           optionDescription:
-            "Words here will automatically get deleted and I'll let them know not to do it again!",
-          optionType: DBD.formTypes.textarea(),
+            "Words here will automatically get deleted and I'll let them know not to do it again! (format them in a comma separated list like; swearword1,swearword2)",
+          optionType: DBD.formTypes.textarea(
+            "this,is,an,example,of,some,words"
+          ),
           getActualSet: async ({ guild }) => {
             return (await evie.getBL(guild)) || false;
           },
@@ -204,6 +177,31 @@ const Dashboard = new DBD.Dashboard({
               },
               {
                 bannedWordList: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "defaultswear",
+          optionName: "Use Default Banned Word List",
+          optionDescription:
+            "Enable this to use the Default Banned word list with your banned word list",
+          optionType: DBD.formTypes.switch(true),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getDBL(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                defaultBannedWordList: newData,
               },
               {
                 upsert: true,
