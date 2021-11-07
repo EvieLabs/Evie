@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import util from "minecraft-server-util";
 import { MessageEmbed, Channel } from "discord.js";
 import imgur from "imgur";

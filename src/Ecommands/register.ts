@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 const regiSlash = require("../events/ready");
 
 module.exports = {

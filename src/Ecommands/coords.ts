@@ -1,4 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import { MessageEmbed } from "discord.js";
 
 module.exports = {
@@ -24,7 +26,7 @@ module.exports = {
       "Ice Spike Monument at `-58863 73 -7940`",
       // ``
     ];
-    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+    const exampleEmbed = await embed(interaction.guild);
     const index = Math.floor(Math.random() * (idk_msg.length - 1) + 1);
     interaction.editReply("Fetched <:applesparkle:841615919428141066>");
     exampleEmbed.addField(

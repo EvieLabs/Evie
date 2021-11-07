@@ -1,0 +1,148 @@
+/*
+Template Name: Admin pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/*Theme Colors*/
+/*bootstrap Color*/
+/*Light colors*/
+/*Normal Color*/
+/*Extra Variable*/
+/*******************/
+/*Floating Label*/
+/*******************/
+.floating-labels .form-group {
+  position: relative; }
+
+.floating-labels .form-control {
+  padding: 10px 10px 10px 0;
+  display: block;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 0px;
+  border-bottom: 1px solid #2c2f33; }
+
+.floating-labels select.form-control > option {
+  font-size: 14px; }
+
+.floating-labels .has-error .form-control {
+  border-bottom: 1px solid #ff5c6c; }
+
+.floating-labels .has-warning .form-control {
+  border-bottom: 1px solid #ff9041; }
+
+.floating-labels .has-success .form-control {
+  border-bottom: 1px solid #24d2b5; }
+
+.floating-labels .form-control:focus {
+  outline: none;
+  border: none; }
+
+.floating-labels label {
+  color: #fff;
+  position: absolute;
+  cursor: auto;
+  top: 5px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all; }
+
+.floating-labels .focused label {
+  top: -20px;
+  font-size: 12px;
+  color: #263238; }
+
+.floating-labels .bar {
+  position: relative;
+  display: block; }
+
+.floating-labels .bar:before,
+.floating-labels .bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #fff;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all; }
+
+.floating-labels .bar:before {
+  left: 50%; }
+
+.floating-labels .bar:after {
+  right: 50%; }
+
+.floating-labels .form-control:focus ~ .bar:before,
+.floating-labels .form-control:focus ~ .bar:after {
+  width: 50%; }
+
+.floating-labels .highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5; }
+
+.floating-labels .input-lg ~ label,
+.floating-labels .input-lg {
+  font-size: 24px; }
+
+.floating-labels .input-sm ~ label,
+.floating-labels .input-sm {
+  font-size: 16px; }
+
+.has-warning .bar:before,
+.has-warning .bar:after {
+  background: #ff9041; }
+
+.has-success .bar:before,
+.has-success .bar:after {
+  background: #24d2b5; }
+
+.has-error .bar:before,
+.has-error .bar:after {
+  background: #ff5c6c; }
+
+.has-warning .form-control:focus ~ label,
+.has-warning .form-control:valid ~ label {
+  color: #ff9041; }
+
+.has-success .form-control:focus ~ label,
+.has-success .form-control:valid ~ label {
+  color: #24d2b5; }
+
+.has-error .form-control:focus ~ label,
+.has-error .form-control:valid ~ label {
+  color: #ff5c6c; }
+
+.has-feedback label ~ .t-0 {
+  top: 0; }
+
+.form-group.error input, .form-group.error select, .form-group.error textarea {
+  border: 1px solid #ff5c6c; }
+
+.form-group.validate input, .form-group.validate select, .form-group.validate textarea {
+  border: 1px solid #24d2b5; }
+
+.form-group.error .help-block ul {
+  padding: 0px;
+  color: #ff5c6c; }
+  .form-group.error .help-block ul li {
+    list-style: none; }
+
+.form-group.issue .help-block ul {
+  padding: 0px;
+  color: #ff9041; }
+  .form-group.issue .help-block ul li {
+    list-style: none; }

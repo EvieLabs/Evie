@@ -5,16 +5,29 @@ require("dotenv").config();
 const DisTube = require("distube").default;
 const voice = require("@discordjs/voice");
 const ffmpeg = require("ffmpeg-static");
+const mongoose = require("mongoose");
+import * as evie from "./tools";
 import * as config from "./botconfig/emojis.json";
 import * as config3 from "./botconfig/filters.json";
 import * as config2 from "./botconfig/embed.json";
 import * as config4 from "./botconfig/settings.json";
 
-// Create a new Player (you don't need any API Key)
+const DBD = require("discord-dashboard");
+const Evie = require("../eviebot");
+
+let langsSettings = {};
+
+let currencyNames = {};
+
+let botNicknames = {};
+
+export function getLang() {
+  return langsSettings;
+}
 
 // create a new Discord client
 
-const client = new Client(
+export const client = new Client(
   {
     intents: [
       Intents.FLAGS.GUILDS,
@@ -43,6 +56,266 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
+
+// Databases
+
+mongoose.connect(
+  "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/evie"
+);
+
+const Schema = mongoose.Schema;
+
+const embedColour = new Schema({
+  serverid: String,
+  color: String,
+  bannedWordList: String,
+  defaultBannedWordList: Boolean,
+  welcomeMessage: String,
+  welcomeMessageEnabled: Boolean,
+  welcomeChannel: String,
+});
+
+export const eModel = mongoose.model("guildSettings", embedColour);
+
+// Dashboard
+const Dashboard = new DBD.Dashboard({
+  port: 80,
+  client: {
+    id: process.env.CLIENT_ID,
+    secret: process.env.CLIENT_SECRET,
+  },
+  invite: {
+    redirectUri: "http://localhost/manage/",
+    permissions: "518855707712",
+    scopes: ["bot", "applications.commands", "identify"],
+  },
+  redirectUri: "http://localhost/discord/callback",
+  domain: "http://localhost",
+  bot: client,
+  theme: Evie({
+    websiteName: "Evie✨",
+    iconURL: "https://eviebot.rocks/assets/EvieHead.svg",
+  }),
+  settings: [
+    {
+      categoryId: "setup",
+      categoryName: "Setup",
+      categoryDescription: "Change Evie's configuration for your server",
+      categoryOptionsList: [
+        {
+          optionId: "embedcolor",
+          optionName: "Embed Colour",
+          optionDescription:
+            "Change what colour Evie uses for embeds in your server",
+          optionType: DBD.formTypes.colorSelect(),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getEC(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                color: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "nickname",
+          optionName: "Nickname",
+          optionDescription:
+            "Change Evie's Nickname on your server! (personally evie likes her own name fyi)",
+          optionType: DBD.formTypes.input("Evie", 1, 16, false, true),
+          getActualSet: async ({ guild }) => {
+            try {
+              const nick = guild.me.nickname;
+              return nick || false;
+            } catch (error) {
+              return "Evie✨" || false;
+            }
+          },
+          setNew: async ({ guild, newData }) => {
+            if (newData.toString()) {
+              const actualGuild = await client.guilds.cache.get(guild.id);
+              await actualGuild.members
+                .fetch()
+                .then((data) =>
+                  actualGuild.me.setNickname(
+                    "",
+                    "Changed my nickname due to an admin changing it via the Dashboard"
+                  )
+                )
+                .catch((error) => console.log(error));
+              return;
+            } else {
+              const actualGuild = await client.guilds.cache.get(guild.id);
+              await actualGuild.members
+                .fetch()
+                .then((data) =>
+                  actualGuild.me.setNickname(
+                    newData.toString(),
+                    "Changed my nickname due to an admin changing it via the Dashboard"
+                  )
+                )
+                .catch((error) => console.log(error));
+              return;
+            }
+          },
+        },
+      ],
+    },
+    {
+      categoryId: "mod",
+      categoryName: "Moderation",
+      categoryDescription: "Evie's Moderation Settings",
+      categoryOptionsList: [
+        {
+          optionId: "banwordlist",
+          optionName: "Banned Words",
+          optionDescription:
+            "Words here will automatically get deleted and I'll let them know not to do it again! (format them in a comma separated list like; swearword1,swearword2)",
+          optionType: DBD.formTypes.textarea(
+            "this,is,an,example,of,some,words"
+          ),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getBL(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                bannedWordList: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "defaultswear",
+          optionName: "Use Default Banned Word List",
+          optionDescription:
+            "Enable this to use the Default Banned word list with your banned word list",
+          optionType: DBD.formTypes.switch(true),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getDBL(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                defaultBannedWordList: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+      ],
+    },
+    {
+      categoryId: "welcome",
+      categoryName: "Welcomer",
+      categoryDescription: "Evie's Welcomer Settings",
+      categoryOptionsList: [
+        {
+          optionId: "enablewelcomer",
+          optionName: "Enable Evie's Welcomer Module",
+          optionDescription: "",
+          optionType: DBD.formTypes.switch(true),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomeModuleSwitch(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeMessageEnabled: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "welcomemsg",
+          optionName: "Welcome Message",
+          optionDescription:
+            "What to say when someone joins, for a full list of codes such as ${mentionUser} you can visit the short code wiki https://docs.eviebot.rocks/dashboard/shortcodes",
+          optionType: DBD.formTypes.textarea(
+            "Welcome ${mentionUser}! to our amazing server!"
+          ),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomeMessage(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeMessage: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "welcomechannel",
+          optionName: "Welcome Channel",
+          optionDescription: "What channel do I say the message in",
+          optionType: DBD.formTypes.channelsSelect(),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomeChannel(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeChannel: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+      ],
+    },
+  ],
+});
+
+Dashboard.init();
 
 // discord-music-player
 

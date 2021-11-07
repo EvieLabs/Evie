@@ -1,0 +1,249 @@
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+
+/*******************
+Main sidebar
+******************/
+
+.left-sidebar {
+    position: absolute;
+    width: 260px;
+    height: 100%;
+    top: 0px;
+    z-index: 20;
+    padding-top: 70px;
+    background: $sidebar;
+    border-right:1px solid $border;
+}
+
+.fix-sidebar .left-sidebar {
+    position: fixed;
+}
+
+
+/*******************
+use profile section
+******************/
+
+.sidebar-nav .user-profile {
+    > a {
+        img {
+            width: 30px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+    }
+    >ul {
+        padding-left: 40px;
+    }
+}
+
+
+/*******************
+sidebar navigation
+******************/
+
+.scroll-sidebar {
+    height:100%;
+    &.ps .ps__scrollbar-y-rail {
+        left: 2px;
+        right: auto;
+        background: none;
+        width: 6px;
+        /* If using `left`, there shouldn't be a `right`. */
+    }
+}
+
+.collapse.in {
+    display: block;
+}
+
+.sidebar-nav {
+    background: $sidebar;
+    padding: 15px 0 0 0px;
+    ul {
+        margin: 0px;
+        padding: 0px;
+        li {
+            list-style: none;
+            a {
+                color: $sidebar-text;
+                padding: 10px 35px 10px 15px;
+                display: block;
+                font-size: 15px;
+                font-weight: 400;
+                &.active,
+                &:hover {
+                    color: $themecolor;
+                    i {
+                        color: $themecolor;
+                    }
+                }
+                &.active {
+                    font-weight: 500;
+                    color: $dark;
+                }
+            }
+            ul {
+                padding-left: 40px;
+                li a {
+                    padding: 7px 35px 7px 15px;
+                }
+                ul {
+                    padding-left: 15px;
+                }
+            }
+            &.nav-small-cap {
+                font-size: 12px;
+                margin-bottom: 0px;
+                padding: 30px 14px 14px 0px;
+                color: $muted;
+                font-weight: 500;
+            }
+            &.nav-devider {
+                height: 1px;
+                background: $border;
+                display: block;
+                margin: 15px 0;
+            }
+        }
+    }
+    > ul > li > a {
+        border-left: 3px solid transparent;
+        i {
+            width: 38px;
+            font-size: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            color: $sidebar-icons;
+        }
+        .label {
+            float: right;
+            margin-top: 2px;
+        }
+        &.active {
+            font-weight: 400;
+            color: $themecolor-alt;
+            border-left: 3px solid $themecolor;
+        }
+    }
+    > ul > li {
+        margin-bottom: 8px;
+        margin-top: 8px;
+        &.active > a {
+            color: $themecolor;
+            font-weight: 500;
+            i {
+                color: $themecolor;
+            }
+        }
+    }
+    .waves-effect {
+        transition: none;
+        -webkit-transition: none;
+        -o-transition: none;
+    }
+}
+
+/****************
+When click on sidebar toggler and also for tablet
+*****************/
+
+@media(min-width:768px) {
+    .mini-sidebar .sidebar-nav #sidebarnav li {
+        position: relative;
+    }
+    .mini-sidebar .sidebar-nav #sidebarnav > li > ul {
+        position: absolute;
+        left: 70px;
+        top: 46px;
+        width: 220px;
+        padding-bottom: 10px;
+        z-index: 1001;
+        background: $sidebar-alt;
+        display: none;
+        padding-left: 1px;
+    }
+    .mini-sidebar .user-profile .profile-img {
+        width: 45px;
+        .setpos {
+            top: -35px;
+        }
+    }
+    .mini-sidebar.fix-sidebar .left-sidebar {
+        position: fixed;
+    }
+    .mini-sidebar .sidebar-nav #sidebarnav > li:hover > ul {
+        height: auto !important;
+        overflow: auto;
+    }
+    .mini-sidebar .sidebar-nav #sidebarnav > li:hover > ul,
+    .mini-sidebar .sidebar-nav #sidebarnav > li:hover > ul.collapse {
+        display: block;
+    }
+    .mini-sidebar .sidebar-nav #sidebarnav > li > a.has-arrow:after {
+        display: none;
+    }
+    .mini-sidebar {
+        .left-sidebar {
+            width: 70px;
+        }
+        .sidebar-nav #sidebarnav .user-profile >a {
+            padding: 12px 20px;
+        }
+        .scroll-sidebar {
+            padding-bottom: 0px;
+            position: absolute;
+        }
+        .hide-menu,
+        .nav-small-cap,
+        .sidebar-footer,
+        .user-profile .profile-text,
+        >.label {
+            display: none;
+        }
+        .nav-devider {
+            width: 70px;
+        }
+        .sidebar-nav {
+            background: transparent;
+        }
+        .sidebar-nav #sidebarnav > li > a {
+            padding: 12px 20px;
+            width: 70px;
+        }
+        .sidebar-nav #sidebarnav > li:hover > a {
+            width: 290px;
+            background: $sidebar-alt;
+            .hide-menu {
+                display: inline;
+            }
+            .label {
+                display: none;
+            }
+        }
+    }
+}
+
+@media(max-width:767px) {
+    .mini-sidebar {
+        .left-sidebar {
+            position: fixed;
+        }
+        .left-sidebar,
+        .sidebar-footer {
+            left: -260px;
+        }
+        &.show-sidebar {
+            .left-sidebar,
+            .sidebar-footer {
+                left: 0px;
+            }
+        }
+    }
+}

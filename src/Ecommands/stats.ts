@@ -1,6 +1,8 @@
 export {};
 
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { embed } from "../tools";
+
 import { MessageEmbed } from "discord.js";
 import si from "systeminformation";
 import { axo } from "../axologs";
@@ -15,7 +17,7 @@ module.exports = {
 
     // Make an embed
 
-    let exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+    let exampleEmbed = await embed(interaction.guild);
 
     // Vars
 
