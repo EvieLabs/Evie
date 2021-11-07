@@ -233,7 +233,7 @@ const Dashboard = new DBD.Dashboard({
           optionId: "phishurldetect",
           optionName: "Detect phishing sites",
           optionDescription:
-            "Enable this to automatically delete messages that include links to phishing websites",
+            "Enable this to automatically delete messages that include links to phishing websites using https://phisherman.gg",
           optionType: DBD.formTypes.switch(true),
           getActualSet: async ({ guild }) => {
             return (await evie.getPhishingDetectionSwitch(guild)) || false;
