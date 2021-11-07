@@ -6,7 +6,7 @@ module.exports = {
   name: "guildMemberAdd",
   once: false,
   async execute(member) {
-    if (await evie.getWelcomeModuleSwitch) {
+    if (await evie.getWelcomeModuleSwitch(member.guild.id)) {
       try {
         const welcomeChannel = await evie.getWelcomeChannel(member.guild);
         let welcomeMessage = await evie.getWelcomeMessage(member.guild);
