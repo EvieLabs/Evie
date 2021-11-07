@@ -196,7 +196,7 @@ export async function getDBL(guild: any) {
 
     return defaultBannedWordList || false;
   } catch (error) {
-    return [];
+    return false;
   }
 }
 
