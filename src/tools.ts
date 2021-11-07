@@ -189,7 +189,7 @@ export async function getDBL(guild: any) {
     let defaultBannedWordList;
 
     if (typeof result[0].defaultBannedWordList == "undefined") {
-      defaultBannedWordList = [];
+      defaultBannedWordList = false;
     } else {
       defaultBannedWordList = result[0].defaultBannedWordList;
     }
