@@ -85,16 +85,16 @@ const Dashboard = new DBD.Dashboard({
     secret: process.env.CLIENT_SECRET,
   },
   invite: {
-    redirectUri: "http://localhost/manage/",
+    redirectUri: "http://dash.eviebot.rocks/manage/",
     permissions: "518855707712",
     scopes: ["bot", "applications.commands", "identify"],
   },
-  redirectUri: "http://localhost/discord/callback",
+  redirectUri: "http://dash.eviebot.rocks/discord/callback",
   domain: "http://localhost",
   bot: client,
   theme: Evie({
     websiteName: "Evie✨",
-    iconURL: "https://eviebot.rocks/assets/EvieHead.svg",
+    iconURL: "https://dash.eviebot.rocks/assets/EvieHead.svg",
   }),
   settings: [
     {
@@ -369,7 +369,7 @@ client.once("ready", () => {
       const activities_list = [
         `your slash commands`,
         `eviebot.rocks`,
-        `/help`
+        `/help`,
         //``
       ];
       const index = Math.floor(
