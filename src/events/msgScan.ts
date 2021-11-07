@@ -14,7 +14,6 @@ module.exports = {
     let BannedWords: Array<String> = [];
     if (await evie.getDBL(message.guild)) {
       BannedWords = [...(await evie.getBL(message.guild)), ...evie.badwords];
-      console.log(BannedWords);
     } else {
       BannedWords = await evie.getBL(message.guild);
     }

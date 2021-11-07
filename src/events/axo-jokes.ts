@@ -21,7 +21,7 @@ module.exports = {
       console.log(error);
     }
 
-    const exampleEmbed = await evie.embed(interaction.guild);
+    const exampleEmbed = await evie.embed(message.guild);
 
     try {
       if (msg.includes("807543126424158238")) {
