@@ -369,9 +369,7 @@ client.once("ready", () => {
       const activities_list = [
         `your slash commands`,
         `eviebot.rocks`,
-        `/help`,
-        `your feedback in https://discord.gg/jfmXDxtN3U`,
-        `you hopefully running /vote`,
+        `/help`
         //``
       ];
       const index = Math.floor(
@@ -407,7 +405,7 @@ client.on("interactionCreate", async (interaction) => {
       console.error(error);
       await interaction.reply({
         content:
-          "Something went wrong! Please alert this to staff in <#884223699778150400>",
+          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
         ephemeral: true,
       });
     }
@@ -422,7 +420,7 @@ client.on("interactionCreate", async (interaction) => {
       console.error(error);
       await interaction.reply({
         content:
-          "Something went wrong! Please alert this to staff in <#884223699778150400> on https://discord.gg/SQhdgXV3rh",
+          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
         ephemeral: true,
       });
     }

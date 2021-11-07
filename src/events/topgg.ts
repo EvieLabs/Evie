@@ -30,7 +30,7 @@ module.exports = {
       const votedUser = await client.users.fetch(`${vote.user}`);
       const voteAmount = 45000;
 
-      const announceChannel = client.channels.cache.get("902455135609970698");
+      const announceChannel = client.channels.cache.get("905017507318997053");
 
       let result = await cs.addMoney({
         user: votedUser,
