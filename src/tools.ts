@@ -79,8 +79,6 @@ export async function getWelcomeMessage(guild: any) {
 // Bad Words
 
 export const badwords: Array<string> = [
-  "abbo",
-  "abo",
   "beeyotch",
   "biatch",
   "bitch",
@@ -107,23 +105,17 @@ export const badwords: Array<string> = [
   "fatass",
   "fatso",
   "gash",
-  "gimp",
   "golliwog",
-  "gook",
-  "goy",
   "goyim",
   "gyp",
   "gypsy",
   "half-breed",
   "halfbreed",
   "heeb",
-  "homo",
-  "hooker",
   "idiot",
   "insane",
   "insanitie",
   "insanity",
-  "jap",
   "kaffer",
   "kaffir",
   "kaffir",
@@ -131,7 +123,6 @@ export const badwords: Array<string> = [
   "kafir",
   "kike",
   "kraut",
-  "lame",
   "lardass",
   "lesbo",
   "lunatic",
@@ -173,9 +164,10 @@ export const badwords: Array<string> = [
   "wetback",
   "whore",
   "wigger",
-  "wop",
-  "yid",
-  "zog",
+  "shit",
+  "fuck",
+  "bulshit",
+  "bullshit",
 ];
 // Status
 
@@ -197,7 +189,7 @@ export async function getDBL(guild: any) {
     let defaultBannedWordList;
 
     if (typeof result[0].defaultBannedWordList == "undefined") {
-      defaultBannedWordList = false;
+      defaultBannedWordList = [];
     } else {
       defaultBannedWordList = result[0].defaultBannedWordList;
     }

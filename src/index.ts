@@ -208,7 +208,7 @@ const Dashboard = new DBD.Dashboard({
           optionName: "Use Default Banned Word List",
           optionDescription:
             "Enable this to use the Default Banned word list with your banned word list",
-          optionType: DBD.formTypes.switch(true),
+          optionType: DBD.formTypes.switch(false),
           getActualSet: async ({ guild }) => {
             return (await evie.getDBL(guild)) || false;
           },
