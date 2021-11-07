@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { axo } from "../axologs";
+import * as evie from "../tools";
 
 module.exports = {
   name: "messageCreate",
@@ -20,7 +21,7 @@ module.exports = {
       console.log(error);
     }
 
-    const exampleEmbed = await embed(interaction.guild);
+    const exampleEmbed = await evie.embed(interaction.guild);
 
     try {
       if (msg.includes("807543126424158238")) {
