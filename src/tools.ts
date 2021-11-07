@@ -4,6 +4,7 @@ import { Guild, Interaction, MessageEmbed } from "discord.js";
 import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
+import fetch from "node-fetch";
 
 // String Parser
 
@@ -11,6 +12,64 @@ export async function parse(input: String, interaction: any) {
   input = input.replace("${mentionUser}", `<@${await interaction.user.id}>`);
 
   return input;
+}
+
+// phisherman functions
+
+export async function checkADomain(domain: string) {
+  // using node fetch get https://api.phisherman.gg/v1/domains/{domain}
+
+  const res = await fetch(`https://api.phisherman.gg/v1/domains/${domain}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const json = await res.json();
+
+  return json;
+}
+
+export async function reportACaughtPhish(domain: string, guild: any) {
+  // using node fetch put https://api.phisherman.gg/v1/domains/{domain}
+  // also pass the guild.id
+  // use a bearer token
+
+  const res = await fetch(`https://api.phisherman.gg/v1/domains/${domain}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer :${process.env.PHISHERMAN_TOKEN}`,
+    },
+    body: JSON.stringify({
+      guild: guild.id,
+    }),
+  });
+
+  const json = await res.json();
+
+  return json;
+}
+
+// Get If Detect phishing sites is Enabled
+
+export async function getPhishingDetectionSwitch(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let phishingDetectionEnabled;
+
+    if (typeof result[0].phishingDetectionEnabled == "undefined") {
+      phishingDetectionEnabled = true;
+    } else {
+      phishingDetectionEnabled = result[0].phishingDetectionEnabled;
+    }
+
+    return phishingDetectionEnabled || false;
+  } catch (error) {
+    return true;
+  }
 }
 
 // Get If Welcome Message is Enabled

@@ -73,6 +73,7 @@ const embedColour = new Schema({
   welcomeMessage: String,
   welcomeMessageEnabled: Boolean,
   welcomeChannel: String,
+  phishingDetectionEnabled: Boolean,
 });
 
 export const eModel = mongoose.model("guildSettings", embedColour);
@@ -90,7 +91,7 @@ const Dashboard = new DBD.Dashboard({
     scopes: ["bot", "applications.commands", "identify"],
   },
   redirectUri: "https://dash.eviebot.rocks/discord/callback",
-  domain: "http://localhost",
+  domain: "https://dash.eviebot.rocks",
   bot: client,
   theme: Evie({
     websiteName: "Evie✨",
@@ -219,6 +220,31 @@ const Dashboard = new DBD.Dashboard({
               },
               {
                 defaultBannedWordList: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "phishurldetect",
+          optionName: "Detect phishing sites",
+          optionDescription:
+            "Enable this to automatically delete messages that include links to phishing websites",
+          optionType: DBD.formTypes.switch(true),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getPhishingDetectionSwitch(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                phishingDetectionEnabled: newData,
               },
               {
                 upsert: true,
