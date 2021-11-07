@@ -70,6 +70,9 @@ const embedColour = new Schema({
   color: String,
   bannedWordList: String,
   defaultBannedWordList: Boolean,
+  welcomeMessage: String,
+  welcomeMessageEnabled: Boolean,
+  welcomeChannel: String,
 });
 
 export const eModel = mongoose.model("guildSettings", embedColour);
@@ -139,17 +142,31 @@ const Dashboard = new DBD.Dashboard({
             }
           },
           setNew: async ({ guild, newData }) => {
-            const actualGuild = await client.guilds.cache.get(guild.id);
-            await actualGuild.members
-              .fetch()
-              .then((data) =>
-                actualGuild.me.setNickname(
-                  newData.toString(),
-                  "Changed my nickname due to an admin changing it via the Dashboard"
+            if (newData.toString()) {
+              const actualGuild = await client.guilds.cache.get(guild.id);
+              await actualGuild.members
+                .fetch()
+                .then((data) =>
+                  actualGuild.me.setNickname(
+                    "",
+                    "Changed my nickname due to an admin changing it via the Dashboard"
+                  )
                 )
-              )
-              .catch((error) => console.log(error));
-            return;
+                .catch((error) => console.log(error));
+              return;
+            } else {
+              const actualGuild = await client.guilds.cache.get(guild.id);
+              await actualGuild.members
+                .fetch()
+                .then((data) =>
+                  actualGuild.me.setNickname(
+                    newData.toString(),
+                    "Changed my nickname due to an admin changing it via the Dashboard"
+                  )
+                )
+                .catch((error) => console.log(error));
+              return;
+            }
           },
         },
       ],
@@ -202,6 +219,88 @@ const Dashboard = new DBD.Dashboard({
               },
               {
                 defaultBannedWordList: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+      ],
+    },
+    {
+      categoryId: "welcome",
+      categoryName: "Welcomer",
+      categoryDescription: "Evie's Welcomer Settings",
+      categoryOptionsList: [
+        {
+          optionId: "enablewelcomer",
+          optionName: "Enable Evie's Welcomer Module",
+          optionDescription: "",
+          optionType: DBD.formTypes.switch(true),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomeModuleSwitch(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeMessageEnabled: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "welcomemsg",
+          optionName: "Welcome Message",
+          optionDescription:
+            "What to say when someone joins, for a full list of codes such as ${mentionUser} you can visit the short code wiki https://docs.eviebot.rocks/dashboard/shortcodes",
+          optionType: DBD.formTypes.textarea(
+            "Welcome ${mentionUser}! to our amazing server!"
+          ),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomeMessage(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeMessage: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "welcomechannel",
+          optionName: "Welcome Channel",
+          optionDescription: "What channel do I say the message in",
+          optionType: DBD.formTypes.channelsSelect(),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomeChannel(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeChannel: newData,
               },
               {
                 upsert: true,

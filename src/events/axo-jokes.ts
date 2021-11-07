@@ -12,7 +12,7 @@ module.exports = {
     try {
       if (message.content.startsWith("j!")) {
         message.reply(
-          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot and if you need more help checkout https://discord.gg/PYdASSE2gr"
+          "Jamble is now Evie! All my commands are slash commands now! To make them pop-up you must reinvite me using https://dsc.gg/eviebot and if you need more help checkout https://discord.gg/82Crd8tZRF"
         );
         console.log("JUST SAID MY MESSAGE!");
       }
@@ -20,7 +20,7 @@ module.exports = {
       console.log(error);
     }
 
-    const exampleEmbed = new MessageEmbed().setColor("#0099ff").setTimestamp();
+    const exampleEmbed = await embed(interaction.guild);
 
     try {
       if (msg.includes("807543126424158238")) {

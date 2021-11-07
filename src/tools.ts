@@ -1,8 +1,80 @@
 const mongoose = require("mongoose");
+import { DiscordGatewayAdapterCreator } from "@discordjs/voice";
 import { Guild, Interaction, MessageEmbed } from "discord.js";
 import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
+
+// String Parser
+
+export async function parse(input: String, interaction: any) {
+  input = input.replace("${mentionUser}", `<@${await interaction.user.id}>`);
+
+  return input;
+}
+
+// Get If Welcome Message is Enabled
+
+export async function getWelcomeModuleSwitch(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let welcomeMessageEnabled;
+
+    if (typeof result[0].welcomeMessageEnabled == "undefined") {
+      welcomeMessageEnabled = false;
+    } else {
+      welcomeMessageEnabled = result[0].welcomeMessageEnabled;
+    }
+
+    return welcomeMessageEnabled || false;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Get Welcome Channel
+
+export async function getWelcomeChannel(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let welcomeChannel;
+
+    if (typeof result[0].welcomeChannel == "undefined") {
+      welcomeChannel = [];
+    } else {
+      welcomeChannel = result[0].welcomeChannel;
+    }
+
+    return welcomeChannel || false;
+  } catch (error) {
+    return "";
+  }
+}
+
+// Get Welcome Message
+
+export async function getWelcomeMessage(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let welcomeMessage;
+
+    if (typeof result[0].welcomeMessage == "undefined") {
+      welcomeMessage = "";
+    } else {
+      welcomeMessage = result[0].welcomeMessage;
+    }
+
+    return welcomeMessage || false;
+  } catch (error) {
+    return "";
+  }
+}
 
 // Bad Words
 
@@ -167,14 +239,14 @@ export async function getEC(guild: any) {
     let colour;
 
     if (typeof result[0].color == "undefined") {
-      colour = "#7289DA";
+      colour = "#f47fff";
     } else {
       colour = result[0].color;
     }
 
     return colour.toString() || false;
   } catch (error) {
-    return "#7289DA";
+    return "#f47fff";
   }
 }
 

@@ -15,10 +15,9 @@ module.exports = {
 
     await interaction.reply("<a:loading:877782934696919040> Fetching Query");
 
-    let exampleEmbed = new MessageEmbed()
-      .setColor("#0099ff")
-      .setTimestamp()
-      .setDescription("Your Inventory is Empty!");
+    let exampleEmbed = await embed(interaction.guild);
+
+    exampleEmbed.setDescription("Your Inventory is Empty!");
 
     let result = await cs.getUserItems({
       user: interaction.user,
