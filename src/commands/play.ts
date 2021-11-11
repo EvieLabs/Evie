@@ -89,7 +89,6 @@ module.exports = {
         const search = await soundcloud.tracks.searchV2({ q: Text });
         const searchResultURL =
           await search.collection[0].permalink_url.toString();
-        console.log(search);
         if (search) {
           if (
             search.collection[0].monetization_model == "BLACKBOX" ||
