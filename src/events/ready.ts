@@ -19,6 +19,8 @@ module.exports = {
       });
     }
 
+    // server info
+
     // Bot  Playground warning
 
     // setInterval(() => {
@@ -43,11 +45,21 @@ module.exports = {
 
     // Night night console!
 
-    console.clear();
-
     // Login
+    axo.startupMsg(`===================`);
 
     axo.startupMsg(`Ready! Logged in as ${client.user.tag}`);
+    await client.guilds
+      .fetch()
+      .then((data) => {
+        client.guilds.cache.forEach(async (guild) => {
+          await guild.members.fetch().then(async (data) => {
+            const owner = await guild.fetchOwner();
+            console.log(`${guild.name} | ${owner.displayName}`);
+          });
+        });
+      })
+      .catch((error) => axo.err(error));
 
     // Slashys (moved to regslash.ts)
   },
