@@ -8,6 +8,7 @@ const ffmpeg = require("ffmpeg-static");
 const mongoose = require("mongoose");
 import * as evie from "./tools";
 import * as config from "./botconfig/emojis.json";
+import * as config2 from "./botconfig/embed.json";
 import * as config3 from "./botconfig/filters.json";
 import * as config4 from "./botconfig/settings.json";
 const { axo } = require("./axologs");
