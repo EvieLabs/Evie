@@ -2,8 +2,12 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import { embed } from "../tools";
 
 import { MessageEmbed } from "discord.js";
-const ee = require("../botconfig/embed.json");
+const ee = {
+  // wrongcolor is red hex
+  wrongcolor: "#ff0000",
+};
 const distube = require("../index");
+
 import Soundcloud from "soundcloud.ts";
 
 module.exports = {
@@ -17,6 +21,7 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
+    let exampleEmbed = await embed(interaction.guild);
     try {
       //console.log(interaction, StringOption)
 
@@ -36,43 +41,30 @@ module.exports = {
       } = interaction;
       const { guild } = member;
       const { channel } = member.voice;
-      if (!channel)
+      if (!channel) {
+        exampleEmbed.setTitle(
+          `:x: **Please join ${
+            guild.me.voice.channel ? "__my__" : "a"
+          } VoiceChannel First!**`
+        );
         return interaction.reply({
-          embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setTitle(
-                `:x: **Please join ${
-                  guild.me.voice.channel ? "__my__" : "a"
-                } VoiceChannel First!**`
-              ),
-          ],
+          embeds: [exampleEmbed],
         });
-      if (channel.userLimit != 0 && channel.full)
-        return interaction.reply({
-          embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setFooter(ee.footertext, ee.footericon)
-              .setTitle(
-                `<:declined:780403017160982538> Your Voice Channel is full, I can't join!`
-              ),
-          ],
-        });
+      }
+      if (channel.userLimit != 0 && channel.full) {
+        exampleEmbed.setTitle(
+          `<:declined:780403017160982538> Your Voice Channel is full, I can't join!`
+        );
+        return interaction.reply({ embeds: [exampleEmbed] });
+      }
       if (
         channel.guild.me.voice.channel &&
         channel.guild.me.voice.channel.id != channel.id
       ) {
-        return interaction.reply({
-          embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setFooter(ee.footertext, ee.footericon)
-              .setTitle(
-                `<:declined:780403017160982538> I am already connected somewhere else`
-              ),
-          ],
-        });
+        exampleEmbed.setTitle(
+          `<:declined:780403017160982538> I am already connected somewhere else`
+        );
+        return interaction.reply({ embeds: exampleEmbed });
       }
       //let IntOption = options.getInteger("OPTIONNAME"); //same as in IntChoices //RETURNS NUMBER
       const Text = interaction.options.getString("song"); //same as in StringChoices //RETURNS STRING
@@ -124,14 +116,6 @@ module.exports = {
         }
       } catch (e) {
         console.log(e.stack ? e.stack : e);
-        interaction.editReply({
-          content: `:x: | Error: `,
-          embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setDescription(`\`\`\`${e}\`\`\``),
-          ],
-        });
       }
     } catch (e) {
       console.log(String(e.stack));

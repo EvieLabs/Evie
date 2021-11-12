@@ -9,9 +9,8 @@ const mongoose = require("mongoose");
 import * as evie from "./tools";
 import * as config from "./botconfig/emojis.json";
 import * as config3 from "./botconfig/filters.json";
-import * as config2 from "./botconfig/embed.json";
 import * as config4 from "./botconfig/settings.json";
-
+const { axo } = require("./axologs");
 const DBD = require("discord-dashboard");
 const Evie = require("../eviebot");
 
@@ -66,19 +65,37 @@ mongoose.connect(
 const Schema = mongoose.Schema;
 
 const embedColour = new Schema({
+  // server id
   serverid: String,
+  // embed custom colour
   color: String,
+  // banned words
   bannedWordList: String,
   defaultBannedWordList: Boolean,
+  // welcome message
   welcomeMessage: String,
   welcomeMessageEnabled: Boolean,
   welcomeChannel: String,
+  // goodbye message
+  goodbyeMessage: String,
+  goodbyeMessageEnabled: Boolean,
+  goodbyeChannel: String,
+  // phishing detection
   phishingDetectionEnabled: Boolean,
 });
 
 export const eModel = mongoose.model("guildSettings", embedColour);
-
+//
 // Dashboard
+//
+
+// Dashboard Vars
+//
+// Beta
+//`http://localhost`
+//  Prod
+//`https://dash.eviebot.rocks`
+
 const Dashboard = new DBD.Dashboard({
   port: 80,
   client: {
@@ -86,12 +103,12 @@ const Dashboard = new DBD.Dashboard({
     secret: process.env.CLIENT_SECRET,
   },
   invite: {
-    redirectUri: "https://dash.eviebot.rocks/manage/",
+    redirectUri: `https://dash.eviebot.rocks/discord/callback`,
     permissions: "518855707712",
     scopes: ["bot", "applications.commands", "identify"],
   },
-  redirectUri: "https://dash.eviebot.rocks/discord/callback",
-  domain: "https://dash.eviebot.rocks",
+  redirectUri: `https://dash.eviebot.rocks/discord/callback`,
+  domain: `https://dash.eviebot.rocks`,
   bot: client,
   theme: Evie({
     websiteName: "Evie✨",
@@ -258,8 +275,8 @@ const Dashboard = new DBD.Dashboard({
     },
     {
       categoryId: "welcome",
-      categoryName: "Welcomer",
-      categoryDescription: "Evie's Welcomer Settings",
+      categoryName: "Welcomer & Goodbyer",
+      categoryDescription: "Evie's Welcomer & Goodbyer Settings",
       categoryOptionsList: [
         {
           optionId: "enablewelcomer",
@@ -327,6 +344,82 @@ const Dashboard = new DBD.Dashboard({
               },
               {
                 welcomeChannel: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        // Goodbyer
+        {
+          optionId: "enablegoodbyer",
+          optionName: "Enable Evie's Goodbye Module",
+          optionDescription: "",
+          optionType: DBD.formTypes.switch(true),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getgoodbyeModuleSwitch(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                goodbyeMessageEnabled: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "goodbyemsg",
+          optionName: "Goodbye Message",
+          optionDescription:
+            "What to say when someone leaves, for a full list of codes such as ${mentionUser} you can visit the short code wiki https://docs.eviebot.rocks/dashboard/shortcodes",
+          optionType: DBD.formTypes.textarea(
+            "Goodbye ${displayName}! Were sad to see you leave!"
+          ),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getgoodbyeMessage(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                goodbyeMessage: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "goodbyechannel",
+          optionName: "Goodbye Channel",
+          optionDescription: "What channel do I say the message in",
+          optionType: DBD.formTypes.channelsSelect(),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getgoodbyeChannel(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                goodbyeChannel: newData,
               },
               {
                 upsert: true,

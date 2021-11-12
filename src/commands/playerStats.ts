@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 import { MessageEmbed } from "discord.js";
 var getJSON = require("get-json");
+import { embed } from "../tools";
+
 var ms = require("ms");
 const { axo } = require("../axologs");
 const ee = require("../botconfig/embed.json");
@@ -39,7 +41,7 @@ module.exports = {
       "/raw";
 
     try {
-      getJSON(url, function (error, response) {
+      getJSON(url, async function (error, response) {
         var username = interaction.options.getString("username");
         var url = "http://202.131.88.29:25571/player/" + username + "/raw";
         var uuid = "ec4b0c12-484e-4544-8346-cc1f1bdd10df";
@@ -98,8 +100,8 @@ module.exports = {
         firstDate = unixTime.toUTCString();
 
         // interaction.reply(response.url);
-        const exampleEmbed = new MessageEmbed()
-          .setColor("#0099ff")
+        let exampleEmbed = await embed(interaction.guild);
+        exampleEmbed
           .setTitle("Player Stats on TristanSMP for " + username)
           .setDescription(
             "Hey, " +
@@ -156,8 +158,7 @@ module.exports = {
           )
           .setImage(faceUrl)
           .setImage(faceUrl)
-          .setTimestamp()
-          .setFooter(ee.footertext, ee.footericon);
+          .setTimestamp();
 
         interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 

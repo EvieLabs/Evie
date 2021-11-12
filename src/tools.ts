@@ -8,13 +8,14 @@ import fetch from "node-fetch";
 
 // String Parser
 
-export async function parse(input: String, interaction: any) {
-  input = input.replace("${mentionUser}", `<@${await interaction.user.id}>`);
+export async function parse(input: String, interaction: Interaction) {
+  input = input.replace("${mentionUser}", `<@${interaction.user.id}>`);
+  input = input.replace("${displayName}", `${interaction.user.username}`);
 
   return input;
 }
 
-// phisherman functions
+// Phisherman functions
 
 export async function checkADomain(domain: string) {
   // using node fetch get https://api.phisherman.gg/v1/domains/{domain}
@@ -71,6 +72,77 @@ export async function getPhishingDetectionSwitch(guild: any) {
     return true;
   }
 }
+
+//
+// Goodbye Message Functions
+//
+
+// Get If Goodbye Message is Enabled
+
+export async function getgoodbyeModuleSwitch(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let goodbyeMessageEnabled;
+
+    if (typeof result[0].goodbyeMessageEnabled == "undefined") {
+      goodbyeMessageEnabled = false;
+    } else {
+      goodbyeMessageEnabled = result[0].goodbyeMessageEnabled;
+    }
+
+    return goodbyeMessageEnabled || false;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Get Goodbye Channel
+
+export async function getgoodbyeChannel(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let goodbyeChannel;
+
+    if (typeof result[0].goodbyeChannel == "undefined") {
+      goodbyeChannel = [];
+    } else {
+      goodbyeChannel = result[0].goodbyeChannel;
+    }
+
+    return goodbyeChannel || false;
+  } catch (error) {
+    return "";
+  }
+}
+
+// Get Goodbye Message
+
+export async function getgoodbyeMessage(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let goodbyeMessage;
+
+    if (typeof result[0].goodbyeMessage == "undefined") {
+      goodbyeMessage = "";
+    } else {
+      goodbyeMessage = result[0].goodbyeMessage;
+    }
+
+    return goodbyeMessage || false;
+  } catch (error) {
+    return "";
+  }
+}
+
+//
+// Welcome Message Functions
+//
 
 // Get If Welcome Message is Enabled
 
@@ -232,7 +304,10 @@ export async function getEC(guild: any) {
 
 export async function embed(guild: any) {
   const colour: any = await (await getEC(guild)).toString();
-  let embed = new MessageEmbed().setColor(colour).setTimestamp();
+  let embed = new MessageEmbed()
+    .setColor(colour)
+    .setTimestamp()
+    .setFooter("Evie", "https://www.eviebot.rocks/assets/EvieIcon.png");
 
   return embed;
 }

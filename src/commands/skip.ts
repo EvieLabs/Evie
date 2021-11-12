@@ -39,13 +39,11 @@ module.exports = {
       if (!channel)
         return interaction.reply({
           embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setTitle(
-                `:x: **Please join ${
-                  guild.me.voice.channel ? "my" : "a"
-                } VoiceChannel First!**`
-              ),
+            new MessageEmbed().setTitle(
+              `:x: **Please join ${
+                guild.me.voice.channel ? "my" : "a"
+              } VoiceChannel First!**`
+            ),
           ],
         });
       if (
@@ -55,8 +53,6 @@ module.exports = {
         return interaction.reply({
           embeds: [
             new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setFooter(ee.footertext, ee.footericon)
               .setTitle(`:x: Join __my__ Voice Channel!`)
               .setDescription(`<#${guild.me.voice.channel.id}>`),
           ],
@@ -67,16 +63,15 @@ module.exports = {
         if (!newQueue || !newQueue.songs || newQueue.songs.length == 0)
           return interaction.reply({
             embeds: [
-              new MessageEmbed()
-                .setColor(ee.wrongcolor)
-                .setTitle(`:x: **I am Playing nothing right now!**`),
+              new MessageEmbed().setTitle(
+                `:x: **I am Playing nothing right now!**`
+              ),
             ],
           });
         await newQueue.skip();
         interaction.reply({
           embeds: [
             new MessageEmbed()
-              .setColor(ee.color)
               .setTimestamp()
               .setTitle(`⏭ **Skipped to the next Song!**`)
               .setFooter(

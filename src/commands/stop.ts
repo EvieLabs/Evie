@@ -32,13 +32,11 @@ module.exports = {
       if (!channel)
         return interaction.reply({
           embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setTitle(
-                `:x: **Please join ${
-                  guild.me.voice.channel ? "my" : "a"
-                } VoiceChannel First!**`
-              ),
+            new MessageEmbed().setTitle(
+              `:x: **Please join ${
+                guild.me.voice.channel ? "my" : "a"
+              } VoiceChannel First!**`
+            ),
           ],
         });
       if (
@@ -48,8 +46,6 @@ module.exports = {
         return interaction.reply({
           embeds: [
             new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setFooter(ee.footertext, ee.footericon)
               .setTitle(`:x: Join __my__ Voice Channel!`)
               .setDescription(`<#${guild.me.voice.channel.id}>`),
           ],
@@ -61,9 +57,7 @@ module.exports = {
           if (!newQueue || !newQueue.songs || newQueue.songs.length == 0)
             return interaction.reply({
               embeds: [
-                new MessageEmbed()
-                  .setColor(ee.wrongcolor)
-                  .setTitle(`:x: **I'm Playing right now!**`),
+                new MessageEmbed().setTitle(`:x: **I'm Playing right now!**`),
               ],
             });
         await newQueue.stop();
@@ -71,7 +65,6 @@ module.exports = {
         interaction.reply({
           embeds: [
             new MessageEmbed()
-              .setColor(ee.color)
               .setTimestamp()
               .setTitle(`⏹ **Stopped playing and left the Channel!**`)
               .setFooter(
@@ -85,11 +78,7 @@ module.exports = {
         console.log(e.stack ? e.stack : e);
         interaction.reply({
           content: `${client.allEmojis.x} | Error: `,
-          embeds: [
-            new MessageEmbed()
-              .setColor(ee.wrongcolor)
-              .setDescription(`\`\`\`${e}\`\`\``),
-          ],
+          embeds: [new MessageEmbed().setDescription(`\`\`\`${e}\`\`\``)],
         });
       }
     } catch (e) {

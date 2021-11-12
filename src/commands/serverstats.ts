@@ -5,7 +5,6 @@ import util from "minecraft-server-util";
 import { MessageEmbed, Channel } from "discord.js";
 import imgur from "imgur";
 import { axo } from "../axologs";
-import ee from "../botconfig/embed.json";
 
 var serverIconLink = null;
 module.exports = {
@@ -22,12 +21,7 @@ module.exports = {
     ),
   async execute(interaction) {
     let realInput: string = "tristansmp.com";
-
-    if (interaction.options.getString("input") == undefined) {
-      realInput == "tristansmp.com";
-    }
-
-    if (!interaction.options.getString("input") == undefined) {
+    if (!interaction.options.getString("input")) {
       realInput == interaction.options.getString("input");
     }
 
@@ -39,10 +33,11 @@ module.exports = {
         var base64Data = data!.replace(/^data:image\/png;base64,/, "");
         imgur
           .uploadBase64(base64Data)
-          .then((json) => {
+          .then(async (json) => {
             axo.log("[SERVER STATS CACHE] " + json.link);
             const serverIconLink = json.link;
-            const exampleEmbed = new MessageEmbed()
+            let exampleEmbed = await embed(interaction.guild);
+            exampleEmbed
               .setColor("#0099ff")
               .setTitle("Server Stats")
               .setDescription("**Server Address**: " + "`" + realInput + "`")
@@ -71,8 +66,7 @@ module.exports = {
                 }
               )
               .setImage(serverIconLink)
-              .setTimestamp()
-              .setFooter(ee.footertext, ee.footericon);
+              .setTimestamp();
 
             interaction.editReply({
               embeds: [exampleEmbed],
