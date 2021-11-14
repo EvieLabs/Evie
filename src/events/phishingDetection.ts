@@ -37,11 +37,11 @@ module.exports = {
               try {
                 await message.delete();
                 message.channel.send(
-                  `${message.author} sent a phishing link above, I deleted it!`
+                  `${message.author} sent a known phishing link above, I deleted it!`
                 );
               } catch (error) {
                 message.channel.send(
-                  `${message.author} sent a phishing link above, but I was unable to delete it due to a lack of permissions`
+                  `${message.author} sent a known phishing link above, but I was unable to delete it due to a lack of permissions`
                 );
               }
             }
