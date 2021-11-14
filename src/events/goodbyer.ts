@@ -23,6 +23,10 @@ module.exports = {
         );
         goodbyeMessageEmbed.addField(
           `${member.displayName} left the server`,
+          `<t:${Math.trunc(Date.now() / 1000)}:R>`
+        );
+        goodbyeMessageEmbed.addField(
+          `${member.displayName} joined the server originally`,
           `<t:${Math.trunc(member.joinedAt.getTime() / 1000)}:R>`
         );
         discordgoodbyeChannel.send({ embeds: [goodbyeMessageEmbed] });

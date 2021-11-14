@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 import { DiscordGatewayAdapterCreator } from "@discordjs/voice";
-import { Guild, Interaction, MessageEmbed } from "discord.js";
+import { Guild, Interaction, MessageEmbed, GuildMember } from "discord.js";
 import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
@@ -8,9 +8,9 @@ import fetch from "node-fetch";
 
 // String Parser
 
-export async function parse(input: String, interaction: Interaction) {
-  input = input.replace("${mentionUser}", `<@${interaction.user.id}>`);
-  input = input.replace("${displayName}", `${interaction.user.username}`);
+export async function parse(input: string, member: GuildMember) {
+  input = input.replace("${mentionUser}", `<@${member.user.id}>`);
+  input = input.replace("${displayName}", `${member.user.username}`);
 
   return input;
 }
@@ -302,7 +302,7 @@ export async function getEC(guild: any) {
 
 // Default Embed
 
-export async function embed(guild: any) {
+export async function embed(guild: Guild) {
   const colour: any = await (await getEC(guild)).toString();
   let embed = new MessageEmbed()
     .setColor(colour)

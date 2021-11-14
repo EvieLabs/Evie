@@ -16,10 +16,8 @@ module.exports = {
     ),
   async execute(interaction) {
     await interaction.reply("<a:loading:877782934696919040> Fetching Info");
-    const exampleEmbed = new MessageEmbed()
-      .setTitle("Google Search Results")
-      .setColor("#0099ff")
-      .setTimestamp();
+    const exampleEmbed = await embed(interaction.guild);
+    exampleEmbed.setTitle("Google Search Results");
 
     googleIt({ query: interaction.options.getString("query") })
       .then((results) => {

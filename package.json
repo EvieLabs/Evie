@@ -33,6 +33,7 @@
     "get-json": "^1.0.1",
     "google-it": "^1.6.2",
     "hex-rgb": "^5.0.0",
+    "hypixel-api-reborn": "^9.0.3",
     "imgur": "^1.0.2",
     "jquery": "^3.6.0",
     "jquery-migrate": "^3.3.2",
