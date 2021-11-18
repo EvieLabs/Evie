@@ -62,5 +62,17 @@ module.exports = {
       .catch((error) => axo.err(error));
 
     // Slashys (moved to regslash.ts)
+
+    // status
+
+    const announceChannel = client.channels.cache.get("905017507318997053");
+
+    try {
+      announceChannel.send(
+        `<:evie:907925898387402802> I've auto Restarted to load **new** changes!`
+      );
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
