@@ -69,7 +69,7 @@ module.exports = {
 
     try {
       announceChannel.send(
-        `<:evie:907925898387402802> I've auto Restarted to load **new** changes!`
+        `<:evie:907925898387402802> I've auto Restarted to load all my **new** changes!`
       );
     } catch (error) {
       console.log(error);
