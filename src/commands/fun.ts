@@ -10,20 +10,27 @@ import {
   CommandInteraction,
 } from "discord.js";
 import { axo } from "../axologs";
+import { debuglog } from "util";
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("fun")
     .setDescription("Fun Commands")
     .addSubcommand((subcommand) =>
       subcommand.setName("shiba").setDescription("much wow so cool very cute")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("evie")
+        .setDescription("sends a picture of real life evie")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("goose").setDescription("honk!")
     ),
-  async execute(interaction) {
+  async execute(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
     if (subcommand == "shiba") {
-      // using node fetch get https://api.phisherman.gg/v1/domains/{domain}
-
       const res = await fetch(
-        `https://api.phisherman.gg/v1/domains/${domain}`,
+        `http://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -31,9 +38,32 @@ module.exports = {
         }
       );
 
-      const json = await res.json();
+      const respros = await res.json();
 
-      return json;
+      const dog = respros[0];
+
+      interaction.reply(dog.toString());
+    } else if (subcommand == "evie") {
+      async function randomEvie() {
+        const res = await fetch(
+          `https://raw.githubusercontent.com/twisttaan/AxolotlBotAPI/main/evie.txt`
+        );
+        const pics: string[] = (await res.text()).trim().split("\n");
+        return pics[Math.floor(Math.random() * pics.length)];
+      }
+      interaction.reply(await randomEvie());
+    } else if (subcommand == "goose") {
+      const res = await fetch(`https://random-d.uk/api/v1/random`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const respros = await res.json();
+
+      const goose = respros?.url;
+
+      interaction.reply(goose.toString());
     }
   },
 };
