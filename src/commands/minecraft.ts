@@ -243,8 +243,7 @@ module.exports = {
                   ")",
               }
             )
-            .setImage(faceUrl)
-            .setImage(faceUrl)
+            .setThumbnail(faceUrl)
             .setTimestamp();
 
           interaction.editReply("Fetched <:applesparkle:841615919428141066>");
