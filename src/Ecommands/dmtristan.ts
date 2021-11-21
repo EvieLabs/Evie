@@ -28,6 +28,6 @@ module.exports = {
           .get("97470053615673344")
           .send(interaction.user.tag.toString() + " said: " + msg)
       )
-      .catch((error) => console.log(error));
+      .catch((error: any) => console.log(error));
   },
 };

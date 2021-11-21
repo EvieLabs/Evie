@@ -5,6 +5,7 @@ import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
 import fetch from "node-fetch";
+import { Model, Models } from "mongoose";
 
 // String Parser
 
@@ -13,6 +14,86 @@ export async function parse(input: string, member: GuildMember) {
   input = input.replace("${displayName}", `${member.user.username}`);
 
   return input;
+}
+
+//
+// Reaction Roles
+//
+
+// Schema
+
+const Schema = mongoose.Schema;
+
+export interface ReactionRoles {
+  // server id
+  serverid: String;
+  // roles id, emoji and message
+  roles: [
+    {
+      roleid: String;
+      emoji: String;
+      message: String;
+    }
+  ];
+}
+
+const reactionRoles = new Schema({
+  // server id
+  serverid: String,
+  // roles id, emoji and message
+  roles: [
+    {
+      roleid: String,
+      emoji: String,
+      message: String,
+    },
+  ],
+});
+
+export const reactionRolesModel = mongoose.model(
+  "reactionRoles",
+  reactionRoles
+);
+
+// Add Reaction Role
+
+export async function addReactionRole(
+  guild: Guild,
+  roleid: string,
+  emoji: string,
+  message: string
+) {
+  await reactionRolesModel.findOneAndUpdate(
+    {
+      serverid: guild.id,
+    },
+    {
+      $push: { roles: [{ roleid: roleid, emoji: emoji, message: message }] },
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+
+  return;
+}
+
+// Get Reaction Roles
+
+export async function getReactionRoles(guild: Guild | null) {
+  if (guild) {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    if (result.length > 0) {
+      return result[0].reactionRoles;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
 }
 
 // Phisherman functions
@@ -151,7 +232,7 @@ export async function getWelcomeModuleSwitch(guild: any) {
     const result = await eModel.find({
       serverid: guild.id,
     });
-    let welcomeMessageEnabled;
+    let welcomeMessageEnabled: boolean;
 
     if (typeof result[0].welcomeMessageEnabled == "undefined") {
       welcomeMessageEnabled = false;
