@@ -66,13 +66,6 @@ module.exports = {
         embeds: [embed],
         components: [row],
       });
-
-      evie.addReactionRole(
-        interaction.guild,
-        role.id,
-        emoji,
-        reactionEmbedMessage.id
-      );
     }
   },
 };
