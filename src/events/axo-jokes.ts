@@ -76,7 +76,7 @@ module.exports = {
       if (message.guild.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Sign Shops");
         exampleEmbed.setDescription(
-          "Here on `Tristan SMP` you can make shops with chests, check out the official [tutorial](https://discord.com/channels/819106797028769844/841958795583422474/912226694893559808)"
+          "Here on `Tristan SMP` you can make shops with chests, check out the official [tutorial](https://www.tristansmp.com/blog/new-shops)"
         );
         // message.delete()
         message.channel.send({ embeds: [exampleEmbed] });
