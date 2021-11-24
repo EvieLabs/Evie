@@ -30,12 +30,6 @@ module.exports = {
             .setDescription("Role to give to the user")
             .setRequired(true)
         )
-        .addStringOption((option) =>
-          option
-            .setName("emoji")
-            .setDescription("Emoji to react with")
-            .setRequired(true)
-        )
         .addChannelOption((option) =>
           option
             .setName("channel")
@@ -49,23 +43,27 @@ module.exports = {
     if (subcommand == "make") {
       const msg = interaction.options.getString("message");
       const role: Role = interaction.options.getRole("role");
-      const emoji = interaction.options.getString("emoji");
       const channel = interaction.options.getChannel("channel");
       let embed = await evie.embed(interaction.guild);
-      embed.setTitle("Button Role");
       embed.setDescription(msg);
-
       const row = new MessageActionRow().addComponents(
         new MessageButton()
           .setLabel(role.name)
           .setStyle("PRIMARY")
-          .setCustomId(role.id)
+          .setCustomId(`RR${role.id}`)
       );
-
-      let reactionEmbedMessage = await channel.send({
-        embeds: [embed],
-        components: [row],
-      });
+      try {
+        await channel.send({
+          embeds: [embed],
+          components: [row],
+        });
+      } catch (error) {
+        const e = await evie.embed(interaction.guild);
+        e.setDescription(
+          "Error: Please make sure my Role is above the role you want to give out."
+        );
+        await interaction.reply({ embeds: [e] });
+      }
     }
   },
 };
