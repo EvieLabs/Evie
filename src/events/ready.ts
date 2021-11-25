@@ -64,15 +64,16 @@ module.exports = {
     // Slashys (moved to regslash.ts)
 
     // status
+    if (client.user.id === "807543126424158238") {
+      const announceChannel = client.channels.cache.get("905017507318997053");
 
-    const announceChannel = client.channels.cache.get("905017507318997053");
-
-    try {
-      announceChannel.send(
-        `<:evie:907925898387402802> I've auto Restarted to load all my **new** changes!`
-      );
-    } catch (error) {
-      console.log(error);
+      try {
+        announceChannel.send(
+          `<:evie:907925898387402802> I've auto Restarted to load all my **new** changes!`
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 };

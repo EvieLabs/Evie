@@ -1,10 +1,17 @@
 const mongoose = require("mongoose");
 import { DiscordGatewayAdapterCreator } from "@discordjs/voice";
-import { Guild, Interaction, MessageEmbed, GuildMember } from "discord.js";
+import {
+  Guild,
+  Interaction,
+  MessageEmbed,
+  GuildMember,
+  Role,
+} from "discord.js";
 import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
 import fetch from "node-fetch";
+import { Model, Models } from "mongoose";
 
 // String Parser
 
@@ -13,6 +20,78 @@ export async function parse(input: string, member: GuildMember) {
   input = input.replace("${displayName}", `${member.user.username}`);
 
   return input;
+}
+
+// Join Role
+
+export async function isJoinRoleOn(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let joinRoleEnabled;
+
+    if (typeof result[0].joinRoleEnabled == "undefined") {
+      joinRoleEnabled = false;
+    } else {
+      joinRoleEnabled = result[0].joinRoleEnabled;
+    }
+
+    return joinRoleEnabled;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function getJoinRole(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let joinRoleID: boolean | string;
+
+    if (typeof result[0].joinRoleID == "undefined") {
+      joinRoleID = false;
+    } else {
+      joinRoleID = result[0].joinRoleID;
+    }
+
+    return joinRoleID;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function setJoinRole(guild: any, role: Role) {
+  await eModel.findOneAndUpdate(
+    {
+      serverid: guild.id,
+    },
+    {
+      joinRoleID: role.id,
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+  return;
+}
+
+export async function setJoinRoleEnable(guild: any, enable: Boolean) {
+  await eModel.findOneAndUpdate(
+    {
+      serverid: guild.id,
+    },
+    {
+      joinRoleEnabled: enable,
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+  return;
 }
 
 // Phisherman functions
@@ -151,7 +230,7 @@ export async function getWelcomeModuleSwitch(guild: any) {
     const result = await eModel.find({
       serverid: guild.id,
     });
-    let welcomeMessageEnabled;
+    let welcomeMessageEnabled: boolean;
 
     if (typeof result[0].welcomeMessageEnabled == "undefined") {
       welcomeMessageEnabled = false;

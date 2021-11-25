@@ -6,8 +6,8 @@ module.exports = {
   async execute(message: Message) {
     if (message.inGuild()) {
       if (await evie.getPhishingDetectionSwitch(message.member?.guild)) {
-        function extractHostname(url) {
-          var hostname;
+        function extractHostname(url: string) {
+          var hostname: string;
           //find & remove protocol (http, ftp, etc.) and get hostname
           if (url.indexOf("//") > -1) {
             hostname = url.split("/")[2];

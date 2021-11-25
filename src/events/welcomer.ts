@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, Role } from "discord.js";
 import { axo } from "../axologs";
 import * as evie from "../tools";
 
@@ -28,6 +28,13 @@ module.exports = {
         discordWelcomeChannel.send({ embeds: [welcomeMessageEmbed] });
       } catch (error) {
         axo.err(error);
+      }
+    }
+    if (await evie.isJoinRoleOn(member.guild)) {
+      try {
+        member.roles.add(await evie.getJoinRole(member.guild));
+      } catch (error) {
+        axo.err("Failed to apply auto role!");
       }
     }
   },
