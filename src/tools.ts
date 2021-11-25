@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 import { DiscordGatewayAdapterCreator } from "@discordjs/voice";
-import { Guild, Interaction, MessageEmbed, GuildMember } from "discord.js";
+import {
+  Guild,
+  Interaction,
+  MessageEmbed,
+  GuildMember,
+  Role,
+} from "discord.js";
 import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
@@ -16,84 +22,76 @@ export async function parse(input: string, member: GuildMember) {
   return input;
 }
 
-//
-// Reaction Roles
-//
+// Join Role
 
-// Schema
+export async function isJoinRoleOn(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let joinRoleEnabled;
 
-const Schema = mongoose.Schema;
-
-export interface ReactionRoles {
-  // server id
-  serverid: String;
-  // roles id, emoji and message
-  roles: [
-    {
-      roleid: String;
-      emoji: String;
-      message: String;
+    if (typeof result[0].joinRoleEnabled == "undefined") {
+      joinRoleEnabled = false;
+    } else {
+      joinRoleEnabled = result[0].joinRoleEnabled;
     }
-  ];
+
+    return joinRoleEnabled;
+  } catch (error) {
+    return false;
+  }
 }
 
-const reactionRoles = new Schema({
-  // server id
-  serverid: String,
-  // roles id, emoji and message
-  roles: [
-    {
-      roleid: String,
-      emoji: String,
-      message: String,
-    },
-  ],
-});
+export async function getJoinRole(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let joinRoleID: boolean | string;
 
-export const reactionRolesModel = mongoose.model(
-  "reactionRoles",
-  reactionRoles
-);
+    if (typeof result[0].joinRoleID == "undefined") {
+      joinRoleID = false;
+    } else {
+      joinRoleID = result[0].joinRoleID;
+    }
 
-// Add Reaction Role
+    return joinRoleID;
+  } catch (error) {
+    return false;
+  }
+}
 
-export async function addReactionRole(
-  guild: Guild,
-  roleid: string,
-  emoji: string,
-  message: string
-) {
-  await reactionRolesModel.findOneAndUpdate(
+export async function setJoinRole(guild: any, role: Role) {
+  await eModel.findOneAndUpdate(
     {
       serverid: guild.id,
     },
     {
-      $push: { roles: [{ roleid: roleid, emoji: emoji, message: message }] },
+      joinRoleID: role.id,
     },
     {
       upsert: true,
       new: true,
     }
   );
-
   return;
 }
 
-// Get Reaction Roles
-
-export async function getReactionRoles(guild: Guild | null) {
-  if (guild) {
-    const result = await eModel.find({
+export async function setJoinRoleEnable(guild: any, enable: Boolean) {
+  await eModel.findOneAndUpdate(
+    {
       serverid: guild.id,
-    });
-    if (result.length > 0) {
-      return result[0].reactionRoles;
-    } else {
-      return false;
+    },
+    {
+      joinRoleEnabled: enable,
+    },
+    {
+      upsert: true,
+      new: true,
     }
-  } else {
-    return false;
-  }
+  );
+  return;
 }
 
 // Phisherman functions

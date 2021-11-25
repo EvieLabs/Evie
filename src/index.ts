@@ -83,6 +83,9 @@ const embedColour = new Schema({
   goodbyeChannel: String,
   // phishing detection
   phishingDetectionEnabled: Boolean,
+  // Join Role
+  joinRoleID: String,
+  joinRoleEnabled: Boolean,
 });
 
 export const eModel = mongoose.model("guildSettings", embedColour);
