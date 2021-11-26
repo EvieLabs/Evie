@@ -89,7 +89,9 @@ module.exports = {
           );
           return { embeds: [e], components: [row] };
         }
-        let msg: string = interaction.options.getString("message")!;
+        let msg: string = interaction.options
+          .getString("message")!
+          .replace("\\n", "\n");
         let role: Role = interaction.options.getRole("role") as Role;
         let channel: TextChannel = interaction.options.getChannel(
           "channel"
@@ -135,7 +137,7 @@ module.exports = {
               e.setDescription(
                 `Error: Please make sure I have permission to send messages in ${channel}.`
               );
-              await i.update({ embeds: [e] });
+              await i.update({ embeds: [e], components: [] });
             }
           } else if (i.customId === "cancelpreprole") {
             const e = await evie.embed(interaction.guild!);
