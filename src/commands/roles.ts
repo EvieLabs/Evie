@@ -10,6 +10,8 @@ import {
   SelectMenuInteraction,
   Permissions,
   GuildMember,
+  Message,
+  MessageComponentInteraction,
 } from "discord.js";
 module.exports = {
   data: new SlashCommandBuilder()
@@ -139,58 +141,149 @@ module.exports = {
             interaction.guild!.roles.cache.forEach((role) => {
               guildRoles.push({ label: role.name, value: role.id });
             });
-            selections.addOptions(guildRoles).setCustomId("addToRoleArray");
-            const row = new MessageActionRow().addComponents(selections);
-            const e = await evie.embed(interaction.guild!);
-            e.setDescription(`Select the role you want to add to the message.`);
-            await i.reply({ embeds: [e], components: [row], ephemeral: true });
-            const filter = (i) =>
-              i.customId === "addToRoleArray" &&
-              i.user.id === interaction.user.id &&
-              i.channel.id === interaction.channel!.id;
-            const collector =
-              interaction.channel!.createMessageComponentCollector({
-                filter,
-                time: 300000,
+            if (guildRoles.length <= 25) {
+              selections.addOptions(guildRoles).setCustomId("addToRoleArray");
+              const row = new MessageActionRow().addComponents(selections);
+              const e = await evie.embed(interaction.guild!);
+              e.setDescription(
+                `Select the role you want to add to the message.`
+              );
+              await i.reply({
+                embeds: [e],
+                components: [row],
+                ephemeral: true,
               });
-            collector.on("end", (collected) => expireIt(interaction));
-            collector.on("collect", async (i: SelectMenuInteraction) => {
-              if (i.customId === "addToRoleArray") {
-                const role: Role = i.guild!.roles.cache.find(
-                  (r) => r.id == i.values[0]
-                ) as Role;
-                roleArray.push(role);
-                const e = await evie.embed(interaction.guild!);
-                e.setTitle(`Info`);
-                e.setDescription(
-                  `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
-                );
-                const row = new MessageActionRow().addComponents(
-                  new MessageButton()
-                    .setLabel("Confirm!")
-                    .setStyle("PRIMARY")
-                    .setCustomId(`confirmpreprole`),
-                  new MessageButton()
-                    .setLabel("Cancel!")
-                    .setStyle("DANGER")
-                    .setCustomId(`cancelpreprole`),
-                  new MessageButton()
-                    .setLabel("Add Role!")
-                    .setStyle("PRIMARY")
-                    .setCustomId(`addrolepreprole`)
-                );
-                i.reply({
-                  embeds: [e],
-                  components: [row],
-                  ephemeral: true,
+              const filter = (i) =>
+                i.customId === "addToRoleArray" &&
+                i.user.id === interaction.user.id &&
+                i.channel.id === interaction.channel!.id;
+              const collector =
+                interaction.channel!.createMessageComponentCollector({
+                  filter,
+                  time: 300000,
                 });
-              }
-            });
+              collector.on("end", (collected) => expireIt(interaction));
+              collector.on("collect", async (i: SelectMenuInteraction) => {
+                if (i.customId === "addToRoleArray") {
+                  const role: Role = i.guild!.roles.cache.find(
+                    (r) => r.id == i.values[0]
+                  ) as Role;
+                  roleArray.push(role);
+                  const e = await evie.embed(interaction.guild!);
+                  e.setTitle(`Info`);
+                  e.setDescription(
+                    `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
+                  );
+                  const row = new MessageActionRow().addComponents(
+                    new MessageButton()
+                      .setLabel("Confirm!")
+                      .setStyle("PRIMARY")
+                      .setCustomId(`confirmpreprole`),
+                    new MessageButton()
+                      .setLabel("Cancel!")
+                      .setStyle("DANGER")
+                      .setCustomId(`cancelpreprole`),
+                    new MessageButton()
+                      .setLabel("Add Role!")
+                      .setStyle("PRIMARY")
+                      .setCustomId(`addrolepreprole`)
+                  );
+                  i.reply({
+                    embeds: [e],
+                    components: [row],
+                    ephemeral: true,
+                  });
+                }
+              });
+            } else {
+              let allDone: boolean = false;
+              await i.reply("Please ping a role to add!").then();
+              const collector = i.channel!.createMessageCollector({
+                filter: (m) => m.author.id === i.user.id,
+                time: 30000,
+                max: 1,
+              });
+              collector.on("end", (collected) => {
+                if (!allDone) {
+                  expireIt(i);
+                }
+              });
+              collector.on("collect", async (m: Message) => {
+                const role: Role = m.mentions.roles.first()!;
+                if (role) {
+                  allDone = true;
+                  roleArray.push(role);
+                  const e = await evie.embed(interaction.guild!);
+                  e.setTitle(`Info`);
+                  e.setDescription(
+                    `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
+                  );
+                  const row = new MessageActionRow().addComponents(
+                    new MessageButton()
+                      .setLabel("Confirm!")
+                      .setStyle("PRIMARY")
+                      .setCustomId(`confirmpreprole`),
+                    new MessageButton()
+                      .setLabel("Cancel!")
+                      .setStyle("DANGER")
+                      .setCustomId(`cancelpreprole`),
+                    new MessageButton()
+                      .setLabel("Add Role!")
+                      .setStyle("PRIMARY")
+                      .setCustomId(`addrolepreprole`)
+                  );
+                  m.reply({
+                    embeds: [e],
+                    components: [row],
+                  });
+                } else {
+                  const er = await evie.embed(interaction.guild!);
+                  er.setDescription(
+                    `Error: You didn't specify a role. Please try again.`
+                  );
+                  m.reply({
+                    embeds: [er],
+                  });
+                  const e = await evie.embed(interaction.guild!);
+                  e.setTitle(`Info`);
+                  e.setDescription(
+                    `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
+                  );
+                  const row = new MessageActionRow().addComponents(
+                    new MessageButton()
+                      .setLabel("Confirm!")
+                      .setStyle("PRIMARY")
+                      .setCustomId(`confirmpreprole`),
+                    new MessageButton()
+                      .setLabel("Cancel!")
+                      .setStyle("DANGER")
+                      .setCustomId(`cancelpreprole`),
+                    new MessageButton()
+                      .setLabel("Add Role!")
+                      .setStyle("PRIMARY")
+                      .setCustomId(`addrolepreprole`)
+                  );
+                  m.reply({
+                    embeds: [e],
+                    components: [row],
+                  });
+                }
+              });
+            }
           }
         });
         collector.on("end", (collected) => expireIt(interaction));
-        function expireIt(interaction: CommandInteraction) {
+        function expireIt(
+          interaction: CommandInteraction | MessageComponentInteraction
+        ) {
           interaction.editReply({
+            content: "Expired!",
+            embeds: [],
+            components: [],
+          });
+        }
+        function expireItMsg(message: Message) {
+          message.edit({
             content: "Expired!",
             embeds: [],
             components: [],
