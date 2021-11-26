@@ -12,6 +12,7 @@ import {
   GuildMember,
   Message,
   MessageComponentInteraction,
+  Guild,
 } from "discord.js";
 module.exports = {
   data: new SlashCommandBuilder()
@@ -62,32 +63,40 @@ module.exports = {
     const perms: Permissions = interaction.member.permissions as Permissions;
     if (perms.has(Permissions.FLAGS.MANAGE_ROLES)) {
       if (subcommand == "buttonrole") {
-        const msg: string = interaction.options.getString("message")!;
-        const role: Role = interaction.options.getRole("role") as Role;
-        const channel: TextChannel = interaction.options.getChannel(
+        async function prepScreen(
+          guild: Guild,
+          channel: TextChannel,
+          msg: string
+        ) {
+          const e = await evie.embed(guild);
+          e.setTitle(`Info`);
+          e.setDescription(
+            `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
+          );
+          const row = new MessageActionRow().addComponents(
+            new MessageButton()
+              .setLabel("Confirm!")
+              .setStyle("PRIMARY")
+              .setCustomId(`confirmpreprole`),
+            new MessageButton()
+              .setLabel("Cancel!")
+              .setStyle("DANGER")
+              .setCustomId(`cancelpreprole`),
+            new MessageButton()
+              .setLabel("Add Role!")
+              .setStyle("PRIMARY")
+              .setCustomId(`addrolepreprole`)
+          );
+          return { embeds: [e], components: [row] };
+        }
+        let msg: string = interaction.options.getString("message")!;
+        let role: Role = interaction.options.getRole("role") as Role;
+        let channel: TextChannel = interaction.options.getChannel(
           "channel"
         ) as TextChannel;
-        const roleArray: Role[] = [role];
-        const e = await evie.embed(interaction.guild!);
-        e.setTitle(`Info`);
-        e.setDescription(
-          `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
-        );
-        const row = new MessageActionRow().addComponents(
-          new MessageButton()
-            .setLabel("Confirm!")
-            .setStyle("PRIMARY")
-            .setCustomId(`confirmpreprole`),
-          new MessageButton()
-            .setLabel("Cancel!")
-            .setStyle("DANGER")
-            .setCustomId(`cancelpreprole`),
-          new MessageButton()
-            .setLabel("Add Role!")
-            .setStyle("PRIMARY")
-            .setCustomId(`addrolepreprole`)
-        );
-        interaction.reply({ embeds: [e], components: [row], ephemeral: true });
+        let roleArray: Role[] = [role];
+
+        interaction.reply(await prepScreen(interaction.guild!, channel, msg));
         const filter = (i) =>
           i.customId === "confirmpreprole" ||
           i.customId === "cancelpreprole" ||
@@ -120,18 +129,18 @@ module.exports = {
               e.setDescription(
                 `Sent! Members can now click the buttons sent in ${channel} to toggle applying and unapplying ${roleArray}. You can also now click dismiss on all these messages to make them disappear 👻`
               );
-              await i.reply({ embeds: [e], ephemeral: true });
+              await i.update({ embeds: [e] });
             } catch (error) {
               const e = await evie.embed(interaction.guild!);
               e.setDescription(
                 `Error: Please make sure I have permission to send messages in ${channel}.`
               );
-              await i.reply({ embeds: [e], ephemeral: true });
+              await i.update({ embeds: [e] });
             }
           } else if (i.customId === "cancelpreprole") {
             const e = await evie.embed(interaction.guild!);
             e.setDescription(`Cancelled!`);
-            await i.reply({ embeds: [e], ephemeral: true });
+            await i.update({ embeds: [e], components: [] });
           } else if (i.customId === "addrolepreprole") {
             const selections = new MessageSelectMenu();
             const guildRoles: {
@@ -148,10 +157,9 @@ module.exports = {
               e.setDescription(
                 `Select the role you want to add to the message.`
               );
-              await i.reply({
+              await i.update({
                 embeds: [e],
                 components: [row],
-                ephemeral: true,
               });
               const filter = (i) =>
                 i.customId === "addToRoleArray" &&
@@ -169,35 +177,12 @@ module.exports = {
                     (r) => r.id == i.values[0]
                   ) as Role;
                   roleArray.push(role);
-                  const e = await evie.embed(interaction.guild!);
-                  e.setTitle(`Info`);
-                  e.setDescription(
-                    `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
-                  );
-                  const row = new MessageActionRow().addComponents(
-                    new MessageButton()
-                      .setLabel("Confirm!")
-                      .setStyle("PRIMARY")
-                      .setCustomId(`confirmpreprole`),
-                    new MessageButton()
-                      .setLabel("Cancel!")
-                      .setStyle("DANGER")
-                      .setCustomId(`cancelpreprole`),
-                    new MessageButton()
-                      .setLabel("Add Role!")
-                      .setStyle("PRIMARY")
-                      .setCustomId(`addrolepreprole`)
-                  );
-                  i.reply({
-                    embeds: [e],
-                    components: [row],
-                    ephemeral: true,
-                  });
+                  i.update(await prepScreen(interaction.guild!, channel, msg));
                 }
               });
             } else {
               let allDone: boolean = false;
-              await i.reply("Please ping a role to add!").then();
+              await i.update("Please ping a role to add!").then();
               const collector = i.channel!.createMessageCollector({
                 filter: (m) => m.author.id === i.user.id,
                 time: 30000,
@@ -213,29 +198,7 @@ module.exports = {
                 if (role) {
                   allDone = true;
                   roleArray.push(role);
-                  const e = await evie.embed(interaction.guild!);
-                  e.setTitle(`Info`);
-                  e.setDescription(
-                    `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
-                  );
-                  const row = new MessageActionRow().addComponents(
-                    new MessageButton()
-                      .setLabel("Confirm!")
-                      .setStyle("PRIMARY")
-                      .setCustomId(`confirmpreprole`),
-                    new MessageButton()
-                      .setLabel("Cancel!")
-                      .setStyle("DANGER")
-                      .setCustomId(`cancelpreprole`),
-                    new MessageButton()
-                      .setLabel("Add Role!")
-                      .setStyle("PRIMARY")
-                      .setCustomId(`addrolepreprole`)
-                  );
-                  m.reply({
-                    embeds: [e],
-                    components: [row],
-                  });
+                  m.reply(await prepScreen(interaction.guild!, channel, msg));
                 } else {
                   const er = await evie.embed(interaction.guild!);
                   er.setDescription(
@@ -244,29 +207,7 @@ module.exports = {
                   m.reply({
                     embeds: [er],
                   });
-                  const e = await evie.embed(interaction.guild!);
-                  e.setTitle(`Info`);
-                  e.setDescription(
-                    `I'm about to send an embed into ${channel}, saying \`\`\`${msg}\`\`\` With the following button(s) attached to give out ${roleArray}`
-                  );
-                  const row = new MessageActionRow().addComponents(
-                    new MessageButton()
-                      .setLabel("Confirm!")
-                      .setStyle("PRIMARY")
-                      .setCustomId(`confirmpreprole`),
-                    new MessageButton()
-                      .setLabel("Cancel!")
-                      .setStyle("DANGER")
-                      .setCustomId(`cancelpreprole`),
-                    new MessageButton()
-                      .setLabel("Add Role!")
-                      .setStyle("PRIMARY")
-                      .setCustomId(`addrolepreprole`)
-                  );
-                  m.reply({
-                    embeds: [e],
-                    components: [row],
-                  });
+                  m.reply(await prepScreen(interaction.guild!, channel, msg));
                 }
               });
             }
@@ -277,14 +218,8 @@ module.exports = {
           interaction: CommandInteraction | MessageComponentInteraction
         ) {
           interaction.editReply({
-            content: "Expired!",
-            embeds: [],
-            components: [],
-          });
-        }
-        function expireItMsg(message: Message) {
-          message.edit({
-            content: "Expired!",
+            content:
+              "Timed Out! I can't wait for a response for too long sadly",
             embeds: [],
             components: [],
           });
