@@ -17,12 +17,18 @@ module.exports = {
           if (i.guild?.me?.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             if (r.editable) {
               if (m.roles.cache.has(r.id)) {
-                m.roles.remove(r);
+                m.roles.remove(
+                  r,
+                  `Button Roles for message in ${i.channel?.toString()}`
+                );
                 const e = await evie.embed(i.guild!);
                 e.setDescription(`You no longer have ${r}`);
                 i.reply({ embeds: [e], ephemeral: true });
               } else {
-                m.roles.add(r);
+                m.roles.add(
+                  r,
+                  `Button Roles for message in ${i.channel?.toString()}`
+                );
                 const e = await evie.embed(i.guild!);
                 e.setDescription(`You now have ${r}`);
                 i.reply({ embeds: [e], ephemeral: true });

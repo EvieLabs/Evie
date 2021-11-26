@@ -32,7 +32,10 @@ module.exports = {
     }
     if (await evie.isJoinRoleOn(member.guild)) {
       try {
-        member.roles.add(await evie.getJoinRole(member.guild));
+        member.roles.add(
+          await evie.getJoinRole(member.guild),
+          `Auto Join Role`
+        );
       } catch (error) {
         axo.err("Failed to apply auto role!");
       }
