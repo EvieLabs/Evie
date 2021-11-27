@@ -1,6 +1,12 @@
 import server from "express";
 import cluster from "cluster";
-import { collectDefaultMetrics, register } from "prom-client";
+import {
+  collectDefaultMetrics,
+  register,
+  Histogram,
+  Counter,
+  Gauge,
+} from "prom-client";
 module.exports = {
   name: "ready",
   once: true,
@@ -9,14 +15,12 @@ module.exports = {
 
     // Create custom metrics
 
-    const Histogram = require("../").Histogram;
     const h = new Histogram({
       name: "test_histogram",
       help: "Example of a histogram",
       labelNames: ["code"],
     });
 
-    const Counter = require("../").Counter;
     const c = new Counter({
       name: "test_counter",
       help: "Example of a counter",
@@ -32,7 +36,6 @@ module.exports = {
       },
     });
 
-    const Gauge = require("../").Gauge;
     const g = new Gauge({
       name: "test_gauge",
       help: "Example of a gauge",
