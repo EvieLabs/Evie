@@ -45,7 +45,6 @@
     "node": "^16.10.0",
     "node-events": "^0.0.2",
     "node-fetch": "^2.0.0",
-    "prom-client": "^14.0.1",
     "soundcloud.ts": "^0.4.5",
     "systeminformation": "^5.9.7",
     "time-stamps": "^1.0.0",
