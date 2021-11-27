@@ -30,10 +30,6 @@ module.exports = {
         if (links) {
           links.forEach(async (element) => {
             if (await evie.checkADomain(extractHostname(element))) {
-              await evie.reportACaughtPhish(
-                extractHostname(element),
-                message.member?.guild
-              );
               try {
                 await message.delete();
                 message.channel.send(
