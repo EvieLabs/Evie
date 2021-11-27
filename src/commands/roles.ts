@@ -130,7 +130,7 @@ module.exports = {
               });
               const e = await evie.embed(interaction.guild!);
               e.setDescription(
-                `Sent! Members can now click the buttons sent in ${channel} to toggle applying and unapplying ${roleArray}. You can also now click dismiss on all these messages to make them disappear 👻`
+                `Sent! Members can now click the buttons sent in ${channel} to toggle applying and unapplying ${roleArray}.`
               );
               await i.update({ embeds: [e] });
             } catch (error) {
