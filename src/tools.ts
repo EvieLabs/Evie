@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-import { DiscordGatewayAdapterCreator } from "@discordjs/voice";
 import {
   Guild,
   Interaction,
@@ -110,7 +109,7 @@ export async function checkADomain(domain: string) {
   return json;
 }
 
-export async function reportACaughtPhish(domain: string, guild: any) {
+export async function reportACaughtPhish(domain: string, guild: Guild) {
   // using node fetch put https://api.phisherman.gg/v1/domains/{domain}
   // also pass the guild.id
   // use a bearer token
