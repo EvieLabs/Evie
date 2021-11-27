@@ -89,6 +89,7 @@ module.exports = {
           );
           return { embeds: [e], components: [row] };
         }
+
         let msg: string = interaction.options
           .getString("message")!
           .replace("\\n", "\n");
@@ -272,6 +273,7 @@ module.exports = {
       e.setDescription("Error: You don't have `Manage Roles` Permission!");
       interaction.reply({
         embeds: [e],
+        ephemeral: true,
       });
     }
   },
