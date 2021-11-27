@@ -1,4 +1,4 @@
-import server from "express";
+import express from "express";
 import cluster from "cluster";
 import {
   collectDefaultMetrics,
@@ -11,6 +11,7 @@ module.exports = {
   name: "ready",
   once: true,
   async execute(client) {
+    const server = express();
     collectDefaultMetrics();
 
     // Create custom metrics
