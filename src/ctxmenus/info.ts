@@ -1,13 +1,19 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { embed } from "../tools";
-
-import { MessageEmbed } from "discord.js";
+import * as evie from "../tools";
 import { axo } from "../axologs";
-const CurrencySystem = require("currency-system");
-const cs = new CurrencySystem();
-import { MessageActionRow, MessageButton } from "discord.js";
+import {
+  ContextMenuInteraction,
+  MessageActionRow,
+  MessageButton,
+} from "discord.js";
+import { ApplicationCommandTypes } from "discord.js/typings/enums";
 
 module.exports = {
-  data: new SlashCommandBuilder().setName("vote"),
-  async execute(interaction) {},
+  data: {
+    name: "User Info",
+    type: 2,
+  },
+  async execute(i: ContextMenuInteraction) {
+    i.reply("soon!");
+  },
 };
