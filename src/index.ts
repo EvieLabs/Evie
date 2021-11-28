@@ -42,6 +42,7 @@ client.tristan = "Hey, This is a test!";
 client.allEmojis = require("./botconfig/emojis.json");
 client.commands = new Collection();
 client.Ecommands = new Collection();
+client.ctxmenus = new Collection();
 const eventFiles = fs
   .readdirSync("./events")
   .filter((file) => file.endsWith(".js"));
@@ -572,6 +573,19 @@ for (const file of EcommandFiles) {
   // set a new item in the Collection
   // with the key as the command name and the value as the exported module
   client.Ecommands.set(Ecommand.data.name, Ecommand);
+}
+
+// Load Context Menus
+
+const ctxmenus = fs
+  .readdirSync("./ctxmenus")
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of ctxmenus) {
+  const ctxmenu = require(`./ctxmenus/${file}`);
+  // set a new item in the Collection
+  // with the key as the command name and the value as the exported module
+  client.ctxmenus.set(ctxmenu.data.name, ctxmenu);
 }
 
 client.login(process.env.CLIENT_TOKEN);
