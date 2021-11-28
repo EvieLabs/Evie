@@ -1,15 +1,7 @@
 import { embed } from "../tools";
 import { axo } from "../axologs";
 import * as evie from "../tools";
-import {
-  ContextMenuInteraction,
-  GuildMember,
-  MessageActionRow,
-  MessageButton,
-  Role,
-} from "discord.js";
-import { ApplicationCommandTypes } from "discord.js/typings/enums";
-
+import { ContextMenuInteraction, GuildMember, Role } from "discord.js";
 module.exports = {
   data: {
     name: "Accept Player",
@@ -19,10 +11,17 @@ module.exports = {
     if (!i.inGuild()) {
       return;
     }
+    const mem: GuildMember = i.member! as GuildMember;
+    if (!mem.roles.cache.has("819442569128706068")) {
+      return i.reply({
+        content: "You are not a staff member!",
+        ephemeral: true,
+      });
+    }
+    const m = i.options.getMember("user") as GuildMember;
     const r: Role = i.guild!.roles.cache.find(
       (r) => r.id == "878074525223378974"
     ) as Role;
-    const m = i.options.getMember("user") as GuildMember;
     const e = await evie.embed(i.guild!);
     const ji =
       "https://discord.com/channels/819106797028769844/819446614568599582/884646964074020905";
@@ -46,7 +45,7 @@ module.exports = {
         i.reply({ embeds: [e] });
       })
       .catch(() => {
-        i.reply("Failed! Tell Tristan asap");
+        i.reply({ content: "Failed! Tell Tristan asap", ephemeral: true });
       });
   },
 };
