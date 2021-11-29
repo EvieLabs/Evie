@@ -4,12 +4,8 @@ import { embed } from "../tools";
 const ms = require("ms");
 import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";
-import {
-  MessageEmbed,
-  Channel,
-  Interaction,
-  CommandInteraction,
-} from "discord.js";
+import * as evie from "../tools";
+import { CommandInteraction } from "discord.js";
 import imgur from "imgur";
 import { axo } from "../axologs";
 declare global {
@@ -363,8 +359,13 @@ module.exports = {
           i.reply({ embeds: [pembed] });
         })
 
-        .catch((e) => {
+        .catch(async (e) => {
           console.error(e);
+          const er = await evie.embed(interaction.guild!);
+          er.setDescription(`Error: That player doesn't seem to exist`);
+          i.reply({
+            embeds: [er],
+          });
         });
     }
   },

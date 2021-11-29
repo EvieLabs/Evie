@@ -11,6 +11,7 @@ import * as config from "./botconfig/emojis.json";
 import * as config2 from "./botconfig/embed.json";
 import * as config3 from "./botconfig/filters.json";
 import * as config4 from "./botconfig/settings.json";
+import { Interaction } from "discord.js";
 const { axo } = require("./axologs");
 const DBD = require("discord-dashboard");
 const Evie = require("../eviebot");
@@ -42,6 +43,8 @@ client.tristan = "Hey, This is a test!";
 client.allEmojis = require("./botconfig/emojis.json");
 client.commands = new Collection();
 client.Ecommands = new Collection();
+client.ctxmenus = new Collection();
+client.tsmpmenu = new Collection();
 const eventFiles = fs
   .readdirSync("./events")
   .filter((file) => file.endsWith(".js"));
@@ -513,7 +516,44 @@ cs.setDefaultWalletAmount(1000);
 //sets default bank amount when ever new user is created.
 cs.setDefaultBankAmount(0);
 
-// Error Message for Commands
+// CTX Menu Handler
+client.on("interactionCreate", async (interaction: Interaction) => {
+  if (!interaction.isContextMenu()) return;
+
+  if (client.ctxmenus.get(interaction.commandName)) {
+    const command = client.ctxmenus.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({
+        content:
+          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
+        ephemeral: true,
+      });
+    }
+  } else {
+    const command = client.tsmpmenu.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({
+        content:
+          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
+        ephemeral: true,
+      });
+    }
+  }
+});
+
+// Slash Command Handler
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
@@ -572,6 +612,30 @@ for (const file of EcommandFiles) {
   // set a new item in the Collection
   // with the key as the command name and the value as the exported module
   client.Ecommands.set(Ecommand.data.name, Ecommand);
+}
+
+// Load Context Menus
+
+const ctxmenus = fs
+  .readdirSync("./ctxmenus")
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of ctxmenus) {
+  const ctxmenu = require(`./ctxmenus/${file}`);
+  // set a new item in the Collection
+  // with the key as the command name and the value as the exported module
+  client.ctxmenus.set(ctxmenu.data.name, ctxmenu);
+}
+
+const tsmpmenu = fs
+  .readdirSync("./tsmpmenu")
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of tsmpmenu) {
+  const tsmpmenu = require(`./tsmpmenu/${file}`);
+  // set a new item in the Collection
+  // with the key as the command name and the value as the exported module
+  client.tsmpmenu.set(tsmpmenu.data.name, tsmpmenu);
 }
 
 client.login(process.env.CLIENT_TOKEN);
