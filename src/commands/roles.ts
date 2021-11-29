@@ -245,7 +245,7 @@ module.exports = {
             await evie.setJoinRoleEnable(interaction.guild!, true);
             const e = await evie.embed(interaction.guild!);
             e.setDescription(
-              `Successfully enabled and set the join role to ${role}. New members will automatically get ${role} applied to them (unless their a bot).`
+              `Successfully enabled and set the join role to ${role}. New members will automatically get ${role} applied to them (unless they are a bot).`
             );
             interaction.editReply({
               embeds: [e],
