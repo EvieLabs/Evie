@@ -46,12 +46,20 @@ module.exports = {
 
       for (const file of commandFiles) {
         const command = require(`../commands/${file}`);
-        commands.push(command.data.toJSON());
+        try {
+          commands.push(command.data.toJSON());
+        } catch (e) {
+          commands.push(command.data);
+        }
       }
 
       for (const file of EcommandFiles) {
         const Ecommand = require(`../Ecommands/${file}`);
-        Ecommands.push(Ecommand.data.toJSON());
+        try {
+          Ecommands.push(Ecommand.data.toJSON());
+        } catch (e) {
+          Ecommands.push(Ecommand.data);
+        }
       }
 
       const rest = new REST({ version: "9" }).setToken(token);
