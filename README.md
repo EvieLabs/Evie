@@ -1,2 +1,3 @@
 # Evie
-Evie is a swiss army knife of a bot for Discord.
+
+Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!
