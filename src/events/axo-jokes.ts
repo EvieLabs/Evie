@@ -123,11 +123,11 @@ module.exports = {
           })();
         }
 
-        if (interaction.user.toString() == "<@97470053615673344>") {
+        if (message.author.id === "97470053615673344") {
           refreshCommands();
           interaction.reply("Refreshing!");
         } else {
-          await interaction.reply({
+          await message.reply({
             content: "Hey! Your not one of my Devs!",
             ephemeral: true,
           });
