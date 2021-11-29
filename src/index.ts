@@ -43,6 +43,8 @@ client.tristan = "Hey, This is a test!";
 client.allEmojis = require("./botconfig/emojis.json");
 client.commands = new Collection();
 client.Ecommands = new Collection();
+client.tsmpmenus = new Collection();
+client.menus = new Collection();
 const eventFiles = fs
   .readdirSync("./events")
   .filter((file) => file.endsWith(".js"));
@@ -519,7 +521,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isContextMenu()) return;
 
   if (client.ctxmenus.get(interaction.commandName)) {
-    const command = client.commands.get(interaction.commandName);
+    const command = client.menus.get(interaction.commandName);
 
     if (!command) return;
 
@@ -534,7 +536,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
       });
     }
   } else {
-    const command = client.Ecommands.get(interaction.commandName);
+    const command = client.tsmpmenus.get(interaction.commandName);
 
     if (!command) return;
 
@@ -622,7 +624,7 @@ for (const file of ctxmenus) {
   const ctxmenu = require(`./ctxmenus/${file}`);
   // set a new item in the Collection
   // with the key as the command name and the value as the exported module
-  client.commands.set(ctxmenu.data.name, ctxmenu);
+  client.menus.set(ctxmenu.data.name, ctxmenu);
 }
 
 const tsmpmenu = fs
@@ -633,7 +635,7 @@ for (const file of tsmpmenu) {
   const tsmpmenu = require(`./tsmpmenu/${file}`);
   // set a new item in the Collection
   // with the key as the command name and the value as the exported module
-  client.Ecommands.set(tsmpmenu.data.name, tsmpmenu);
+  client.tsmpmenus.set(tsmpmenu.data.name, tsmpmenu);
 }
 
 client.login(process.env.CLIENT_TOKEN);

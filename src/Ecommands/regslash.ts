@@ -22,6 +22,16 @@ module.exports = {
         .readdirSync("./Ecommands")
         .filter((file) => file.endsWith(".js"));
 
+      const tsmpmenus: string[] = [];
+      const tsmpmenusFiles = fs
+        .readdirSync("./tsmpmenu")
+        .filter((file) => file.endsWith(".js"));
+
+      const menus: string[] = [];
+      const menusFiles = fs
+        .readdirSync("./ctxmenus")
+        .filter((file) => file.endsWith(".js"));
+
       const commands: string[] = [];
       const none = [];
       const commandFiles = fs
@@ -46,20 +56,22 @@ module.exports = {
 
       for (const file of commandFiles) {
         const command = require(`../commands/${file}`);
-        try {
-          commands.push(command.data.toJSON());
-        } catch (e) {
-          commands.push(command.data);
-        }
+        commands.push(command.data.toJSON());
       }
 
       for (const file of EcommandFiles) {
         const Ecommand = require(`../Ecommands/${file}`);
-        try {
-          Ecommands.push(Ecommand.data.toJSON());
-        } catch (e) {
-          Ecommands.push(Ecommand.data);
-        }
+        Ecommands.push(Ecommand.data.toJSON());
+      }
+
+      for (const file of menusFiles) {
+        const menu = require(`../ctxmenus/${file}`);
+        commands.push(menu.data);
+      }
+
+      for (const file of tsmpmenusFiles) {
+        const tsmpmenu = require(`../tsmpmenu/${file}`);
+        Ecommands.push(tsmpmenu.data);
       }
 
       const rest = new REST({ version: "9" }).setToken(token);
