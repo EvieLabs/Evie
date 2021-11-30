@@ -27,7 +27,7 @@ module.exports = {
       m.user.createdAt ? m.user.createdAt.toLocaleString() : "Unknown"
     );
     e.addField("Bot", m.user.bot ? "Yes" : "No");
-    e.addField("Roles", m.roles.cache.map((r) => r.name).join(", "));
+    e.addField("Roles", m.roles.cache.map((r) => r).join(", "));
     e.addField(
       "Permissions",
       capitalizeEachWord(
