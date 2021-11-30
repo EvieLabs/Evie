@@ -520,7 +520,7 @@ cs.setDefaultBankAmount(0);
 client.on("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isContextMenu()) return;
 
-  if (client.ctxmenus.get(interaction.commandName)) {
+  if (client.commands.get(interaction.commandName)) {
     const command = client.commands.get(interaction.commandName);
 
     if (!command) return;
