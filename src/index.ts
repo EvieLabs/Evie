@@ -519,15 +519,12 @@ cs.setDefaultBankAmount(0);
 // CTX Menu Handler
 client.on("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isContextMenu()) return;
-  console.log("contexty");
   if (client.menus.get(interaction.commandName)) {
     const command = client.menus.get(interaction.commandName);
-    console.log("got global ctx");
 
     if (!command) return;
 
     try {
-      console.log("executing global ctx menu i");
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
@@ -541,9 +538,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
     const command = client.tsmpmenus.get(interaction.commandName);
 
     if (!command) return;
-    console.log("got tsmp ctx");
     try {
-      console.log("executing global ctx menu i");
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
