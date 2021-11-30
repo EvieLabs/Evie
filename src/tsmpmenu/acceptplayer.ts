@@ -40,9 +40,9 @@ module.exports = {
       "To use Proximity Voice Chat in Game you must download the [optional modpack](https://discord.com/channels/819106797028769844/819676385727217664/889387219939381320) that brings with it, we do use simple voice chat mod except we use a specific version and the mod pack is usually easier for most and includes other important mods like performance buffs."
     );
     await m?.roles
-      .add(r)
+      .add(r, `Accepted by ${i.user}`)
       .then(() => {
-        i.reply({ embeds: [e] });
+        i.reply({ embeds: [e], content: `${m} Good News!` });
       })
       .catch(() => {
         i.reply({ content: "Failed! Tell Tristan asap", ephemeral: true });
