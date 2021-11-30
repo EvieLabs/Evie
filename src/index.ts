@@ -520,8 +520,8 @@ cs.setDefaultBankAmount(0);
 client.on("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isContextMenu()) return;
 
-  if (client.commands.get(interaction.commandName)) {
-    const command = client.commands.get(interaction.commandName);
+  if (client.menus.get(interaction.commandName)) {
+    const command = client.menus.get(interaction.commandName);
 
     if (!command) return;
 
@@ -536,7 +536,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
       });
     }
   } else {
-    const command = client.Ecommands.get(interaction.commandName);
+    const command = client.tsmpmenus.get(interaction.commandName);
 
     if (!command) return;
 
