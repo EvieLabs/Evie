@@ -139,9 +139,10 @@ module.exports = {
     //
 
     if (
-      msg.startsWith("New Application!") &&
+      message.content === "New Application!" &&
       message.channel.id === "878082173498982470"
     ) {
+      console.log("New application!");
       const applicationInfo = message.embeds[0];
       const applicant = applicationInfo.fields[2].value;
 
@@ -169,11 +170,15 @@ module.exports = {
             },
             {
               id: evie.tsmp.staff.roleID,
+              allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
+            },
+            {
+              id: message.client.user!.id,
               allow: ["VIEW_CHANNEL"],
             },
           ],
           reason: "New Application",
-          topic: "Application for " + member!.user.username,
+          topic: `Application for ${member!.user.username}`,
           nsfw: false,
           rateLimitPerUser: 0,
           position: 0,
@@ -182,12 +187,13 @@ module.exports = {
 
       // edit application embed
       const applicationInfoParsed = applicationInfo
-        .setDescription(`Date: ${new Date()}`)
+        .setDescription(`Date: ${new Date().toLocaleDateString("en-US")}`)
         .setFooter(
           `Application ID: ${channel.id}`,
           member!.user.displayAvatarURL({ format: "png" })
         )
-        .setTitle(`Application for ${member!.user.username}`);
+        .setTitle(`Application for ${member!.user.username}`)
+        .setColor("#36393f");
 
       // add the application to the channel
       await channel.send({
