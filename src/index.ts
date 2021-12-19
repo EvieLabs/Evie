@@ -80,6 +80,7 @@ const embedColour = new Schema({
   welcomeMessage: String,
   welcomeMessageEnabled: Boolean,
   welcomeChannel: String,
+  welcomeMessagePingEnabled: Boolean,
   // goodbye message
   goodbyeMessage: String,
   goodbyeMessageEnabled: Boolean,
@@ -300,6 +301,30 @@ const Dashboard = new DBD.Dashboard({
               },
               {
                 welcomeMessageEnabled: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
+          optionId: "enablewelcomerping",
+          optionName: "Ping people when they join?",
+          optionDescription: "",
+          optionType: DBD.formTypes.switch(false),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomePingSwitch(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeMessagePingEnabled: newData,
               },
               {
                 upsert: true,

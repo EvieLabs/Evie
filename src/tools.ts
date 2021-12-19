@@ -243,6 +243,27 @@ export async function getWelcomeModuleSwitch(guild: any) {
   }
 }
 
+// Get If Welcome Message Ping is Enabled
+
+export async function getWelcomePingSwitch(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let welcomeMessagePingEnabled: boolean;
+
+    if (typeof result[0].welcomeMessagePingEnabled == "undefined") {
+      welcomeMessagePingEnabled = false;
+    } else {
+      welcomeMessagePingEnabled = result[0].welcomeMessagePingEnabled;
+    }
+
+    return welcomeMessagePingEnabled || false;
+  } catch (error) {
+    return false;
+  }
+}
+
 // Get Welcome Channel
 
 export async function getWelcomeChannel(guild: any) {
