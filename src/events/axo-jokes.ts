@@ -142,64 +142,79 @@ module.exports = {
       message.content === "New Application!" &&
       message.channel.id === "878082173498982470"
     ) {
-      console.log("New application!");
-      const applicationInfo = message.embeds[0];
-      const applicant = applicationInfo.fields[2].value;
+      try {
+        console.log("New application!");
+        const applicationInfo = message.embeds[0];
+        const applicant = applicationInfo.fields[2].value;
 
-      // get member from username and tag
-      const member = message.guild!.members.cache.find(
-        (member) =>
-          member.user.username.toLowerCase() === applicant.toLowerCase() ||
-          member.user.tag.toLowerCase() === applicant.toLowerCase()
-      );
+        // get member from username and tag
+        const member = message.guild!.members.cache.find(
+          (member) =>
+            member.user.username.toLowerCase() === applicant.toLowerCase() ||
+            member.user.tag.toLowerCase() === applicant.toLowerCase()
+        );
+        // make sure username doesn't go over 30 characters
+        const username =
+          member!.user.username.length > 30
+            ? member!.user.username.slice(0, 30) + "..."
+            : member!.user.username;
+        // make a channel
+        const channel = await message.guild!.channels.create(
+          `${username}-application`,
+          {
+            type: "GUILD_TEXT",
+            parent: "884224263509401650",
+            permissionOverwrites: [
+              {
+                id: message.guild!.id,
+                deny: ["VIEW_CHANNEL"],
+              },
+              {
+                id: member!.id,
+                allow: ["VIEW_CHANNEL"],
+              },
+              {
+                id: evie.tsmp.staff.roleID,
+                allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
+              },
+              {
+                id: message.client.user!.id,
+                allow: ["VIEW_CHANNEL"],
+              },
+            ],
+            reason: "New Application",
+            topic: `Application for ${member!.user.username}`,
+            nsfw: false,
+            rateLimitPerUser: 0,
+            position: 0,
+          }
+        );
 
-      // make a channel
-      const channel = await message.guild!.channels.create(
-        `${member!.user.username}-application`,
-        {
-          type: "GUILD_TEXT",
-          parent: "884224263509401650",
-          permissionOverwrites: [
-            {
-              id: message.guild!.id,
-              deny: ["VIEW_CHANNEL"],
-            },
-            {
-              id: member!.id,
-              allow: ["VIEW_CHANNEL"],
-            },
-            {
-              id: evie.tsmp.staff.roleID,
-              allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
-            },
-            {
-              id: message.client.user!.id,
-              allow: ["VIEW_CHANNEL"],
-            },
-          ],
-          reason: "New Application",
-          topic: `Application for ${member!.user.username}`,
-          nsfw: false,
-          rateLimitPerUser: 0,
-          position: 0,
-        }
-      );
+        // edit application embed
+        const applicationInfoParsed = applicationInfo
+          .setDescription(`Date: ${new Date().toLocaleDateString("en-US")}`)
+          .setFooter(
+            `Application ID: ${channel.id}`,
+            member!.user.displayAvatarURL({ format: "png" })
+          )
+          .setTitle(`Application for ${member!.user.username}`)
+          .setColor("#36393f");
 
-      // edit application embed
-      const applicationInfoParsed = applicationInfo
-        .setDescription(`Date: ${new Date().toLocaleDateString("en-US")}`)
-        .setFooter(
-          `Application ID: ${channel.id}`,
-          member!.user.displayAvatarURL({ format: "png" })
-        )
-        .setTitle(`Application for ${member!.user.username}`)
-        .setColor("#36393f");
-
-      // add the application to the channel
-      await channel.send({
-        content: `<@&${evie.tsmp.staff.roleID}>`,
-        embeds: [applicationInfoParsed],
-      });
+        // add the application to the channel
+        await channel.send({
+          content: `<@&${evie.tsmp.staff.roleID}>`,
+          embeds: [applicationInfoParsed],
+        });
+      } catch (error) {
+        // scream at nick
+        await message.client.users
+          .fetch(`97470053615673344`)
+          .then((user) =>
+            user.send(
+              `Failed to auto create application channel:\n\`\`\`${error}\`\`\`\npls fix`
+            )
+          );
+      }
     }
 
     //
