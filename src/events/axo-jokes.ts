@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 
 module.exports = {
   name: "messageCreate",
-  async execute(message, interaction) {
+  async execute(message: Message) {
     //console.log('ok')
     //console.log(message.content)
 
@@ -58,7 +58,7 @@ module.exports = {
         const jambl = "807927235478421534";
 
         // Place your client and guild ids here
-        if (client.user.id == betaid) {
+        if (client.user!.id == betaid) {
           axo.startupMsg("RUNNING IN BETA MODE");
           clientId = betaid;
           TSMP = "901426442242498650";
@@ -132,20 +132,82 @@ module.exports = {
       message.reply("Done!");
     }
 
-    const exampleEmbed = await evie.embed(message.guild);
+    const exampleEmbed = await evie.embed(message.guild!);
+
+    //
+    // Application
+    //
+
+    if (
+      msg.startsWith("New Application!") &&
+      message.channel.id === "878082173498982470"
+    ) {
+      const applicationInfo = message.embeds[0];
+      const applicant = applicationInfo.fields[2].value;
+
+      // get member from username and tag
+      const member = message.guild!.members.cache.find(
+        (member) =>
+          member.user.username.toLowerCase() === applicant.toLowerCase() ||
+          member.user.tag.toLowerCase() === applicant.toLowerCase()
+      );
+
+      // make a channel
+      const channel = await message.guild!.channels.create(
+        `${member!.user.username}-application`,
+        {
+          type: "GUILD_TEXT",
+          parent: "884224263509401650",
+          permissionOverwrites: [
+            {
+              id: message.guild!.id,
+              deny: ["VIEW_CHANNEL"],
+            },
+            {
+              id: member!.id,
+              allow: ["VIEW_CHANNEL"],
+            },
+            {
+              id: evie.tsmp.staff.roleID,
+              allow: ["VIEW_CHANNEL"],
+            },
+          ],
+          reason: "New Application",
+          topic: "Application for " + member!.user.username,
+          nsfw: false,
+          rateLimitPerUser: 0,
+          position: 0,
+        }
+      );
+
+      // edit application embed
+      const applicationInfoParsed = applicationInfo
+        .setDescription(`Date: ${new Date()}`)
+        .setFooter(
+          `Application ID: ${channel.id}`,
+          member!.user.displayAvatarURL({ format: "png" })
+        )
+        .setTitle(`Application for ${member!.user.username}`);
+
+      // add the application to the channel
+      await channel.send({
+        content: `<@&${evie.tsmp.staff.roleID}>`,
+        embeds: [applicationInfoParsed],
+      });
+    }
 
     //
     // Time Savers
     //
 
     if (msg === "!d bump") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Fun Fact:");
         exampleEmbed.setDescription(
           "You can vote for `Tristan SMP` on more places then disboard, you just have to do it not from a Discord bot but rather these sites [top.gg](https://top.gg/servers/819106797028769844/vote), [discords.com](https://discords.com/servers/819106797028769844/upvote) and [discordservers.com](https://discordservers.com/panel/819106797028769844/bump)"
         );
         try {
-          message.reply({ embeds: [exampleEmbed], ephemeral: true });
+          message.reply({ embeds: [exampleEmbed] });
         } catch (error) {
           console.log(error);
         }
@@ -153,7 +215,7 @@ module.exports = {
     }
 
     if (msg === "!vane") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Vane");
         exampleEmbed.setDescription(
           "Here on `Tristan SMP` we utilize a plugin called **Vane** <:Vane:884218809966276628> that adds alot of **QOL** changes and **enchants**, check out the [wiki](https://oddlama.github.io/vane/) for more info"
@@ -164,7 +226,7 @@ module.exports = {
     }
 
     if (msg === "!apply" || msg === "!smp") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Member System");
         exampleEmbed.setDescription(
           "Here on Evie's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
@@ -183,7 +245,7 @@ module.exports = {
     }
 
     if (msg === "!trade" || msg === "!shop") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Sign Shops");
         exampleEmbed.setDescription(
           "Here on `Tristan SMP` you can make shops with chests, check out the official [tutorial](https://www.tristansmp.com/blog/new-shops)"

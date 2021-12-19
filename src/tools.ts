@@ -12,6 +12,14 @@ const { axo } = require("./axologs");
 import fetch from "node-fetch";
 import { Model, Models } from "mongoose";
 
+// export tsmp
+
+export const tsmp = {
+  staff: {
+    roleID: "819442569128706068",
+  },
+};
+
 // String Parser
 
 export async function parse(input: string, member: GuildMember) {
