@@ -11,6 +11,7 @@ module.exports = {
     if (!i.inGuild()) {
       return;
     }
+
     const mem: GuildMember = i.member! as GuildMember;
     if (!mem.roles.cache.has("819442569128706068")) {
       return i.reply({
@@ -19,6 +20,9 @@ module.exports = {
       });
     }
     const m = i.options.getMember("user") as GuildMember;
+    if (m.roles.cache.has("904148775801585676")) {
+      await m?.roles.remove("904148775801585676", `Re-accept by ${i.user}`);
+    }
     const r: Role = i.guild!.roles.cache.find(
       (r) => r.id == "878074525223378974"
     ) as Role;
