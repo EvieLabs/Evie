@@ -12,9 +12,6 @@ module.exports = {
     .setDescription("Who has the most $EVIE?"),
   async execute(interaction, client) {
     // Axolotl Fetching Mechanic
-
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
 
     let data = await cs.leaderboard();
@@ -39,12 +36,8 @@ module.exports = {
       `this list only shows users that are [cached](https://eviebot.rocks/cache)`
     );
 
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
     // Send Embed
 
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

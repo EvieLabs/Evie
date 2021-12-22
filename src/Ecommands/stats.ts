@@ -12,9 +12,6 @@ module.exports = {
     .setName("stats")
     .setDescription("Stats about me and TristanSMP"),
   async execute(interaction, client) {
-    // Axolotl Fetching Mechanic
-    await interaction.reply("<a:loading:877782934696919040> Fetching Info");
-
     // Make an embed
 
     let exampleEmbed = await embed(interaction.guild);
@@ -84,12 +81,6 @@ module.exports = {
       )
       .catch((error) => axo.err(error));
 
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
-    // Send Embed
-
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

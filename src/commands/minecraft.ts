@@ -16,7 +16,6 @@ declare global {
   }
 }
 const hypixel = new Hypixel.Client(process.env.HYPIXEL);
-var serverIconLink = null;
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("minecraft")
@@ -67,7 +66,7 @@ module.exports = {
         .then((response) => {
           interaction.deferReply();
           let data = response.favicon; // your image data
-          var base64Data = data!.replace(/^data:image\/png;base64,/, "");
+          const base64Data = data!.replace(/^data:image\/png;base64,/, "");
           imgur
             .uploadBase64(base64Data)
             .then(async (json) => {
@@ -118,24 +117,14 @@ module.exports = {
         });
     }
     if (subcommand == "tristansmp") {
-      await interaction.reply(
-        "<a:loading:877782934696919040> Fetching Info `(This will hang if " +
-          interaction.options.getString("username") +
-          " hasn't visited the End and the Nether and died atleast once)`"
-      );
-      var url =
+      await interaction.deferReply();
+      const url =
         "http://202.131.88.29:25571/player/" +
         interaction.options.getString("username") +
         "/raw";
-
       try {
         getJSON(url, async function (error, response) {
-          var username = interaction.options.getString("username");
-          var url = "http://202.131.88.29:25571/player/" + username + "/raw";
-          var uuid = "ec4b0c12-484e-4544-8346-cc1f1bdd10df";
-          var whyjavalol = "com.djrapitops.plan.gathering.domain.WorldTimes";
-
-          var currentChannel = interaction.currentChannel;
+          const username = interaction.options.getString("username");
 
           if (error === null) {
             axo.log("Fetched JSON for " + username);
@@ -143,36 +132,12 @@ module.exports = {
             axo.err("[Player Stats, Get JSON] " + error);
           }
 
-          //SKIN STUFF HERE
+          const uuid: string = response.BASE_USER.uuid;
+          const faceUrl = "https://crafatar.com/renders/body/" + uuid;
 
-          if (response.BASE_USER === "undefined") {
-            throw "DBNOEXIST";
-          }
-          if (response.world_times.times.world.times.SURVIVAL === "undefined") {
-            throw "DIM";
-          }
-          if (
-            response.world_times.times.world_nether.times.SURVIVAL ===
-            "undefined"
-          ) {
-            throw "DIM";
-          }
-          if (
-            response.world_times.times.world_the_end.times.SURVIVAL ===
-            "undefined"
-          ) {
-            throw "DIM";
-          }
-          if (response.death_count === "undefined") {
-            throw "DIE";
-          }
+          const skinDL = "https://crafatar.com/skins/" + uuid;
 
-          var uuid: string = response.BASE_USER.uuid;
-          var faceUrl = "https://crafatar.com/renders/body/" + uuid;
-
-          var skinDL = "https://crafatar.com/skins/" + uuid;
-
-          var applySkin =
+          const applySkin =
             "https://www.minecraft.net/profile/skin/remote?url=" +
             skinDL +
             ".png&model=slim";
@@ -182,7 +147,6 @@ module.exports = {
 
           firstDate = unixTime.toUTCString();
 
-          // interaction.reply(response.url);
           let exampleEmbed = await embed(interaction.guild);
           exampleEmbed
             .setTitle("Player Stats on TristanSMP for " + username)
@@ -260,31 +224,6 @@ module.exports = {
           );
         }
       }
-
-      process.on("uncaughtException", function (err) {
-        if (err.toString() == "DBNOEXIST") {
-          interaction.editReply(
-            "```" +
-              "Player Doesn't Exist On Database, They need to login to tristansmp.com at least once" +
-              "```"
-          );
-        }
-        if (err.toString() == "DIM") {
-          interaction.editReply(
-            "```" +
-              "Player Hasn't Visted Every Dimension, They need to atleast visit every dimension once on tristansmp.com" +
-              "```"
-          );
-        }
-        if (err.toString() == "DIE") {
-          interaction.editReply(
-            "```" +
-              "Player Hasn't Died Before, They need to atleast die once on tristansmp.com for me to pull up stats as deaths is a stat" +
-              "```"
-          );
-        }
-        axo.err(err);
-      });
     }
     if (subcommand == "hypixel") {
       let pembed = await embed(interaction.guild);

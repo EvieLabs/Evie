@@ -12,9 +12,6 @@ module.exports = {
     .setDescription("View the things you can buy with $EVIE"),
   async execute(interaction, client) {
     // Axolotl Fetching Mechanic
-
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
 
     let result = await cs.getShopItems({});
@@ -30,12 +27,9 @@ module.exports = {
 
     exampleEmbed.setTitle(`Shop Items`);
     exampleEmbed.setDescription("Use `/buy <itemid>` to buy items!");
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 
     // Send Embed
 
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

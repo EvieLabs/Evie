@@ -14,8 +14,6 @@ module.exports = {
   async execute(interaction) {
     // Axolotl Fetching Mechanic
 
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
 
     exampleEmbed.setTitle(`Want some free $EVIE?`);
@@ -35,12 +33,6 @@ module.exports = {
         .setURL("https://top.gg/bot/807543126424158238/vote")
     );
 
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
-    // Send Embed
-
-    await interaction.editReply({ embeds: [exampleEmbed], components: [vote] });
+    await interaction.reply({ embeds: [exampleEmbed], components: [vote] });
   },
 };

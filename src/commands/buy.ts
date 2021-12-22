@@ -17,19 +17,13 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction, client) {
-    // Axolotl Fetching Mechanic
-
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
 
     let thing = interaction.options.getInteger("itemid");
     if (!thing)
-      return interaction.editReply(
-        "Please provide item number! check the `/shop`"
-      );
+      return interaction.reply("Please provide item number! check the `/shop`");
     if (thing == 2) {
-      return interaction.editReply(
+      return interaction.reply(
         "Sorry but you can only sell a `Muffin` instead buy a `Basic Oven` and bake them using `/bake muffin`"
       );
     }
@@ -39,15 +33,13 @@ module.exports = {
     });
     if (result.error) {
       if (result.type === "No-Item")
-        return interaction.editReply(
+        return interaction.reply(
           "Please provide valid item number check the `/shop`"
         );
       if (result.type === "Invalid-Item")
-        return interaction.editReply(
-          "item does not exist.... check the `/shop`"
-        );
+        return interaction.reply("item does not exist.... check the `/shop`");
       if (result.type === "low-money")
-        return interaction.editReply(
+        return interaction.reply(
           `**You don't have enough $EVIE to buy this!**`
         );
     } else
@@ -58,13 +50,8 @@ module.exports = {
     exampleEmbed.setThumbnail(
       `https://cdn.discordapp.com/attachments/887532552481566770/900888795040317440/Evie_Bot-modified.png`
     );
-
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
     // Send Embed
 
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };
