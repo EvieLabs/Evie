@@ -192,14 +192,9 @@ module.exports = {
             .addFields(
               {
                 name: "Play Time",
-                value: ms(
-                  response.world_times.times.world.times.SURVIVAL +
-                    response.world_times.times.world_nether.times.SURVIVAL +
-                    response.world_times.times.world_the_end.times.SURVIVAL,
-                  {
-                    long: true,
-                  }
-                ),
+                value: ms(response.world_times.times.world.times.SURVIVAL, {
+                  long: true,
+                }),
               },
               {
                 name: "Times Kicked",
