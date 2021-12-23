@@ -194,7 +194,7 @@ module.exports = {
               {
                 name: "First Time Joining tristansmp.com",
                 value: response.BASE_USER.registered
-                  ? `<t:${response.BASE_USER.registered}:R>`
+                  ? `<t:${Math.trunc(response.BASE_USER.registered) / 1000}:R>`
                   : "Missing",
                 inline: true,
               },
