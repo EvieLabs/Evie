@@ -33,6 +33,12 @@ type TSMPMcmmoResp = {
   archery: number;
   taming: number;
 };
+type discordRes = {
+  discordId: string;
+  error: boolean;
+  discordTag: string;
+  discordName: string;
+};
 const hypixel = new Hypixel.Client(process.env.HYPIXEL);
 module.exports = {
   data: new SlashCommandBuilder()
@@ -163,6 +169,17 @@ module.exports = {
             }
           ).then((res) => res.json());
 
+          const dres: discordRes = await fetch(
+            `https://api.tristansmp.com/player/${response.uuid}/discord`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ).then((dres) => dres.json());
+
+          const dUser = await interaction.client.users.fetch(dres.discordId);
+
           if (res.error) {
             return interaction.editReply({
               content: "Player needs to at least level up their skills once.",
@@ -176,7 +193,9 @@ module.exports = {
 
           const e = await embed(interaction.guild);
 
-          e.setDescription(`TSMP Stats for ${username}`)
+          e.setDescription(
+            `TSMP Stats for **${username}**${dUser ? ` | ${dUser}` : ""}`
+          )
             .addFields(
               {
                 name: "Play Time",
