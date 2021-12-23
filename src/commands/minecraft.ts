@@ -152,7 +152,6 @@ module.exports = {
 
           const uuid: string = response.BASE_USER.uuid;
           const faceUrl = "https://crafatar.com/renders/body/" + uuid;
-
           const skinDL = "https://crafatar.com/skins/" + uuid;
 
           const res: TSMPMcmmoResp = await fetch(
@@ -177,25 +176,18 @@ module.exports = {
 
           let firstDate = "Couldn't Find Data";
           const unixTime = new Date(response.BASE_USER.registered);
-
           firstDate = unixTime.toUTCString();
 
-          let exampleEmbed = await embed(interaction.guild);
+          const exampleEmbed = await embed(interaction.guild);
           exampleEmbed
-            .setTitle("Player Stats on TristanSMP for " + username)
-            .setDescription(
-              "Hey, " +
-                interaction.user.toString() +
-                " heres a list of stats for " +
-                username
-            )
+            .setDescription(`TSMP Stats for ${username}`)
             .addFields(
               {
                 name: "Play Time",
                 value:
                   ms(response.world_times.times.world.times.SURVIVAL, {
                     long: true,
-                  }) ?? "0",
+                  }) ?? "Missing",
               },
               {
                 name: "Times Kicked",
@@ -251,15 +243,11 @@ module.exports = {
               },
               {
                 name: "Acrobatics",
-                value: res.acrobatics.toString()
-                  ? res.acrobatics.toString()
-                  : "0",
+                value: res.acrobatics.toString() ?? "0",
               },
               {
                 name: "Excavation",
-                value: res.excavation.toString()
-                  ? res.excavation.toString()
-                  : "0",
+                value: res.excavation.toString() ?? "0",
               },
               {
                 name: "Skin",
@@ -275,7 +263,7 @@ module.exports = {
             )
             .setThumbnail(faceUrl)
             .setTimestamp();
-
+          console.log(exampleEmbed);
           interaction.editReply({ embeds: [exampleEmbed] });
         });
       } catch (err) {
@@ -289,7 +277,7 @@ module.exports = {
         .getPlayer(i.options.getString("username") ?? "twisttaan")
         .then(async (player) => {
           // Title
-          pembed.setTitle("Hypixel Stats for " + player.nickname);
+          pembed.setTitle(`Hypixel Stats for ${player.nickname}`);
           // Thumbnail
           pembed.setThumbnail(
             `https://crafatar.com/renders/body/${player.uuid}`
