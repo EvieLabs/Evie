@@ -174,10 +174,6 @@ module.exports = {
             skinDL +
             ".png&model=slim";
 
-          let firstDate = "Couldn't Find Data";
-          const unixTime = new Date(response.BASE_USER.registered);
-          firstDate = unixTime.toUTCString();
-
           const e = await embed(interaction.guild);
 
           e.setDescription(`TSMP Stats for ${username}`)
@@ -191,17 +187,19 @@ module.exports = {
                 inline: true,
               },
               {
-                name: "Times Kicked",
-                value: response.BASE_USER.timesKicked.toString() ?? "0",
+                name: "Power Level",
+                value: res.powerLevel.toString() ?? "0",
                 inline: true,
               },
               {
                 name: "First Time Joining tristansmp.com",
-                value: firstDate ?? "Couldn't Find Data",
+                value: response.BASE_USER.registered
+                  ? `<t:${response.BASE_USER.registered}:R>`
+                  : "Missing",
                 inline: true,
               },
               {
-                name: "Player Deaths",
+                name: "Deaths",
                 value: response.death_count.toString() ?? "0",
                 inline: true,
               },
@@ -263,6 +261,11 @@ module.exports = {
               {
                 name: "Excavation",
                 value: res.excavation.toString() ?? "0",
+                inline: true,
+              },
+              {
+                name: "Times Kicked",
+                value: response.BASE_USER.timesKicked.toString() ?? "0",
                 inline: true,
               },
               {
