@@ -80,3 +80,4 @@ shard.js
 shard.js
 config.json
 .env
+.DS_Store
