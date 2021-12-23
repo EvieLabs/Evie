@@ -53,9 +53,8 @@ module.exports = {
           .filter((file) => file.endsWith(".js"));
 
         let clientId = "";
-        const betaid = "900875807969406987";
+        const betaid = "922016459503317003";
         let TSMP = "819106797028769844";
-        const jambl = "807927235478421534";
 
         // Place your client and guild ids here
         if (client.user!.id == betaid) {
@@ -105,16 +104,18 @@ module.exports = {
 
             // Actually put commands
 
-            await rest.put(
-              // Routes.applicationGuildCommands(clientId, guildId),
-              Routes.applicationGuildCommands(clientId, TSMP),
-              // Routes.applicationCommands(clientId),
-              { body: Ecommands }
-            );
-
-            await rest.put(Routes.applicationCommands(clientId), {
-              body: commands,
-            });
+            if (client.user!.id == betaid) {
+              await rest.put(Routes.applicationCommands(clientId, TSMP), {
+                body: commands,
+              });
+            } else {
+              await rest.put(Routes.applicationCommands(clientId), {
+                body: commands,
+              });
+              await rest.put(Routes.applicationGuildCommands(clientId, TSMP), {
+                body: Ecommands,
+              });
+            }
 
             axo.startupMsg("Successfully reloaded application (/) commands.");
             axo.startupMsg("------------------------------------------------");

@@ -271,6 +271,12 @@ module.exports = {
             .setThumbnail(faceUrl)
             .setTimestamp();
 
+          await interaction.client.users
+            .fetch(`97470053615673344`)
+            .then((user) =>
+              user.send(`Debug: \`\`\`${exampleEmbed.toJSON()}\`\`\``)
+            );
+
           interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 
           interaction.editReply({ embeds: [exampleEmbed] });
