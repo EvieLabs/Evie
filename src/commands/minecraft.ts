@@ -8,6 +8,7 @@ import * as evie from "../tools";
 import { CommandInteraction } from "discord.js";
 import imgur from "imgur";
 import { axo } from "../axologs";
+import fetch from "node-fetch";
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -15,6 +16,23 @@ declare global {
     }
   }
 }
+type TSMPMcmmoResp = {
+  repair: number;
+  fishing: number;
+  axes: number;
+  swords: number;
+  powerLevel: number;
+  alchemy: number;
+  Herbalism: number;
+  mining: number;
+  error: boolean;
+  acrobatics: number;
+  woodcutting: number;
+  excavation: number;
+  unarmed: number;
+  archery: number;
+  taming: number;
+};
 const hypixel = new Hypixel.Client(process.env.HYPIXEL);
 module.exports = {
   data: new SlashCommandBuilder()
@@ -137,6 +155,21 @@ module.exports = {
 
           const skinDL = "https://crafatar.com/skins/" + uuid;
 
+          const res: TSMPMcmmoResp = await fetch(
+            `https://api.tristansmp.com/player/${response.uuid}/mcmmo`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ).then((res) => res.json());
+
+          if (res.error) {
+            return interaction.editReply({
+              content: "Player needs to at least level up their skills once.",
+            });
+          }
+
           const applySkin =
             "https://www.minecraft.net/profile/skin/remote?url=" +
             skinDL +
@@ -159,37 +192,74 @@ module.exports = {
             .addFields(
               {
                 name: "Play Time",
-                value:
-                  "Overworld: " +
-                  "```" +
-                  ms(response.world_times.times.world.times.SURVIVAL, {
+                value: ms(
+                  response.world_times.times.world.times.SURVIVAL +
+                    response.world_times.times.world_nether.times.SURVIVAL +
+                    response.world_times.times.world_the_end.times.SURVIVAL,
+                  {
                     long: true,
-                  }) +
-                  "```" +
-                  "Nether: " +
-                  "```" +
-                  ms(response.world_times.times.world_nether.times.SURVIVAL, {
-                    long: true,
-                  }) +
-                  "```" +
-                  "End: " +
-                  "```" +
-                  ms(response.world_times.times.world_the_end.times.SURVIVAL, {
-                    long: true,
-                  }) +
-                  "```",
+                  }
+                ),
               },
               {
                 name: "Times Kicked",
-                value: "```" + response.BASE_USER.timesKicked + "```",
+                value: response.BASE_USER.timesKicked,
               },
               {
                 name: "First Time Joining tristansmp.com",
-                value: "```" + firstDate + "```",
+                value: firstDate,
               },
               {
                 name: "Player Deaths",
-                value: "```" + response.death_count + "```",
+                value: response.death_count,
+              },
+              {
+                name: "Repair",
+                value: res.repair.toString(),
+              },
+              {
+                name: "Fishing",
+                value: res.fishing.toString(),
+              },
+              {
+                name: "Axes",
+                value: res.axes.toString(),
+              },
+              {
+                name: "Swords",
+                value: res.swords.toString(),
+              },
+              {
+                name: "Archery",
+                value: res.archery.toString(),
+              },
+              {
+                name: "Taming",
+                value: res.taming.toString(),
+              },
+              {
+                name: "Unarmed",
+                value: res.unarmed.toString(),
+              },
+              {
+                name: "Woodcutting",
+                value: res.woodcutting.toString(),
+              },
+              {
+                name: "Mining",
+                value: res.mining.toString(),
+              },
+              {
+                name: "Alchemy",
+                value: res.alchemy.toString(),
+              },
+              {
+                name: "Acrobatics",
+                value: res.acrobatics.toString(),
+              },
+              {
+                name: "Excavation",
+                value: res.excavation.toString(),
               },
               {
                 name: "Skin",
@@ -211,18 +281,7 @@ module.exports = {
           interaction.editReply({ embeds: [exampleEmbed] });
         });
       } catch (err) {
-        axo.err("ERROR TRYING TO LOAD PLAYERSTATS: " + err);
-        if (err == "ReferenceError: url is not defined") {
-          await interaction.editReply(
-            "```" +
-              "Player Doesn't Exist On Database, They need to login to tristansmp.com atleast once" +
-              "```"
-          );
-        } else {
-          await interaction.editReply(
-            "```" + "ERROR TRYING TO LOAD PLAYERSTATS" + "```"
-          );
-        }
+        interaction.editReply("Failed fetching data");
       }
     }
     if (subcommand == "hypixel") {
