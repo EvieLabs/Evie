@@ -159,7 +159,7 @@ module.exports = {
       } else {
         // send the discord user
         const e = await evie.embed(i.guild!);
-        e.setDescription(`${username} is linked to ${dUser.username}`);
+        e.setDescription(`${username} is linked to ${dUser}`);
         return i.reply({
           embeds: [e],
           ephemeral: true,
