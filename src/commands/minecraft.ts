@@ -192,69 +192,62 @@ module.exports = {
             .addFields(
               {
                 name: "Play Time",
-                value: ms(response.world_times.times.world.times.SURVIVAL, {
-                  long: true,
-                })
-                  ? ms(response.world_times.times.world.times.SURVIVAL, {
-                      long: true,
-                    })
-                  : "0",
+                value:
+                  ms(response.world_times.times.world.times.SURVIVAL, {
+                    long: true,
+                  }) ?? "0",
               },
               {
                 name: "Times Kicked",
-                value: response.BASE_USER.timesKicked
-                  ? response.BASE_USER.timesKicked
-                  : "0",
+                value: response.BASE_USER.timesKicked ?? "0",
               },
               {
                 name: "First Time Joining tristansmp.com",
-                value: firstDate ? firstDate : "Couldn't Find Data",
+                value: firstDate ?? "Couldn't Find Data",
               },
               {
                 name: "Player Deaths",
-                value: response.death_count ? response.death_count : "0",
+                value: response.death_count ?? "0",
               },
               {
                 name: "Repair",
-                value: res.repair.toString() ? res.repair.toString() : "0",
+                value: res.repair.toString() ?? "0",
               },
               {
                 name: "Fishing",
-                value: res.fishing.toString() ? res.fishing.toString() : "0",
+                value: res.fishing.toString() ?? "0",
               },
               {
                 name: "Axes",
-                value: res.axes.toString() ? res.axes.toString() : "0",
+                value: res.axes.toString() ?? "0",
               },
               {
                 name: "Swords",
-                value: res.swords.toString() ? res.swords.toString() : "0",
+                value: res.swords.toString() ?? "0",
               },
               {
                 name: "Archery",
-                value: res.archery.toString() ? res.archery.toString() : "0",
+                value: res.archery.toString() ?? "0",
               },
               {
                 name: "Taming",
-                value: res.taming.toString() ? res.taming.toString() : "0",
+                value: res.taming.toString() ?? "0",
               },
               {
                 name: "Unarmed",
-                value: res.unarmed.toString() ? res.unarmed.toString() : "0",
+                value: res.unarmed.toString() ?? "0",
               },
               {
                 name: "Woodcutting",
-                value: res.woodcutting.toString()
-                  ? res.woodcutting.toString()
-                  : "0",
+                value: res.woodcutting.toString() ?? "0",
               },
               {
                 name: "Mining",
-                value: res.mining.toString() ? res.mining.toString() : "0",
+                value: res.mining.toString() ?? "0",
               },
               {
                 name: "Alchemy",
-                value: res.alchemy.toString() ? res.alchemy.toString() : "0",
+                value: res.alchemy.toString() ?? "0",
               },
               {
                 name: "Acrobatics",
@@ -282,8 +275,6 @@ module.exports = {
             )
             .setThumbnail(faceUrl)
             .setTimestamp();
-
-          interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 
           interaction.editReply({ embeds: [exampleEmbed] });
         });
