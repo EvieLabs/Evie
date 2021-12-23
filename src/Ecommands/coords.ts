@@ -8,8 +8,6 @@ module.exports = {
     .setName("coords")
     .setDescription("Spits a random set of coords on tristansmp.com"),
   async execute(interaction) {
-    await interaction.reply("<a:loading:877782934696919040> Fetching Info");
-
     const idk_msg = [
       "a Stronghold at `1464 ~ 584` ",
       "an Igloo at `5904 ~ -4816`",
@@ -28,7 +26,6 @@ module.exports = {
     ];
     const exampleEmbed = await embed(interaction.guild);
     const index = Math.floor(Math.random() * (idk_msg.length - 1) + 1);
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
     exampleEmbed.addField(
       "Here's a random landmark in the overworld on `tristansmp.com`",
       "theres " + idk_msg[index]
@@ -39,6 +36,6 @@ module.exports = {
         " want your landmark added to this command?",
       "If so directly contact Tristan with the command `/dmtristan <message>` in <#877795126615879750>"
     );
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

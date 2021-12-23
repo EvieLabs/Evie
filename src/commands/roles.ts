@@ -187,7 +187,13 @@ module.exports = {
                 });
               } else {
                 let allDone: boolean = false;
-                await i.update("Please ping a role to add!").then();
+                await i
+                  .update({
+                    content: "Please ping a role to add!",
+                    components: [],
+                    embeds: [],
+                  })
+                  .then();
                 const collector = i.channel!.createMessageCollector({
                   filter: (m) => m.author.id === i.user.id,
                   time: 30000,
@@ -229,8 +235,7 @@ module.exports = {
           interaction: CommandInteraction | MessageComponentInteraction
         ) {
           interaction.editReply({
-            content:
-              "Timed Out! I can't wait for a response for too long sadly",
+            content: "Cancelled!",
             embeds: [],
             components: [],
           });

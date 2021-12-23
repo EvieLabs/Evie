@@ -25,7 +25,14 @@ module.exports = {
           `${member.displayName} joined the server`,
           `<t:${Math.trunc(member.joinedAt!.getTime() / 1000)}:R>`
         );
-        discordWelcomeChannel.send({ embeds: [welcomeMessageEmbed] });
+        if (await evie.getWelcomePingSwitch(member.guild)) {
+          discordWelcomeChannel.send({
+            content: `${member}`,
+            embeds: [welcomeMessageEmbed],
+          });
+        } else {
+          discordWelcomeChannel.send({ embeds: [welcomeMessageEmbed] });
+        }
       } catch (error) {
         axo.err(error);
       }

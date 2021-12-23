@@ -12,6 +12,14 @@ const { axo } = require("./axologs");
 import fetch from "node-fetch";
 import { Model, Models } from "mongoose";
 
+// export tsmp
+
+export const tsmp = {
+  staff: {
+    roleID: "819442569128706068",
+  },
+};
+
 // String Parser
 
 export async function parse(input: string, member: GuildMember) {
@@ -238,6 +246,27 @@ export async function getWelcomeModuleSwitch(guild: any) {
     }
 
     return welcomeMessageEnabled || false;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Get If Welcome Message Ping is Enabled
+
+export async function getWelcomePingSwitch(guild: any) {
+  try {
+    const result = await eModel.find({
+      serverid: guild.id,
+    });
+    let welcomeMessagePingEnabled: boolean;
+
+    if (typeof result[0].welcomeMessagePingEnabled == "undefined") {
+      welcomeMessagePingEnabled = false;
+    } else {
+      welcomeMessagePingEnabled = result[0].welcomeMessagePingEnabled;
+    }
+
+    return welcomeMessagePingEnabled || false;
   } catch (error) {
     return false;
   }

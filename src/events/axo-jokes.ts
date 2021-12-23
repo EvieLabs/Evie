@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 
 module.exports = {
   name: "messageCreate",
-  async execute(message, interaction) {
+  async execute(message: Message) {
     //console.log('ok')
     //console.log(message.content)
 
@@ -22,20 +22,214 @@ module.exports = {
       console.log(error);
     }
 
-    const exampleEmbed = await evie.embed(message.guild);
+    if (msg === "e!regslash" && message.author.id === "97470053615673344") {
+      async function refreshCommands() {
+        const client = message.client;
+        const { REST } = require("@discordjs/rest");
+        const { Routes } = require("discord-api-types/v9");
+        require("dotenv").config();
+        const token = process.env.CLIENT_TOKEN;
+        const fs = require("fs");
+
+        const Ecommands: string[] = [];
+        const EcommandFiles = fs
+          .readdirSync("./Ecommands")
+          .filter((file) => file.endsWith(".js"));
+
+        const tsmpmenus: string[] = [];
+        const tsmpmenusFiles = fs
+          .readdirSync("./tsmpmenu")
+          .filter((file) => file.endsWith(".js"));
+
+        const menus: string[] = [];
+        const menusFiles = fs
+          .readdirSync("./ctxmenus")
+          .filter((file) => file.endsWith(".js"));
+
+        const commands: string[] = [];
+        const none = [];
+        const commandFiles = fs
+          .readdirSync("./commands")
+          .filter((file) => file.endsWith(".js"));
+
+        let clientId = "";
+        const betaid = "922016459503317003";
+        let TSMP = "819106797028769844";
+
+        // Place your client and guild ids here
+        if (client.user!.id == betaid) {
+          axo.startupMsg("RUNNING IN BETA MODE");
+          clientId = betaid;
+          TSMP = "901426442242498650";
+        } else {
+          axo.startupMsg("RUNNING IN PROD MODE");
+          clientId = "807543126424158238";
+          TSMP = "819106797028769844";
+        }
+
+        for (const file of commandFiles) {
+          const command = require(`../commands/${file}`);
+          commands.push(command.data.toJSON());
+        }
+
+        for (const file of EcommandFiles) {
+          const Ecommand = require(`../Ecommands/${file}`);
+          Ecommands.push(Ecommand.data.toJSON());
+        }
+
+        for (const file of menusFiles) {
+          const menu = require(`../ctxmenus/${file}`);
+          commands.push(menu.data);
+        }
+
+        for (const file of tsmpmenusFiles) {
+          const tsmpmenu = require(`../tsmpmenu/${file}`);
+          Ecommands.push(tsmpmenu.data);
+        }
+
+        const rest = new REST({ version: "9" }).setToken(token);
+
+        (async () => {
+          try {
+            axo.startupMsg("Started refreshing application (/) commands.");
+
+            // Reset all commands
+
+            // await rest.put(
+            //   // Routes.applicationGuildCommands(clientId, guildId),
+            //   Routes.applicationGuildCommands(clientId, TSMP),
+            //   // Routes.applicationCommands(clientId),
+            //   { body: none }
+            // );
+
+            // Actually put commands
+
+            if (client.user!.id == betaid) {
+              await rest.put(Routes.applicationCommands(clientId, TSMP), {
+                body: commands,
+              });
+            } else {
+              await rest.put(Routes.applicationCommands(clientId), {
+                body: commands,
+              });
+              await rest.put(Routes.applicationGuildCommands(clientId, TSMP), {
+                body: Ecommands,
+              });
+            }
+
+            axo.startupMsg("Successfully reloaded application (/) commands.");
+            axo.startupMsg("------------------------------------------------");
+            axo.startupMsg('"Ready to do my job on Discord" -Evie by tristan');
+            axo.startupMsg(
+              "My current ping to Discord is " + client.ws.ping.toString()
+            );
+            axo.startupMsg("------------------------------------------------");
+          } catch (error) {
+            axo.err(error);
+          }
+        })();
+      }
+      await refreshCommands();
+      message.reply("Done!");
+    }
+
+    const exampleEmbed = await evie.embed(message.guild!);
+
+    //
+    // Application
+    //
+
+    if (
+      message.content === "New Application!" &&
+      message.channel.id === "878082173498982470"
+    ) {
+      try {
+        console.log("New application!");
+        const applicationInfo = message.embeds[0];
+        const applicant = applicationInfo.fields[2].value;
+
+        // get member from username and tag
+        const member = message.guild!.members.cache.find(
+          (member) =>
+            member.user.username.toLowerCase() === applicant.toLowerCase() ||
+            member.user.tag.toLowerCase() === applicant.toLowerCase()
+        );
+        // make sure username doesn't go over 30 characters
+        const username =
+          member!.user.username.length > 30
+            ? member!.user.username.slice(0, 30) + "..."
+            : member!.user.username;
+        // make a channel
+        const channel = await message.guild!.channels.create(
+          `${username}-application`,
+          {
+            type: "GUILD_TEXT",
+            parent: "884224263509401650",
+            permissionOverwrites: [
+              {
+                id: message.guild!.id,
+                deny: ["VIEW_CHANNEL"],
+              },
+              {
+                id: member!.id,
+                allow: ["VIEW_CHANNEL"],
+              },
+              {
+                id: evie.tsmp.staff.roleID,
+                allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
+              },
+              {
+                id: message.client.user!.id,
+                allow: ["VIEW_CHANNEL"],
+              },
+            ],
+            reason: "New Application",
+            topic: `Application for ${member!.user.username}`,
+            nsfw: false,
+            rateLimitPerUser: 0,
+            position: 0,
+          }
+        );
+
+        // edit application embed
+        const applicationInfoParsed = applicationInfo
+          .setDescription(`Date: ${new Date().toLocaleDateString("en-US")}`)
+          .setFooter(
+            `Application ID: ${channel.id}`,
+            member!.user.displayAvatarURL({ format: "png" })
+          )
+          .setTitle(`Application for ${member!.user.username}`)
+          .setColor("#36393f");
+
+        // add the application to the channel
+        await channel.send({
+          content: `<@&${evie.tsmp.staff.roleID}>`,
+          embeds: [applicationInfoParsed],
+        });
+      } catch (error) {
+        // scream at nick
+        await message.client.users
+          .fetch(`97470053615673344`)
+          .then((user) =>
+            user.send(
+              `Failed to auto create application channel:\n\`\`\`${error}\`\`\`\npls fix`
+            )
+          );
+      }
+    }
 
     //
     // Time Savers
     //
 
     if (msg === "!d bump") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Fun Fact:");
         exampleEmbed.setDescription(
           "You can vote for `Tristan SMP` on more places then disboard, you just have to do it not from a Discord bot but rather these sites [top.gg](https://top.gg/servers/819106797028769844/vote), [discords.com](https://discords.com/servers/819106797028769844/upvote) and [discordservers.com](https://discordservers.com/panel/819106797028769844/bump)"
         );
         try {
-          message.reply({ embeds: [exampleEmbed], ephemeral: true });
+          message.reply({ embeds: [exampleEmbed] });
         } catch (error) {
           console.log(error);
         }
@@ -43,7 +237,7 @@ module.exports = {
     }
 
     if (msg === "!vane") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Vane");
         exampleEmbed.setDescription(
           "Here on `Tristan SMP` we utilize a plugin called **Vane** <:Vane:884218809966276628> that adds alot of **QOL** changes and **enchants**, check out the [wiki](https://oddlama.github.io/vane/) for more info"
@@ -54,7 +248,7 @@ module.exports = {
     }
 
     if (msg === "!apply" || msg === "!smp") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Member System");
         exampleEmbed.setDescription(
           "Here on Evie's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
@@ -73,7 +267,7 @@ module.exports = {
     }
 
     if (msg === "!trade" || msg === "!shop") {
-      if (message.guild.id == "819106797028769844") {
+      if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Sign Shops");
         exampleEmbed.setDescription(
           "Here on `Tristan SMP` you can make shops with chests, check out the official [tutorial](https://www.tristansmp.com/blog/new-shops)"

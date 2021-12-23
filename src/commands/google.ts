@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import { embed } from "../tools";
 
 const googleIt = require("google-it");
@@ -14,9 +15,9 @@ module.exports = {
         .setDescription("The search query")
         .setRequired(true)
     ),
-  async execute(interaction) {
-    await interaction.reply("<a:loading:877782934696919040> Fetching Info");
-    const exampleEmbed = await embed(interaction.guild);
+  async execute(interaction: CommandInteraction) {
+    await interaction.deferReply();
+    const exampleEmbed = await embed(interaction.guild!);
     exampleEmbed.setTitle("Google Search Results");
 
     googleIt({ query: interaction.options.getString("query") })
@@ -27,7 +28,6 @@ module.exports = {
             "<" + item.link + ">"
           );
         });
-        interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 
         interaction.editReply({ embeds: [exampleEmbed] });
       })

@@ -21,7 +21,7 @@ module.exports = {
     if (message.author.id !== message.guild.me.id) {
       if (
         BannedWords.some((word) =>
-          message.toString().toLowerCase().includes(word)
+          message.toString().toLowerCase().includes(word.toLowerCase())
         )
       ) {
         const yell = await message.channel.send(

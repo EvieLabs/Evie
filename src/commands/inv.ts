@@ -13,8 +13,6 @@ module.exports = {
   async execute(interaction, client) {
     // Axolotl Fetching Mechanic
 
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
 
     exampleEmbed.setDescription("Your Inventory is Empty!");
@@ -35,12 +33,8 @@ module.exports = {
       exampleEmbed.setDescription(`${interaction.user.username}'s Inventory!`);
     }
 
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
     // Send Embed
 
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

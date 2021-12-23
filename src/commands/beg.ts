@@ -13,8 +13,6 @@ module.exports = {
   async execute(interaction, client) {
     // Axolotl Fetching Mechanic
 
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
 
     let result = await cs.beg({
@@ -29,20 +27,15 @@ module.exports = {
         `Woof! You homeless or something? But do it again in ${result.time}`,
         `Woof! Get a job and do something more productive, but you can beg again in ${result.time}`,
         `Woof! Could you be more lazy, seriously begging is for losers! Wait ${result.time}`,
-        `Woof! Get yo fat ass off the beg command and get yo self a job you slob! I recommend ${c}/bake${c} Wait ${result.time}`,
       ];
       const index = Math.floor(Math.random() * (begMsg.length - 1) + 1);
       exampleEmbed.setDescription(begMsg[index]);
     } else {
       const c = "`";
       const begMsg = [
-        `Wooooooo! Elon just invested <:eviecoin:900886713096888371> ${result.amount} into you!`,
         `omg tristan just ran ${c}/give ${interaction.user.username} $EVIE ${result.amount}${c}`,
         `Discord had no other options but to donate ${result.amount} $EVIE to you!`,
         `<:eviecoin:900886713096888371> ${result.amount} go brrrrrrrr`,
-        `A chad just walked past you and threw ${result.amount} $EVIE at you to impress the crowd`,
-        `i mean you can have ${result.amount} $EVIE cause that aint gonna hurt me brokey`,
-        `Get good and have ${result.amount} $EVIE for legit no reason other then running ${c}/beg${c}`,
       ];
       const index = Math.floor(Math.random() * (begMsg.length - 1) + 1);
       exampleEmbed.setDescription(begMsg[index]);
@@ -50,12 +43,8 @@ module.exports = {
 
     exampleEmbed.setFooter(`Imagine begging lol`);
 
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
     // Send Embed
 
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

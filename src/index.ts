@@ -80,6 +80,7 @@ const embedColour = new Schema({
   welcomeMessage: String,
   welcomeMessageEnabled: Boolean,
   welcomeChannel: String,
+  welcomeMessagePingEnabled: Boolean,
   // goodbye message
   goodbyeMessage: String,
   goodbyeMessageEnabled: Boolean,
@@ -310,6 +311,30 @@ const Dashboard = new DBD.Dashboard({
           },
         },
         {
+          optionId: "enablewelcomerping",
+          optionName: "Ping people when they join?",
+          optionDescription: "",
+          optionType: DBD.formTypes.switch(false),
+          getActualSet: async ({ guild }) => {
+            return (await evie.getWelcomePingSwitch(guild)) || false;
+          },
+          setNew: async ({ guild, newData }) => {
+            await eModel.findOneAndUpdate(
+              {
+                serverid: guild.id,
+              },
+              {
+                welcomeMessagePingEnabled: newData,
+              },
+              {
+                upsert: true,
+                new: true,
+              }
+            );
+            return;
+          },
+        },
+        {
           optionId: "welcomemsg",
           optionName: "Welcome Message",
           optionDescription:
@@ -519,15 +544,12 @@ cs.setDefaultBankAmount(0);
 // CTX Menu Handler
 client.on("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isContextMenu()) return;
-  console.log("contexty");
   if (client.menus.get(interaction.commandName)) {
     const command = client.menus.get(interaction.commandName);
-    console.log("got global ctx");
 
     if (!command) return;
 
     try {
-      console.log("executing global ctx menu i");
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
@@ -541,9 +563,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
     const command = client.tsmpmenus.get(interaction.commandName);
 
     if (!command) return;
-    console.log("got tsmp ctx");
     try {
-      console.log("executing global ctx menu i");
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
@@ -560,8 +580,8 @@ client.on("interactionCreate", async (interaction: Interaction) => {
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  if (client.menus.get(interaction.commandName)) {
-    const command = client.menus.get(interaction.commandName);
+  if (client.commands.get(interaction.commandName)) {
+    const command = client.commands.get(interaction.commandName);
 
     if (!command) return;
 
@@ -576,7 +596,7 @@ client.on("interactionCreate", async (interaction) => {
       });
     }
   } else {
-    const command = client.tsmpmenus.get(interaction.commandName);
+    const command = client.Ecommands.get(interaction.commandName);
 
     if (!command) return;
 

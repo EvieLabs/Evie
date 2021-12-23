@@ -13,8 +13,6 @@ module.exports = {
   async execute(interaction, client) {
     // Axolotl Fetching Mechanic
 
-    await interaction.reply("<a:loading:877782934696919040> Fetching Query");
-
     let exampleEmbed = await embed(interaction.guild);
     try {
       exampleEmbed.setTitle(`Random User`);
@@ -29,20 +27,12 @@ module.exports = {
           )
         )
         .catch((error) => axo.err(error));
-
-      exampleEmbed.setThumbnail(
-        `https://cdn.discordapp.com/attachments/887532552481566770/900888795040317440/Evie_Bot-modified.png`
-      );
     } catch (error) {
       console.log(error);
     }
 
-    // Fetched!
-
-    interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
     // Send Embed
 
-    await interaction.editReply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [exampleEmbed] });
   },
 };

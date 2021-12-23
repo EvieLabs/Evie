@@ -8,6 +8,7 @@ import * as evie from "../tools";
 import { CommandInteraction } from "discord.js";
 import imgur from "imgur";
 import { axo } from "../axologs";
+import fetch from "node-fetch";
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -15,8 +16,24 @@ declare global {
     }
   }
 }
+type TSMPMcmmoResp = {
+  repair: number;
+  fishing: number;
+  axes: number;
+  swords: number;
+  powerLevel: number;
+  alchemy: number;
+  Herbalism: number;
+  mining: number;
+  error: boolean;
+  acrobatics: number;
+  woodcutting: number;
+  excavation: number;
+  unarmed: number;
+  archery: number;
+  taming: number;
+};
 const hypixel = new Hypixel.Client(process.env.HYPIXEL);
-var serverIconLink = null;
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("minecraft")
@@ -67,7 +84,7 @@ module.exports = {
         .then((response) => {
           interaction.deferReply();
           let data = response.favicon; // your image data
-          var base64Data = data!.replace(/^data:image\/png;base64,/, "");
+          const base64Data = data!.replace(/^data:image\/png;base64,/, "");
           imgur
             .uploadBase64(base64Data)
             .then(async (json) => {
@@ -118,24 +135,14 @@ module.exports = {
         });
     }
     if (subcommand == "tristansmp") {
-      await interaction.reply(
-        "<a:loading:877782934696919040> Fetching Info `(This will hang if " +
-          interaction.options.getString("username") +
-          " hasn't visited the End and the Nether and died atleast once)`"
-      );
-      var url =
+      await interaction.deferReply();
+      const url =
         "http://202.131.88.29:25571/player/" +
         interaction.options.getString("username") +
         "/raw";
-
       try {
         getJSON(url, async function (error, response) {
-          var username = interaction.options.getString("username");
-          var url = "http://202.131.88.29:25571/player/" + username + "/raw";
-          var uuid = "ec4b0c12-484e-4544-8346-cc1f1bdd10df";
-          var whyjavalol = "com.djrapitops.plan.gathering.domain.WorldTimes";
-
-          var currentChannel = interaction.currentChannel;
+          const username = interaction.options.getString("username");
 
           if (error === null) {
             axo.log("Fetched JSON for " + username);
@@ -143,89 +150,104 @@ module.exports = {
             axo.err("[Player Stats, Get JSON] " + error);
           }
 
-          //SKIN STUFF HERE
+          const uuid: string = response.BASE_USER.uuid;
+          const faceUrl = "https://crafatar.com/renders/body/" + uuid;
+          const skinDL = "https://crafatar.com/skins/" + uuid;
 
-          if (response.BASE_USER === "undefined") {
-            throw "DBNOEXIST";
-          }
-          if (response.world_times.times.world.times.SURVIVAL === "undefined") {
-            throw "DIM";
-          }
-          if (
-            response.world_times.times.world_nether.times.SURVIVAL ===
-            "undefined"
-          ) {
-            throw "DIM";
-          }
-          if (
-            response.world_times.times.world_the_end.times.SURVIVAL ===
-            "undefined"
-          ) {
-            throw "DIM";
-          }
-          if (response.death_count === "undefined") {
-            throw "DIE";
+          const res: TSMPMcmmoResp = await fetch(
+            `https://api.tristansmp.com/player/${response.uuid}/mcmmo`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ).then((res) => res.json());
+
+          if (res.error) {
+            return interaction.editReply({
+              content: "Player needs to at least level up their skills once.",
+            });
           }
 
-          var uuid: string = response.BASE_USER.uuid;
-          var faceUrl = "https://crafatar.com/renders/body/" + uuid;
-
-          var skinDL = "https://crafatar.com/skins/" + uuid;
-
-          var applySkin =
+          const applySkin =
             "https://www.minecraft.net/profile/skin/remote?url=" +
             skinDL +
             ".png&model=slim";
 
           let firstDate = "Couldn't Find Data";
           const unixTime = new Date(response.BASE_USER.registered);
-
           firstDate = unixTime.toUTCString();
 
-          // interaction.reply(response.url);
-          let exampleEmbed = await embed(interaction.guild);
-          exampleEmbed
-            .setTitle("Player Stats on TristanSMP for " + username)
-            .setDescription(
-              "Hey, " +
-                interaction.user.toString() +
-                " heres a list of stats for " +
-                username
-            )
+          const e = await embed(interaction.guild);
+
+          e.setDescription(`TSMP Stats for ${username}`)
             .addFields(
               {
                 name: "Play Time",
                 value:
-                  "Overworld: " +
-                  "```" +
                   ms(response.world_times.times.world.times.SURVIVAL, {
                     long: true,
-                  }) +
-                  "```" +
-                  "Nether: " +
-                  "```" +
-                  ms(response.world_times.times.world_nether.times.SURVIVAL, {
-                    long: true,
-                  }) +
-                  "```" +
-                  "End: " +
-                  "```" +
-                  ms(response.world_times.times.world_the_end.times.SURVIVAL, {
-                    long: true,
-                  }) +
-                  "```",
+                  }) ?? "Missing",
               },
               {
                 name: "Times Kicked",
-                value: "```" + response.BASE_USER.timesKicked + "```",
+                value: response.BASE_USER.timesKicked.toString() ?? "0",
               },
               {
                 name: "First Time Joining tristansmp.com",
-                value: "```" + firstDate + "```",
+                value: firstDate ?? "Couldn't Find Data",
               },
               {
                 name: "Player Deaths",
-                value: "```" + response.death_count + "```",
+                value: response.death_count.toString() ?? "0",
+              },
+              {
+                name: "Repair",
+                value: res.repair.toString() ?? "0",
+              },
+              {
+                name: "Fishing",
+                value: res.fishing.toString() ?? "0",
+              },
+              {
+                name: "Axes",
+                value: res.axes.toString() ?? "0",
+              },
+              {
+                name: "Swords",
+                value: res.swords.toString() ?? "0",
+              },
+              {
+                name: "Archery",
+                value: res.archery.toString() ?? "0",
+              },
+              {
+                name: "Taming",
+                value: res.taming.toString() ?? "0",
+              },
+              {
+                name: "Unarmed",
+                value: res.unarmed.toString() ?? "0",
+              },
+              {
+                name: "Woodcutting",
+                value: res.woodcutting.toString() ?? "0",
+              },
+              {
+                name: "Mining",
+                value: res.mining.toString() ?? "0",
+              },
+              {
+                name: "Alchemy",
+                value: res.alchemy.toString() ?? "0",
+              },
+              {
+                name: "Acrobatics",
+                value: res.acrobatics.toString() ?? "0",
+              },
+              {
+                name: "Excavation",
+                value: res.excavation.toString() ?? "0",
               },
               {
                 name: "Skin",
@@ -241,50 +263,11 @@ module.exports = {
             )
             .setThumbnail(faceUrl)
             .setTimestamp();
-
-          interaction.editReply("Fetched <:applesparkle:841615919428141066>");
-
-          interaction.editReply({ embeds: [exampleEmbed] });
+          interaction.editReply({ embeds: [e] });
         });
       } catch (err) {
-        axo.err("ERROR TRYING TO LOAD PLAYERSTATS: " + err);
-        if (err == "ReferenceError: url is not defined") {
-          await interaction.editReply(
-            "```" +
-              "Player Doesn't Exist On Database, They need to login to tristansmp.com atleast once" +
-              "```"
-          );
-        } else {
-          await interaction.editReply(
-            "```" + "ERROR TRYING TO LOAD PLAYERSTATS" + "```"
-          );
-        }
+        interaction.editReply("Failed fetching data");
       }
-
-      process.on("uncaughtException", function (err) {
-        if (err.toString() == "DBNOEXIST") {
-          interaction.editReply(
-            "```" +
-              "Player Doesn't Exist On Database, They need to login to tristansmp.com at least once" +
-              "```"
-          );
-        }
-        if (err.toString() == "DIM") {
-          interaction.editReply(
-            "```" +
-              "Player Hasn't Visted Every Dimension, They need to atleast visit every dimension once on tristansmp.com" +
-              "```"
-          );
-        }
-        if (err.toString() == "DIE") {
-          interaction.editReply(
-            "```" +
-              "Player Hasn't Died Before, They need to atleast die once on tristansmp.com for me to pull up stats as deaths is a stat" +
-              "```"
-          );
-        }
-        axo.err(err);
-      });
     }
     if (subcommand == "hypixel") {
       let pembed = await embed(interaction.guild);
@@ -293,7 +276,7 @@ module.exports = {
         .getPlayer(i.options.getString("username") ?? "twisttaan")
         .then(async (player) => {
           // Title
-          pembed.setTitle("Hypixel Stats for " + player.nickname);
+          pembed.setTitle(`Hypixel Stats for ${player.nickname}`);
           // Thumbnail
           pembed.setThumbnail(
             `https://crafatar.com/renders/body/${player.uuid}`
