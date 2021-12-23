@@ -2,6 +2,13 @@ export {};
 import { SlashCommandBuilder } from "@discordjs/builders";
 import * as evie from "../tools";
 import { CommandInteraction, GuildMember, Role } from "discord.js";
+import fetch from "node-fetch";
+type discordRes = {
+  discordId: string;
+  error: boolean;
+  discordTag: string;
+  discordName: string;
+};
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("tsmp")
@@ -25,6 +32,17 @@ module.exports = {
           option
             .setName("player")
             .setDescription("Player to revoke")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("linked")
+        .setDescription("Lookup a Minecraft Username")
+        .addStringOption((option) =>
+          option
+            .setName("username")
+            .setDescription("Minecraft Username")
             .setRequired(true)
         )
     ),
@@ -111,6 +129,42 @@ module.exports = {
         .catch(() => {
           i.reply({ content: "Failed! Tell Tristan asap", ephemeral: true });
         });
+    } else if (subcommand == "linked") {
+      // fetch the username
+      const username = i.options.getString("username");
+      // fetch https://api.tristansmp.com/player/:username/discord
+      const res: discordRes = await fetch(
+        `https://api.tristansmp.com/player/${username}/discord`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
+      // if theres no discord id
+      if (!res.discordId) {
+        return i.reply({
+          content: "No Discord ID found!",
+          ephemeral: true,
+        });
+      }
+      // fetch the discord user
+      const dUser = await i.client.users.fetch(res.discordId);
+      // if theres no discord user
+      if (!dUser) {
+        return i.reply({
+          content: "No Discord User found!",
+          ephemeral: true,
+        });
+      } else {
+        // send the discord user
+        const e = await evie.embed(i.guild!);
+        e.setDescription(`${username} is linked to ${dUser.username}`);
+        return i.reply({
+          embeds: [e],
+          ephemeral: true,
+        });
+      }
     }
   },
 };
