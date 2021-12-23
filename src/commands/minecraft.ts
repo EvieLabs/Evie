@@ -179,86 +179,7 @@ module.exports = {
           firstDate = unixTime.toUTCString();
 
           const e = await embed(interaction.guild);
-          console.log(
-            {
-              name: "Play Time",
-              value:
-                ms(response.world_times.times.world.times.SURVIVAL, {
-                  long: true,
-                }) ?? "Missing",
-            },
-            {
-              name: "Times Kicked",
-              value: response.BASE_USER.timesKicked ?? "0",
-            },
-            {
-              name: "First Time Joining tristansmp.com",
-              value: firstDate ?? "Couldn't Find Data",
-            },
-            {
-              name: "Player Deaths",
-              value: response.death_count ?? "0",
-            },
-            {
-              name: "Repair",
-              value: res.repair.toString() ?? "0",
-            },
-            {
-              name: "Fishing",
-              value: res.fishing.toString() ?? "0",
-            },
-            {
-              name: "Axes",
-              value: res.axes.toString() ?? "0",
-            },
-            {
-              name: "Swords",
-              value: res.swords.toString() ?? "0",
-            },
-            {
-              name: "Archery",
-              value: res.archery.toString() ?? "0",
-            },
-            {
-              name: "Taming",
-              value: res.taming.toString() ?? "0",
-            },
-            {
-              name: "Unarmed",
-              value: res.unarmed.toString() ?? "0",
-            },
-            {
-              name: "Woodcutting",
-              value: res.woodcutting.toString() ?? "0",
-            },
-            {
-              name: "Mining",
-              value: res.mining.toString() ?? "0",
-            },
-            {
-              name: "Alchemy",
-              value: res.alchemy.toString() ?? "0",
-            },
-            {
-              name: "Acrobatics",
-              value: res.acrobatics.toString() ?? "0",
-            },
-            {
-              name: "Excavation",
-              value: res.excavation.toString() ?? "0",
-            },
-            {
-              name: "Skin",
-              value:
-                "[Download](" +
-                skinDL +
-                ")" +
-                " | " +
-                "[Apply Skin](" +
-                applySkin +
-                ")",
-            }
-          );
+
           e.setDescription(`TSMP Stats for ${username}`)
             .addFields(
               {
@@ -270,7 +191,7 @@ module.exports = {
               },
               {
                 name: "Times Kicked",
-                value: response.BASE_USER.timesKicked ?? "0",
+                value: response.BASE_USER.timesKicked.toString() ?? "0",
               },
               {
                 name: "First Time Joining tristansmp.com",
@@ -278,7 +199,7 @@ module.exports = {
               },
               {
                 name: "Player Deaths",
-                value: response.death_count ?? "0",
+                value: response.death_count.toString() ?? "0",
               },
               {
                 name: "Repair",
