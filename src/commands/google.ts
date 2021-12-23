@@ -29,7 +29,7 @@ module.exports = {
           );
         });
 
-        interaction.reply({ embeds: [exampleEmbed] });
+        interaction.editReply({ embeds: [exampleEmbed] });
       })
       .catch((e) => {
         // any possible errors that might have occurred (like no Internet connection)
