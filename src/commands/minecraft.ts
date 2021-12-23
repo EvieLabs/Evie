@@ -188,66 +188,82 @@ module.exports = {
                   ms(response.world_times.times.world.times.SURVIVAL, {
                     long: true,
                   }) ?? "Missing",
+                inline: true,
               },
               {
                 name: "Times Kicked",
                 value: response.BASE_USER.timesKicked.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "First Time Joining tristansmp.com",
                 value: firstDate ?? "Couldn't Find Data",
+                inline: true,
               },
               {
                 name: "Player Deaths",
                 value: response.death_count.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Repair",
                 value: res.repair.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Fishing",
                 value: res.fishing.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Axes",
                 value: res.axes.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Swords",
                 value: res.swords.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Archery",
                 value: res.archery.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Taming",
                 value: res.taming.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Unarmed",
                 value: res.unarmed.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Woodcutting",
                 value: res.woodcutting.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Mining",
                 value: res.mining.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Alchemy",
                 value: res.alchemy.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Acrobatics",
                 value: res.acrobatics.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Excavation",
                 value: res.excavation.toString() ?? "0",
+                inline: true,
               },
               {
                 name: "Skin",
@@ -259,6 +275,7 @@ module.exports = {
                   "[Apply Skin](" +
                   applySkin +
                   ")",
+                inline: true,
               }
             )
             .setThumbnail(faceUrl)
