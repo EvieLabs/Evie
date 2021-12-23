@@ -194,67 +194,79 @@ module.exports = {
                 name: "Play Time",
                 value: ms(response.world_times.times.world.times.SURVIVAL, {
                   long: true,
-                }),
+                })
+                  ? ms(response.world_times.times.world.times.SURVIVAL, {
+                      long: true,
+                    })
+                  : "0",
               },
               {
                 name: "Times Kicked",
-                value: response.BASE_USER.timesKicked,
+                value: response.BASE_USER.timesKicked
+                  ? response.BASE_USER.timesKicked
+                  : "0",
               },
               {
                 name: "First Time Joining tristansmp.com",
-                value: firstDate,
+                value: firstDate ? firstDate : "Couldn't Find Data",
               },
               {
                 name: "Player Deaths",
-                value: response.death_count,
+                value: response.death_count ? response.death_count : "0",
               },
               {
                 name: "Repair",
-                value: res.repair.toString(),
+                value: res.repair.toString() ? res.repair.toString() : "0",
               },
               {
                 name: "Fishing",
-                value: res.fishing.toString(),
+                value: res.fishing.toString() ? res.fishing.toString() : "0",
               },
               {
                 name: "Axes",
-                value: res.axes.toString(),
+                value: res.axes.toString() ? res.axes.toString() : "0",
               },
               {
                 name: "Swords",
-                value: res.swords.toString(),
+                value: res.swords.toString() ? res.swords.toString() : "0",
               },
               {
                 name: "Archery",
-                value: res.archery.toString(),
+                value: res.archery.toString() ? res.archery.toString() : "0",
               },
               {
                 name: "Taming",
-                value: res.taming.toString(),
+                value: res.taming.toString() ? res.taming.toString() : "0",
               },
               {
                 name: "Unarmed",
-                value: res.unarmed.toString(),
+                value: res.unarmed.toString() ? res.unarmed.toString() : "0",
               },
               {
                 name: "Woodcutting",
-                value: res.woodcutting.toString(),
+                value: res.woodcutting.toString()
+                  ? res.woodcutting.toString()
+                  : "0",
               },
               {
                 name: "Mining",
-                value: res.mining.toString(),
+                value: res.mining.toString() ? res.mining.toString() : "0",
               },
               {
                 name: "Alchemy",
-                value: res.alchemy.toString(),
+                value: res.alchemy.toString() ? res.alchemy.toString() : "0",
               },
               {
                 name: "Acrobatics",
-                value: res.acrobatics.toString(),
+                value: res.acrobatics.toString()
+                  ? res.acrobatics.toString()
+                  : "0",
               },
               {
                 name: "Excavation",
-                value: res.excavation.toString(),
+                value: res.excavation.toString()
+                  ? res.excavation.toString()
+                  : "0",
               },
               {
                 name: "Skin",
@@ -270,12 +282,6 @@ module.exports = {
             )
             .setThumbnail(faceUrl)
             .setTimestamp();
-
-          await interaction.client.users
-            .fetch(`97470053615673344`)
-            .then((user) =>
-              user.send(`Debug: \`\`\`${exampleEmbed.toJSON()}\`\`\``)
-            );
 
           interaction.editReply("Fetched <:applesparkle:841615919428141066>");
 
