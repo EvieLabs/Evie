@@ -22,6 +22,7 @@ module.exports = {
     }
     const m = i.options.getMember("user") as GuildMember;
     const e = await evie.embed(i.guild!);
+    i.deferReply();
     const res: discordRes = await fetch(
       `https://api.tristansmp.com/discord/users/id/${m.id}/player`,
       {
@@ -83,6 +84,6 @@ module.exports = {
       true
     );
 
-    i.reply({ embeds: [e] });
+    i.editReply({ embeds: [e] });
   },
 };
