@@ -65,13 +65,17 @@ module.exports = {
     );
     e.addField(
       `Joined TSMP Discord`,
-      m.joinedAt ? m.joinedAt.toLocaleString() : "Unknown",
+      m.joinedAt
+        ? `<t:${Math.trunc(m.joinedAt.getTime() / 1000)}:R>`
+        : "Unknown",
       true
     );
     e.addField(`Joined TSMP Minecraft Server`, joinDate || "Missing", true);
     e.addField(
-      `Created Account`,
-      m.user.createdAt ? m.user.createdAt.toLocaleString() : "Unknown",
+      `Created Discord Account`,
+      m.user.createdAt
+        ? `<t:${Math.trunc(m.user.createdAt.getTime() / 1000)}:R>`
+        : "Unknown",
       true
     );
     e.addField(
