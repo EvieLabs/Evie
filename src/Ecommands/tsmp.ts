@@ -8,6 +8,7 @@ type discordRes = {
   error: boolean;
   discordTag: string;
   discordName: string;
+  uuid: string;
 };
 module.exports = {
   data: new SlashCommandBuilder()
