@@ -134,7 +134,7 @@ module.exports = {
       const username = i.options.getString("username");
       // fetch https://api.tristansmp.com/player/:username/discord
       const res: discordRes = await fetch(
-        `https://api.tristansmp.com/player/${username}/discord`,
+        `https://api.tristansmp.com/players/username/${username}/discord`,
         {
           headers: {
             "Content-Type": "application/json",

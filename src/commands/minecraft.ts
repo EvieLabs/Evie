@@ -161,7 +161,7 @@ module.exports = {
           const skinDL = "https://crafatar.com/skins/" + uuid;
 
           const res: TSMPMcmmoResp = await fetch(
-            `https://api.tristansmp.com/player/${response.uuid}/mcmmo`,
+            `https://api.tristansmp.com/players/uuid/${response.uuid}/mcmmo`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -170,7 +170,7 @@ module.exports = {
           ).then((res) => res.json());
 
           const dres: discordRes = await fetch(
-            `https://api.tristansmp.com/player/${username}/discord`,
+            `https://api.tristansmp.com/players/username/${username}/discord`,
             {
               headers: {
                 "Content-Type": "application/json",
