@@ -55,20 +55,23 @@ module.exports = {
     if (res.uuid) {
       e.setThumbnail(`https://crafatar.com/renders/body/${res.uuid}`);
     }
-    e.addField("User", `${m.user.tag} (${m.user.id})`);
-    e.addField("Nickname", m.nickname || "None");
+    e.addField("User", `${m.user.tag} (${m.user.id})`, true);
+    e.addField("Nickname", m.nickname || "None", true);
     e.addField(
       `Linked Minecraft Account`,
-      `${res.username} | \`${res.uuid}\`` || "None"
+      `${res.username} | \`${res.uuid}\`` || "None",
+      true
     );
     e.addField(
       `Joined TSMP Discord`,
-      m.joinedAt ? m.joinedAt.toLocaleString() : "Unknown"
+      m.joinedAt ? m.joinedAt.toLocaleString() : "Unknown",
+      true
     );
-    e.addField(`Joined TSMP Minecraft Server`, joinDate || "Missing");
+    e.addField(`Joined TSMP Minecraft Server`, joinDate || "Missing", true);
     e.addField(
       `Created Account`,
-      m.user.createdAt ? m.user.createdAt.toLocaleString() : "Unknown"
+      m.user.createdAt ? m.user.createdAt.toLocaleString() : "Unknown",
+      true
     );
     e.addField(
       "Member Status",
@@ -76,7 +79,8 @@ module.exports = {
         ? "Blacklisted"
         : m.roles.cache.has("878074525223378974")
         ? "Member"
-        : "Denied/Not Applied"
+        : "Denied/Not Applied",
+      true
     );
 
     i.reply({ embeds: [e] });
