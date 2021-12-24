@@ -5,7 +5,7 @@ const ms = require("ms");
 import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";
 import * as evie from "../tools";
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, User } from "discord.js";
 import imgur from "imgur";
 import { axo } from "../axologs";
 import fetch from "node-fetch";
@@ -170,7 +170,7 @@ module.exports = {
           ).then((res) => res.json());
 
           const dres: discordRes = await fetch(
-            `https://api.tristansmp.com/player/${response.uuid}/discord`,
+            `https://api.tristansmp.com/player/${username}/discord`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -178,7 +178,11 @@ module.exports = {
             }
           ).then((dres) => dres.json());
 
-          const dUser = await interaction.client.users.fetch(dres.discordId);
+          if (!dres.error) {
+          }
+          const dUser: User | false = dres.error
+            ? false
+            : await interaction.client.users.fetch(dres.discordId);
 
           if (res.error) {
             return interaction.editReply({
