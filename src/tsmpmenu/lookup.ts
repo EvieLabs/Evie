@@ -56,12 +56,12 @@ module.exports = {
     if (res.uuid) {
       e.setThumbnail(`https://crafatar.com/renders/body/${res.uuid}`);
     }
-    e.addField("User", `${m.user.tag} (${m.user.id})`, true);
-    e.addField("Nickname", m.nickname || "None", true);
+    e.addField("User", `${m.user.tag} (${m.user.id})`, false);
+    e.addField("Nickname", m.nickname || "None", false);
     e.addField(
       `Linked Minecraft Account`,
       `${res.username} | \`${res.uuid}\`` || "None",
-      true
+      false
     );
     e.addField(
       `Joined TSMP Discord`,
