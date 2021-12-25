@@ -32,7 +32,7 @@ module.exports = {
       }
     ).then((res) => res.json());
     let joinDate;
-    if (res.username) {
+    if (!res.error) {
       const tres = await fetch(
         "http://202.131.88.29:25571/player/" + res.username + "/raw",
         {

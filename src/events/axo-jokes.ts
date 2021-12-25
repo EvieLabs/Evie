@@ -182,6 +182,10 @@ module.exports = {
                 id: message.client.user!.id,
                 allow: ["VIEW_CHANNEL"],
               },
+              {
+                id: "864676306662195200",
+                allow: ["VIEW_CHANNEL"],
+              },
             ],
             reason: "New Application",
             topic: `Application for ${member!.user.username}`,
