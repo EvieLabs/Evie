@@ -9,7 +9,7 @@ module.exports = {
     //console.log('ok')
     //console.log(message.content)
 
-    if (message.content.startsWith("slavbot.com")) {
+    if (message.content.toString().toLowerCase().includes("slavbot.com")) {
       console.log(
         "Found Spam #1",
         message.content,
@@ -18,7 +18,9 @@ module.exports = {
       );
     }
 
-    if (message.content.startsWith("megaweb.androne.dev")) {
+    if (
+      message.content.toString().toLowerCase().includes("megaweb.androne.dev")
+    ) {
       console.log(
         "Found Spam #2",
         message.content,
