@@ -9,6 +9,24 @@ module.exports = {
     //console.log('ok')
     //console.log(message.content)
 
+    if (message.content.startsWith("slavbot.com")) {
+      console.log(
+        "Found Spam #1",
+        message.content,
+        message.author.username,
+        message.guildId
+      );
+    }
+
+    if (message.content.startsWith("megaweb.androne.dev")) {
+      console.log(
+        "Found Spam #2",
+        message.content,
+        message.author.username,
+        message.guildId
+      );
+    }
+
     let msg = message.content.toString().toLowerCase();
 
     try {
