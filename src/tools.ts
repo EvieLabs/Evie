@@ -106,36 +106,19 @@ export async function setJoinRoleEnable(guild: any, enable: Boolean) {
 export async function checkADomain(domain: string) {
   // using node fetch get https://api.phisherman.gg/v1/domains/{domain}
 
-  const res = await fetch(`https://api.phisherman.gg/v1/domains/${domain}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await fetch(
+    `https://api.phisherman.gg/v2/domains/check/${domain}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer :${process.env.PHISHERMAN_TOKEN}`,
+      },
+    }
+  );
 
   const json = await res.json();
 
-  return json;
-}
-
-export async function reportACaughtPhish(domain: string, guild: any) {
-  // using node fetch put https://api.phisherman.gg/v1/domains/{domain}
-  // also pass the guild.id
-  // use a bearer token
-
-  const res = await fetch(`https://api.phisherman.gg/v1/domains/${domain}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer :${process.env.PHISHERMAN_TOKEN}`,
-    },
-    body: JSON.stringify({
-      guild: guild.id,
-    }),
-  });
-
-  const json = await res.json();
-
-  return json;
+  return json.verifiedPhish;
 }
 
 // Get If Detect phishing sites is Enabled
