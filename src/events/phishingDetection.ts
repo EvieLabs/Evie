@@ -4,6 +4,7 @@ module.exports = {
   name: "messageCreate",
   once: false,
   async execute(message: Message) {
+    if (message.author.bot) return;
     if (message.inGuild()) {
       if (await evie.getPhishingDetectionSwitch(message.member?.guild)) {
         function extractHostname(url: string) {
