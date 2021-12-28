@@ -13,7 +13,10 @@ module.exports = {
     }
 
     const mem: GuildMember = i.member! as GuildMember;
-    if (!mem.roles.cache.has("819442569128706068")) {
+    if (
+      !mem.roles.cache.has("819442569128706068") ||
+      !mem.roles.cache.has("925183963331457076")
+    ) {
       return i.reply({
         content: "You are not a staff member!",
         ephemeral: true,

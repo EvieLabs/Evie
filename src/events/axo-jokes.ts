@@ -179,10 +179,16 @@ module.exports = {
                 allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
               },
               {
+                // Application Reviewers
+                id: "925183963331457076",
+                allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
+              },
+              {
                 id: message.client.user!.id,
                 allow: ["VIEW_CHANNEL"],
               },
               {
+                // Natsirt
                 id: "864676306662195200",
                 allow: ["VIEW_CHANNEL"],
               },
