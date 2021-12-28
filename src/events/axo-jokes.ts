@@ -144,7 +144,6 @@ module.exports = {
       message.channel.id === "878082173498982470"
     ) {
       try {
-        console.log("New application!");
         const applicationInfo = message.embeds[0];
         const applicant = applicationInfo.fields[2].value;
 
@@ -173,10 +172,6 @@ module.exports = {
               {
                 id: member!.id,
                 allow: ["VIEW_CHANNEL"],
-              },
-              {
-                id: evie.tsmp.staff.roleID,
-                allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
               },
               {
                 // Application Reviewers
@@ -213,7 +208,7 @@ module.exports = {
 
         // add the application to the channel
         await channel.send({
-          content: `<@&${evie.tsmp.staff.roleID}>`,
+          content: `<@&925183963331457076>`,
           embeds: [applicationInfoParsed],
         });
       } catch (error) {
