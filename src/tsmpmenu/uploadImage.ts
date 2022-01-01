@@ -34,6 +34,9 @@ module.exports = {
     const e = await evie.embed(i.guild!);
     e.setTitle("Uploaded!");
     e.setDescription(`Post ID: ${doc.id}`);
-    i.reply({ embeds: [e], ephemeral: true });
+    i.reply({
+      embeds: [e],
+      content: `${message.author}, your photo has been uploaded to https://tristansmp.com/photos by ${mem}`,
+    });
   },
 };
