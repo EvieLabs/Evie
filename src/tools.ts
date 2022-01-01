@@ -11,6 +11,9 @@ import { client } from "./index";
 const { axo } = require("./axologs");
 import fetch from "node-fetch";
 import { Model, Models } from "mongoose";
+import { applicationDefault, initializeApp } from "firebase-admin/app";
+
+export const app = initializeApp();
 
 // export tsmp
 
