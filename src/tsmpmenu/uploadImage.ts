@@ -34,6 +34,6 @@ module.exports = {
     const e = await evie.embed(i.guild!);
     e.setTitle("Uploaded!");
     e.setDescription(`Post ID: ${doc.id}`);
-    i.reply({ embeds: [e] });
+    i.reply({ embeds: [e], ephemeral: true });
   },
 };
