@@ -6,7 +6,7 @@ import * as admin from "firebase-admin";
 import { ContextMenuInteraction, GuildMember, Message, Role } from "discord.js";
 module.exports = {
   data: {
-    name: "Uplaod to TSMP Photos",
+    name: "Upload Image",
     type: 3,
   },
   async execute(i: ContextMenuInteraction) {
