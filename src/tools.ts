@@ -11,9 +11,12 @@ import { client } from "./index";
 const { axo } = require("./axologs");
 import fetch from "node-fetch";
 import { Model, Models } from "mongoose";
-import { initializeApp } from "firebase-admin/app";
+import { initializeApp, cert } from "firebase-admin/app";
 
-export const app = initializeApp(JSON.parse(process.env.FBA!));
+export const app = initializeApp({
+  credential: cert(JSON.parse(process.env.FBA!)),
+  projectId: "tristan-smp",
+});
 
 // export tsmp
 
