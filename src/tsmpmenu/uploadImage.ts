@@ -20,7 +20,19 @@ module.exports = {
         ephemeral: true,
       });
     }
+    if (i.channelId !== "910411610592538685") {
+      return i.reply({
+        content: "You can only use this feature in <#910411610592538685>!",
+        ephemeral: true,
+      });
+    }
     const message = i.options.getMessage("message") as Message;
+    if (!message.content) {
+      return i.reply({
+        content: "The image needs to have a caption!",
+        ephemeral: true,
+      });
+    }
     const data = {
       author: message.author.id,
       caption: message.content ?? "No Caption",
