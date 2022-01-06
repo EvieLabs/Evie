@@ -241,6 +241,17 @@ module.exports = {
       }
     }
 
+    if (msg === "!market") {
+      if (message.guild!.id == "819106797028769844") {
+        exampleEmbed.setTitle("Tristan SMP | Markets");
+        exampleEmbed.setDescription(
+          "On TristanSMP, there is an online market. This is where you can buy and sell items for Diamonds. For more info visit the [info page](https://tristansmp.com/info/markets)"
+        );
+        message.channel.send({ embeds: [exampleEmbed] });
+        // message.delete()
+      }
+    }
+
     if (msg === "!vane") {
       if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Vane");
