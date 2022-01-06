@@ -267,7 +267,7 @@ module.exports = {
       if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Member System");
         exampleEmbed.setDescription(
-          "Here on Evie's Discord we have our very own SMP called `Tristan SMP` It's a bedrock and java crossplay SMP!"
+          "Introducing a SMP for everyone, tsmp! It's a bedrock and java crossplay SMP!"
         );
         exampleEmbed.addField(
           "How do I apply?",
