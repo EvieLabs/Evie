@@ -286,7 +286,7 @@ module.exports = {
       if (message.guild!.id == "819106797028769844") {
         exampleEmbed.setTitle("Tristan SMP | Sign Shops");
         exampleEmbed.setDescription(
-          "Here on `Tristan SMP` you can make shops with chests, check out the official [tutorial](https://www.tristansmp.com/blog/new-shops)"
+          "These our now outdated, we recommend using the market. Type `!market` for more info"
         );
         // message.delete()
         message.channel.send({ embeds: [exampleEmbed] });

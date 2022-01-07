@@ -82,6 +82,10 @@ module.exports = {
         "Proximity Voice Chat",
         "To use Proximity Voice Chat in Game you don't need to do anything as it's all done in the Discord automatically by our bots, simply [read our blog post](https://www.tristansmp.com/blog/proximity) for more info :)"
       );
+      e.addField(
+        "Explore the Market",
+        "On tsmp, there is an online market. This is where you can buy and sell items for Diamonds. For more info visit the [info page](https://tristansmp.com/info/markets)"
+      );
       await m?.roles
         .add(r, `Accepted by ${i.user}`)
         .then(() => {
