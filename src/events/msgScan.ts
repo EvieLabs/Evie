@@ -25,13 +25,9 @@ module.exports = {
           message.toString().toLowerCase().includes(word.toLowerCase())
         )
       ) {
-        const yell = await message.channel.send(
-          `Hey! ${message.author} A word in that message is banned in ${message.guild.name}!`
-        );
         try {
           await message.delete();
           await sleep(1500);
-          await yell.delete();
         } catch (error) {
           message.channel.send(
             `User ${message.author} said a banned word, but I don't have perms to delete it!`
