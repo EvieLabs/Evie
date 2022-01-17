@@ -33,9 +33,6 @@ module.exports = {
             if (await evie.checkADomain(extractHostname(element))) {
               try {
                 await message.delete();
-                message.channel.send(
-                  `${message.author} sent a known phishing link above, I deleted it!`
-                );
               } catch (error) {
                 message.channel.send(
                   `${message.author} sent a known phishing link above, but I was unable to delete it due to a lack of permissions`
