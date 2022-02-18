@@ -5,6 +5,10 @@ require("dotenv").config();
 import { Interaction } from "discord.js";
 const mongoose = require("mongoose");
 import * as evie from "./tools";
+import * as config from "./botconfig/emojis.json";
+import * as config2 from "./botconfig/embed.json";
+import * as config3 from "./botconfig/filters.json";
+import * as config4 from "./botconfig/settings.json";
 
 let langsSettings = {};
 
