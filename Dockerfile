@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
+RUN yarn
 RUN npm install pm2 -g
 RUN npm install -g typescript
 # If you are building your code for production
@@ -17,7 +17,5 @@ RUN npm install -g typescript
 # Bundle app source
 COPY . .
 
-RUN apt-get update && apt-get install -y ffmpeg
-
 #EXPOSE 8080
-CMD [ "npm", "run", "docker" ]
+CMD [ "yarn", "docker" ]
