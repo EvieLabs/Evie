@@ -2,25 +2,13 @@
 const { Client, Intents, Collection, Permissions } = require("discord.js");
 const fs = require("fs");
 require("dotenv").config();
-const DisTube = require("distube").default;
-const voice = require("@discordjs/voice");
-const ffmpeg = require("ffmpeg-static");
-const mongoose = require("mongoose");
-import * as evie from "./tools";
-import * as config from "./botconfig/emojis.json";
-import * as config2 from "./botconfig/embed.json";
-import * as config3 from "./botconfig/filters.json";
-import * as config4 from "./botconfig/settings.json";
 import { Interaction } from "discord.js";
-const { axo } = require("./axologs");
-const DBD = require("discord-dashboard");
-const Evie = require("../eviebot");
+import * as mongoose from "mongoose";
+import * as evie from "./tools";
+import * as DBD from "discord-dashboard";
+import * as Evie from "./eviebot";
 
 let langsSettings = {};
-
-let currencyNames = {};
-
-let botNicknames = {};
 
 export function getLang() {
   return langsSettings;
@@ -118,7 +106,7 @@ const Dashboard = new DBD.Dashboard({
   redirectUri: `https://dash.eviebot.rocks/discord/callback`,
   domain: `https://dash.eviebot.rocks`,
   bot: client,
-  theme: Evie({
+  theme: Evie.default({
     websiteName: "Evie✨",
     iconURL: "https://www.eviebot.rocks/assets/EvieHead.svg",
   }),
@@ -467,41 +455,6 @@ const Dashboard = new DBD.Dashboard({
 });
 
 Dashboard.init();
-
-// discord-music-player
-
-const { SpotifyPlugin } = require("@distube/spotify");
-const { SoundCloudPlugin } = require("@distube/soundcloud");
-client.distube = new DisTube(client, {
-  emitNewSongOnly: false,
-  leaveOnEmpty: false,
-  leaveOnFinish: true,
-  leaveOnStop: true,
-  savePreviousSongs: true,
-  emitAddSongWhenCreatingQueue: false,
-  //emitAddListWhenCreatingQueue: false,
-  searchSongs: 0,
-  // youtubeCookie: config.youtubeCookie,     //Comment this line if you dont want to use a youtube Cookie
-  // nsfw: true, //Set it to false if u want to disable nsfw songs
-  emptyCooldown: 25,
-  ytdlOptions: {
-    //requestOptions: {
-    //  agent //ONLY USE ONE IF YOU KNOW WHAT YOU DO!
-    //},
-    highWaterMark: 1024 * 1024 * 64,
-    quality: "highestaudio",
-    format: "audioonly",
-    liveBuffer: 60000,
-    dlChunkSize: 1024 * 1024 * 64,
-  },
-  youtubeDL: true,
-  updateYouTubeDL: true,
-  //  customFilters: filters,
-  plugins: [
-    //new SpotifyPlugin(spotifyoptions),
-    new SoundCloudPlugin(),
-  ],
-});
 
 // Money
 
