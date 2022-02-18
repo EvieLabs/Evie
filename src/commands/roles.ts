@@ -60,7 +60,7 @@ module.exports = {
     ),
   async execute(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
-    const perms: Permissions = interaction.member.permissions as Permissions;
+    const perms: Permissions = interaction.member?.permissions as Permissions;
     if (perms.has(Permissions.FLAGS.MANAGE_ROLES)) {
       if (subcommand == "buttonrole") {
         async function prepScreen(
