@@ -114,9 +114,7 @@ client.once("ready", () => {
   }
 });
 
-cs.setMongoURL(
-  "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/mongoeconomy"
-);
+cs.setMongoURL(process.env.MONGO_URL);
 //sets default wallet amount when ever new user is created.
 cs.setDefaultWalletAmount(1000);
 //sets default bank amount when ever new user is created.
