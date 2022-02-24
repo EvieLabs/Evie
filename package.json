@@ -4,8 +4,7 @@
   "description": "",
   "main": "bin/index.js",
   "scripts": {
-    "start": "rm -rf ./bin/ && tsc && cd ./bin/ && node index.js",
-    "rerun": "tsc && cd ./bin/ && node index.js",
+    "dev": "tsc && cd ./bin/ && node index.js",
     "docker": "rm -rf ./bin/ && tsc && cd ./bin/ && pm2-runtime start index.js",
     "stop": "pm2 stop index"
   },

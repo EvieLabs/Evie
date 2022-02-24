@@ -52,9 +52,7 @@ for (const file of eventFiles) {
 
 // Databases
 
-mongoose.connect(
-  "mongodb+srv://evie:IHgatYyirF8IIuJs@cluster0.dobcl.mongodb.net/evie"
-);
+mongoose.connect(process.env.MONGO_URL);
 
 const Schema = mongoose.Schema;
 
