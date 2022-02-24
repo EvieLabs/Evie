@@ -1,11 +1,8 @@
 # Evie Bot
-<a href="https://top.gg/bot/807543126424158238">
-  <img src="https://top.gg/api/widget/807543126424158238.svg">
-</a>
 
 ## Moderation
 - Automatically detect phishing links in your Discord server and delete them using the [Phisherman API](http://phisherman.gg)
-- Using the [Dashboard](https://dash.eviebot.rocks/) set banned words and/or use our default list of banned words to protect your Discord server.
+- Using the [Dashboard](https://dash.eviebot.rocks/) set banned words and/or use our default list of banned words to protect your Discord server. (currently being redone)
 - Welcome new people that join your Discord server and set a custom message in the [Dashboard](https://dash.eviebot.rocks/)
 - Change the colour Evie uses for every embed in your server on the [Dashboard](https://dash.eviebot.rocks/)
 ## Utilities
