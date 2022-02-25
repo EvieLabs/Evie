@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import axios from "axios";
 import { SlashCommandBuilder } from "@discordjs/builders";
-const getJSON = require("get-json");
 import { embed } from "../tools";
 const ms = require("ms");
 import * as Hypixel from "hypixel-api-reborn";
@@ -163,14 +163,9 @@ module.exports = {
         interaction.options.getString("username") +
         "/raw";
       try {
-        getJSON(url, async function (error, response) {
+        axios.get(url).then(async (r) => {
+          const response = r.data;
           const username = interaction.options.getString("username");
-
-          if (error === null) {
-            axo.log("Fetched JSON for " + username);
-          } else {
-            axo.err("[Player Stats, Get JSON] " + error);
-          }
 
           const uuid: string = response.BASE_USER.uuid;
           const faceUrl = "https://crafatar.com/renders/body/" + uuid;

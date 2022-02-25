@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-const getJSON = require("get-json");
-import { embed } from "../tools";
-const ms = require("ms");
 import fetch from "node-fetch";
 import {
   MessageEmbed,

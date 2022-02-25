@@ -16,12 +16,12 @@
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
+    "axios": "^0.26.0",
     "currency-system": "^2.6.26",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
     "firebase-admin": "^10.0.1",
-    "get-json": "^1.0.1",
     "glob": "^7.2.0",
     "google-it": "^1.6.2",
     "hypixel-api-reborn": "^9.0.3",
