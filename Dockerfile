@@ -15,5 +15,8 @@ COPY . .
 # Compile typescript to javascript
 RUN yarn build
 
+# Install pm2
+RUN npm install pm2 -g
+
 # Entrypoint
 CMD [ "yarn", "docker" ]
