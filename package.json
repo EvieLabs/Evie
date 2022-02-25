@@ -1,16 +1,17 @@
 {
-  "name": "axo",
+  "name": "evie-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!  ",
   "main": "bin/index.js",
   "scripts": {
     "dev": "tsc && cd ./bin/ && node index.js",
-    "docker": "rm -rf ./bin/ && tsc && cd ./bin/ && pm2-runtime start index.js",
+    "build": "tsc",
+    "docker:run": "cd ./bin/ && pm2-runtime start index.js",
     "stop": "pm2 stop index"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tristan Camejo <contact@tristancamejo.com>",
+  "license": "Apache-2.0",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
