@@ -16,4 +16,4 @@ COPY . .
 RUN yarn build
 
 # Entrypoint
-CMD [ "yarn", "docker:run" ]
+CMD [ "yarn", "docker" ]
