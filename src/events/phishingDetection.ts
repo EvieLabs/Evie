@@ -16,48 +16,28 @@ limitations under the License.
 
 import { Message } from "discord.js";
 import * as evie from "../tools";
+import { extractHostname } from "../utils";
+const URL_REGEX =
+  /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+
 module.exports = {
   name: "messageCreate",
   once: false,
-  async execute(message: Message) {
-    if (message.author.bot) return;
-    if (message.inGuild()) {
-      if (await evie.getPhishingDetectionSwitch(message.member?.guild)) {
-        function extractHostname(url: string) {
-          var hostname: string;
-          //find & remove protocol (http, ftp, etc.) and get hostname
-          if (url.indexOf("//") > -1) {
-            hostname = url.split("/")[2];
-          } else {
-            hostname = url.split("/")[0];
-          }
-          //find & remove port number
-          hostname = hostname.split(":")[0];
-          //find & remove "?"
-          hostname = hostname.split("?")[0];
 
-          return hostname;
-        }
-        const urlRegex =
-          /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-        function linkify(text) {
-          return text.match(urlRegex, "");
-        }
-        const links = linkify(message.content);
-        if (links) {
-          links.forEach(async (element) => {
-            if (await evie.checkADomain(extractHostname(element))) {
-              try {
-                await message.delete();
-              } catch (error) {
-                message.channel.send(
-                  `${message.author} sent a known phishing link above, but I was unable to delete it due to a lack of permissions`
-                );
-              }
-            }
-          });
-        }
+  async execute(message: Message) {
+    if (message.author.bot || !message.inGuild()) return;
+    if (!(await evie.getPhishingDetectionSwitch(message.member?.guild))) return;
+    const links = message.content.match(URL_REGEX);
+    if (!links) return;
+    links.forEach(async (element) => {
+      if (!(await evie.checkADomain(extractHostname(element)))) return;
+      try {
+        await message.delete();
+      } catch (error) {
+        message.channel.send(
+          `${message.author} sent a known phishing link above, but I was unable to delete it due to a lack of permissions`
+        );
       }
-    }
+    });
   },
 };
