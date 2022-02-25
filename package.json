@@ -5,6 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "dev": "tsc && cd ./bin/ && node index.js",
+    "preflight": "node ./scripts/preflight.js",
     "build": "tsc",
     "docker:run": "cd ./bin/ && pm2-runtime start index.js",
     "stop": "pm2 stop index"
