@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// require the needed discord.js classes
-const { Client, Intents, Collection, Permissions } = require("discord.js");
+import { Client, Intents, Collection, Permissions } from "discord.js";
 const fs = require("fs");
-require("dotenv").config();
 import { Interaction } from "discord.js";
 const mongoose = require("mongoose");
 import * as evie from "./tools";
