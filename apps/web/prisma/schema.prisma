@@ -1,0 +1,24 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Cosmetic {
+    id      String   @id @unique
+    type    String
+    texture String   @db.LongText
+    Players Player[]
+}
+
+model Player {
+    uuid            String     @id @unique
+    activeCosmetics Json
+    ownedCosmetics  Cosmetic[]
+    dev             Boolean
+    eviePlus        Boolean
+    media           Boolean
+}

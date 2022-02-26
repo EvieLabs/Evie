@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
+import "dotenv/config";
 import { Client, Intents, Collection, Permissions } from "discord.js";
-const fs = require("fs");
+import fs from "fs";
 import { Interaction } from "discord.js";
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 import * as evie from "./tools";
 import * as config from "./botconfig/emojis.json";
 import * as config2 from "./botconfig/embed.json";
@@ -32,26 +32,31 @@ export function getLang() {
 
 // create a new Discord client
 
-export const client = new Client(
-  {
-    intents: [
-      Intents.FLAGS.GUILDS,
-      "GUILD_MESSAGES",
-      "GUILD_MEMBERS",
-      Intents.FLAGS.GUILD_VOICE_STATES,
-    ],
-  },
-  { shardCount: "auto" }
-);
-client.tristan = "Hey, This is a test!";
-client.allEmojis = require("./botconfig/emojis.json");
+export const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    "GUILD_MESSAGES",
+    "GUILD_MEMBERS",
+    Intents.FLAGS.GUILD_VOICE_STATES,
+  ],
+});
+
+declare module "discord.js" {
+  interface Client {
+    commands: Collection<string, NodeRequire>;
+    Ecommands: Collection<string, NodeRequire>;
+    tsmpmenus: Collection<string, NodeRequire>;
+    menus: Collection<string, NodeRequire>;
+  }
+}
+
 client.commands = new Collection();
 client.Ecommands = new Collection();
 client.tsmpmenus = new Collection();
 client.menus = new Collection();
 const eventFiles = fs
   .readdirSync("./events")
-  .filter((file) => file.endsWith(".js"));
+  .filter((file: string) => file.endsWith(".js"));
 
 // Load Events
 
@@ -98,9 +103,9 @@ export const eModel = mongoose.model("guildSettings", embedColour);
 
 // Money
 
-const CurrencySystem = require("currency-system");
+import CurrencySystem from "currency-system";
 const cs = new CurrencySystem();
-CurrencySystem.cs.on("debug", (debug, error) => {
+CurrencySystem.cs.on("debug", (debug: any, error: any) => {
   console.log(debug);
   if (error) console.error(error);
 });
@@ -108,19 +113,19 @@ CurrencySystem.cs.on("debug", (debug, error) => {
 // Status
 
 client.once("ready", () => {
+  if (client.user == null) {
+    throw new Error("Client user is null");
+    return process.exit(1);
+  }
+
   try {
     setInterval(() => {
-      const activities_list = [
-        `your slash commands`,
-        `eviebot.rocks`,
-        `/help`,
-        //``
-      ];
+      const activities_list = [`your slash commands`, `eviebot.rocks`, `/help`];
       const index = Math.floor(
         Math.random() * (activities_list.length - 1) + 1
       );
-      client.user.setActivity(activities_list[index], { type: "LISTENING" });
-    }, 50000); //Timer
+      client.user!.setActivity(activities_list[index], { type: "LISTENING" });
+    }, 50000);
   } catch (error) {
     console.log(error);
   }
@@ -208,7 +213,7 @@ client.on("interactionCreate", async (interaction) => {
 
 const commandFiles = fs
   .readdirSync("./commands")
-  .filter((file) => file.endsWith(".js"));
+  .filter((file: string) => file.endsWith(".js"));
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
@@ -219,7 +224,7 @@ for (const file of commandFiles) {
 
 const EcommandFiles = fs
   .readdirSync("./Ecommands")
-  .filter((file) => file.endsWith(".js"));
+  .filter((file: string) => file.endsWith(".js"));
 
 for (const file of EcommandFiles) {
   const Ecommand = require(`./Ecommands/${file}`);
@@ -232,7 +237,7 @@ for (const file of EcommandFiles) {
 
 const ctxmenus = fs
   .readdirSync("./ctxmenus")
-  .filter((file) => file.endsWith(".js"));
+  .filter((file: string) => file.endsWith(".js"));
 
 for (const file of ctxmenus) {
   const ctxmenu = require(`./ctxmenus/${file}`);
@@ -243,7 +248,7 @@ for (const file of ctxmenus) {
 
 const tsmpmenu = fs
   .readdirSync("./tsmpmenu")
-  .filter((file) => file.endsWith(".js"));
+  .filter((file: string) => file.endsWith(".js"));
 
 for (const file of tsmpmenu) {
   const tsmpmenu = require(`./tsmpmenu/${file}`);

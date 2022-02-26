@@ -1,34 +1,22 @@
 {
-  "compilerOptions": { /* Docs: https://www.typescriptlang.org/tsconfig */
-    "target": "ES2020",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2021",
     "module": "commonjs",
-    "outDir": "bin",
-    "rootDir": "src",
-    "strict": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "checkJs": true,
-    "allowJs": true,
-    "resolveJsonModule": true,
     "moduleResolution": "node",
-    "types": [
-      "node"
-    ],
-    "lib": [
-      "es6"
-    ],
+    "lib": ["ES2021", "ESNext.Array"],
+    "strict": true,
+    "outDir": "dist",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowUnreachableCode": true,
-     "useUnknownInCatchVariables": false,  // TypeScript 4.4+ only!
-},
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "<node_internals>/**",
-  ]
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": false,
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "src/typings"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.json"]
 }
