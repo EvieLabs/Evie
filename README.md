@@ -1,4 +1,7 @@
-# Evie Bot
+# Evie
+
+# Contributing
+> Evie is currently being [re-wrote](https://github.com/twisttaan/Evie/pull/28) in [this branch](https://github.com/twisttaan/Evie/tree/rewrite)
 
 ## Moderation
 - Automatically detect phishing links in your Discord server and delete them using the [Phisherman API](http://phisherman.gg)
