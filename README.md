@@ -12,9 +12,11 @@ The current checklist lives in [this pr](https://github.com/twisttaan/Evie/pull/
 2. Clone the repo, and switch to the `rewrite` branch.
 3. Install deps with by typing `yarn`.
 4. Create a `.env` file with the keys of [`example.env`](https://github.com/twisttaan/Evie/blob/rewrite/example.env), make sure to place it in `apps/bot`.
-5. Code away.
-6. Push your changes.
-7. Make a PR.
+5. Go into the `apps/bot` directory. `cd apps/bot`
+6. Type `npx prisma generate && npx prisma db push`
+7. Code away.
+8. Push your changes.
+9. Make a PR.
 
 ## Need help?
 
