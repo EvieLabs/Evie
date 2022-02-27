@@ -40,7 +40,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://evie.pw"><img src="https://avatars.githubusercontent.com/u/69066026?v=4?s=100" width="100px;" alt=""/><br /><sub><b>tristan</b></sub></a><br /><a href="#projectManagement-twisttaan" title="Project Management">📆</a></td>
+    <td align="center"><a href="http://evie.pw"><img src="https://avatars.githubusercontent.com/u/69066026?v=4?s=100" width="100px;" alt=""/><br /><sub><b>tristan</b></sub></a><br /><a href="#projectManagement-twisttaan" title="Project Management">📆</a> <a href="https://github.com/twisttaan/Evie/commits?author=twisttaan" title="Code">💻</a></td>
   </tr>
 </table>
 
