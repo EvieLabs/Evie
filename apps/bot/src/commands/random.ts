@@ -19,8 +19,6 @@ import { embed } from "../tools";
 
 import { MessageEmbed } from "discord.js";
 import { axo } from "../axologs";
-const CurrencySystem = require("currency-system");
-const cs = new CurrencySystem();
 
 module.exports = {
   data: new SlashCommandBuilder()

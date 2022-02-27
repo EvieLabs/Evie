@@ -385,6 +385,18 @@
   resolved "https://registry.yarnpkg.com/@panva/asn1.js/-/asn1.js-1.0.0.tgz#dd55ae7b8129e02049f009408b97c61ccf9032f6"
   integrity sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==
 
+"@prisma/client@^3.10.0":
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-3.10.0.tgz#4782fe6f1b0e43c2a11a75ad4bb1098599d1dfb1"
+  integrity sha512-6P4sV7WFuODSfSoSEzCH1qfmWMrCUBk1LIIuTbQf6m1LI/IOpLN4lnqGDmgiBGprEzuWobnGLfe9YsXLn0inrg==
+  dependencies:
+    "@prisma/engines-version" "3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86"
+
+"@prisma/engines-version@3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86":
+  version "3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86"
+  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86.tgz#82750856fa637dd89b8f095d2dcc6ac0631231c6"
+  integrity sha512-cVYs5gyQH/qyut24hUvDznCfPrWiNMKNfPb9WmEoiU6ihlkscIbCfkmuKTtspVLWRdl0LqjYEC7vfnPv17HWhw==
+
 "@prisma/engines@3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86":
   version "3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86"
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86.tgz#2964113729a78b8b21e186b5592affd1fde73c16"
@@ -1279,9 +1291,9 @@ dashdash@^1.12.0:
     assert-plus "^1.0.0"
 
 date-and-time@^2.0.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-2.1.2.tgz#5b0e71296bbdd66ff1ce0e456c77d40f1479db5a"
-  integrity sha512-YlQUtuqYGPR58I7jzx4TIjknN9wCKjwewiylIp+P4xMuO23mlZje3Qe9gYCKp/6ncbeNpU8ZnPdhQNZnVphveQ==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-2.2.0.tgz#8b64dd8a55415da87d1f7eae2066ab20a3cf0430"
+  integrity sha512-LRljAtx+9iz1Uztw5jUuVjLyv8IBQEUNGGc+QteEfZYj/UndICRPVK3/3++BQQq8dsc5reJDZ3bRBAZObbcAHQ==
 
 debug@3.1.0:
   version "3.1.0"
@@ -1701,9 +1713,9 @@ eslint-plugin-react@7.28.0:
     string.prototype.matchall "^4.0.6"
 
 eslint-plugin-react@^7.27.0:
-  version "7.29.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.29.1.tgz#6c40bc83142bb63d132a1b3565e2ea655411f800"
-  integrity sha512-WtzRpHMhsOX05ZrkyaaqmLl2uXGqmYooCfBxftJKlkYdsltiufGgfU7uuoHwR2lBam2Kh/EIVID4aU9e3kbCMA==
+  version "7.29.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.29.2.tgz#2d4da69d30d0a736efd30890dc6826f3e91f3f7c"
+  integrity sha512-ypEBTKOy5liFQXZWMchJ3LN0JX1uPI6n7MN7OPHKacqXAxq5gYC30TdO7wqGYQyxD1OrzpobdHC3hDmlRWDg9w==
   dependencies:
     array-includes "^3.1.4"
     array.prototype.flatmap "^1.2.5"

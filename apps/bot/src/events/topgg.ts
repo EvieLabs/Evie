@@ -17,9 +17,6 @@ limitations under the License.
 import { MessageEmbed } from "discord.js";
 const DBL = require("top.gg");
 
-const CurrencySystem = require("currency-system");
-const cs = new CurrencySystem();
-
 module.exports = {
   name: "ready",
   once: true,
@@ -48,18 +45,10 @@ module.exports = {
 
       const announceChannel = client.channels.cache.get("905017507318997053");
 
-      let result = await cs.addMoney({
-        user: votedUser,
-        amount: voteAmount,
-        wheretoPutMoney: "wallet",
-      });
-
       // Announce Channel
 
       try {
-        announceChannel.send(
-          `Thanks for voting <@${votedUser.id}>! You earnt <:eviecoin:900886713096888371> 45,000 Evie Coins for that!`
-        );
+        announceChannel.send(`Thanks for voting <@${votedUser.id}>!`);
       } catch (error) {
         console.log(error);
       }
@@ -67,9 +56,7 @@ module.exports = {
       // Direct Message
 
       try {
-        votedUser.message(
-          `Thanks for voting <@${votedUser.id}>! You earnt <:eviecoin:900886713096888371> 45,000 Evie Coins for that!`
-        );
+        votedUser.message(`Thanks for voting <@${votedUser.id}>!`);
       } catch (error) {
         console.log(error);
       }

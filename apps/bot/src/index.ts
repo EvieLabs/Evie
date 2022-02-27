@@ -23,6 +23,7 @@ import * as config from "./botconfig/emojis.json";
 import * as config2 from "./botconfig/embed.json";
 import * as config3 from "./botconfig/filters.json";
 import * as config4 from "./botconfig/settings.json";
+import { EvieCommand, EvieContextMenu } from "./types";
 
 let langsSettings = {};
 
@@ -43,10 +44,10 @@ export const client = new Client({
 
 declare module "discord.js" {
   interface Client {
-    commands: Collection<string, NodeRequire>;
-    Ecommands: Collection<string, NodeRequire>;
-    tsmpmenus: Collection<string, NodeRequire>;
-    menus: Collection<string, NodeRequire>;
+    commands: Collection<string, EvieCommand>;
+    Ecommands: Collection<string, EvieCommand>;
+    tsmpmenus: Collection<string, EvieContextMenu>;
+    menus: Collection<string, EvieContextMenu>;
   }
 }
 
@@ -69,53 +70,11 @@ for (const file of eventFiles) {
   }
 }
 
-// Databases
-
-mongoose.connect(process.env.MONGO_URL);
-
-const Schema = mongoose.Schema;
-
-const embedColour = new Schema({
-  // server id
-  serverid: String,
-  // embed custom colour
-  color: String,
-  // banned words
-  bannedWordList: String,
-  defaultBannedWordList: Boolean,
-  // welcome message
-  welcomeMessage: String,
-  welcomeMessageEnabled: Boolean,
-  welcomeChannel: String,
-  welcomeMessagePingEnabled: Boolean,
-  // goodbye message
-  goodbyeMessage: String,
-  goodbyeMessageEnabled: Boolean,
-  goodbyeChannel: String,
-  // phishing detection
-  phishingDetectionEnabled: Boolean,
-  // Join Role
-  joinRoleID: String,
-  joinRoleEnabled: Boolean,
-});
-
-export const eModel = mongoose.model("guildSettings", embedColour);
-
-// Money
-
-import CurrencySystem from "currency-system";
-const cs = new CurrencySystem();
-CurrencySystem.cs.on("debug", (debug: any, error: any) => {
-  console.log(debug);
-  if (error) console.error(error);
-});
-
 // Status
 
 client.once("ready", () => {
   if (client.user == null) {
     throw new Error("Client user is null");
-    return process.exit(1);
   }
 
   try {
@@ -130,12 +89,6 @@ client.once("ready", () => {
     console.log(error);
   }
 });
-
-cs.setMongoURL(process.env.MONGO_URL);
-//sets default wallet amount when ever new user is created.
-cs.setDefaultWalletAmount(1000);
-//sets default bank amount when ever new user is created.
-cs.setDefaultBankAmount(0);
 
 // CTX Menu Handler
 client.on("interactionCreate", async (interaction: Interaction) => {
