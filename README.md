@@ -1,6 +1,6 @@
 # Evie Re-write
 
-> Hey thanks for being intersted in coding the future of Evie!
+> Hey thanks for being interested in coding the future of Evie!
 
 ## What needs to be done
 
