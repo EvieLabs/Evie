@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "twisttaan",
+      "name": "tristan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69066026?v=4",
+      "profile": "http://evie.pw",
+      "contributions": [
+        "projectManagement",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Evie",
+  "projectOwner": "twisttaan",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
