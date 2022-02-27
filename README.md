@@ -11,7 +11,7 @@ The current checklist lives in [this pr](https://github.com/twisttaan/Evie/pull/
 1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
 2. Clone the repo, and switch to the `rewrite` branch.
 3. Install deps with by typing `yarn`.
-4. Create a `.env` file with the keys of [`example.env`](https://github.com/twisttaan/Evie/blob/rewrite/example.env).
+4. Create a `.env` file with the keys of [`example.env`](https://github.com/twisttaan/Evie/blob/rewrite/example.env), make sure to place it in `apps/bot`.
 5. Code away.
 6. Push your changes.
 7. Make a PR.
