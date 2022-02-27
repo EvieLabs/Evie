@@ -1,8 +1,24 @@
-import { Guild, Role, Snowflake } from "discord.js";
+/* 
+Copyright 2022 Tristan Camejo
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import type { Guild, Role, Snowflake } from "discord.js";
 import { prisma } from ".";
 import { Success } from "../../types";
 
-export async function isJoinRoleOn(guild: Guild): Promise<boolean> {
+async function isJoinRoleOn(guild: Guild): Promise<boolean> {
   try {
     const result = await prisma.guildsettings.findFirst({
       where: {
@@ -15,7 +31,7 @@ export async function isJoinRoleOn(guild: Guild): Promise<boolean> {
   }
 }
 
-export async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
+async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
   try {
     const result = await prisma.guildsettings.findFirst({
       where: {
@@ -28,12 +44,10 @@ export async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
   }
 }
 
-export async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
+async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
   try {
     const result = await prisma.guildsettings.update({
-      where: {
-        serverid: guild.id,
-      },
+      where: {},
       data: {
         joinRoleID: role.id,
       },
@@ -44,7 +58,7 @@ export async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
   }
 }
 
-export async function setJoinRoleEnable(
+async function setJoinRoleEnable(
   guild: Guild,
   enable: boolean
 ): Promise<Success> {
@@ -68,3 +82,10 @@ export async function setJoinRoleEnable(
     };
   }
 }
+
+export const RolesDB = {
+  isJoinRoleOn,
+  getJoinRole,
+  setJoinRole,
+  setJoinRoleEnable,
+};

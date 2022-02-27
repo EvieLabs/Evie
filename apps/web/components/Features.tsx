@@ -6,7 +6,6 @@ import {
   UserIcon,
 } from "@heroicons/react/outline";
 import { Tooltip } from "@mui/material";
-import ReactCountryFlag from "react-country-flag";
 
 const features = [
   {

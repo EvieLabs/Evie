@@ -19,7 +19,7 @@ const glob = require("glob");
 const path = require("path");
 
 function getDirectories(src, callback) {
-  glob(src + "/**/*", callback);
+  glob(src + "/src/**/*", callback);
 }
 
 const header = `/* 

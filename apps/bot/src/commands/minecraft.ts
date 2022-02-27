@@ -22,7 +22,7 @@ import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";
 import * as evie from "../tools";
 import { CommandInteraction, User } from "discord.js";
-import imgur from "imgur";
+const imgur = require("imgur");
 import { axo } from "../axologs";
 import fetch from "node-fetch";
 declare global {
@@ -95,7 +95,7 @@ module.exports = {
             .setRequired(true)
         )
     ),
-  async execute(interaction) {
+  async execute(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
     if (subcommand == "serverstats") {
       let realInput: string =
@@ -109,7 +109,7 @@ module.exports = {
           const base64Data = data!.replace(/^data:image\/png;base64,/, "");
           imgur
             .uploadBase64(base64Data)
-            .then(async (json) => {
+            .then(async (json: any) => {
               axo.log("[SERVER STATS CACHE] " + json.link);
               const serverIconLink = json.link;
               let exampleEmbed = await embed(interaction.guild);
@@ -148,7 +148,7 @@ module.exports = {
                 embeds: [exampleEmbed],
               });
             })
-            .catch((error) => {
+            .catch((error: any) => {
               axo.err(error.message);
             });
         })

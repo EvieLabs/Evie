@@ -17,7 +17,7 @@ limitations under the License.
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { embed } from "../tools";
 
-import { MessageEmbed } from "discord.js";
+import { Client, CommandInteraction, MessageEmbed } from "discord.js";
 import { axo } from "../axologs";
 const CurrencySystem = require("currency-system");
 const cs = new CurrencySystem();
@@ -26,7 +26,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("inventory")
     .setDescription("View your inventory"),
-  async execute(interaction, client) {
+  async execute(interaction: CommandInteraction, client: Client) {
     // Axolotl Fetching Mechanic
 
     let exampleEmbed = await embed(interaction.guild);

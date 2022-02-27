@@ -16,14 +16,7 @@ limitations under the License.
 
 import { SlashCommandBuilder } from "@discordjs/builders";
 import fetch from "node-fetch";
-import {
-  MessageEmbed,
-  Channel,
-  Interaction,
-  CommandInteraction,
-} from "discord.js";
-import { axo } from "../axologs";
-import { debuglog } from "util";
+import { CommandInteraction } from "discord.js";
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("fun")

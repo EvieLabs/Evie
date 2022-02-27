@@ -17,7 +17,7 @@ limitations under the License.
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { embed } from "../tools";
 
-import { MessageEmbed } from "discord.js";
+import { CommandInteraction } from "discord.js";
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -31,8 +31,8 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand.setName("config").setDescription("Need help configurating me?")
     ),
-  async execute(interaction) {
-    const exampleEmbed = await embed(interaction.guild);
+  async execute(interaction: CommandInteraction) {
+    const exampleEmbed = await embed(interaction.guild ?? null);
     const subcommand = interaction.options.getSubcommand();
     switch (subcommand) {
       case "commands":

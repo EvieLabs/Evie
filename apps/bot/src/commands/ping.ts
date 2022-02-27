@@ -16,13 +16,25 @@ limitations under the License.
 
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { embed } from "../tools";
+import { Command } from "@sapphire/framework";
+import type { Message } from "discord.js";
 
-module.exports = {
-  data: new SlashCommandBuilder().setName("ping").setDescription("Pong!"),
-  async execute(interaction) {
-    await interaction.reply({
-      content: `Pong! That took me ${interaction.client.ws.ping.toString()}ms`,
-      ephemeral: true,
+export class PingCommand extends Command {
+  public constructor(context: Command.Context, options: Command.Options) {
+    super(context, {
+      ...options,
+      name: "ping",
+      aliases: ["pong"],
+      description: "ping pong",
     });
-  },
-};
+  }
+  public async messageRun(message: Message) {
+    const msg = await message.channel.send("Ping?");
+
+    const content = `Pong from JavaScript! Bot Latency ${Math.round(
+      this.container.client.ws.ping
+    )}ms. API Latency ${msg.createdTimestamp - message.createdTimestamp}ms.`;
+
+    return msg.edit(content);
+  }
+}

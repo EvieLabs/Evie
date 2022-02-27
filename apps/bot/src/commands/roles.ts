@@ -25,10 +25,10 @@ import {
   MessageSelectMenu,
   SelectMenuInteraction,
   Permissions,
-  GuildMember,
   Message,
   MessageComponentInteraction,
   Guild,
+  Interaction,
 } from "discord.js";
 module.exports = {
   data: new SlashCommandBuilder()
@@ -116,7 +116,7 @@ module.exports = {
         let roleArray: Role[] = [role];
 
         interaction.reply(await prepScreen(interaction.guild!, channel, msg));
-        const filter = (i) =>
+        const filter = (i: any) =>
           i.customId === "confirmpreprole" ||
           i.customId === "cancelpreprole" ||
           (i.customId === "addrolepreprole" &&
@@ -180,7 +180,7 @@ module.exports = {
                   embeds: [e],
                   components: [row],
                 });
-                const filter = (i) =>
+                const filter = (i: any) =>
                   i.customId === "addToRoleArray" &&
                   i.user.id === interaction.user.id &&
                   i.channel.id === interaction.channel!.id;

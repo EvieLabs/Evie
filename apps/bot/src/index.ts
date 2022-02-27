@@ -14,15 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import "dotenv/config";
-import { Client, Intents, Collection, Permissions } from "discord.js";
+import { Intents, Collection, Permissions } from "discord.js";
+import { SapphireClient } from "@sapphire/framework";
 import fs from "fs";
 import { Interaction } from "discord.js";
-import mongoose from "mongoose";
-import * as evie from "./tools";
-import * as config from "./botconfig/emojis.json";
-import * as config2 from "./botconfig/embed.json";
-import * as config3 from "./botconfig/filters.json";
-import * as config4 from "./botconfig/settings.json";
 import { EvieCommand, EvieContextMenu } from "./types";
 
 let langsSettings = {};
@@ -33,7 +28,7 @@ export function getLang() {
 
 // create a new Discord client
 
-export const client = new Client({
+export const client = new SapphireClient({
   intents: [
     Intents.FLAGS.GUILDS,
     "GUILD_MESSAGES",

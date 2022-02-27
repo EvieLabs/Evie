@@ -19,7 +19,6 @@ import { CommandInteraction } from "discord.js";
 import { embed } from "../tools";
 
 const googleIt = require("google-it");
-const { MessageEmbed } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -37,8 +36,11 @@ module.exports = {
     exampleEmbed.setTitle("Google Search Results");
 
     googleIt({ query: interaction.options.getString("query") })
-      .then((results) => {
-        results.forEach(function (item, index) {
+      .then((results: any[]) => {
+        results.forEach(function (
+          item: { title: string; link: string },
+          index: number
+        ) {
           exampleEmbed.addField(
             index + 1 + ": " + item.title,
             "<" + item.link + ">"
@@ -47,8 +49,6 @@ module.exports = {
 
         interaction.editReply({ embeds: [exampleEmbed] });
       })
-      .catch((e) => {
-        // any possible errors that might have occurred (like no Internet connection)
-      });
+      .catch((e: any) => {});
   },
 };

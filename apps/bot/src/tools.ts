@@ -22,7 +22,6 @@ import {
   GuildMember,
   Role,
 } from "discord.js";
-import { eModel } from "./index";
 import { client } from "./index";
 const { axo } = require("./axologs");
 import fetch from "node-fetch";
@@ -263,84 +262,9 @@ export const badwords: Array<string> = [
 // Status
 
 export async function prodMode() {
-  if (client.user.id == `900875807969406987`) {
+  if (client.user?.id == `900875807969406987`) {
     return false;
   } else {
     return true;
   }
-}
-
-// Get If Default Banned Word List is enabled
-
-export async function getDBL(guild: any) {
-  try {
-    const result = await eModel.find({
-      serverid: guild.id,
-    });
-    let defaultBannedWordList;
-
-    if (typeof result[0].defaultBannedWordList == "undefined") {
-      defaultBannedWordList = false;
-    } else {
-      defaultBannedWordList = result[0].defaultBannedWordList;
-    }
-
-    return defaultBannedWordList || false;
-  } catch (error) {
-    return false;
-  }
-}
-
-// Get Banned Word List
-
-export async function getBL(guild: any) {
-  try {
-    const result = await eModel.find({
-      serverid: guild.id,
-    });
-    let bannedWordList;
-
-    if (typeof result[0].bannedWordList == "undefined") {
-      bannedWordList = [];
-    } else {
-      bannedWordList = result[0].bannedWordList;
-    }
-
-    return bannedWordList.split(",") || false;
-  } catch (error) {
-    return [];
-  }
-}
-
-// Get Embed Color
-
-export async function getEC(guild: any) {
-  try {
-    const result = await eModel.find({
-      serverid: guild.id,
-    });
-    let colour;
-
-    if (typeof result[0].color == "undefined") {
-      colour = "#f47fff";
-    } else {
-      colour = result[0].color;
-    }
-
-    return colour.toString() || false;
-  } catch (error) {
-    return "#f47fff";
-  }
-}
-
-// Default Embed
-
-export async function embed(guild: Guild): Promise<MessageEmbed> {
-  return new MessageEmbed()
-    .setColor(guild ? await getEC(guild) : "#f47fff")
-    .setTimestamp()
-    .setFooter({
-      text: "Evie",
-      iconURL: "https://www.eviebot.rocks/assets/EvieIcon.png",
-    });
 }

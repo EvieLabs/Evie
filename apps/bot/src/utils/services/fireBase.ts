@@ -14,18 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
-import { embed } from "../tools";
-
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("privacy")
-    .setDescription("View my Privacy Policy"),
-  async execute(interaction: CommandInteraction) {
-    await interaction.reply({
-      content: "You can read it over here https://privacy.eviebot.rocks/",
-      ephemeral: true,
-    });
-  },
-};
+export async function setupFirebase() {
+  const { initializeApp, cert } = await import("firebase-admin/app");
+  if (!process.env.FBA) return;
+  initializeApp({
+    credential: cert(JSON.parse(process.env.FBA)),
+    projectId: "tristan-smp",
+  });
+}
