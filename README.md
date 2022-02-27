@@ -15,8 +15,9 @@ The current checklist lives in [this pr](https://github.com/twisttaan/Evie/pull/
 5. Go into the `apps/bot` directory. `cd apps/bot`
 6. Type `npx prisma generate && npx prisma db push`
 7. Code away.
-8. Push your changes.
-9. Make a PR.
+8. Test with `yarn dev`
+9. Push your changes.
+10. Make a PR.
 
 ## Need help?
 
