@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-function hexStringToHexNumber(hexString: string): number {
-  return parseInt(hexString, 16);
+class TeamEvie {
+  public static readonly STAFF_ID: string = "819442569128706068";
 }
-
-export const ColorUtils = {
-  hexStringToHexNumber,
-};

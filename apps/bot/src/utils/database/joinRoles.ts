@@ -15,16 +15,13 @@ limitations under the License.
 */
 
 import type { Guild, Role, Snowflake } from "discord.js";
-import { prisma } from ".";
+import { dbUtils, prisma } from ".";
 import { Success } from "../../types";
 
 async function isJoinRoleOn(guild: Guild): Promise<boolean> {
   try {
-    const result = await prisma.guildsettings.findFirst({
-      where: {
-        serverid: guild.id,
-      },
-    });
+    const result = await dbUtils.getGuildSettings(guild);
+
     return result?.joinRoleEnabled || false;
   } catch (error) {
     return false;
@@ -33,11 +30,8 @@ async function isJoinRoleOn(guild: Guild): Promise<boolean> {
 
 async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
   try {
-    const result = await prisma.guildsettings.findFirst({
-      where: {
-        serverid: guild.id,
-      },
-    });
+    const result = await dbUtils.getGuildSettings(guild);
+
     return result?.joinRoleID || null;
   } catch (error) {
     return false || null;

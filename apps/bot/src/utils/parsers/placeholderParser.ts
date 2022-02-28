@@ -14,10 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-function hexStringToHexNumber(hexString: string): number {
-  return parseInt(hexString, 16);
-}
+import { GuildMember } from "discord.js";
 
-export const ColorUtils = {
-  hexStringToHexNumber,
-};
+export default async function placeholderParser(
+  input: string,
+  member: GuildMember
+) {
+  input = input.replace("${mentionUser}", `<@${member.user.id}>`);
+  input = input.replace("${displayName}", member.user.username);
+
+  return input;
+}

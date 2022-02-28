@@ -14,19 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Guild, Snowflake } from "discord.js";
+import { Guild } from "discord.js";
 import { dbUtils } from ".";
 
-/** Gets the embed color for the specified guild */
-async function getEmbedColor(guild: Guild): Promise<string | null> {
+/** Gets the ban words list for the specified guild */
+async function getBannedWords(guild: Guild): Promise<string[] | []> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
-    return result?.color || null;
+
+    return result?.bannedWordList?.split(",") || [];
   } catch (error) {
-    return null;
+    return [];
   }
 }
 
-export const MiscDB = {
-  getEmbedColor,
+/** Gets the phishing detection boolean for the specified guild */
+async function getPhishingDetectionSwitch(guild: any): Promise<boolean> {
+  try {
+    const result = await dbUtils.getGuildSettings(guild);
+
+    return result?.phishingDetectionEnabled || false;
+  } catch (error) {
+    return false;
+  }
+}
+
+export const modDB = {
+  getBannedWords,
+  getPhishingDetectionSwitch,
 };

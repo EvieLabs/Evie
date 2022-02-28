@@ -14,5 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PrismaClient } from "@prisma/client";
+import { guildsettings, PrismaClient } from "@prisma/client";
+import type { Guild } from "discord.js";
 export const prisma = new PrismaClient();
+
+async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
+  return await prisma.guildsettings.findFirst({
+    where: {
+      serverid: guild.id,
+    },
+  });
+}
+
+export const dbUtils = { getGuildSettings };

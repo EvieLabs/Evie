@@ -14,20 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import "dotenv/config";
-import { Intents, Collection, Permissions } from "discord.js";
+import { Intents, Collection } from "discord.js";
 import { SapphireClient } from "@sapphire/framework";
 import fs from "fs";
 import { Interaction } from "discord.js";
 import { EvieCommand, EvieContextMenu } from "./types";
 
-let langsSettings = {};
-
-export function getLang() {
-  return langsSettings;
-}
-
-// create a new Discord client
-
+/** The Sapphire Client */
 export const client = new SapphireClient({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -37,33 +30,33 @@ export const client = new SapphireClient({
   ],
 });
 
-declare module "discord.js" {
-  interface Client {
-    commands: Collection<string, EvieCommand>;
-    Ecommands: Collection<string, EvieCommand>;
-    tsmpmenus: Collection<string, EvieContextMenu>;
-    menus: Collection<string, EvieContextMenu>;
-  }
-}
+// declare module "discord.js" {
+//   interface Client {
+//     commands: Collection<string, EvieCommand>;
+//     Ecommands: Collection<string, EvieCommand>;
+//     tsmpmenus: Collection<string, EvieContextMenu>;
+//     menus: Collection<string, EvieContextMenu>;
+//   }
+// }
 
-client.commands = new Collection();
-client.Ecommands = new Collection();
-client.tsmpmenus = new Collection();
-client.menus = new Collection();
-const eventFiles = fs
-  .readdirSync("./events")
-  .filter((file: string) => file.endsWith(".js"));
+// client.commands = new Collection();
+// client.Ecommands = new Collection();
+// client.tsmpmenus = new Collection();
+// client.menus = new Collection();
+// const eventFiles = fs
+//   .readdirSync("./events")
+//   .filter((file: string) => file.endsWith(".js"));
 
-// Load Events
+// // Load Events
 
-for (const file of eventFiles) {
-  const event = require(`./events/${file}`);
-  if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
-  } else {
-    client.on(event.name, (...args) => event.execute(...args));
-  }
-}
+// for (const file of eventFiles) {
+//   const event = require(`./events/${file}`);
+//   if (event.once) {
+//     client.once(event.name, (...args) => event.execute(...args));
+//   } else {
+//     client.on(event.name, (...args) => event.execute(...args));
+//   }
+// }
 
 // Status
 
@@ -85,124 +78,125 @@ client.once("ready", () => {
   }
 });
 
-// CTX Menu Handler
-client.on("interactionCreate", async (interaction: Interaction) => {
-  if (!interaction.isContextMenu()) return;
-  if (client.menus.get(interaction.commandName)) {
-    const command = client.menus.get(interaction.commandName);
+// // CTX Menu Handler
+// client.on("interactionCreate", async (interaction: Interaction) => {
+//   if (!interaction.isContextMenu()) return;
+//   if (client.menus.get(interaction.commandName)) {
+//     const command = client.menus.get(interaction.commandName);
 
-    if (!command) return;
+//     if (!command) return;
 
-    try {
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content:
-          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
-        ephemeral: true,
-      });
-    }
-  } else {
-    const command = client.tsmpmenus.get(interaction.commandName);
+//     try {
+//       await command.execute(interaction);
+//     } catch (error) {
+//       console.error(error);
+//       await interaction.reply({
+//         content:
+//           "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
+//         ephemeral: true,
+//       });
+//     }
+//   } else {
+//     const command = client.tsmpmenus.get(interaction.commandName);
 
-    if (!command) return;
-    try {
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content:
-          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
-        ephemeral: true,
-      });
-    }
-  }
-});
+//     if (!command) return;
+//     try {
+//       await command.execute(interaction);
+//     } catch (error) {
+//       console.error(error);
+//       await interaction.reply({
+//         content:
+//           "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
+//         ephemeral: true,
+//       });
+//     }
+//   }
+// });
 
-// Slash Command Handler
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
+// // Slash Command Handler
+// client.on("interactionCreate", async (interaction) => {
+//   if (!interaction.isCommand()) return;
 
-  if (client.commands.get(interaction.commandName)) {
-    const command = client.commands.get(interaction.commandName);
+//   if (client.commands.get(interaction.commandName)) {
+//     const command = client.commands.get(interaction.commandName);
 
-    if (!command) return;
+//     if (!command) return;
 
-    try {
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content:
-          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
-        ephemeral: true,
-      });
-    }
-  } else {
-    const command = client.Ecommands.get(interaction.commandName);
+//     try {
+//       await command.execute(interaction);
+//     } catch (error) {
+//       console.error(error);
+//       await interaction.reply({
+//         content:
+//           "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
+//         ephemeral: true,
+//       });
+//     }
+//   } else {
+//     const command = client.Ecommands.get(interaction.commandName);
 
-    if (!command) return;
+//     if (!command) return;
 
-    try {
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content:
-          "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
-        ephemeral: true,
-      });
-    }
-  }
-});
+//     try {
+//       await command.execute(interaction);
+//     } catch (error) {
+//       console.error(error);
+//       await interaction.reply({
+//         content:
+//           "Something went wrong! Please alert this to staff in https://discord.gg/82Crd8tZRF",
+//         ephemeral: true,
+//       });
+//     }
+//   }
+// });
 
-// Load Commands
+// // Load Commands
 
-const commandFiles = fs
-  .readdirSync("./commands")
-  .filter((file: string) => file.endsWith(".js"));
+// const commandFiles = fs
+//   .readdirSync("./commands")
+//   .filter((file: string) => file.endsWith(".js"));
 
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  // set a new item in the Collection
-  // with the key as the command name and the value as the exported module
-  client.commands.set(command.data.name, command);
-}
+// for (const file of commandFiles) {
+//   const command = require(`./commands/${file}`);
+//   // set a new item in the Collection
+//   // with the key as the command name and the value as the exported module
+//   client.commands.set(command.data.name, command);
+// }
 
-const EcommandFiles = fs
-  .readdirSync("./Ecommands")
-  .filter((file: string) => file.endsWith(".js"));
+// const EcommandFiles = fs
+//   .readdirSync("./Ecommands")
+//   .filter((file: string) => file.endsWith(".js"));
 
-for (const file of EcommandFiles) {
-  const Ecommand = require(`./Ecommands/${file}`);
-  // set a new item in the Collection
-  // with the key as the command name and the value as the exported module
-  client.Ecommands.set(Ecommand.data.name, Ecommand);
-}
+// for (const file of EcommandFiles) {
+//   const Ecommand = require(`./Ecommands/${file}`);
+//   // set a new item in the Collection
+//   // with the key as the command name and the value as the exported module
+//   client.Ecommands.set(Ecommand.data.name, Ecommand);
+// }
 
-// Load Context Menus
+// // Load Context Menus
 
-const ctxmenus = fs
-  .readdirSync("./ctxmenus")
-  .filter((file: string) => file.endsWith(".js"));
+// const ctxmenus = fs
+//   .readdirSync("./ctxmenus")
+//   .filter((file: string) => file.endsWith(".js"));
 
-for (const file of ctxmenus) {
-  const ctxmenu = require(`./ctxmenus/${file}`);
-  // set a new item in the Collection
-  // with the key as the command name and the value as the exported module
-  client.menus.set(ctxmenu.data.name, ctxmenu);
-}
+// for (const file of ctxmenus) {
+//   const ctxmenu = require(`./ctxmenus/${file}`);
+//   // set a new item in the Collection
+//   // with the key as the command name and the value as the exported module
+//   client.menus.set(ctxmenu.data.name, ctxmenu);
+// }
 
-const tsmpmenu = fs
-  .readdirSync("./tsmpmenu")
-  .filter((file: string) => file.endsWith(".js"));
+// const tsmpmenu = fs
+//   .readdirSync("./tsmpmenu")
+//   .filter((file: string) => file.endsWith(".js"));
 
-for (const file of tsmpmenu) {
-  const tsmpmenu = require(`./tsmpmenu/${file}`);
-  // set a new item in the Collection
-  // with the key as the command name and the value as the exported module
-  client.tsmpmenus.set(tsmpmenu.data.name, tsmpmenu);
-}
+// for (const file of tsmpmenu) {
+//   const tsmpmenu = require(`./tsmpmenu/${file}`);
+//   // set a new item in the Collection
+//   // with the key as the command name and the value as the exported module
+//   client.tsmpmenus.set(tsmpmenu.data.name, tsmpmenu);
+// }
 
+/** Login to the client */
 client.login(process.env.CLIENT_TOKEN);
