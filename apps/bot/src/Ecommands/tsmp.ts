@@ -16,9 +16,9 @@ limitations under the License.
 
 export {};
 import { SlashCommandBuilder } from "@discordjs/builders";
-import * as evie from "../tools";
 import { CommandInteraction, GuildMember, Role } from "discord.js";
 import fetch from "node-fetch";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 type discordRes = {
   discordId: string;
   error: boolean;
@@ -81,7 +81,7 @@ module.exports = {
       const r: Role = i.guild!.roles.cache.find(
         (r) => r.id == "878074525223378974"
       ) as Role;
-      const e = await evie.embed(i.guild!);
+      const e = await EvieEmbed(i.guild);
       const ji =
         "https://discord.com/channels/819106797028769844/819446614568599582/884646964074020905";
       e.setTitle("Accepted!");
@@ -134,7 +134,7 @@ module.exports = {
       const br: Role = i.guild!.roles.cache.find(
         (r) => r.id == "904148775801585676"
       ) as Role;
-      const e = await evie.embed(i.guild!);
+      const e = await EvieEmbed(i.guild);
 
       e.setTitle("Revoked!");
       e.setDescription(
@@ -179,7 +179,7 @@ module.exports = {
         });
       } else {
         // send the discord user
-        const e = await evie.embed(i.guild!);
+        const e = await EvieEmbed(i.guild);
         e.setDescription(`${username} is linked to ${dUser}`);
         return i.reply({
           embeds: [e],

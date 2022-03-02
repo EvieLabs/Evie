@@ -15,15 +15,14 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { embed } from "../tools";
-
+import { CommandInteraction } from "discord.js";
 const regiSlash = require("../events/ready");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("reslash")
     .setDescription("Add all new slash commands"),
-  async execute(interaction) {
+  async execute(interaction: CommandInteraction) {
     const client = interaction.client;
 
     if (interaction.user.toString() == "<@97470053615673344>") {

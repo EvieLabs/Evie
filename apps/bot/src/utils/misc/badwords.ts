@@ -14,17 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-module.exports = {
-  name: "ready",
-  once: true,
-  async execute(client) {
-    const CurrencySystem = require("currency-system");
-    const cs = new CurrencySystem();
-    // cs.addItem({
-    //   inventory: {
-    //     name: "Muffin", // item name
-    //     price: 10000, // item price
-    //   },
-    // });
-  },
-};
+const list: Array<string> = require("leo-profanity").list();
+
+export { list };

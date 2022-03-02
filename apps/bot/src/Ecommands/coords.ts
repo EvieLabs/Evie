@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { embed } from "../tools";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 
-import { MessageEmbed } from "discord.js";
+import { CommandInteraction, MessageEmbed } from "discord.js";
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("coords")
     .setDescription("Spits a random set of coords on tristansmp.com"),
-  async execute(interaction) {
+  async execute(interaction: CommandInteraction) {
     const idk_msg = [
       "a Stronghold at `1464 ~ 584` ",
       "an Igloo at `5904 ~ -4816`",
@@ -40,7 +40,7 @@ module.exports = {
       "Ice Spike Monument at `-58863 73 -7940`",
       // ``
     ];
-    const exampleEmbed = await embed(interaction.guild);
+    const exampleEmbed = await EvieEmbed(interaction.guild);
     const index = Math.floor(Math.random() * (idk_msg.length - 1) + 1);
     exampleEmbed.addField(
       "Here's a random landmark in the overworld on `tristansmp.com`",

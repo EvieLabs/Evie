@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { embed } from "../tools";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 
 import { Client, CommandInteraction } from "discord.js";
 import { axo } from "../axologs";
@@ -27,7 +27,7 @@ module.exports = {
   async execute(interaction: CommandInteraction, client: Client) {
     // Axolotl Fetching Mechanic
 
-    let exampleEmbed = await embed(interaction.guild);
+    let exampleEmbed = await EvieEmbed(interaction.guild);
     try {
       exampleEmbed.setTitle(`Random User`);
 

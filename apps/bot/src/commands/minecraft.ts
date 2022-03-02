@@ -16,11 +16,10 @@ limitations under the License.
 
 import axios from "axios";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { embed } from "../tools";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 const ms = require("ms");
 import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";
-import * as evie from "../tools";
 import { CommandInteraction, User } from "discord.js";
 const imgur = require("imgur");
 import { axo } from "../axologs";
@@ -112,7 +111,7 @@ module.exports = {
             .then(async (json: any) => {
               axo.log("[SERVER STATS CACHE] " + json.link);
               const serverIconLink = json.link;
-              let exampleEmbed = await embed(interaction.guild);
+              let exampleEmbed = await EvieEmbed(interaction.guild);
               exampleEmbed
                 .setColor("#0099ff")
                 .setTitle("Server Stats")
@@ -206,7 +205,7 @@ module.exports = {
             skinDL +
             ".png&model=slim";
 
-          const e = await embed(interaction.guild);
+          const e = await EvieEmbed(interaction.guild);
 
           e.setDescription(
             `TSMP Stats for **${username}**${dUser ? ` | ${dUser}` : ""}`
@@ -324,7 +323,7 @@ module.exports = {
       }
     }
     if (subcommand == "hypixel") {
-      let pembed = await embed(interaction.guild);
+      let pembed = await EvieEmbed(interaction.guild);
       let i: CommandInteraction = interaction;
       hypixel
         .getPlayer(i.options.getString("username") ?? "twisttaan")
@@ -398,7 +397,7 @@ module.exports = {
 
         .catch(async (e) => {
           console.error(e);
-          const er = await evie.embed(interaction.guild!);
+          const er = await EvieEmbed(interaction.guild!);
           er.setDescription(`Error: That player doesn't seem to exist`);
           i.reply({
             embeds: [er],

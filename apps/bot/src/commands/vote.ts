@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { embed } from "../tools";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 
 import { MessageEmbed } from "discord.js";
 import { MessageActionRow, MessageButton } from "discord.js";
@@ -26,7 +26,7 @@ const command: EvieCommand = {
     .setName("vote")
     .setDescription("Help us grow!"),
   async execute(interaction) {
-    let exampleEmbed = await embed(interaction.guild);
+    let exampleEmbed = await EvieEmbed(interaction.guild);
 
     exampleEmbed.setTitle(`Want to help us grow?`);
     exampleEmbed.setDescription(

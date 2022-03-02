@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { CommandInteraction } from "discord.js";
+
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -22,7 +24,7 @@ module.exports = {
     .setDescription(
       "Sends an image of the last timeline generated for tristansmp.com"
     ),
-  async execute(interaction) {
+  async execute(interaction: CommandInteraction) {
     await interaction.reply(
       "https://cdn.discordapp.com/attachments/819719663289106514/890097693014261770/unknown.png"
     );

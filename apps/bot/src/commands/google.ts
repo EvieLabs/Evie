@@ -16,8 +16,7 @@ limitations under the License.
 
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { embed } from "../tools";
-
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 const googleIt = require("google-it");
 
 module.exports = {
@@ -32,7 +31,7 @@ module.exports = {
     ),
   async execute(interaction: CommandInteraction) {
     await interaction.deferReply();
-    const exampleEmbed = await embed(interaction.guild!);
+    const exampleEmbed = await EvieEmbed(interaction.guild!);
     exampleEmbed.setTitle("Google Search Results");
 
     googleIt({ query: interaction.options.getString("query") })

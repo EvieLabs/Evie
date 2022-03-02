@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Embed } from "@discordjs/builders";
 import { Guild, MessageEmbed } from "discord.js";
 import { MiscDB } from "../database/embedSettings";
 import { ColorUtils } from "../parsers/colorUtils";

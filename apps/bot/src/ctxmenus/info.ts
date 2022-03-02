@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { embed } from "../tools";
-import * as evie from "../tools";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 import { axo } from "../axologs";
 import { ContextMenuInteraction, GuildMember, MessageButton } from "discord.js";
 
@@ -29,7 +28,7 @@ module.exports = {
       return;
     }
     const m = i.options.getMember("user") as GuildMember;
-    const e = await evie.embed(i.guild!);
+    const e = await EvieEmbed(i.guild!);
     e.setTitle(`Member Info for ${m.user.tag}`);
     e.setThumbnail(m.user.displayAvatarURL());
     e.addField("User", `${m.user.tag} (${m.user.id})`);

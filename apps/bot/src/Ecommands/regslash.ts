@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { embed } from "../tools";
+import { CommandInteraction } from "discord.js";
+import { EvieEmbed } from "../utils/classes/EvieEmbed";
 
 const { axo } = require("../axologs");
 
@@ -23,7 +24,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("slashys")
     .setDescription("Reloads all slash commands!"),
-  async execute(interaction) {
+  async execute(interaction: CommandInteraction) {
     const client = interaction.client;
 
     async function refreshCommands() {
@@ -36,23 +37,23 @@ module.exports = {
       const Ecommands: string[] = [];
       const EcommandFiles = fs
         .readdirSync("./Ecommands")
-        .filter((file) => file.endsWith(".js"));
+        .filter((file: string) => file.endsWith(".js"));
 
       const tsmpmenus: string[] = [];
       const tsmpmenusFiles = fs
         .readdirSync("./tsmpmenu")
-        .filter((file) => file.endsWith(".js"));
+        .filter((file: string) => file.endsWith(".js"));
 
       const menus: string[] = [];
       const menusFiles = fs
         .readdirSync("./ctxmenus")
-        .filter((file) => file.endsWith(".js"));
+        .filter((file: string) => file.endsWith(".js"));
 
       const commands: string[] = [];
       const none = [];
       const commandFiles = fs
         .readdirSync("./commands")
-        .filter((file) => file.endsWith(".js"));
+        .filter((file: string) => file.endsWith(".js"));
 
       let clientId = "";
       const betaid = "900875807969406987";
@@ -60,7 +61,7 @@ module.exports = {
       const jambl = "807927235478421534";
 
       // Place your client and guild ids here
-      if (client.user.id == betaid) {
+      if (client?.user?.id == betaid) {
         axo.startupMsg("RUNNING IN BETA MODE");
         clientId = betaid;
         TSMP = "901426442242498650";

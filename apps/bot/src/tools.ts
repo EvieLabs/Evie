@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { client } from ".";
-const badwords: Array<string> = require("leo-profanity").list();
 
 export async function prodMode() {
   if (client.user?.id == `900875807969406987`) {
