@@ -2,10 +2,10 @@
   "name": "evie-bot",
   "version": "1.0.0",
   "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
-  "main": "bin/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "tsup --watch --onSuccess \"yarn start\"",
-    "start": "node --enable-source-maps dist/index.mjs",
+    "start": "yarn preflight && node --enable-source-maps dist/index.mjs",
     "preflight": "node ./scripts/preflight.js",
     "build": "yarn preflight && tsup",
     "docker": "cd ./dist/ && pm2-runtime start index.mjs",
