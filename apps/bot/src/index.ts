@@ -18,6 +18,7 @@ import "dotenv/config";
 import { Intents } from "discord.js";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import "@sapphire/plugin-logger/register";
+import discordModals from "discord-modals";
 
 /** The Sapphire Client */
 export const client = new SapphireClient({
@@ -34,6 +35,8 @@ export const client = new SapphireClient({
 });
 
 client.fetchPrefix = () => "slashies.";
+// @ts-ignore
+discordModals(client);
 
 // declare module "discord.js" {
 //   interface Client {
