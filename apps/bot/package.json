@@ -7,7 +7,7 @@
     "dev": "tsup --watch --onSuccess \"yarn start\"",
     "start": "yarn preflight && node --enable-source-maps dist/index.mjs",
     "preflight": "node ./scripts/preflight.js && yarn lint:fix",
-    "build": "yarn preflight && tsup",
+    "build": "yarn prisma generate && yarn preflight && tsup",
     "docker": "cd ./dist/ && pm2-runtime start index.mjs",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix"
