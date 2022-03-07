@@ -24,22 +24,9 @@ import { CommandInteraction, User } from "discord.js";
 const imgur = require("imgur");
 import { axo } from "../axologs";
 import fetch from "node-fetch";
-import { McMMORes } from "../types/api/TSMP";
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      HYPIXEL: string;
-    }
-  }
-}
- 
-type discordRes = {
-  discordId: string;
-  error: boolean;
-  discordTag: string;
-  discordName: string;
-};
-const hypixel = new Hypixel.Client(process.env.HYPIXEL);
+import { DiscordLookupRes, McMMORes } from "../types/api/TSMP";
+
+const hypixel = new Hypixel.Client(process.env.HYPIXEL!);
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("minecraft")
@@ -164,7 +151,7 @@ module.exports = {
             }
           ).then((res) => res.json());
 
-          const dres: discordRes = await fetch(
+          const dres: DiscordLookupRes = await fetch(
             `https://api.tristansmp.com/players/username/${username}/discord`,
             {
               headers: {

@@ -15,19 +15,26 @@ limitations under the License.
 */
 
 export type McMMORes = {
-    repair: number;
-    fishing: number;
-    axes: number;
-    swords: number;
-    powerLevel: number;
-    alchemy: number;
-    Herbalism: number;
-    mining: number;
-    error: boolean;
-    acrobatics: number;
-    woodcutting: number;
-    excavation: number;
-    unarmed: number;
-    archery: number;
-    taming: number;
+  repair: number;
+  fishing: number;
+  axes: number;
+  swords: number;
+  powerLevel: number;
+  alchemy: number;
+  Herbalism: number;
+  mining: number;
+  error: boolean;
+  acrobatics: number;
+  woodcutting: number;
+  excavation: number;
+  unarmed: number;
+  archery: number;
+  taming: number;
+};
+
+export type DiscordLookupRes = {
+  discordId: string;
+  error: boolean;
+  discordTag: string;
+  discordName: string;
 };
