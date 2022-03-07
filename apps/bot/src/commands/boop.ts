@@ -1,5 +1,5 @@
 /* 
-Copyright 2022 Tristan Camejo
+Copyright 2022 Team Evie
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,18 +34,10 @@ export class Boop extends Command {
   }
 
   public override async chatInputRun(interaction: CommandInteraction) {
-    if (interaction.user.id !== "139836912335716352") {
-      await interaction.reply({
-        ephemeral: true,
-        content: "This maze wasn't meant for you.",
-      });
-      return;
-    }
-
     const user = interaction.options.getUser("user_to_boop", true);
 
     await interaction.reply({
-      content: `${user} just got booped by ${interaction.user}`,
+      content: `${user} boop`,
       allowedMentions: { users: [...new Set([interaction.user.id, user.id])] },
     });
   }

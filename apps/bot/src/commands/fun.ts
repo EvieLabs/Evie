@@ -1,5 +1,5 @@
 /* 
-Copyright 2022 Tristan Camejo
+Copyright 2022 Team Evie
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,22 +17,11 @@ limitations under the License.
 import { SlashCommandBuilder } from "@discordjs/builders";
 import fetch from "node-fetch";
 import { CommandInteraction } from "discord.js";
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("fun")
-    .setDescription("Fun Commands")
-    .addSubcommand((subcommand) =>
-      subcommand.setName("shiba").setDescription("much wow so cool very cute")
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("evie")
-        .setDescription("sends a picture of real life evie")
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName("goose").setDescription("honk!")
-    ),
-  async execute(interaction: CommandInteraction) {
+import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
+import { ApplicationCommandType } from "discord-api-types";
+
+export class Fun extends Command {
+  public override async chatInputRun(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
     if (subcommand == "shiba") {
       const res = await fetch(
@@ -58,18 +47,29 @@ module.exports = {
         return pics[Math.floor(Math.random() * pics.length)];
       }
       interaction.reply(await randomEvie());
-    } else if (subcommand == "goose") {
-      const res = await fetch(`https://random-d.uk/api/v1/random`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const respros = await res.json();
-
-      const goose = respros?.url;
-
-      interaction.reply(goose.toString());
     }
-  },
-};
+  }
+  public override registerApplicationCommands(
+    registry: ApplicationCommandRegistry
+  ) {
+    registry.registerChatInputCommand(
+      (builder) =>
+        builder
+          .setName(this.name)
+          .setDescription("Fun Commands")
+          .addSubcommand((subcommand) =>
+            subcommand
+              .setName("evie")
+              .setDescription("sends a picture of real life evie")
+          )
+          .addSubcommand((subcommand) =>
+            subcommand
+              .setName("shiba")
+              .setDescription("much wow so cool very cute")
+          ),
+      {
+        guildIds: ["901426442242498650"],
+      }
+    );
+  }
+}

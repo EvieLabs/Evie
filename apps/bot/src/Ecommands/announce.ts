@@ -1,5 +1,5 @@
 /* 
-Copyright 2022 Tristan Camejo
+Copyright 2022 Team Evie
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -26,8 +26,9 @@ module.exports = {
     ),
   async execute(interaction: CommandInteraction) {
     if (interaction.user.toString() == "<@97470053615673344>") {
-      const announceChannel =
-        interaction.client.channels.cache.get("902455135609970698") as TextBasedChannel;
+      const announceChannel = interaction.client.channels.cache.get(
+        "902455135609970698"
+      ) as TextBasedChannel;
       try {
         announceChannel?.send(`${interaction.options.getString("message")}`);
       } catch (error) {

@@ -1,5 +1,5 @@
 /* 
-Copyright 2022 Tristan Camejo
+Copyright 2022 Team Evie
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ function getDirectories(src, callback) {
 }
 
 const header = `/* 
-Copyright 2022 Tristan Camejo
+Copyright 2022 Team Evie
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

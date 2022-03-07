@@ -1,5 +1,5 @@
 /* 
-Copyright 2022 Tristan Camejo
+Copyright 2022 Team Evie
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -81,13 +81,13 @@ module.exports = {
       )
       .catch((error) => axo.err(error));
 
-    await interaction.guild!.members
-      .fetch()
+    await interaction
+      .guild!.members.fetch()
       .then((data) =>
         exampleEmbed.addField(
           "Staff Members:",
-          interaction.guild!.roles.cache
-            .find((role) => role.name == "Staff")!
+          interaction
+            .guild!.roles.cache.find((role) => role.name == "Staff")!
             .members.size.toString(),
           true
         )
