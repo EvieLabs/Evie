@@ -19,6 +19,7 @@ import fetch from "node-fetch";
 import { CommandInteraction } from "discord.js";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { ApplicationCommandType } from "discord-api-types";
+import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
@@ -68,7 +69,7 @@ export class Fun extends Command {
               .setDescription("much wow so cool very cute")
           ),
       {
-        guildIds: ["901426442242498650"],
+        guildIds: getGuildIDS(),
       }
     );
   }
