@@ -21,19 +21,9 @@ import {
   Command,
   SapphireClient,
 } from "@sapphire/framework";
-import { TextInputStyle } from "discord-api-types/v9";
 import { CommandInteraction } from "discord.js";
 
 import { Modal, showModal, TextInputComponent } from "discord-modals";
-declare module "discord-modals" {
-  export function showModal(
-    modal: Modal,
-    options: {
-      client: SapphireClient;
-      interaction: CommandInteraction;
-    }
-  ): Promise<any>;
-}
 
 export class ModalTest extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {

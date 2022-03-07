@@ -24,6 +24,7 @@ import { CommandInteraction, User } from "discord.js";
 const imgur = require("imgur");
 import { axo } from "../axologs";
 import fetch from "node-fetch";
+import { McMMORes } from "../types/api/TSMP";
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -31,23 +32,7 @@ declare global {
     }
   }
 }
-type TSMPMcmmoResp = {
-  repair: number;
-  fishing: number;
-  axes: number;
-  swords: number;
-  powerLevel: number;
-  alchemy: number;
-  Herbalism: number;
-  mining: number;
-  error: boolean;
-  acrobatics: number;
-  woodcutting: number;
-  excavation: number;
-  unarmed: number;
-  archery: number;
-  taming: number;
-};
+ 
 type discordRes = {
   discordId: string;
   error: boolean;
@@ -170,7 +155,7 @@ module.exports = {
           const faceUrl = "https://crafatar.com/renders/body/" + uuid;
           const skinDL = "https://crafatar.com/skins/" + uuid;
 
-          const res: TSMPMcmmoResp = await fetch(
+          const res: McMMORes = await fetch(
             `https://api.tristansmp.com/players/uuid/${response.uuid}/mcmmo`,
             {
               headers: {
