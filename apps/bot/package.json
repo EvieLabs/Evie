@@ -4,9 +4,10 @@
   "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
   "main": "dist/index.mjs",
   "imports": {
-    "#root/*": "./dist/*.js",
-    "#types/*": "./dist/types/*.js",
-    "#utils/*": "./dist/utils/*.js"
+    "#root/*": "./dist/*.mjs",
+    "#types/*": "./dist/types/*.mjs",
+    "#utils/*": "./dist/utils/*.mjs",
+    "#constants/*": "./dist/constants/*.mjs"
   },
   "scripts": {
     "dev": "tsup --watch --onSuccess \"yarn start\"",
@@ -24,13 +25,12 @@
     "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
     "@prisma/client": "^3.10.0",
-    "@sapphire/discord.js-utilities": "^4.8.2",
+    "@sapphire/decorators": "^4.2.5",
     "@sapphire/framework": "next",
     "@sapphire/plugin-logger": "^2.1.3",
     "@swc/core": "^1.2.150",
     "axios": "^0.26.0",
-    "discord-modals": "^1.2.4",
-    "discord.js": "^13.6.0",
+    "discord.js": "github:monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
     "firebase-admin": "^10.0.2",
     "glob": "^7.2.0",

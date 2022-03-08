@@ -547,6 +547,13 @@
   resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.3.0.tgz#98b1b364a5fe820366a786827f2e987590de5964"
   integrity sha512-z+CDw5X4UgIEpZL8KM+ThVx1i8V60HBg0l/oFewTNbQQeRDJHdVxHyJykv+SF1H+Rc8EkMS81VTWo95jVYgO/g==
 
+"@sapphire/decorators@^4.2.5":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/decorators/-/decorators-4.3.0.tgz#cc103822b192d490ffb9afcc610f31cb2fd59ebf"
+  integrity sha512-6h/3xpP4EbFJlNfh6rMh9vfM2TaRgKEzjLaP9PQzcVQfNYCh0PjdU/+EvmsECZ1kN90oKgNS5Owr9OJiXM2bWA==
+  dependencies:
+    tslib "^2.3.1"
+
 "@sapphire/discord-utilities@^2.10.0":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@sapphire/discord-utilities/-/discord-utilities-2.10.0.tgz#6012acb828807b8d52a11ba9330b95b234f05fc1"
@@ -554,7 +561,7 @@
   dependencies:
     twemoji-parser "^13.1.0"
 
-"@sapphire/discord.js-utilities@^4.8.2", "@sapphire/discord.js-utilities@^4.9.0":
+"@sapphire/discord.js-utilities@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@sapphire/discord.js-utilities/-/discord.js-utilities-4.9.0.tgz#f77b1a56568b54ba9dfc47b75f51dbcfe36e719a"
   integrity sha512-UX8ES6q/rpBeIDJM/8Ck6xgmZkwhfGbxFMr5MMSpSL3qJnyxXpAifW+dHvkj6fxjArFlwdzVFcdIutd4EjfQMw==
@@ -1611,24 +1618,21 @@ discord-api-types@^0.26.0, discord-api-types@^0.26.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.26.1.tgz#726f766ddc37d60da95740991d22cb6ef2ed787b"
   integrity sha512-T5PdMQ+Y1MEECYMV5wmyi9VEYPagEDEi4S0amgsszpWY0VB9JJ/hEvM6BgLhbdnKky4gfmZEXtEEtojN8ZKJQQ==
 
-discord-modals@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/discord-modals/-/discord-modals-1.2.4.tgz#37c5a3c8cefaef7519ddd428b0ee2ef5708d16c4"
-  integrity sha512-/BtwUs0zV6QJvAAseDuw28lp0DMjEdtebvi5SG+ccLPa7e3QOGwz8mxHbbHVs+7H52HXSb70gKzWnVQ5ZAihIg==
-  dependencies:
-    discord.js "^13.6.0"
+discord-api-types@^0.27.1:
+  version "0.27.3"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.27.3.tgz#518e99a548b62a7912a09e94ad90d0612e2053c6"
+  integrity sha512-HOG64DTpZ7CB5EU9eKbjHD50H5qG1pxKG8pmFfHUMKjKvEWeLBHfw0c9xF1cruiYLnBb3+n7m3jBWxZ3H1hcgQ==
 
-discord.js@^13.6.0:
+"discord.js@github:monbrey/discord.js#modals":
   version "13.6.0"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.6.0.tgz#d8a8a591dbf25cbcf9c783d5ddf22c4694860475"
-  integrity sha512-tXNR8zgsEPxPBvGk3AQjJ9ljIIC6/LOPjzKwpwz8Y1Q2X66Vi3ZqFgRHYwnHKC0jC0F+l4LzxlhmOJsBZDNg9g==
+  resolved "https://codeload.github.com/monbrey/discord.js/tar.gz/55340655f247f48fb66dde1d53342bb3dfeb4a39"
   dependencies:
     "@discordjs/builders" "^0.11.0"
     "@discordjs/collection" "^0.4.0"
     "@sapphire/async-queue" "^1.1.9"
     "@types/node-fetch" "^2.5.12"
     "@types/ws" "^8.2.2"
-    discord-api-types "^0.26.0"
+    discord-api-types "^0.27.1"
     form-data "^4.0.0"
     node-fetch "^2.6.1"
     ws "^8.4.0"
