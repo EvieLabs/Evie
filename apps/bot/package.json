@@ -2,7 +2,7 @@
   "name": "evie-bot",
   "version": "1.0.0",
   "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "scripts": {
     "dev": "tsup --watch --onSuccess \"yarn start\"",
     "start": "yarn preflight && node --enable-source-maps dist/index.mjs",

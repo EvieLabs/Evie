@@ -43,7 +43,7 @@ client.once("ready", () => {
   if (client.user == null) {
     throw new Error("Client user is null");
   }
-
+  console.log(process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : []);
   try {
     setInterval(() => {
       const activities_list = [`your slash commands`, `eviebot.rocks`, `/help`];

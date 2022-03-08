@@ -24,7 +24,6 @@ import {
 import { CommandInteraction } from "discord.js";
 
 import { Modal, showModal, TextInputComponent } from "discord-modals";
-import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class ModalTest extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
@@ -60,7 +59,7 @@ export class ModalTest extends Command {
         description: "sends a modal",
       },
       {
-        guildIds: getGuildIDS(),
+        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
       }
     );
   }

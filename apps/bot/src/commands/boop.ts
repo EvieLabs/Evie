@@ -21,7 +21,6 @@ import type {
   ContextMenuInteraction,
   Message,
 } from "discord.js";
-import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class Boop extends Command {
   public override async messageRun(message: Message, args: Args) {
@@ -79,7 +78,7 @@ export class Boop extends Command {
         ],
       },
       {
-        guildIds: getGuildIDS(),
+        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
       }
     );
 
@@ -89,7 +88,7 @@ export class Boop extends Command {
         type: "USER",
       },
       {
-        guildIds: getGuildIDS(),
+        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
       }
     );
 
@@ -99,7 +98,7 @@ export class Boop extends Command {
           .setName("Boop message author gently")
           .setType(ApplicationCommandType.Message),
       {
-        guildIds: getGuildIDS(),
+        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
       }
     );
   }

@@ -18,7 +18,6 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import fetch from "node-fetch";
 import { CommandInteraction } from "discord.js";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
@@ -68,7 +67,7 @@ export class Fun extends Command {
               .setDescription("much wow so cool very cute")
           ),
       {
-        guildIds: getGuildIDS(),
+        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
       }
     );
   }
