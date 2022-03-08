@@ -12,7 +12,7 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import type { CommandInteraction } from "discord.js";
 
 module.exports = {
   data: new SlashCommandBuilder().setName("ping").setDescription("Pong!"),

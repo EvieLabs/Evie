@@ -1,0 +1,12 @@
+{
+  "extends": "@sapphire/ts-config/extra-strict",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "importsNotUsedAsValues": "error",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  }
+}

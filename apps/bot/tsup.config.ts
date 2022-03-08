@@ -9,7 +9,7 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   sourcemap: true,
   target: "esnext",
-  tsconfig: "./tsconfig.json",
+  tsconfig: "src/tsconfig.json",
   bundle: false,
   shims: false,
   keepNames: true,

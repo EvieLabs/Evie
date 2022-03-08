@@ -20,11 +20,11 @@ import { EvieEmbed } from "../utils/classes/EvieEmbed";
 const ms = require("ms");
 import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";
-import { CommandInteraction, User } from "discord.js";
+import type { CommandInteraction, User } from "discord.js";
 const imgur = require("imgur");
-import { axo } from "../axologs";
+import { axo } from "#root/axologs";
 import fetch from "node-fetch";
-import { DiscordLookupRes, McMMORes } from "../types/api/TSMP";
+import type { DiscordLookupRes, McMMORes } from "#types/api/TSMP";
 
 const hypixel = new Hypixel.Client(process.env.HYPIXEL!);
 module.exports = {

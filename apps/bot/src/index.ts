@@ -16,7 +16,7 @@ limitations under the License.
 
 import "dotenv/config";
 import { Intents } from "discord.js";
-import { container, LogLevel, SapphireClient } from "@sapphire/framework";
+import { LogLevel, SapphireClient } from "@sapphire/framework";
 import "@sapphire/plugin-logger/register";
 import discordModals from "discord-modals";
 

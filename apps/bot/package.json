@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
   "main": "dist/index.mjs",
+  "imports": {
+    "#root/*": "./dist/*.js",
+    "#types/*": "./dist/types/*.js",
+    "#utils/*": "./dist/utils/*.js"
+  },
   "scripts": {
     "dev": "tsup --watch --onSuccess \"yarn start\"",
     "start": "yarn preflight && node --enable-source-maps dist/index.mjs",
@@ -40,6 +45,7 @@
     "top.gg": "^2.3.2"
   },
   "devDependencies": {
+    "@sapphire/ts-config": "^3.3.2",
     "@types/node": "^17.0.21",
     "eslint": "7.32.0",
     "prisma": "^3.10.0",

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SlashCommandBuilder } from "@discordjs/builders";
 import fetch from "node-fetch";
-import { CommandInteraction } from "discord.js";
+import type { CommandInteraction } from "discord.js";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 
 export class Fun extends Command {
