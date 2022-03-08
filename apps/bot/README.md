@@ -1,12 +1,12 @@
 # Evie Re-write
 
-> Hey thanks for being intersted in coding the future of Evie!
+> Hey thanks for being interested in coding the future of Evie!
 
 ## What needs to be done
 
 The current checklist lives in [this pr](https://github.com/twisttaan/Evie/pull/28).
 
-## How to start your Evie dev environment
+## How to start your Evie Dev Environment
 
 1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
 2. Clone the repo, and switch to the `rewrite` branch.
