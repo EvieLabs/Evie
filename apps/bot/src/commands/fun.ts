@@ -18,8 +18,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import fetch from "node-fetch";
 import { CommandInteraction } from "discord.js";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import { ApplicationCommandType } from "discord-api-types";
-import { getGuildIDS } from "../../utils/parsers/envUtils";
+import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {

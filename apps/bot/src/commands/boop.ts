@@ -21,7 +21,7 @@ import type {
   ContextMenuInteraction,
   Message,
 } from "discord.js";
-import { getGuildIDS } from "../../utils/parsers/envUtils";
+import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class Boop extends Command {
   public override async messageRun(message: Message, args: Args) {

@@ -16,7 +16,7 @@ limitations under the License.
 
 import "dotenv/config";
 import { Intents } from "discord.js";
-import { LogLevel, SapphireClient } from "@sapphire/framework";
+import { container, LogLevel, SapphireClient } from "@sapphire/framework";
 import "@sapphire/plugin-logger/register";
 import discordModals from "discord-modals";
 
@@ -35,38 +35,9 @@ export const client = new SapphireClient({
 });
 
 client.fetchPrefix = () => "slashies.";
+
 // @ts-ignore
 discordModals(client);
-
-// declare module "discord.js" {
-//   interface Client {
-//     commands: Collection<string, EvieCommand>;
-//     Ecommands: Collection<string, EvieCommand>;
-//     tsmpmenus: Collection<string, EvieContextMenu>;
-//     menus: Collection<string, EvieContextMenu>;
-//   }
-// }
-
-// client.commands = new Collection();
-// client.Ecommands = new Collection();
-// client.tsmpmenus = new Collection();
-// client.menus = new Collection();
-// const eventFiles = fs
-//   .readdirSync("./events")
-//   .filter((file: string) => file.endsWith(".js"));
-
-// // Load Events
-
-// for (const file of eventFiles) {
-//   const event = require(`./events/${file}`);
-//   if (event.once) {
-//     client.once(event.name, (...args) => event.execute(...args));
-//   } else {
-//     client.on(event.name, (...args) => event.execute(...args));
-//   }
-// }
-
-// Status
 
 client.once("ready", () => {
   if (client.user == null) {

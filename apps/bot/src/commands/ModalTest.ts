@@ -24,7 +24,7 @@ import {
 import { CommandInteraction } from "discord.js";
 
 import { Modal, showModal, TextInputComponent } from "discord-modals";
-import { getGuildIDS } from "../../utils/parsers/envUtils";
+import { getGuildIDS } from "../utils/parsers/envUtils";
 
 export class ModalTest extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
