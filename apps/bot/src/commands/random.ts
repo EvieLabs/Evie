@@ -17,7 +17,7 @@ limitations under the License.
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { EvieEmbed } from "../utils/classes/EvieEmbed";
 
-import { Client, CommandInteraction } from "discord.js";
+import type { Client, CommandInteraction } from "discord.js";
 import { axo } from "../axologs";
 
 module.exports = {
