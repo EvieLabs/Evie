@@ -14,57 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Guild, Role, Snowflake } from "discord.js";
+import type { EvieTag, Success } from "#root/types";
+import type { Guild } from "discord.js";
 import { dbUtils, prisma } from ".";
-import type { Success } from "../../types";
 
-async function isJoinRoleOn(guild: Guild): Promise<boolean> {
+/** Gets the tags for the specified guild */
+async function getTags(guild: Guild): Promise<EvieTag[] | []> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
+    const tags = result?.tags || [];
 
-    return result?.joinRoleEnabled || false;
+    return tags[0] ? (Object.values(tags[0]) as EvieTag[]) : [];
   } catch (error) {
-    return false;
+    return [];
   }
 }
 
-async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
-  try {
-    const result = await dbUtils.getGuildSettings(guild);
-
-    return result?.joinRoleID || null;
-  } catch (error) {
-    return false || null;
-  }
-}
-
-async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
+/** Adds a tag to the database */
+async function addTag(guild: Guild, tag: EvieTag): Promise<Success> {
   try {
     await prisma.guildsettings.update({
       where: {
         serverid: guild.id,
       },
       data: {
-        joinRoleID: role.id,
-      },
-    });
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
-async function setJoinRoleEnable(
-  guild: Guild,
-  enable: boolean
-): Promise<Success> {
-  try {
-    await prisma.guildsettings.update({
-      where: {
-        serverid: guild.id,
-      },
-      data: {
-        joinRoleEnabled: enable,
+        tags: {
+          [tag.id]: tag,
+        },
       },
     });
     return {
@@ -79,9 +55,7 @@ async function setJoinRoleEnable(
   }
 }
 
-export const RolesDB = {
-  isJoinRoleOn,
-  getJoinRole,
-  setJoinRole,
-  setJoinRoleEnable,
+export const tagDB = {
+  getTags,
+  addTag,
 };

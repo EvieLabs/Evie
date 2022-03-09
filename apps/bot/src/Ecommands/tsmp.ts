@@ -18,7 +18,7 @@ export {};
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, GuildMember, Role } from "discord.js";
 import fetch from "node-fetch";
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
+import { EvieEmbed } from "#classes/EvieEmbed";
 type discordRes = {
   discordId: string;
   error: boolean;

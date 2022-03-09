@@ -9,8 +9,9 @@
       "#root/*": ["*"],
       "#types/*": ["types/*"],
       "#utils/*": ["utils/*"],
+      "#classes/*": ["classes/*"],
       "#constants/*": ["constants/*"]
     }
   },
-  "include": ["."]
+  "include": ["./**/*.ts"]
 }

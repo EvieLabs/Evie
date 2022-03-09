@@ -15,15 +15,33 @@ limitations under the License.
 */
 
 import { guildsettings, PrismaClient } from "@prisma/client";
+import Redis from "ioredis";
 import type { Guild } from "discord.js";
+import { cacheMiddleware } from "./cacheMiddleware";
+
+export const redis = new Redis({
+  port: 8287,
+  host: "redis",
+  password: "redis",
+  db: 1,
+});
+
 export const prisma = new PrismaClient();
 
 async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
-  return await prisma.guildsettings.findFirst({
-    where: {
-      serverid: guild.id,
-    },
-  });
+  try {
+    const data = await prisma.guildsettings.findFirst({
+      where: {
+        serverid: guild.id,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error);
+
+    return null;
+  }
 }
 
 export const dbUtils = { getGuildSettings };

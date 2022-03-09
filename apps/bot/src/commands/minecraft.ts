@@ -16,7 +16,7 @@ limitations under the License.
 
 import axios from "axios";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
+import { EvieEmbed } from "#classes/EvieEmbed";
 const ms = require("ms");
 import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";

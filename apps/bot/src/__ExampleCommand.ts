@@ -14,25 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ApplicationCommandRegistry, Args, Command } from "@sapphire/framework";
+import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { ApplicationCommandType } from "discord-api-types/v9";
-import type {
-  CommandInteraction,
-  ContextMenuInteraction,
-  Message,
-} from "discord.js";
+import type { CommandInteraction, ContextMenuInteraction } from "discord.js";
+import { registeredGuilds } from "./utils/parsers/envUtils";
 
 export class Boop extends Command {
-  public override async messageRun(message: Message, args: Args) {
-    if (message.author.id !== "97470053615673344") return;
-    const user = await args.pick("user");
-
-    await message.reply({
-      content: `${user} just got booped by ${message.author}`,
-      allowedMentions: { users: [...new Set([message.author.id, user.id])] },
-    });
-  }
-
   public override async chatInputRun(interaction: CommandInteraction) {
     const user = interaction.options.getUser("user_to_boop", true);
 
@@ -78,7 +65,7 @@ export class Boop extends Command {
         ],
       },
       {
-        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
+        guildIds: registeredGuilds,
       }
     );
 
@@ -88,7 +75,7 @@ export class Boop extends Command {
         type: "USER",
       },
       {
-        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
+        guildIds: registeredGuilds,
       }
     );
 
@@ -98,7 +85,7 @@ export class Boop extends Command {
           .setName("Boop message author gently")
           .setType(ApplicationCommandType.Message),
       {
-        guildIds: process.env.GUILD_IDS ? process.env.GUILD_IDS.split(",") : [],
+        guildIds: registeredGuilds,
       }
     );
   }

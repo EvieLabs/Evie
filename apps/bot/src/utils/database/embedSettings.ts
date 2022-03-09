@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Guild, Snowflake } from "discord.js";
+import type { Guild } from "discord.js";
 import { dbUtils } from ".";
 
 /** Gets the embed color for the specified guild */
-async function getEmbedColor(guild: Guild): Promise<string | null> {
+async function getEmbedColor(guild: Guild | null): Promise<string> {
+  if (!guild) return "#f47fff";
   try {
     const result = await dbUtils.getGuildSettings(guild);
-    return result?.color || null;
+    return result?.color || "#f47fff";
   } catch (error) {
-    return null;
+    return "#f47fff";
   }
 }
 

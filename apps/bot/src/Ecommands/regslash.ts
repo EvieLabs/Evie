@@ -16,7 +16,7 @@ limitations under the License.
 
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
+import { EvieEmbed } from "#classes/EvieEmbed";
 
 const { axo } = require("../axologs");
 

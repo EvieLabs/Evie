@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
+import { EvieEmbed } from "#classes/EvieEmbed";
 
-import { MessageEmbed } from "discord.js";
 import { MessageActionRow, MessageButton } from "discord.js";
-import { EvieCommand } from "../types";
+import type { EvieCommand } from "../types";
 
 const command: EvieCommand = {
   data: new SlashCommandBuilder()

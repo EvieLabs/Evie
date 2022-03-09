@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
-import { axo } from "../axologs";
-import { ContextMenuInteraction, GuildMember, MessageButton } from "discord.js";
+import { EvieEmbed } from "#classes/EvieEmbed";
+import type { ContextMenuInteraction, GuildMember } from "discord.js";
 
 module.exports = {
   data: {

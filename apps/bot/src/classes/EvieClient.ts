@@ -14,15 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import { EvieClient } from "#classes/EvieClient";
-import "@sapphire/plugin-hmr/register";
+import { LogLevel, SapphireClient } from "@sapphire/framework";
+import { Intents } from "discord.js";
 
-/** The Sapphire Client */
-export const client = new EvieClient();
-
-client.fetchPrefix = () => "slashies.";
-
-/** Login to the client */
-client.login(process.env.CLIENT_TOKEN);
+export class EvieClient extends SapphireClient {
+  public constructor() {
+    super({
+      intents: [
+        Intents.FLAGS.GUILDS,
+        "GUILD_MESSAGES",
+        "GUILD_MEMBERS",
+        Intents.FLAGS.GUILD_VOICE_STATES,
+      ],
+      logger: {
+        level: LogLevel.Info,
+      },
+      loadMessageCommandListeners: true,
+      shards: "auto",
+    });
+  }
+}

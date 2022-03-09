@@ -70,6 +70,7 @@ model guildsettings {
   welcomeMessage            String?
   welcomeMessageEnabled     Boolean?
   welcomeMessagePingEnabled Boolean?
+  tags                      Json[]
 }
 
 model reactionroles {

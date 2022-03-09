@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, ContextMenuInteraction } from "discord.js";
+import type { SlashCommandBuilder } from "@discordjs/builders";
+import type {
+  CommandInteraction,
+  ContextMenuInteraction,
+  Snowflake,
+} from "discord.js";
 
 export type EvieCommand = {
   data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
@@ -33,4 +37,11 @@ export type EvieContextMenu = {
 export type Success = {
   success: boolean;
   message: string | null;
+};
+
+export type EvieTag = {
+  id: Snowflake;
+  name: string;
+  content: string;
+  embed: boolean;
 };

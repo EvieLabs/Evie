@@ -14,7 +14,7 @@ limitations under the License.
 export {};
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
+import { EvieEmbed } from "#classes/EvieEmbed";
 
 import { CommandInteraction } from "discord.js";
 import si from "systeminformation";

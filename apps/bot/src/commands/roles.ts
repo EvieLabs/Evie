@@ -12,7 +12,7 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { EvieEmbed } from "../utils/classes/EvieEmbed";
+import { EvieEmbed } from "#classes/EvieEmbed";
 import { RolesDB } from "../utils/database/joinRoles";
 import {
   CommandInteraction,

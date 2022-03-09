@@ -14,15 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
-import { EvieClient } from "#classes/EvieClient";
-import "@sapphire/plugin-hmr/register";
+export const registeredGuilds = process.env.GUILD_IDS
+  ? process.env.GUILD_IDS.split(",")
+  : [];
 
-/** The Sapphire Client */
-export const client = new EvieClient();
-
-client.fetchPrefix = () => "slashies.";
-
-/** Login to the client */
-client.login(process.env.CLIENT_TOKEN);
+export const botAdmins = process.env.BOT_ADMINS
+  ? process.env.BOT_ADMINS.split(",")
+  : [];
