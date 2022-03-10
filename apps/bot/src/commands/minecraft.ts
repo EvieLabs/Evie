@@ -24,7 +24,7 @@ import util from "minecraft-server-util";
 import ms from "ms";
 import fetch from "node-fetch";
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("minecraft")
     .setDescription("Minecraft Related Commands")

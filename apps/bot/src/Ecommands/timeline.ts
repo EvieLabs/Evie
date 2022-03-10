@@ -18,7 +18,7 @@ import type { CommandInteraction } from "discord.js";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("timeline")
     .setDescription(

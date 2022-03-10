@@ -26,7 +26,7 @@ interface discordRes {
   discordName: string;
   uuid: string;
 }
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("tsmp")
     .setDescription("TristanSMP Actions")

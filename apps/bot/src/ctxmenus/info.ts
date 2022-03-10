@@ -17,7 +17,7 @@ limitations under the License.
 import { EvieEmbed } from "#classes/EvieEmbed";
 import type { ContextMenuInteraction, GuildMember } from "discord.js";
 
-module.exports = {
+export default {
   data: {
     name: "User Info",
     type: 2,

@@ -12,9 +12,9 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, PresenceStatusData } from "discord.js";
+import type { CommandInteraction, PresenceStatusData } from "discord.js";
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("setstatus")
     .setDescription("Sets my Status!")

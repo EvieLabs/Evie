@@ -14,7 +14,7 @@ limitations under the License.
 import { SlashCommandBuilder } from "@discordjs/builders";
 import type { CommandInteraction, TextBasedChannel } from "discord.js";
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("announce")
     .setDescription("Announces a message to the announcement channel")

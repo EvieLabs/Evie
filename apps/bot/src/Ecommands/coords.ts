@@ -17,9 +17,9 @@ limitations under the License.
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { EvieEmbed } from "#classes/EvieEmbed";
 
-import { CommandInteraction, MessageEmbed } from "discord.js";
+import type { CommandInteraction } from "discord.js";
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("coords")
     .setDescription("Spits a random set of coords on tristansmp.com"),

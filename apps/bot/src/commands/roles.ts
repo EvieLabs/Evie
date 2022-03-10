@@ -23,12 +23,11 @@ import {
   MessageSelectMenu,
   SelectMenuInteraction,
   Permissions,
-  GuildMember,
   Message,
   MessageComponentInteraction,
   Guild,
 } from "discord.js";
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("roles")
     .setDescription("Evie's Reaction Roles Options")

@@ -11,16 +11,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export {};
-
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { EvieEmbed } from "#classes/EvieEmbed";
 
-import { CommandInteraction } from "discord.js";
+import type { CommandInteraction } from "discord.js";
 import si from "systeminformation";
 import { axo } from "../axologs";
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("stats")
     .setDescription("Stats about me and TristanSMP"),
