@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { EvieTag, Success } from "#root/types";
+import type { Success } from "#root/types";
+import type { EvieTag } from "@prisma/client";
 import type { Guild } from "discord.js";
 import { dbUtils, prisma } from ".";
 
@@ -22,9 +23,8 @@ import { dbUtils, prisma } from ".";
 async function getTags(guild: Guild): Promise<EvieTag[] | []> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
-    const tags = result?.tags || [];
 
-    return tags[0] ? (Object.values(tags[0]) as EvieTag[]) : [];
+    return result?.tags || [];
   } catch (error) {
     return [];
   }

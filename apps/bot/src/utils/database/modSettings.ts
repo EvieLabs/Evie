@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Guild } from "discord.js";
+import type { Guild } from "discord.js";
 import { dbUtils } from ".";
 
 /** Gets the ban words list for the specified guild */
@@ -29,7 +29,7 @@ async function getBannedWords(guild: Guild): Promise<string[] | []> {
 }
 
 /** Gets the phishing detection boolean for the specified guild */
-async function getPhishingDetectionSwitch(guild: any): Promise<boolean> {
+async function getPhishingDetectionSwitch(guild: Guild): Promise<boolean> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
 

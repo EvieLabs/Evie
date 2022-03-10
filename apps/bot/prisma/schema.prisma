@@ -53,10 +53,16 @@ model currencies {
   wallet       Int
 }
 
+type EvieTag {
+  id      String
+  name    String
+  content String
+  embed   Boolean
+}
+
 model guildsettings {
-  id                        String   @id @default(auto()) @map("_id") @db.ObjectId
-  v                         Int      @map("__v")
-  bannedWordList            String?
+  id                        String    @id @default(auto()) @map("_id") @db.ObjectId
+  bannedWordList            String[]
   color                     String?
   defaultBannedWordList     Boolean?
   goodbyeChannel            String?
@@ -65,12 +71,12 @@ model guildsettings {
   joinRoleEnabled           Boolean?
   joinRoleID                String?
   phishingDetectionEnabled  Boolean?
-  serverid                  String   @unique
+  serverid                  String    @unique
   welcomeChannel            String?
   welcomeMessage            String?
   welcomeMessageEnabled     Boolean?
   welcomeMessagePingEnabled Boolean?
-  tags                      Json[]
+  tags                      EvieTag[]
 }
 
 model reactionroles {

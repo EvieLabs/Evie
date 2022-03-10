@@ -14,23 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { SlashCommandBuilder } from "@discordjs/builders";
-import type { CommandInteraction, ContextMenuInteraction } from "discord.js";
+import { ApplyOptions } from "@sapphire/decorators";
+import { Listener } from "@sapphire/framework";
+import type { Client } from "discord.js";
 
-export interface EvieCommand {
-  data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
-  execute(interaction: CommandInteraction): Promise<void> | void;
-}
-
-export interface EvieContextMenu {
-  data: {
-    name: string;
-    type: 1 | 2;
-  };
-  execute(interaction: ContextMenuInteraction): Promise<void> | void;
-}
-
-export interface Success {
-  success: boolean;
-  message: string | null;
+@ApplyOptions<Listener.Options>({ once: false, event: "ready" })
+export class MessageListener extends Listener {
+  public async run(c: Client) {
+    console.log("ready");
+  }
 }

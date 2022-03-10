@@ -16,14 +16,12 @@ limitations under the License.
 
 import { guildsettings, PrismaClient } from "@prisma/client";
 import type { Guild } from "discord.js";
-import { cacheMiddleware } from "./cacheMiddleware";
 import Redis from "ioredis";
-import axios, { AxiosRequestConfig } from "axios";
-import { AxiosRedis } from "@tictactrip/axios-redis";
+import { cacheMiddleware } from "./cacheMiddleware";
 
 export const prisma = new PrismaClient();
 
-if (process.env.NODE_ENV === "compose") {
+if (process.env.NODE_ENV === "compose_") {
   console.log("Using Redis as a caching layer");
 
   const prismaRedis = new Redis({
@@ -58,6 +56,14 @@ async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
 
     return null;
   }
+}
+
+async function createGuildSettings(guild: Guild): Promise<guildsettings> {
+  return prisma.guildsettings.create({
+    data: {
+      serverid: guild.id,
+    },
+  });
 }
 
 export const dbUtils = { getGuildSettings };
