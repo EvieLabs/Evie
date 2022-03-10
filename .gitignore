@@ -36,3 +36,7 @@ yarn-error.log*
 # sentry
 .sentryclirc
 apps/web/.sentryclirc
+
+# IDEs
+.idea
+.vscode
