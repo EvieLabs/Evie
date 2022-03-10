@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import axios from "axios";
-import { SlashCommandBuilder } from "@discordjs/builders";
 import { EvieEmbed } from "#classes/EvieEmbed";
-import ms from "ms";
-import * as Hypixel from "hypixel-api-reborn";
-import util from "minecraft-server-util";
-import { CommandInteraction, MessageAttachment, User } from "discord.js";
 import { axo } from "#root/axologs";
-import fetch from "node-fetch";
 import type { DiscordLookupRes, McMMORes } from "#types/api/TSMP";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import axios from "axios";
+import { CommandInteraction, MessageAttachment, User } from "discord.js";
+import util from "minecraft-server-util";
+import ms from "ms";
+import fetch from "node-fetch";
 
-const hypixel = new Hypixel.Client(process.env.HYPIXEL!);
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("minecraft")
@@ -279,88 +277,6 @@ module.exports = {
       } catch (err) {
         interaction.editReply("Failed fetching data");
       }
-    }
-    if (subcommand == "hypixel") {
-      const pembed = await EvieEmbed(interaction.guild);
-      const i: CommandInteraction = interaction;
-      hypixel
-        .getPlayer(i.options.getString("username") ?? "twisttaan")
-        .then(async (player) => {
-          // Title
-          pembed.setTitle(`Hypixel Stats for ${player.nickname}`);
-          // Thumbnail
-          pembed.setThumbnail(
-            `https://crafatar.com/renders/body/${player.uuid}`
-          );
-          // Stats
-          pembed.addField("Player Level", player.level.toString());
-          pembed.addField("Player Rank", player.rank, true);
-          pembed.addField(
-            "First Login",
-            player.firstLogin.toLocaleDateString(),
-            true
-          );
-          pembed.addField(
-            "Bedwars Final Kills",
-            player.stats?.bedwars?.finalKills.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Bedwars Kills",
-            player.stats?.bedwars?.kills.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Bedwars KD",
-            player.stats?.bedwars?.KDRatio.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Bedwars Wins",
-            player.stats?.bedwars?.wins.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Bedwars Current Winstreak",
-            player.stats?.bedwars?.winstreak.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Duels Wins",
-            player.stats?.duels?.wins.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Skywars KD",
-            player.stats?.skywars?.KDRatio.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Skywars Kills",
-            player.stats?.skywars?.kills.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Skywars Wins",
-            player.stats?.skywars?.wins.toString() ?? "None",
-            true
-          );
-          pembed.addField(
-            "Skywars Current Winstreak",
-            player.stats?.skywars?.winstreak.toString() ?? "None",
-            true
-          );
-          i.reply({ embeds: [pembed] });
-        })
-
-        .catch(async (e) => {
-          console.error(e);
-          const er = await EvieEmbed(interaction.guild!);
-          er.setDescription(`Error: That player doesn't seem to exist`);
-          i.reply({
-            embeds: [er],
-          });
-        });
     }
   },
 };
