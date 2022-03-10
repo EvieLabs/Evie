@@ -33,5 +33,6 @@ jobs:
         with:
           push: true
           context: .
+          file: ./docker-compose.yml
           tags: |
             ghcr.io/teamevie/evie:latest
