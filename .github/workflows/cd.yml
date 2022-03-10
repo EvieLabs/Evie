@@ -29,10 +29,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Evie Docker image
-        uses: docker/build-push-action@7f9d37fa544684fb73bfe4835ed7214c255ce02b # renovate: tag=v2.9.0
+        uses: docker/bake-action@master
         with:
           push: true
           context: .
-          file: ./docker-compose.yml
           tags: |
             ghcr.io/teamevie/evie:latest
