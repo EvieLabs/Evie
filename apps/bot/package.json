@@ -16,7 +16,8 @@
     "preflight": "node ./scripts/preflight.js",
     "build": "yarn prisma generate && yarn preflight && tsup",
     "docker": "cd ./dist/ && pm2-runtime start index.js",
-    "lint": "eslint --fix --ext ts src"
+    "lint": "eslint --fix --ext ts src",
+    "compose": "docker-compose up --env-file ./apps/bot/.env --build"
   },
   "keywords": [],
   "author": "Tristan Camejo <contact@tristancamejo.com>",
