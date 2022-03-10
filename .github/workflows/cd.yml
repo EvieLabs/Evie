@@ -33,5 +33,4 @@ jobs:
         with:
           push: true
           context: .
-          tags: |
-            ghcr.io/teamevie/evie:latest
+          tag: ghcr.io/teamevie/evie:latest
