@@ -1,0 +1,24 @@
+version: '3.3'
+
+#services describe the containers that will start
+services:
+  # api is the container name for our Go API
+  redis:
+    command: 'redis-server --port 8287 --requirepass redis'
+    container_name: redis
+    image: 'redis:alpine'
+    ports:
+      - '8287:8287'
+    restart: always
+  bot:
+    # It will look for a Dockerfile in the project root and build it
+    build: "./apps/bot"
+    env_file:
+      - "./apps/bot/.env"
+    environment:
+      - NODE_ENV=compose
+    # If the container goes down, it will restart
+    restart: "always"
+    # Connects the API to a common api.network bridge
+    links:
+      - redis

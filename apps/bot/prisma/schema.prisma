@@ -1,0 +1,81 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+type CurrenciesStreak {
+  daily    Int
+  hafly    Int
+  hourly   Int
+  monthly  Int
+  quaterly Int
+  weekly   Int
+  yearly   Int
+}
+
+type ReactionrolesRoles {
+  id      String @map("_id") @db.ObjectId
+  emoji   String
+  message String
+  roleid  String
+}
+
+model currencies {
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  v            Int              @map("__v")
+  bank         Int
+  bankSpace    Int
+  begTimeout   Int
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  guildID      Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  inventory    Json?
+  lastBegged   Float
+  lastDaily    Float
+  lastGamble   Int
+  lastHafly    Int
+  lastHourly   Int
+  lastMonthly  Int
+  lastQuaterly Int
+  lastRob      Int
+  lastUpdated  DateTime         @db.Date
+  lastWeekly   Int
+  lastWork     Int
+  lastYearly   Int
+  networth     Int
+  streak       CurrenciesStreak
+  userID       String
+  wallet       Int
+}
+
+model guildsettings {
+  id                        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v                         Int      @map("__v")
+  bannedWordList            String?
+  color                     String?
+  defaultBannedWordList     Boolean?
+  goodbyeChannel            String?
+  goodbyeMessage            String?
+  goodbyeMessageEnabled     Boolean?
+  joinRoleEnabled           Boolean?
+  joinRoleID                String?
+  phishingDetectionEnabled  Boolean?
+  serverid                  String   @unique
+  welcomeChannel            String?
+  welcomeMessage            String?
+  welcomeMessageEnabled     Boolean?
+  welcomeMessagePingEnabled Boolean?
+  tags                      Json[]
+}
+
+model reactionroles {
+  id       String               @id @default(auto()) @map("_id") @db.ObjectId
+  v        Int                  @map("__v")
+  roles    ReactionrolesRoles[]
+  serverid String
+}

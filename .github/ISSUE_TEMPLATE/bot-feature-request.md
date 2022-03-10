@@ -2,9 +2,8 @@
 name: Bot Feature Request
 about: Suggest an idea for Evie bot
 title: "[BOT:FEAT] Name your feature"
-labels: ''
+labels: ""
 assignees: twisttaan
-
 ---
 
 **Is your feature request related to a problem? Please describe.**
