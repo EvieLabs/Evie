@@ -13,7 +13,6 @@
 
 ## What needs to be done before merging with [production evie]
 
-- [ ] Remove or redo the economic system without a package
 - [ ] Re-make the dashboard with Next.js instead of express
 - [ ] Everything that is possible with the dashboard should be able to be changed inside of Discord with Modals and slash commands
 - [ ] Re-write just about every typescript file as they were made when I was brand new to JavaScript and TypeScript so there's a lot of issues with them.
