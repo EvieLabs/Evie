@@ -16,7 +16,7 @@ limitations under the License.
 
 export {};
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, GuildMember, Role } from "discord.js";
+import type { CommandInteraction, GuildMember, Role } from "discord.js";
 import fetch from "node-fetch";
 import { EvieEmbed } from "#classes/EvieEmbed";
 interface discordRes {
