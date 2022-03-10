@@ -1,12 +1,6 @@
 <div align="center">
 
-<style>
-.round {
-  border-radius: 50%;
-}
-</style>
-
-<img src="https://github.com/TeamEvie.png" width="15%" class="round">
+<img src="https://github.com/TeamEvie.png" width="15%" class="round" style="border-radius: 50%;">
 
 # Evie [![DiscordInvite](https://discord.com/api/guilds/819106797028769844/embed.png)](https://evie.pw/discord)
 
