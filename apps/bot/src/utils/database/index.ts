@@ -15,18 +15,34 @@ limitations under the License.
 */
 
 import { guildsettings, PrismaClient } from "@prisma/client";
-import Redis from "ioredis";
 import type { Guild } from "discord.js";
 import { cacheMiddleware } from "./cacheMiddleware";
-
-export const redis = new Redis({
-  port: 8287,
-  host: "redis",
-  password: "redis",
-  db: 1,
-});
+import Redis from "ioredis";
+import axios, { AxiosRequestConfig } from "axios";
+import { AxiosRedis } from "@tictactrip/axios-redis";
 
 export const prisma = new PrismaClient();
+
+if (process.env.NODE_ENV === "compose") {
+  console.log("Using Redis as a caching layer");
+
+  const prismaRedis = new Redis({
+    port: 8287,
+    host: "redis",
+    password: "redis",
+    db: 1,
+  });
+
+  prisma.$use(
+    cacheMiddleware({
+      redis: prismaRedis,
+      defaultValues: { language: "nl", prefix: "!a" },
+      ttlInSeconds: 10,
+    })
+  );
+} else {
+  console.log("Redis was not found, using no caching layer");
+}
 
 async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
   try {

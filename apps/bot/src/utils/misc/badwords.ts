@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const list: Array<string> = require("leo-profanity").list();
+import Filter from "bad-words";
 
-export { list };
+const filter = new Filter();
+
+export { filter };

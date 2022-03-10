@@ -15,6 +15,8 @@ services:
     build: "./apps/bot"
     env_file:
       - "./apps/bot/.env"
+    environment:
+      - NODE_ENV=compose
     # If the container goes down, it will restart
     restart: "always"
     # Connects the API to a common api.network bridge

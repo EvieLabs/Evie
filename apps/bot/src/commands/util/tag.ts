@@ -38,45 +38,7 @@ export class Tag extends Command {
     const query = interaction.options.getString("query");
     if (query == "create") {
       await interaction.showModal(CreateTagModal);
-      const submit = (await interaction
-        .awaitModalSubmit({
-          filter: (i) => i.customId === "create_tag",
-          time: 20000,
-        })
-        .catch(() =>
-          interaction.followUp({
-            content: "Tag Creation timed out.",
-            ephemeral: true,
-          })
-        )) as ModalSubmitInteraction;
-      if (submit) await submit.deferReply({ ephemeral: true });
-
-      const tag = submit.fields.getTextInputValue("tag_name");
-      const content = submit.fields.getTextInputValue("tag_content");
-
-      if (tag && content) {
-        const guild = interaction.guild;
-        if (!guild) {
-          interaction.followUp({
-            content: "You must be in a guild to create a tag.",
-            ephemeral: true,
-          });
-          return;
-        }
-        const tagObj: EvieTag = {
-          id: SnowflakeUtil.generate(),
-          name: tag,
-          content: content,
-          embed: false,
-        };
-        tagDB.addTag(guild, tagObj);
-        interaction.followUp({ content: `Created tag ${tag}` });
-      } else {
-        interaction.followUp({
-          content: "Tag creation failed.",
-          ephemeral: true,
-        });
-      }
+      this.waitForModal(interaction);
     } else {
       if (!interaction.guild) return;
       const tagData = await tagDB.getTags(interaction.guild);
@@ -97,12 +59,51 @@ export class Tag extends Command {
     }
   }
 
+  private async waitForModal(interaction: CommandInteraction) {
+    const submit = (await interaction
+      .awaitModalSubmit({
+        filter: (i) => i.customId === "create_tag",
+        time: 20000,
+      })
+      .catch(() =>
+        interaction.followUp({
+          content: "Tag Creation timed out.",
+          ephemeral: true,
+        })
+      )) as ModalSubmitInteraction;
+    if (submit) await submit.deferReply({ ephemeral: true });
+
+    const tag = submit.fields.getTextInputValue("tag_name");
+    const content = submit.fields.getTextInputValue("tag_content");
+
+    if (tag && content) {
+      const { guild } = interaction;
+      if (!guild) {
+        interaction.followUp({
+          content: "You must be in a guild to create a tag.",
+          ephemeral: true,
+        });
+        return;
+      }
+      const tagObj: EvieTag = {
+        id: SnowflakeUtil.generate(),
+        name: tag,
+        content,
+        embed: false,
+      };
+      tagDB.addTag(guild, tagObj);
+      interaction.followUp({ content: `Created tag ${tag}` });
+    } else {
+      interaction.followUp({
+        content: "Tag creation failed.",
+        ephemeral: true,
+      });
+    }
+  }
+
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
     if (!interaction.guild) return;
     const tagData = await tagDB.getTags(interaction.guild);
-
-    console.log(`Autocompleting ${interaction.guild.name}`);
-    console.log(tagData);
 
     if (tagData.length == 0) {
       return await interaction.respond([
@@ -111,24 +112,15 @@ export class Tag extends Command {
           value: "create",
         },
       ]);
-    } else {
-      console.log(
-        tagData.map((tag) => {
-          return {
-            name: `📌${tag.name}`,
-            value: tag.id,
-          };
-        })
-      );
-      return await interaction.respond(
-        tagData.map((tag) => {
-          return {
-            name: `📌${tag.name}`,
-            value: tag.id,
-          };
-        })
-      );
     }
+    return await interaction.respond(
+      tagData.map((tag) => {
+        return {
+          name: `📌${tag.name}`,
+          value: tag.id,
+        };
+      })
+    );
   }
 
   public override registerApplicationCommands(

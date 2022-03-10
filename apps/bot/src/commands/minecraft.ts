@@ -17,11 +17,10 @@ limitations under the License.
 import axios from "axios";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { EvieEmbed } from "#classes/EvieEmbed";
-const ms = require("ms");
+import ms from "ms";
 import * as Hypixel from "hypixel-api-reborn";
 import util from "minecraft-server-util";
-import type { CommandInteraction, User } from "discord.js";
-const imgur = require("imgur");
+import { CommandInteraction, MessageAttachment, User } from "discord.js";
 import { axo } from "#root/axologs";
 import fetch from "node-fetch";
 import type { DiscordLookupRes, McMMORes } from "#types/api/TSMP";
@@ -69,78 +68,72 @@ module.exports = {
   async execute(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
     if (subcommand == "serverstats") {
-      let realInput: string =
+      const realInput: string =
         (await interaction.options.getString("ip")) ?? "tristansmp.com";
 
       util
         .status(realInput) // port is default 25565
-        .then((response) => {
+        .then(async (response) => {
           interaction.deferReply();
-          let data = response.favicon; // your image data
-          const base64Data = data!.replace(/^data:image\/png;base64,/, "");
-          imgur
-            .uploadBase64(base64Data)
-            .then(async (json: any) => {
-              axo.log("[SERVER STATS CACHE] " + json.link);
-              const serverIconLink = json.link;
-              let exampleEmbed = await EvieEmbed(interaction.guild);
-              exampleEmbed
-                .setColor("#0099ff")
-                .setTitle("Server Stats")
-                .setDescription("**Server Address**: " + "`" + realInput + "`")
-                .addFields(
-                  {
-                    name: "Online Players",
-                    value:
-                      response.onlinePlayers!.toString() +
-                      "/" +
-                      response.maxPlayers!.toString(),
-                  },
-                  {
-                    name: "Motd",
-                    value:
-                      "```" +
-                      response.description!.descriptionText.toString() +
-                      "```",
-                  },
-                  {
-                    name: "Server Version",
-                    value: "```" + response.version + "```",
-                  },
-                  {
-                    name: "Server Icon",
-                    value: ":point_down:",
-                  }
-                )
-                .setImage(serverIconLink)
-                .setTimestamp();
+          const data = response.favicon; // your image data
+          const base64Data = data?.replace(/^data:image\/png;base64,/, "");
+          const exampleEmbed = await EvieEmbed(interaction.guild);
+          exampleEmbed
+            .setColor("#0099ff")
+            .setTitle("Server Stats")
+            .setDescription(`${"**Server Address**: " + "`"}${realInput}\``)
+            .addFields(
+              {
+                name: "Online Players",
+                value: `${response.onlinePlayers?.toString()}/${response.maxPlayers?.toString()}`,
+              },
+              {
+                name: "Motd",
+                value: `\`\`\`${response.description?.descriptionText.toString()}\`\`\``,
+              },
+              {
+                name: "Server Version",
+                value: `\`\`\`${response.version}\`\`\``,
+              },
+              {
+                name: "Server Icon",
+                value: ":point_down:",
+              }
+            )
+            .setImage("attachment://server.png")
+            .setTimestamp();
 
-              interaction.editReply({
-                embeds: [exampleEmbed],
-              });
-            })
-            .catch((error: any) => {
-              axo.err(error.message);
-            });
+          interaction.editReply({
+            embeds: [exampleEmbed],
+            ...(base64Data
+              ? {
+                  files: [
+                    new MessageAttachment(
+                      Buffer.from(base64Data, "base64"),
+                      "server.png"
+                    ),
+                  ],
+                }
+              : null),
+          });
         })
-        .catch((err) => {
-          axo.err(err.message);
+        .catch((error: any) => {
+          axo.err(error.message);
         });
     }
     if (subcommand == "tristansmp") {
       await interaction.deferReply();
-      const url =
-        "http://202.131.88.29:25571/player/" +
-        interaction.options.getString("username") +
-        "/raw";
+      const url = `http://202.131.88.29:25571/player/${interaction.options.getString(
+        "username"
+      )}/raw`;
       try {
         axios.get(url).then(async (r) => {
           const response = r.data;
           const username = interaction.options.getString("username");
 
-          const uuid: string = response.BASE_USER.uuid;
-          const faceUrl = "https://crafatar.com/renders/body/" + uuid;
-          const skinDL = "https://crafatar.com/skins/" + uuid;
+          const { uuid } = response.BASE_USER;
+          const faceUrl = `https://crafatar.com/renders/body/${uuid}`;
+          const skinDL = `https://crafatar.com/skins/${uuid}`;
 
           const res: McMMORes = await fetch(
             `https://api.tristansmp.com/players/uuid/${response.uuid}/mcmmo`,
@@ -172,10 +165,7 @@ module.exports = {
             });
           }
 
-          const applySkin =
-            "https://www.minecraft.net/profile/skin/remote?url=" +
-            skinDL +
-            ".png&model=slim";
+          const applySkin = `https://www.minecraft.net/profile/skin/remote?url=${skinDL}.png&model=slim`;
 
           const e = await EvieEmbed(interaction.guild);
 
@@ -276,13 +266,9 @@ module.exports = {
               {
                 name: "Skin",
                 value:
-                  "[Download](" +
-                  skinDL +
-                  ")" +
-                  " | " +
-                  "[Apply Skin](" +
-                  applySkin +
-                  ")",
+                  `[Download](${skinDL})` +
+                  ` | ` +
+                  `[Apply Skin](${applySkin})`,
                 inline: true,
               }
             )
@@ -295,8 +281,8 @@ module.exports = {
       }
     }
     if (subcommand == "hypixel") {
-      let pembed = await EvieEmbed(interaction.guild);
-      let i: CommandInteraction = interaction;
+      const pembed = await EvieEmbed(interaction.guild);
+      const i: CommandInteraction = interaction;
       hypixel
         .getPlayer(i.options.getString("username") ?? "twisttaan")
         .then(async (player) => {

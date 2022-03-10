@@ -12,7 +12,7 @@ limitations under the License.
 */
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, TextBasedChannel } from "discord.js";
+import type { CommandInteraction, TextBasedChannel } from "discord.js";
 
 module.exports = {
   data: new SlashCommandBuilder()

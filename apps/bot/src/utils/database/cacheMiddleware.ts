@@ -15,32 +15,24 @@ limitations under the License.
 */
 
 import type { Prisma } from "@prisma/client";
-import { redis } from ".";
+import type { Redis } from "ioredis";
 
-type CacheMiddlewareOptions = {
-  model: Prisma.ModelName;
-  action: Prisma.PrismaAction;
+interface CacheMiddlewareOptions {
   keys?: string[];
   defaultValues?: Record<string, unknown>;
   ttlInSeconds: number;
-};
+  redis: Redis;
+}
 
 /* Redis Cache Middleware for Prisma **/
 export const cacheMiddleware =
   ({
-    model,
-    action,
     keys,
     defaultValues,
     ttlInSeconds,
+    redis,
   }: CacheMiddlewareOptions): Prisma.Middleware =>
   async (params, next) => {
-    console.log(`[cacheMiddleware] ${model} ${action}`);
-    console.log(redis.keys("*"));
-    if (params.model !== model || action !== params.action) {
-      return next(params);
-    }
-
     if (keys) {
       const selectedKeys = Object.keys(params.args.select);
       const match = selectedKeys.every((key) => keys.includes(key));

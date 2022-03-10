@@ -44,12 +44,10 @@ module.exports = {
     const index = Math.floor(Math.random() * (idk_msg.length - 1) + 1);
     exampleEmbed.addField(
       "Here's a random landmark in the overworld on `tristansmp.com`",
-      "theres " + idk_msg[index]
+      `theres ${idk_msg[index]}`
     );
     exampleEmbed.addField(
-      "Hey, " +
-        interaction.user.username.toString() +
-        " want your landmark added to this command?",
+      `Hey, ${interaction.user.username.toString()} want your landmark added to this command?`,
       "If so directly contact Tristan with the command `/dmtristan <message>` in <#877795126615879750>"
     );
     await interaction.reply({ embeds: [exampleEmbed] });

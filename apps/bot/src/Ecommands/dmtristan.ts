@@ -34,7 +34,7 @@ module.exports = {
       .then((data) =>
         interaction.client.users.cache
           .get("97470053615673344")
-          ?.send(interaction.user.tag.toString() + " said: " + msg)
+          ?.send(`${interaction.user.tag.toString()} said: ${msg}`)
       )
       .catch((error: any) => console.log(error));
   },

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Snowflake } from "discord-api-types";
+import type { Snowflake } from "discord-api-types";
 import { dbUtils } from ".";
 
 /** Gets the goodbye module boolean for the specified guild */

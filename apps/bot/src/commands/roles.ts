@@ -104,14 +104,14 @@ module.exports = {
           return { embeds: [e], components: [row] };
         }
 
-        let msg: string = interaction.options
+        const msg: string = interaction.options
           .getString("message")!
           .replace("\\n", "\n");
-        let role: Role = interaction.options.getRole("role") as Role;
-        let channel: TextChannel = interaction.options.getChannel(
+        const role: Role = interaction.options.getRole("role") as Role;
+        const channel: TextChannel = interaction.options.getChannel(
           "channel"
         ) as TextChannel;
-        let roleArray: Role[] = [role];
+        const roleArray: Role[] = [role];
 
         interaction.reply(await prepScreen(interaction.guild!, channel, msg));
         const filter = (i: MessageComponentInteraction) =>
@@ -126,7 +126,7 @@ module.exports = {
         collector.on("collect", async (i) => {
           if (i.user.id === interaction.user.id) {
             if (i.customId === "confirmpreprole") {
-              let embed = await EvieEmbed(interaction.guild!);
+              const embed = await EvieEmbed(interaction.guild!);
               embed.setDescription(msg);
               const row = new MessageActionRow();
               roleArray.forEach((role) => {
@@ -200,7 +200,7 @@ module.exports = {
                   }
                 });
               } else {
-                let allDone: boolean = false;
+                let allDone = false;
                 await i
                   .update({
                     content: "Please ping a role to add!",

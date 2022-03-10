@@ -21,27 +21,27 @@ import type {
   Snowflake,
 } from "discord.js";
 
-export type EvieCommand = {
+export interface EvieCommand {
   data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
   execute(interaction: CommandInteraction): Promise<void> | void;
-};
+}
 
-export type EvieContextMenu = {
+export interface EvieContextMenu {
   data: {
     name: string;
     type: 1 | 2;
   };
   execute(interaction: ContextMenuInteraction): Promise<void> | void;
-};
+}
 
-export type Success = {
+export interface Success {
   success: boolean;
   message: string | null;
-};
+}
 
-export type EvieTag = {
+export interface EvieTag {
   id: Snowflake;
   name: string;
   content: string;
   embed: boolean;
-};
+}

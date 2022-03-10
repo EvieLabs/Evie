@@ -35,7 +35,7 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction: CommandInteraction) {
-    const client = interaction.client;
+    const { client } = interaction;
 
     if (interaction.user.toString() == "<@97470053615673344>") {
       client.user?.setPresence({
@@ -47,13 +47,11 @@ module.exports = {
       client.user?.setActivity(activity, { type: "LISTENING" });
 
       await interaction.reply({
-        content:
-          "Setting my status to, " +
-          "```" +
-          interaction.options.getString("status") +
-          "``` and setting my activity to ```" +
-          activity +
-          "```",
+        content: `${
+          "Setting my status to, " + "```"
+        }${interaction.options.getString(
+          "status"
+        )}\`\`\` and setting my activity to \`\`\`${activity}\`\`\``,
         ephemeral: false,
       });
     } else {

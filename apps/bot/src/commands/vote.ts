@@ -25,7 +25,7 @@ const command: EvieCommand = {
     .setName("vote")
     .setDescription("Help us grow!"),
   async execute(interaction) {
-    let exampleEmbed = await EvieEmbed(interaction.guild);
+    const exampleEmbed = await EvieEmbed(interaction.guild);
 
     exampleEmbed.setTitle(`Want to help us grow?`);
     exampleEmbed.setDescription(

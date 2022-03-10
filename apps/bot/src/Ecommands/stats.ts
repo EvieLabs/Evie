@@ -27,7 +27,7 @@ module.exports = {
   async execute(interaction: CommandInteraction) {
     // Make an embed
 
-    let exampleEmbed = await EvieEmbed(interaction.guild);
+    const exampleEmbed = await EvieEmbed(interaction.guild);
 
     // Vars
 
@@ -52,11 +52,11 @@ module.exports = {
       )
       .addField(
         `My Average Response Time:`,
-        interaction.client.ws.ping.toString() + "ms",
+        `${interaction.client.ws.ping.toString()}ms`,
         true
       )
       .addField("My CPU's Core Count:", cpu.cores.toString(), true)
-      .addField("My CPU's Speed:", cpu.speedMax.toString() + "GHz", true)
+      .addField("My CPU's Speed:", `${cpu.speedMax.toString()}GHz`, true)
       .addField(
         "<a:tlogo:898393556878786560> Discord Server Stats <a:tlogo:898393556878786560>",
         "━━━━━━━━━━━━━━━━━━━━━━━━",

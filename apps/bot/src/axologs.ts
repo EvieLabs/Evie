@@ -15,23 +15,19 @@ limitations under the License.
 */
 
 export const axo = {
-  startupMsg: function (startupMsg: any) {
+  startupMsg(startupMsg: any) {
     console.log("\x1b[34m[Startup] \x1b[0m", startupMsg);
-    return;
   },
 
-  log: function (msg: any) {
+  log(msg: any) {
     console.log("\x1b[36m[Evie] \x1b[0m", msg);
-    return;
   },
 
-  err: function (err: any) {
+  err(err: any) {
     console.log("\x1b[31m[ERROR] \x1b[0m", err);
-    return;
   },
 
-  i: function (i: any) {
+  i(i: any) {
     console.log("\x1b[36m[Interaction] \x1b[0m", i);
-    return;
   },
 };

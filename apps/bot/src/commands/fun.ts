@@ -48,6 +48,7 @@ export class Fun extends Command {
       interaction.reply(await randomEvie());
     }
   }
+
   public override registerApplicationCommands(
     registry: ApplicationCommandRegistry
   ) {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export type McMMORes = {
+export interface McMMORes {
   repair: number;
   fishing: number;
   axes: number;
@@ -30,11 +30,11 @@ export type McMMORes = {
   unarmed: number;
   archery: number;
   taming: number;
-};
+}
 
-export type DiscordLookupRes = {
+export interface DiscordLookupRes {
   discordId: string;
   error: boolean;
   discordTag: string;
   discordName: string;
-};
+}

@@ -19,13 +19,13 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, GuildMember, Role } from "discord.js";
 import fetch from "node-fetch";
 import { EvieEmbed } from "#classes/EvieEmbed";
-type discordRes = {
+interface discordRes {
   discordId: string;
   error: boolean;
   discordTag: string;
   discordName: string;
   uuid: string;
-};
+}
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("tsmp")
@@ -177,15 +177,14 @@ module.exports = {
           content: "No Discord User found!",
           ephemeral: true,
         });
-      } else {
-        // send the discord user
-        const e = await EvieEmbed(i.guild);
-        e.setDescription(`${username} is linked to ${dUser}`);
-        return i.reply({
-          embeds: [e],
-          ephemeral: true,
-        });
       }
+      // send the discord user
+      const e = await EvieEmbed(i.guild);
+      e.setDescription(`${username} is linked to ${dUser}`);
+      return i.reply({
+        embeds: [e],
+        ephemeral: true,
+      });
     }
   },
 };
