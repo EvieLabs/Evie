@@ -13,8 +13,6 @@ services:
   bot:
     # It will look for a Dockerfile in the project root and build it
     build: "./apps/bot"
-    env_file:
-      - "./apps/bot/.env"
     environment:
       - NODE_ENV=compose
     # If the container goes down, it will restart
