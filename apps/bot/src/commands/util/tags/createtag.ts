@@ -15,51 +15,29 @@ limitations under the License.
 */
 
 import { CreateTagModal } from "#constants/modals";
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { tagDB } from "#root/utils/database/tags";
 import { registeredGuilds } from "#utils/parsers/envUtils";
-import type { EvieTag } from "@prisma/client";
 import {
   ApplicationCommandRegistry,
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
 import {
-  AutocompleteInteraction,
   CommandInteraction,
   ModalSubmitInteraction,
   SnowflakeUtil,
 } from "discord.js";
 
-export class Tag extends Command {
+export class CreateTag extends Command {
   public override async chatInputRun(
     interaction: CommandInteraction
   ): Promise<void> {
-    const query = interaction.options.getString("query");
-    if (query == "create") {
-      await interaction.showModal(CreateTagModal);
-      this.waitForModal(interaction);
-    } else {
-      if (!interaction.guild) return;
-      const tagData = await tagDB.getTags(interaction.guild);
-      const tag: EvieTag | undefined = tagData.find((t) => t.id === query);
-      if (!tag) return;
-      const e = await EvieEmbed(interaction.guild);
-      e.setTitle(tag.name);
-      e.setDescription(tag.content);
-      if (tag.embed) {
-        interaction.reply({
-          embeds: [e],
-        });
-      } else {
-        interaction.reply({
-          content: tag.content,
-        });
-      }
-    }
+    const embed = interaction.options.getBoolean("embed") ?? false;
+    await interaction.showModal(CreateTagModal);
+    this.waitForModal(interaction, embed);
   }
 
-  private async waitForModal(interaction: CommandInteraction) {
+  private async waitForModal(interaction: CommandInteraction, embed: boolean) {
     const submit = (await interaction
       .awaitModalSubmit({
         filter: (i) => i.customId === "create_tag",
@@ -71,6 +49,7 @@ export class Tag extends Command {
           ephemeral: true,
         })
       )) as ModalSubmitInteraction;
+
     if (submit) await submit.deferReply({ ephemeral: true });
 
     const tag = submit.fields.getTextInputValue("tag_name");
@@ -79,9 +58,8 @@ export class Tag extends Command {
     if (tag && content) {
       const { guild } = interaction;
       if (!guild) {
-        interaction.followUp({
+        submit.editReply({
           content: "You must be in a guild to create a tag.",
-          ephemeral: true,
         });
         return;
       }
@@ -89,38 +67,15 @@ export class Tag extends Command {
         id: SnowflakeUtil.generate(),
         name: tag,
         content,
-        embed: false,
+        embed,
         guildId: guild.id,
       });
-      interaction.followUp({ content: `Created tag ${tag}` });
+      submit.editReply({ content: `Created tag ${tag}` });
     } else {
-      interaction.followUp({
+      submit.editReply({
         content: "Tag creation failed.",
-        ephemeral: true,
       });
     }
-  }
-
-  public override async autocompleteRun(interaction: AutocompleteInteraction) {
-    if (!interaction.guild) return;
-    const tagData = await tagDB.getTags(interaction.guild);
-
-    if (tagData.length == 0) {
-      return await interaction.respond([
-        {
-          name: "📌Create a new tag",
-          value: "create",
-        },
-      ]);
-    }
-    return await interaction.respond(
-      tagData.map((tag) => {
-        return {
-          name: `📌${tag.name}`,
-          value: tag.id,
-        };
-      })
-    );
   }
 
   public override registerApplicationCommands(
@@ -129,20 +84,13 @@ export class Tag extends Command {
     registry.registerChatInputCommand(
       {
         name: this.name,
-        description: "Send a tag",
+        description: "Creates a new tag",
         options: [
           {
-            name: "query",
-            description: "The name of the tag",
-            type: "STRING",
-            autocomplete: true,
+            name: "embed",
+            description: "Make the tag an embed",
+            type: "BOOLEAN",
             required: true,
-          },
-          {
-            name: "target",
-            description: "Targeted user",
-            type: "USER",
-            required: false,
           },
         ],
       },

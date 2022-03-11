@@ -16,7 +16,7 @@ limitations under the License.
 
 import type { Success } from "#root/types";
 import type { EvieTag } from "@prisma/client";
-import type { Guild } from "discord.js";
+import type { Guild, Snowflake } from "discord.js";
 import { dbUtils, prisma } from ".";
 
 /** Gets the tags for the specified guild */
@@ -27,12 +27,45 @@ async function getTags(guild: Guild): Promise<EvieTag[] | []> {
         guildId: guild?.id,
       },
     });
-
-    console.log("Found Tags:", tags);
-
     return tags || [];
   } catch (error) {
     return [];
+  }
+}
+
+/** Gets specific tag from Snowflake */
+async function getTagFromSnowflake(
+  guild: Guild,
+  tagId: Snowflake
+): Promise<EvieTag | null> {
+  try {
+    const tag = await prisma.evieTag.findFirst({
+      where: {
+        id: tagId,
+        guildId: guild?.id,
+      },
+    });
+    return tag || null;
+  } catch (error) {
+    return null;
+  }
+}
+
+/** Gets first tag from name */
+async function getClosestTagFromName(
+  guild: Guild,
+  tagName: string
+): Promise<EvieTag | null> {
+  try {
+    const tag = await prisma.evieTag.findFirst({
+      where: {
+        name: tagName,
+        guildId: guild?.id,
+      },
+    });
+    return tag || null;
+  } catch (error) {
+    return null;
   }
 }
 
@@ -59,4 +92,6 @@ async function addTag(tag: EvieTag): Promise<Success> {
 export const tagDB = {
   getTags,
   addTag,
+  getClosestTagFromName,
+  getTagFromSnowflake,
 };
