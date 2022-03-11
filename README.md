@@ -45,11 +45,12 @@
 3. Install deps with by typing `yarn`.
 4. Fill in the `.env` file located in `apps/bot`.
 5. Go into the `apps/bot` directory. `cd apps/bot`
-6. Type `yarn build && npx prisma db push`
+6. Type `yarn build` to build the Prisma schema.
 7. Code away.
-8. Test with `docker-compose up --build` this will spin up the Main container (the bot) and a local MongoDB container.
-9. Push your changes.
-10. Make a PR.
+8. Before testing make sure to make a volume for the database with `docker volume create --name=postgres`.
+9. Test with `docker-compose up --build` this will spin up the Main container (the bot) and a local database container.
+10. Push your changes.
+11. Make a PR.
 
 ## Need help?
 
