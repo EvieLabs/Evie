@@ -19,7 +19,7 @@ import "@sapphire/plugin-hmr/register";
 import "@sapphire/plugin-logger/register";
 import "dotenv/config";
 
-/** The Sapphire Client */
+/** The running EvieClient */
 export const client = new EvieClient();
 
 client.fetchPrefix = () => "slashies.";

@@ -20,7 +20,7 @@ import type { Success } from "../../types";
 
 async function isJoinRoleOn(guild: Guild): Promise<boolean> {
   try {
-    const result = await dbUtils.getGuildSettings(guild);
+    const result = await dbUtils.getGuild(guild);
 
     return result?.joinRoleEnabled || false;
   } catch (error) {
@@ -30,7 +30,7 @@ async function isJoinRoleOn(guild: Guild): Promise<boolean> {
 
 async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
   try {
-    const result = await dbUtils.getGuildSettings(guild);
+    const result = await dbUtils.getGuild(guild);
 
     return result?.joinRoleID || null;
   } catch (error) {
@@ -40,7 +40,7 @@ async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
 
 async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
   try {
-    await prisma.guildsettings.update({
+    await prisma.evieGuild.update({
       where: {
         id: guild.id,
       },
@@ -59,7 +59,7 @@ async function setJoinRoleEnable(
   enable: boolean
 ): Promise<Success> {
   try {
-    await prisma.guildsettings.update({
+    await prisma.evieGuild.update({
       where: {
         id: guild.id,
       },

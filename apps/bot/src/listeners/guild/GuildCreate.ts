@@ -14,13 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { dbUtils } from "#root/utils/database";
 import { ApplyOptions } from "@sapphire/decorators";
-import { Listener } from "@sapphire/framework";
-import type { Client } from "discord.js";
+import { Events, Listener } from "@sapphire/framework";
+import type { Guild } from "discord.js";
 
-@ApplyOptions<Listener.Options>({ once: false, event: "ready" })
-export class MessageListener extends Listener {
-  public async run(c: Client) {
-    console.log("ready");
+@ApplyOptions<Listener.Options>({
+  once: false,
+  event: Events.GuildCreate,
+})
+export class GuildCreateListener extends Listener {
+  public async run(g: Guild) {
+    console.log(`Got added to ${g.name} (${g.id})`);
+    await dbUtils.createGuild(g);
   }
 }

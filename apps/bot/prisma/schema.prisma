@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model guildsettings {
+model EvieGuild {
   id                        String    @unique
   bannedWordList            String[]
   color                     String?
@@ -26,10 +26,10 @@ model guildsettings {
 }
 
 model EvieTag {
-  id            String         @unique
-  name          String
-  content       String
-  embed         Boolean
-  guildsettings guildsettings? @relation(fields: [guildId], references: [id])
-  guildId       String?
+  id        String     @unique
+  name      String
+  content   String
+  embed     Boolean
+  evieGuild EvieGuild? @relation(fields: [guildId], references: [id])
+  guildId   String?
 }
