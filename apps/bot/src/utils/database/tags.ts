@@ -22,11 +22,13 @@ import { prisma } from ".";
 /** Gets the tags for the specified guild */
 async function getTags(guild: Guild): Promise<EvieTag[] | []> {
   try {
-    const tags = prisma.evieTag.findMany({
+    const tags = await prisma.evieTag.findMany({
       where: {
         guildId: guild?.id,
       },
     });
+
+    console.log("Found Tags:", tags);
 
     return tags || [];
   } catch (error) {
@@ -35,17 +37,10 @@ async function getTags(guild: Guild): Promise<EvieTag[] | []> {
 }
 
 /** Adds a tag to the database */
-async function addTag(guild: Guild, tag: EvieTag): Promise<Success> {
+async function addTag(tag: EvieTag): Promise<Success> {
   try {
-    await prisma.guildsettings.update({
-      where: {
-        id: guild.id,
-      },
-      data: {
-        tags: {
-          [tag.id]: tag,
-        },
-      },
+    await prisma.evieTag.create({
+      data: tag,
     });
     return {
       success: true,

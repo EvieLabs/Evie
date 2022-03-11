@@ -16,9 +16,9 @@ limitations under the License.
 
 import { CreateTagModal } from "#constants/modals";
 import { EvieEmbed } from "#root/classes/EvieEmbed";
-import type { EvieTag } from "#root/types";
 import { tagDB } from "#root/utils/database/tags";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import type { EvieTag } from "@prisma/client";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -85,13 +85,13 @@ export class Tag extends Command {
         });
         return;
       }
-      const tagObj: EvieTag = {
+      tagDB.addTag({
         id: SnowflakeUtil.generate(),
         name: tag,
         content,
         embed: false,
-      };
-      tagDB.addTag(guild, tagObj);
+        guildId: guild.id,
+      });
       interaction.followUp({ content: `Created tag ${tag}` });
     } else {
       interaction.followUp({
