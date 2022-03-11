@@ -17,14 +17,18 @@ limitations under the License.
 import type { Success } from "#root/types";
 import type { EvieTag } from "@prisma/client";
 import type { Guild } from "discord.js";
-import { dbUtils, prisma } from ".";
+import { prisma } from ".";
 
 /** Gets the tags for the specified guild */
 async function getTags(guild: Guild): Promise<EvieTag[] | []> {
   try {
-    const result = await dbUtils.getGuildSettings(guild);
+    const tags = prisma.evieTag.findMany({
+      where: {
+        guildId: guild?.id,
+      },
+    });
 
-    return result?.tags || [];
+    return tags || [];
   } catch (error) {
     return [];
   }
@@ -35,7 +39,7 @@ async function addTag(guild: Guild, tag: EvieTag): Promise<Success> {
   try {
     await prisma.guildsettings.update({
       where: {
-        serverid: guild.id,
+        id: guild.id,
       },
       data: {
         tags: {

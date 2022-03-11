@@ -22,7 +22,7 @@ async function getBannedWords(guild: Guild): Promise<string[] | []> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
 
-    return result?.bannedWordList?.split(",") || [];
+    return result?.bannedWordList || [];
   } catch (error) {
     return [];
   }

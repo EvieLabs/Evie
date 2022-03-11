@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 import type { Snowflake } from "discord-api-types";
+import type { Guild } from "discord.js";
 import { dbUtils } from ".";
 
 /** Gets the goodbye module boolean for the specified guild */
-async function getGoodbyeModuleSwitch(guild: any): Promise<boolean> {
+async function getGoodbyeModuleSwitch(guild: Guild): Promise<boolean> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.goodbyeMessageEnabled || false;
@@ -28,7 +29,7 @@ async function getGoodbyeModuleSwitch(guild: any): Promise<boolean> {
 }
 
 /** Gets the goodbye channel for the specified guild */
-async function getGoodbyeChannel(guild: any): Promise<Snowflake | null> {
+async function getGoodbyeChannel(guild: Guild): Promise<Snowflake | null> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.goodbyeChannel || null;
@@ -38,7 +39,7 @@ async function getGoodbyeChannel(guild: any): Promise<Snowflake | null> {
 }
 
 /** Gets the goodbye message for the specified guild */
-async function getGoodbyeMessage(guild: any): Promise<string | null> {
+async function getGoodbyeMessage(guild: Guild): Promise<string | null> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.goodbyeMessage || null;
@@ -48,7 +49,7 @@ async function getGoodbyeMessage(guild: any): Promise<string | null> {
 }
 
 /** Gets the welcome module boolean for the specified guild */
-async function getWelcomeModuleSwitch(guild: any): Promise<boolean> {
+async function getWelcomeModuleSwitch(guild: Guild): Promise<boolean> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.welcomeMessageEnabled || false;
@@ -58,7 +59,7 @@ async function getWelcomeModuleSwitch(guild: any): Promise<boolean> {
 }
 
 /** Gets the welcome channel for the specified guild */
-async function getWelcomeChannel(guild: any): Promise<Snowflake | null> {
+async function getWelcomeChannel(guild: Guild): Promise<Snowflake | null> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.welcomeChannel || null;
@@ -68,7 +69,7 @@ async function getWelcomeChannel(guild: any): Promise<Snowflake | null> {
 }
 
 /** Gets the goodbye message for the specified guild */
-async function getWelcomeMessage(guild: any): Promise<string | null> {
+async function getWelcomeMessage(guild: Guild): Promise<string | null> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.welcomeMessage || null;
@@ -78,7 +79,7 @@ async function getWelcomeMessage(guild: any): Promise<string | null> {
 }
 
 /** Gets the welcome ping boolean for the specified guild */
-async function getWelcomePing(guild: any): Promise<boolean> {
+async function getWelcomePing(guild: Guild): Promise<boolean> {
   try {
     const result = await dbUtils.getGuildSettings(guild);
     return result?.welcomeMessagePingEnabled || false;

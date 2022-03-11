@@ -42,7 +42,7 @@ async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
   try {
     await prisma.guildsettings.update({
       where: {
-        serverid: guild.id,
+        id: guild.id,
       },
       data: {
         joinRoleID: role.id,
@@ -61,7 +61,7 @@ async function setJoinRoleEnable(
   try {
     await prisma.guildsettings.update({
       where: {
-        serverid: guild.id,
+        id: guild.id,
       },
       data: {
         joinRoleEnabled: enable,

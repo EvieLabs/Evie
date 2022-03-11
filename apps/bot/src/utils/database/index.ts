@@ -22,6 +22,7 @@ import { cacheMiddleware } from "./cacheMiddleware";
 export const prisma = new PrismaClient();
 
 if (process.env.NODE_ENV === "compose_") {
+  // will be "compose" later when we have a proper caching system
   console.log("Using Redis as a caching layer");
 
   const prismaRedis = new Redis({
@@ -46,7 +47,7 @@ async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
   try {
     const data = await prisma.guildsettings.findFirst({
       where: {
-        serverid: guild.id,
+        id: guild.id,
       },
     });
 
@@ -61,7 +62,7 @@ async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
 async function createGuildSettings(guild: Guild): Promise<guildsettings> {
   return prisma.guildsettings.create({
     data: {
-      serverid: guild.id,
+      id: guild.id,
     },
   });
 }

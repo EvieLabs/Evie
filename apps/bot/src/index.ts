@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "dotenv/config";
-import "@sapphire/plugin-logger/register";
 import { EvieClient } from "#classes/EvieClient";
 import "@sapphire/plugin-hmr/register";
+import "@sapphire/plugin-logger/register";
+import "dotenv/config";
 
 /** The Sapphire Client */
 export const client = new EvieClient();
