@@ -41,7 +41,7 @@ export class CreateTag extends Command {
     const submit = (await interaction
       .awaitModalSubmit({
         filter: (i) => i.customId === "create_tag",
-        time: 20000,
+        time: 100000,
       })
       .catch(() =>
         interaction.followUp({
@@ -50,16 +50,15 @@ export class CreateTag extends Command {
         })
       )) as ModalSubmitInteraction;
 
-    if (submit) await submit.deferReply({ ephemeral: true });
-
     const tag = submit.fields.getTextInputValue("tag_name");
     const content = submit.fields.getTextInputValue("tag_content");
 
     if (tag && content) {
       const { guild } = interaction;
       if (!guild) {
-        submit.editReply({
+        submit.reply({
           content: "You must be in a guild to create a tag.",
+          ephemeral: true,
         });
         return;
       }
@@ -70,10 +69,11 @@ export class CreateTag extends Command {
         embed,
         guildId: guild.id,
       });
-      submit.editReply({ content: `Created tag ${tag}` });
+      submit.reply({ content: `Created tag ${tag}`, ephemeral: true });
     } else {
-      submit.editReply({
+      submit.reply({
         content: "Tag creation failed.",
+        ephemeral: true,
       });
     }
   }

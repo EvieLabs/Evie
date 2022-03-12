@@ -31,6 +31,7 @@ export class EvieClient extends SapphireClient {
       },
       loadMessageCommandListeners: true,
       shards: "auto",
+      allowedMentions: { users: [], roles: [] },
     });
   }
 }

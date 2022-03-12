@@ -20,7 +20,7 @@ import type { Guild, Snowflake } from "discord.js";
 import { dbUtils, prisma } from ".";
 
 /** Gets the tags for the specified guild */
-async function getTags(guild: Guild): Promise<EvieTag[] | []> {
+async function getTags(guild: Guild): Promise<EvieTag[]> {
   try {
     const tags = await prisma.evieTag.findMany({
       where: {

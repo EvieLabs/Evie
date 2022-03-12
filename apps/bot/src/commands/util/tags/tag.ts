@@ -29,6 +29,8 @@ export class Tag extends Command {
     interaction: CommandInteraction
   ): Promise<void> {
     const query = interaction.options.getString("query");
+    const target = interaction.options.getMember("target");
+
     if (!interaction.guild) return;
     if (!query) return;
     const tag = await tagDB.getTagFromSnowflake(interaction.guild, query);
@@ -59,11 +61,21 @@ export class Tag extends Command {
     e.setDescription(tag.content);
     if (tag.embed) {
       interaction.reply({
+        [target
+          ? "content"
+          : ""]: `Hey, ${target}! ${interaction.user} thinks this will be useful for you!`,
+
         embeds: [e],
+        allowedMentions: {},
       });
     } else {
       interaction.reply({
-        content: tag.content,
+        content: `${
+          target
+            ? `Hey, ${target}! ${interaction.user} thinks this will be useful for you!\n`
+            : ""
+        }${tag.content}`,
+        allowedMentions: {},
       });
     }
   }
@@ -71,6 +83,7 @@ export class Tag extends Command {
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
     if (!interaction.guild) return;
     const tagData = await tagDB.getTags(interaction.guild);
+    const query = interaction.options.getString("query") ?? "";
 
     if (tagData.length == 0) {
       return await interaction.respond([
@@ -80,8 +93,17 @@ export class Tag extends Command {
         },
       ]);
     }
+
+    const tags = tagData
+      .filter((tag) => tag.name.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 5)
+      .map((tag) => ({
+        name: tag.name,
+        id: tag.id,
+      }));
+
     return await interaction.respond(
-      tagData.map((tag) => {
+      tags.map((tag) => {
         return {
           name: `📌${tag.name}`,
           value: tag.id,

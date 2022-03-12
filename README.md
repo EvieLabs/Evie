@@ -1,5 +1,5 @@
 <div align="center">
- 
+ dear godd
 <img src="https://github.com/TeamEvie.png" width="15%" class="round" style="border-radius: 50%;">
 
 # Evie [![DiscordInvite](https://discord.com/api/guilds/819106797028769844/embed.png)](https://evie.pw/discord)
@@ -38,12 +38,16 @@
 - [`Docker`]: To be able to spin up a testing environment like production
 - [`yarn`]: To manage dependencies
 
-### How to start your Evie dev environment
+## How to start your Evie dev environment
+
+There are multiple ways to start your Evie dev environment.
+
+### Docker Compose (manually built & started every change)
 
 1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
 2. Clone the repo, and switch to the `rewrite` branch.
 3. Install deps with by typing `yarn`.
-4. Fill in the `.env` file located in `apps/bot`.
+4. Copy `.env.example` to a new file `.env` file located in `apps/bot`.
 5. Go into the `apps/bot` directory. `cd apps/bot`
 6. Type `yarn build` to build the Prisma schema.
 7. Code away.
@@ -51,6 +55,24 @@
 9. Test with `docker-compose up --build` this will spin up the Main container (the bot) and a local database container.
 10. Push your changes.
 11. Make a PR.
+
+### TSup Watch (automatically builds & restarts every change)
+
+1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
+2. Clone the repo, and switch to the `rewrite` branch.
+3. Install deps with by typing `yarn`.
+4. Copy `.env.example` to a new file `.env` file located in `apps/bot`.
+5. Go into the `apps/bot` directory. `cd apps/bot`
+6. Type `yarn build` to build the Prisma schema.
+7. Code away.
+8. Make a volume for the database with `docker volume create --name=postgres`.
+9. Start the database with `docker-compose up --build postgres` this will only start the database container.
+10. Update the environment variable `DATABASE_URL` in `/apps/bot` with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
+11. Test with `yarn dev` Every save will automatically build and restart the bot.
+12. Push your changes.
+13. Make a PR.
+
+**Tip:** When working in a monorepo such as this, when running `yarn dev` in the root directory, it will run `yarn dev` in every apps subdirectory. So make sure to run `yarn dev` in the `apps/bot` directory.
 
 ## Need help?
 
