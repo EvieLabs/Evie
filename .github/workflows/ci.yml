@@ -16,7 +16,7 @@ jobs:
         with:
           submodules: true
       - name: Use Node.js v16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
@@ -33,7 +33,7 @@ jobs:
         with:
           submodules: true
       - name: Use Node.js v16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
