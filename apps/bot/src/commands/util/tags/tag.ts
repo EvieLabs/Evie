@@ -95,7 +95,11 @@ export class Tag extends Command {
     }
 
     const tags = tagData
-      .filter((tag) => tag.name.toLowerCase().includes(query.toLowerCase()))
+      .filter(
+        (tag) =>
+          tag.name.toLowerCase().includes(query.toLowerCase()) ||
+          tag.content.toLowerCase().includes(query.toLowerCase())
+      )
       .slice(0, 5)
       .map((tag) => ({
         name: tag.name,
