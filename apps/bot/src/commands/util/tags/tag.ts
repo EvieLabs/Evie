@@ -33,6 +33,8 @@ export class Tag extends Command {
 
     if (!interaction.guild) return;
     if (!query) return;
+    if (!interaction.member) return;
+
     const tag = await tagDB.getTagFromSnowflake(interaction.guild, query);
     if (!tag) {
       const tag = await tagDB.getClosestTagFromName(interaction.guild, query);

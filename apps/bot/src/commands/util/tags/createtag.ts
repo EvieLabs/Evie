@@ -16,6 +16,7 @@ limitations under the License.
 
 import { CreateTagModal } from "#constants/modals";
 import { tagDB } from "#root/utils/database/tags";
+import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
   ApplicationCommandRegistry,
@@ -25,6 +26,7 @@ import {
 import {
   CommandInteraction,
   ModalSubmitInteraction,
+  Permissions,
   SnowflakeUtil,
 } from "discord.js";
 
@@ -32,6 +34,12 @@ export class CreateTag extends Command {
   public override async chatInputRun(
     interaction: CommandInteraction
   ): Promise<void> {
+    const perms: Permissions = interaction.member?.permissions as Permissions;
+
+    if (!perms.has(Permissions.FLAGS.MANAGE_GUILD)) {
+      return informNeedsPerms(interaction, PermissionLang.MANAGE_SERVER);
+    }
+
     const embed = interaction.options.getBoolean("embed") ?? false;
     await interaction.showModal(CreateTagModal);
     this.waitForModal(interaction, embed);
@@ -43,12 +51,15 @@ export class CreateTag extends Command {
         filter: (i) => i.customId === "create_tag",
         time: 100000,
       })
-      .catch(() =>
+      .catch(() => {
         interaction.followUp({
           content: "Tag Creation timed out.",
           ephemeral: true,
-        })
-      )) as ModalSubmitInteraction;
+        });
+      })) as ModalSubmitInteraction;
+
+    if (!submit) return;
+    if (!submit.fields) return;
 
     const tag = submit.fields.getTextInputValue("tag_name");
     const content = submit.fields.getTextInputValue("tag_content");
