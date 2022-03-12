@@ -20,9 +20,9 @@ import { dbUtils } from ".";
 /** Gets the ban words list for the specified guild */
 async function getBannedWords(guild: Guild): Promise<string[] | []> {
   try {
-    const result = await dbUtils.getGuildSettings(guild);
+    const result = await dbUtils.getGuild(guild);
 
-    return result?.bannedWordList?.split(",") || [];
+    return result?.bannedWordList || [];
   } catch (error) {
     return [];
   }
@@ -31,7 +31,7 @@ async function getBannedWords(guild: Guild): Promise<string[] | []> {
 /** Gets the phishing detection boolean for the specified guild */
 async function getPhishingDetectionSwitch(guild: Guild): Promise<boolean> {
   try {
-    const result = await dbUtils.getGuildSettings(guild);
+    const result = await dbUtils.getGuild(guild);
 
     return result?.phishingDetectionEnabled || false;
   } catch (error) {

@@ -1,22 +1,23 @@
 services:
-  mongodb:
-    image: mongo
-    restart: always
+  postgres:
+    container_name: postgres
+    image: 'postgres:latest'
     ports:
-      - "27017:27017"
-    volumes:
-      - mongo:/var/lib/mongo
+      - '5432:5432'
+    restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      - POSTGRES_PASSWORD=internalpassword
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
   bot:
     build: "./apps/bot"
     env_file:
       - "./apps/bot/.env"
     environment:
-      - MONGO_URL=mongodb://root:password@mongodb:27017/bot?authSource=admin&retryWrites=true&w=majority
+      - DATABASE_URL=postgresql://postgres:internalpassword@postgres:5432/bot?schema=public
     restart: "always"
     links:
-      - mongodb
+      - postgres
 volumes:
-  mongo:
+  postgres:
+    external: true

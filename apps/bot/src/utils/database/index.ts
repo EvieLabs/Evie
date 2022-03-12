@@ -14,56 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { guildsettings, PrismaClient } from "@prisma/client";
+import { EvieGuild, PrismaClient } from "@prisma/client";
 import type { Guild } from "discord.js";
-import Redis from "ioredis";
-import { cacheMiddleware } from "./cacheMiddleware";
 
 export const prisma = new PrismaClient();
 
-if (process.env.NODE_ENV === "compose_") {
-  console.log("Using Redis as a caching layer");
-
-  const prismaRedis = new Redis({
-    port: 8287,
-    host: "redis",
-    password: "redis",
-    db: 1,
-  });
-
-  prisma.$use(
-    cacheMiddleware({
-      redis: prismaRedis,
-      defaultValues: { language: "nl", prefix: "!a" },
-      ttlInSeconds: 10,
-    })
-  );
-} else {
-  console.log("Redis was not found, using no caching layer");
-}
-
-async function getGuildSettings(guild: Guild): Promise<guildsettings | null> {
+async function getGuild(guild: Guild | string): Promise<EvieGuild | null> {
   try {
-    const data = await prisma.guildsettings.findFirst({
+    const data = await prisma.evieGuild.findFirst({
       where: {
-        serverid: guild.id,
+        id: typeof guild === "string" ? guild : guild.id,
       },
     });
 
-    return data;
+    return data || (await createGuild(guild));
   } catch (error) {
     console.log(error);
-
     return null;
   }
 }
 
-async function createGuildSettings(guild: Guild): Promise<guildsettings> {
-  return prisma.guildsettings.create({
+async function createGuild(guild: Guild | string): Promise<EvieGuild> {
+  return await prisma.evieGuild.create({
     data: {
-      serverid: guild.id,
+      id: typeof guild === "string" ? guild : guild.id,
     },
   });
 }
 
-export const dbUtils = { getGuildSettings };
+export const dbUtils = { getGuild, createGuild };

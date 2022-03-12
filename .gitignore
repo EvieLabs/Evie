@@ -40,3 +40,4 @@ apps/web/.sentryclirc
 # IDEs
 .idea
 .vscode
+apps/bot/.env

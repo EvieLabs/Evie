@@ -16,32 +16,66 @@ limitations under the License.
 
 import type { Success } from "#root/types";
 import type { EvieTag } from "@prisma/client";
-import type { Guild } from "discord.js";
+import type { Guild, Snowflake } from "discord.js";
 import { dbUtils, prisma } from ".";
 
 /** Gets the tags for the specified guild */
-async function getTags(guild: Guild): Promise<EvieTag[] | []> {
+async function getTags(guild: Guild): Promise<EvieTag[]> {
   try {
-    const result = await dbUtils.getGuildSettings(guild);
-
-    return result?.tags || [];
+    const tags = await prisma.evieTag.findMany({
+      where: {
+        guildId: guild?.id,
+      },
+    });
+    return tags || [];
   } catch (error) {
     return [];
   }
 }
 
-/** Adds a tag to the database */
-async function addTag(guild: Guild, tag: EvieTag): Promise<Success> {
+/** Gets specific tag from Snowflake */
+async function getTagFromSnowflake(
+  guild: Guild,
+  tagId: Snowflake
+): Promise<EvieTag | null> {
   try {
-    await prisma.guildsettings.update({
+    const tag = await prisma.evieTag.findFirst({
       where: {
-        serverid: guild.id,
+        id: tagId,
+        guildId: guild?.id,
       },
-      data: {
-        tags: {
-          [tag.id]: tag,
-        },
+    });
+    return tag || null;
+  } catch (error) {
+    return null;
+  }
+}
+
+/** Gets first tag from name */
+async function getClosestTagFromName(
+  guild: Guild,
+  tagName: string
+): Promise<EvieTag | null> {
+  try {
+    const tag = await prisma.evieTag.findFirst({
+      where: {
+        name: tagName,
+        guildId: guild?.id,
       },
+    });
+    return tag || null;
+  } catch (error) {
+    return null;
+  }
+}
+
+/** Adds a tag to the database */
+async function addTag(tag: EvieTag): Promise<Success> {
+  try {
+    if (!tag.guildId) throw new Error("Tag must have a guildId");
+    await dbUtils.getGuild(tag.guildId);
+    await prisma.evieTag.create({
+      data: tag,
     });
     return {
       success: true,
@@ -58,4 +92,6 @@ async function addTag(guild: Guild, tag: EvieTag): Promise<Success> {
 export const tagDB = {
   getTags,
   addTag,
+  getClosestTagFromName,
+  getTagFromSnowflake,
 };

@@ -21,7 +21,7 @@ import { dbUtils } from ".";
 async function getEmbedColor(guild: Guild | null): Promise<string> {
   if (!guild) return "#f47fff";
   try {
-    const result = await dbUtils.getGuildSettings(guild);
+    const result = await dbUtils.getGuild(guild);
     return result?.color || "#f47fff";
   } catch (error) {
     return "#f47fff";

@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { CreateTagModal } from "#constants/modals";
 import { EvieEmbed } from "#root/classes/EvieEmbed";
-import type { EvieTag } from "#root/types";
 import { tagDB } from "#root/utils/database/tags";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
@@ -24,79 +22,60 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
-import {
-  AutocompleteInteraction,
-  CommandInteraction,
-  ModalSubmitInteraction,
-  SnowflakeUtil,
-} from "discord.js";
+import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 
 export class Tag extends Command {
   public override async chatInputRun(
     interaction: CommandInteraction
   ): Promise<void> {
     const query = interaction.options.getString("query");
-    if (query == "create") {
-      await interaction.showModal(CreateTagModal);
-      this.waitForModal(interaction);
-    } else {
-      if (!interaction.guild) return;
-      const tagData = await tagDB.getTags(interaction.guild);
-      const tag: EvieTag | undefined = tagData.find((t) => t.id === query);
-      if (!tag) return;
-      const e = await EvieEmbed(interaction.guild);
-      e.setTitle(tag.name);
-      e.setDescription(tag.content);
-      if (tag.embed) {
-        interaction.reply({
-          embeds: [e],
-        });
+    const target = interaction.options.getMember("target");
+
+    if (!interaction.guild) return;
+    if (!query) return;
+    const tag = await tagDB.getTagFromSnowflake(interaction.guild, query);
+    if (!tag) {
+      const tag = await tagDB.getClosestTagFromName(interaction.guild, query);
+      if (tag) {
+        const e = await EvieEmbed(interaction.guild);
+        e.setTitle(tag.name);
+        e.setDescription(tag.content);
+        if (tag.embed) {
+          interaction.reply({
+            embeds: [e],
+          });
+        } else {
+          interaction.reply({
+            content: tag.content,
+          });
+        }
       } else {
         interaction.reply({
-          content: tag.content,
+          content: `No tag found with the name \`${query}\``,
         });
       }
+      return;
     }
-  }
+    const e = await EvieEmbed(interaction.guild);
+    e.setTitle(tag.name);
+    e.setDescription(tag.content);
+    if (tag.embed) {
+      interaction.reply({
+        [target
+          ? "content"
+          : ""]: `Hey, ${target}! ${interaction.user} thinks this will be useful for you!`,
 
-  private async waitForModal(interaction: CommandInteraction) {
-    const submit = (await interaction
-      .awaitModalSubmit({
-        filter: (i) => i.customId === "create_tag",
-        time: 20000,
-      })
-      .catch(() =>
-        interaction.followUp({
-          content: "Tag Creation timed out.",
-          ephemeral: true,
-        })
-      )) as ModalSubmitInteraction;
-    if (submit) await submit.deferReply({ ephemeral: true });
-
-    const tag = submit.fields.getTextInputValue("tag_name");
-    const content = submit.fields.getTextInputValue("tag_content");
-
-    if (tag && content) {
-      const { guild } = interaction;
-      if (!guild) {
-        interaction.followUp({
-          content: "You must be in a guild to create a tag.",
-          ephemeral: true,
-        });
-        return;
-      }
-      const tagObj: EvieTag = {
-        id: SnowflakeUtil.generate(),
-        name: tag,
-        content,
-        embed: false,
-      };
-      tagDB.addTag(guild, tagObj);
-      interaction.followUp({ content: `Created tag ${tag}` });
+        embeds: [e],
+        allowedMentions: {},
+      });
     } else {
-      interaction.followUp({
-        content: "Tag creation failed.",
-        ephemeral: true,
+      interaction.reply({
+        content: `${
+          target
+            ? `Hey, ${target}! ${interaction.user} thinks this will be useful for you!\n`
+            : ""
+        }${tag.content}`,
+        allowedMentions: {},
       });
     }
   }
@@ -104,17 +83,31 @@ export class Tag extends Command {
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
     if (!interaction.guild) return;
     const tagData = await tagDB.getTags(interaction.guild);
+    const query = interaction.options.getString("query") ?? "";
 
     if (tagData.length == 0) {
       return await interaction.respond([
         {
-          name: "📌Create a new tag",
+          name: "📌Create a new tag with /createtag",
           value: "create",
         },
       ]);
     }
+
+    const tags = tagData
+      .filter(
+        (tag) =>
+          tag.name.toLowerCase().includes(query.toLowerCase()) ||
+          tag.content.toLowerCase().includes(query.toLowerCase())
+      )
+      .slice(0, 5)
+      .map((tag) => ({
+        name: tag.name,
+        id: tag.id,
+      }));
+
     return await interaction.respond(
-      tagData.map((tag) => {
+      tags.map((tag) => {
         return {
           name: `📌${tag.name}`,
           value: tag.id,
