@@ -143,7 +143,7 @@ import { lang } from "~/constants/lang";
             class="w-full h-auto overflow-hidden rounded-md shadow-blurple sm:rounded-xl"
           >
             <img
-              src="/feat/bannedwords.gif"
+              src="https://dummyimage.com/1071x695/000000/fff"
               width="{948.666666667}"
               height="{625.333333333}"
               alt="Animated image of a user setting banned words for their server and then testing if Evie deletes the message with the banned word."
@@ -161,7 +161,7 @@ import { lang } from "~/constants/lang";
             class="w-full h-auto overflow-hidden rounded-md shadow-blurple sm:rounded-xl"
           >
             <img
-              src="/feat/utils.gif"
+              src="https://dummyimage.com/1071x695/000000/fff"
               width="{1071}"
               height="{695}"
               alt="Animated image of a user viewing Hypixel stats, TristanSMP Stats, and Server stats"
