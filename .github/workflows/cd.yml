@@ -6,13 +6,13 @@ on:
     branches:
       - main
     paths:
-      - "src/**"
+      - "apps/bots/src/**"
       - "Dockerfile"
       - ".github/workflows/continuous-delivery.yml"
       - "package.json"
 
 jobs:
-  PublishSkyra:
+  PublishEvie:
     name: Publish Evie image to container registries
     runs-on: ubuntu-latest
     steps:
