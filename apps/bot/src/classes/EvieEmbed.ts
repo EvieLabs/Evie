@@ -15,7 +15,18 @@ limitations under the License.
 */
 
 import { MiscDB } from "#utils/database/embedSettings";
-import { type Guild, MessageEmbed, ColorResolvable } from "discord.js";
+import {
+  ColorResolvable,
+  CommandInteraction,
+  MessageEmbed,
+  ModalSubmitInteraction,
+  type Guild,
+} from "discord.js";
+
+export enum StatusEmoji {
+  SUCCESS = "<a:success:952340083418230874>",
+  FAIL = "<a:fail:952340157858709594>",
+}
 
 export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
   return new MessageEmbed()
@@ -23,6 +34,26 @@ export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
     .setTimestamp()
     .setFooter({
       text: "Evie",
-      iconURL: "https://www.eviebot.rocks/assets/EvieIcon.png",
+      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
     });
+}
+
+export async function StatusEmbed(
+  status: StatusEmoji,
+  description: string,
+  i: CommandInteraction | ModalSubmitInteraction
+) {
+  return i.reply({
+    embeds: [
+      new MessageEmbed()
+        .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
+        .setTimestamp()
+        .setFooter({
+          text: "Evie",
+          iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+        })
+        .setDescription(`${status} ${description}`),
+    ],
+    ephemeral: true,
+  });
 }

@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import type { ModalOptions } from "discord.js";
+
 export const CreateTagModal = {
   title: "Create Tag",
   custom_id: "create_tag",
@@ -49,4 +51,4 @@ export const CreateTagModal = {
       ],
     },
   ],
-} as any;
+} as unknown as ModalOptions;

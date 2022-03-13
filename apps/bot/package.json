@@ -15,6 +15,7 @@
     "start": "yarn preflight && node dist/index.js",
     "preflight": "node ./scripts/preflight.js",
     "build": "yarn prisma generate && yarn preflight && tsup",
+    "pushdb": "yarn prisma db push",
     "docker": "yarn prisma db push && cd ./dist/ && pm2-runtime start index.js",
     "lint": "eslint --fix --ext ts src",
     "compose": "docker-compose up --env-file ./apps/bot/.env --build"
@@ -34,8 +35,10 @@
     "@tictactrip/axios-redis": "^2.0.0",
     "axios": "^0.26.0",
     "bad-words": "^3.0.4",
+    "bufferutil": "^4.0.6",
     "discord.js": "github:monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
+    "erlpack": "discord/erlpack",
     "firebase-admin": "^10.0.2",
     "glob": "^7.2.0",
     "ioredis": "^4.28.5",
@@ -44,7 +47,9 @@
     "node-fetch": "2.6.1",
     "pm2": "^5.2.0",
     "systeminformation": "^5.9.7",
-    "top.gg": "^2.3.2"
+    "top.gg": "^2.3.2",
+    "utf-8-validate": "^5.0.9",
+    "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
     "@sapphire/eslint-config": "^4.3.0",

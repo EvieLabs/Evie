@@ -8,7 +8,7 @@ datasource db {
 }
 
 model EvieGuild {
-  id                        String    @unique
+  id                        String        @unique
   bannedWordList            String[]
   color                     String?
   defaultBannedWordList     Boolean?
@@ -23,6 +23,7 @@ model EvieGuild {
   welcomeMessageEnabled     Boolean?
   welcomeMessagePingEnabled Boolean?
   tags                      EvieTag[]
+  tempBans                  EvieTempBan[]
 }
 
 model EvieTag {
@@ -32,4 +33,16 @@ model EvieTag {
   embed     Boolean
   evieGuild EvieGuild? @relation(fields: [guildId], references: [id])
   guildId   String?
+}
+
+model EvieTempBan {
+  id          String     @unique
+  reason      String
+  userId      String
+  guildId     String
+  expiresAt   DateTime?
+  EvieGuild   EvieGuild? @relation(fields: [evieGuildId], references: [id])
+  evieGuildId String?
+
+  @@unique([userId, guildId])
 }

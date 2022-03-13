@@ -14,34 +14,65 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { punishDB } from "#root/utils/database/punishments";
+import { checkPerm } from "#root/utils/misc/permChecks";
+import { banGuildMember } from "#root/utils/punishments/ban";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { time } from "@discordjs/builders";
 import {
   ApplicationCommandRegistry,
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
-import type { CommandInteraction } from "discord.js";
+import { CommandInteraction, Permissions } from "discord.js";
 
 export class Ban extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
-    const user = interaction.message.mentions.users.first();
-    const reason = interaction.message.content.slice(
-      interaction.prefix.length + 5
-    );
-    if (!user) return interaction.reply("Please mention a user to ban.");
-    if (!reason)
-      return interaction.reply("Please provide a reason for the ban.");
-    if (user.id === interaction.message.author.id)
-      return interaction.reply("You cannot ban yourself.");
-    if (user.id === interaction.client.user.id)
-      return interaction.reply("You cannot ban me.");
-    if (user.id === interaction.client.owner.id)
-      return interaction.reply("You cannot ban the owner.");
-    if (interaction.message.guild.members.cache.get(user.id).bannable) {
-      await interaction.message.guild.members.ban(user, { reason });
-      return interaction.reply(`Banned ${user.tag} for ${reason}.`);
+    if (!interaction.inCachedGuild()) return;
+
+    if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
+      return await StatusEmbed(
+        StatusEmoji.FAIL,
+        "You do not have the required permissions to ban users.",
+        interaction
+      );
     }
-    return interaction.reply("I cannot ban this user.");
+    const userToBeBanned = interaction.options.getMember("user");
+    const reason = interaction.options.getString("reason");
+    const days = interaction.options.getNumber("days");
+    const expiresAt = days ? new Date(Date.now() + days * 86400000) : undefined;
+
+    if (!userToBeBanned) {
+      return await StatusEmbed(
+        StatusEmoji.FAIL,
+        "You must specify a user to ban.",
+        interaction
+      );
+    }
+
+    if (await punishDB.getBan(userToBeBanned)) {
+      await punishDB.deleteBan(userToBeBanned.id, interaction.guild);
+    }
+
+    try {
+      await banGuildMember(
+        userToBeBanned,
+        {
+          reason: reason ?? "No reason provided.",
+        },
+        expiresAt
+      );
+      return await StatusEmbed(
+        StatusEmoji.SUCCESS,
+        `Banned ${userToBeBanned} ${userToBeBanned.displayName} ${
+          expiresAt ? time(expiresAt, "R") : `indefinitely`
+        } for \`${reason ?? "no reason :("}\`.`,
+        interaction
+      );
+    } catch (e) {
+      return StatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
+    }
   }
 
   public override registerApplicationCommands(
@@ -59,9 +90,9 @@ export class Ban extends Command {
             required: true,
           },
           {
-            name: "length",
-            description: "Length of the ban",
-            type: "STRING",
+            name: "days",
+            description: "Days to ban the user for",
+            type: "NUMBER",
             required: false,
             autocomplete: true,
           },

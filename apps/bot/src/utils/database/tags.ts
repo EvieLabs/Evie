@@ -51,6 +51,45 @@ async function getTagFromSnowflake(
   }
 }
 
+/** Deletes specific tag from Snowflake */
+async function deleteTagFromSnowflake(
+  tagId: Snowflake
+): Promise<EvieTag | null> {
+  try {
+    const tag = await prisma.evieTag.delete({
+      where: {
+        id: tagId,
+      },
+    });
+    return tag || null;
+  } catch (error) {
+    return null;
+  }
+}
+
+/** Deletes first tag from name */
+async function deleteClosestTagFromName(
+  guild: Guild,
+  tagName: string
+): Promise<EvieTag | null> {
+  try {
+    const tag = await prisma.evieTag.findFirst({
+      where: {
+        name: tagName,
+        guildId: guild.id,
+      },
+    });
+    await prisma.evieTag.delete({
+      where: {
+        id: tag?.id,
+      },
+    });
+    return tag || null;
+  } catch (error) {
+    return null;
+  }
+}
+
 /** Gets first tag from name */
 async function getClosestTagFromName(
   guild: Guild,
