@@ -10,7 +10,7 @@ services:
     volumes:
       - 'postgres:/var/lib/postgresql/data'
   bot:
-    build: "./apps/bot"
+    image: "ghcr.io/teamevie/evie:latest"
     env_file:
       - "./apps/bot/.env"
     environment:
