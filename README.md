@@ -12,22 +12,20 @@
 
 ## What needs to be done before merging with [production evie]
 
-- [ ] Re-make the dashboard with Next.js instead of express
-- [ ] Everything that is possible with the dashboard should be able to be changed inside of Discord with Modals and slash commands
-- [ ] Re-write just about every typescript file as they were made when I was brand new to JavaScript and TypeScript so there's a lot of issues with them.
 - [ ] Moderation system
 
   - [ ] Mod action log
     - [ ] Mod notes
-    - [ ] Bans
+    - [x] Bans
     - [ ] Kicks
     - [ ] Warns
+    - [ ] Phishing Detection
   - [ ] User log
     - [ ] Messages
     - [ ] Nicknames
     - [ ] Roles
 
-- [ ] Add a tag system
+- [x] Add a tag system
 
 ## Contributing to Evie
 
@@ -38,24 +36,6 @@
 - [`yarn`]: To manage dependencies
 
 ## How to start your Evie dev environment
-
-There are multiple ways to start your Evie dev environment.
-
-### Docker Compose (manually built & started every change)
-
-1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
-2. Clone the repo, and switch to the `rewrite` branch.
-3. Install deps with by typing `yarn`.
-4. Copy `.env.example` to a new file `.env` file located in `apps/bot`.
-5. Go into the `apps/bot` directory. `cd apps/bot`
-6. Type `yarn build` to build the Prisma schema.
-7. Code away.
-8. Before testing make sure to make a volume for the database with `docker volume create --name=postgres`.
-9. Test with `docker-compose up --build` this will spin up the Main container (the bot) and a local database container.
-10. Push your changes.
-11. Make a PR.
-
-### TSup Watch (automatically builds & restarts every change)
 
 1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
 2. Clone the repo, and switch to the `rewrite` branch.
