@@ -31,6 +31,6 @@
     "vite": "^2.8.0",
     "vite-plugin-pages": "^0.21.4",
     "vitepress": "^0.22.3",
-    "vue-tsc": "^0.29.8"
+    "vue-tsc": "0.33.1"
   }
 }
