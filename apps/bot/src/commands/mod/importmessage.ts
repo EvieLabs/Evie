@@ -218,6 +218,7 @@ export class ImportMessage extends Command {
           );
         }
       } catch (e) {
+        console.log(e);
         await StatusEmbed(StatusEmoji.FAIL, `Failed to import`, submit);
       }
     } else {

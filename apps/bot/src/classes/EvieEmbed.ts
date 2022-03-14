@@ -16,10 +16,12 @@ limitations under the License.
 
 import { MiscDB } from "#utils/database/embedSettings";
 import {
+  ButtonInteraction,
   ColorResolvable,
   CommandInteraction,
   ContextMenuInteraction,
   MessageEmbed,
+  MessageMentionOptions,
   ModalSubmitInteraction,
   type Guild,
 } from "discord.js";
@@ -42,9 +44,14 @@ export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
 export async function StatusEmbed(
   status: StatusEmoji,
   description: string,
-  i: CommandInteraction | ModalSubmitInteraction | ContextMenuInteraction
+  i:
+    | CommandInteraction
+    | ModalSubmitInteraction
+    | ContextMenuInteraction
+    | ButtonInteraction,
+  allowedMentions?: MessageMentionOptions
 ) {
-  return i.replied
+  i.replied
     ? i.followUp({
         embeds: [
           new MessageEmbed()
@@ -57,6 +64,7 @@ export async function StatusEmbed(
             .setDescription(`${status} ${description}`),
         ],
         ephemeral: true,
+        allowedMentions: allowedMentions,
       })
     : i.reply({
         embeds: [
@@ -70,5 +78,7 @@ export async function StatusEmbed(
             .setDescription(`${status} ${description}`),
         ],
         ephemeral: true,
+        allowedMentions: allowedMentions,
       });
+  return;
 }

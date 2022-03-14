@@ -16,6 +16,40 @@ limitations under the License.
 
 import type { ModalOptions, Snowflake } from "discord.js";
 
+export function TSMPApplyModal(state: Snowflake) {
+  return {
+    title: "Apply for member on Tristan SMP",
+    custom_id: `tsmp_applymodal_${state}`,
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "whyjoin",
+            label: "Why do you want to join the smp?",
+            style: 2,
+            min_length: 50,
+            max_length: 200,
+            placeholder: "what do you like doing?",
+            required: true,
+          },
+          // {
+          //   type: 4,
+          //   custom_id: "howmuch",
+          //   label: "Estimate how much you will play in a week?",
+          //   style: 2,
+          //   min_length: 5,
+          //   max_length: 15,
+          //   placeholder: "an estimate to let us know how active you will be.",
+          //   required: true,
+          // },
+        ],
+      },
+    ],
+  } as unknown as ModalOptions;
+}
+
 export function ImportMessageModal(state: Snowflake) {
   return {
     title: "Import Discord Message JSON",
