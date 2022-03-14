@@ -24,6 +24,7 @@ model EvieGuild {
   welcomeMessagePingEnabled Boolean?
   tags                      EvieTag[]
   tempBans                  EvieTempBan[]
+  importedMessages          String[]
 }
 
 model EvieTag {

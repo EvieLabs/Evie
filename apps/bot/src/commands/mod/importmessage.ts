@@ -16,6 +16,7 @@ limitations under the License.
 
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
+import { miscDB } from "#root/utils/database/misc";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
@@ -23,8 +24,11 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import { ApplicationCommandType } from "discord-api-types/v9";
 import {
   CommandInteraction,
+  ContextMenuInteraction,
+  Message,
   ModalSubmitInteraction,
   Permissions,
   Snowflake,
@@ -42,10 +46,12 @@ export class ImportMessage extends Command {
     const channel = interaction.options.getChannel("channel");
 
     if (!(channel instanceof TextChannel)) {
-      return interaction.reply({
-        content: "Please provide a valid text channel.",
-        ephemeral: true,
-      });
+      await StatusEmbed(
+        StatusEmoji.FAIL,
+        "Please provide a valid text channel.",
+        interaction
+      );
+      return;
     }
 
     if (!perms.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
@@ -54,6 +60,77 @@ export class ImportMessage extends Command {
 
     if (
       !channel
+        .permissionsFor(interaction.member)
+        .has(Permissions.FLAGS.SEND_MESSAGES)
+    ) {
+      await StatusEmbed(
+        StatusEmoji.FAIL,
+        "You do not have permission to send messages in this channel.",
+        interaction
+      );
+      return;
+    }
+
+    if (
+      !interaction.guild.me
+        ?.permissionsIn(channel)
+        .has(Permissions.FLAGS.SEND_MESSAGES)
+    ) {
+      await StatusEmbed(
+        StatusEmoji.FAIL,
+        "I do not have permission to send messages in this channel.",
+        interaction
+      );
+      return;
+    }
+
+    const generatedState = SnowflakeUtil.generate();
+
+    await interaction.showModal(ImportMessageModal(generatedState));
+    this.waitForModal(interaction, channel, generatedState);
+  }
+
+  public override async contextMenuRun(interaction: ContextMenuInteraction) {
+    if (!interaction.inCachedGuild()) return;
+
+    const message = interaction.options.getMessage("message", true);
+
+    if (!message) {
+      return await StatusEmbed(
+        StatusEmoji.FAIL,
+        `Please provide a valid message.`,
+        interaction
+      );
+    }
+
+    if (
+      !(await miscDB.getImportedMessages(interaction.guild)).includes(
+        message.id
+      )
+    ) {
+      return await StatusEmbed(
+        StatusEmoji.FAIL,
+        `Please don't try and edit a message that is not user-generated.`,
+        interaction
+      );
+    }
+
+    if (message.author.id !== interaction.client.user?.id) {
+      return await StatusEmbed(
+        StatusEmoji.FAIL,
+        `Please Provide a message that was sent by me.`,
+        interaction
+      );
+    }
+
+    const perms: Permissions = interaction.member?.permissions as Permissions;
+
+    if (!perms.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+      return informNeedsPerms(interaction, PermissionLang.MANAGE_MESSAGES);
+    }
+
+    if (
+      !message.channel
         .permissionsFor(interaction.member)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
@@ -66,12 +143,12 @@ export class ImportMessage extends Command {
 
     if (
       !interaction.guild.me
-        ?.permissionsIn(channel)
+        ?.permissionsIn(message.channel)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       return await StatusEmbed(
         StatusEmoji.FAIL,
-        "I do not have permission to send messages in this channel.",
+        "I do not have permission to edit messages in this channel.",
         interaction
       );
     }
@@ -79,13 +156,20 @@ export class ImportMessage extends Command {
     const generatedState = SnowflakeUtil.generate();
 
     await interaction.showModal(ImportMessageModal(generatedState));
-    this.waitForModal(interaction, channel, generatedState);
+
+    this.waitForModal(
+      interaction as CommandInteraction,
+      message.channel as TextChannel,
+      generatedState,
+      message
+    );
   }
 
   private async waitForModal(
     interaction: CommandInteraction,
     channel: TextChannel,
-    stateflake: Snowflake
+    stateflake: Snowflake,
+    existingMessage?: Message
   ) {
     const submit = (await interaction
       .awaitModalSubmit({
@@ -93,10 +177,7 @@ export class ImportMessage extends Command {
         time: 100000,
       })
       .catch(() => {
-        interaction.followUp({
-          content: "Message JSON import timed out.",
-          ephemeral: true,
-        });
+        StatusEmbed(StatusEmoji.FAIL, `Import Timed Out`, interaction);
       })) as ModalSubmitInteraction;
 
     if (!submit) return;
@@ -105,33 +186,53 @@ export class ImportMessage extends Command {
     const jsonData = submit.fields.getTextInputValue("json_data");
 
     if (jsonData) {
-      const json = JSON.parse(jsonData);
-
-      await submit.reply({
-        content: "Importing...",
-        ephemeral: true,
-      });
       try {
-        const message = await channel.send(json);
-        await submit.editReply({
-          content: `Imported [here](<${message.url}>)!`,
-        });
+        if (existingMessage) {
+          const json = JSON.parse(jsonData);
+
+          const message = await existingMessage.edit(json);
+
+          await miscDB.addImportedMessage(message);
+
+          return StatusEmbed(
+            StatusEmoji.SUCCESS,
+            `Imported [here](<${message.url}>)!`,
+            submit
+          );
+        } else {
+          const json = JSON.parse(jsonData);
+
+          const message = await channel.send(json);
+          await miscDB.addImportedMessage(message);
+
+          return StatusEmbed(
+            StatusEmoji.SUCCESS,
+            `Imported [here](<${message.url}>)!`,
+            submit
+          );
+        }
       } catch (e) {
-        await submit.editReply({
-          content: "Failed to import.",
-        });
+        await StatusEmbed(StatusEmoji.FAIL, `Failed to import`, submit);
       }
     } else {
-      submit.reply({
-        content: "Missing JSON data.",
-        ephemeral: true,
-      });
+      await StatusEmbed(StatusEmoji.FAIL, `Missing JSON Data`, submit);
     }
   }
 
   public override registerApplicationCommands(
     registry: ApplicationCommandRegistry
   ) {
+    registry.registerContextMenuCommand(
+      (builder) =>
+        builder //
+          .setName("Edit Message")
+          .setType(ApplicationCommandType.Message),
+      {
+        guildIds: registeredGuilds,
+        behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+      }
+    );
+
     registry.registerChatInputCommand(
       {
         name: this.name,

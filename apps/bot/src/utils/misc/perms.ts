@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { CommandInteraction } from "discord.js";
+import type { CommandInteraction, ContextMenuInteraction } from "discord.js";
 
 export enum PermissionLang {
   MANAGE_SERVER = "Hey, you must have the `Manage Server` permission to use this command.",
@@ -22,7 +22,7 @@ export enum PermissionLang {
 }
 
 export async function informNeedsPerms(
-  interaction: CommandInteraction,
+  interaction: CommandInteraction | ContextMenuInteraction,
   perm: PermissionLang
 ) {
   if (interaction.replied) {

@@ -18,6 +18,7 @@ import { MiscDB } from "#utils/database/embedSettings";
 import {
   ColorResolvable,
   CommandInteraction,
+  ContextMenuInteraction,
   MessageEmbed,
   ModalSubmitInteraction,
   type Guild,
@@ -41,19 +42,33 @@ export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
 export async function StatusEmbed(
   status: StatusEmoji,
   description: string,
-  i: CommandInteraction | ModalSubmitInteraction
+  i: CommandInteraction | ModalSubmitInteraction | ContextMenuInteraction
 ) {
-  return i.reply({
-    embeds: [
-      new MessageEmbed()
-        .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
-        .setTimestamp()
-        .setFooter({
-          text: "Evie",
-          iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
-        })
-        .setDescription(`${status} ${description}`),
-    ],
-    ephemeral: true,
-  });
+  return i.replied
+    ? i.followUp({
+        embeds: [
+          new MessageEmbed()
+            .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
+            .setTimestamp()
+            .setFooter({
+              text: "Evie",
+              iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+            })
+            .setDescription(`${status} ${description}`),
+        ],
+        ephemeral: true,
+      })
+    : i.reply({
+        embeds: [
+          new MessageEmbed()
+            .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
+            .setTimestamp()
+            .setFooter({
+              text: "Evie",
+              iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+            })
+            .setDescription(`${status} ${description}`),
+        ],
+        ephemeral: true,
+      });
 }
