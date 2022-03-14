@@ -33,6 +33,7 @@ export async function banGuildMember(
     });
 
   // TODO: Run ban hooks such as logging it to a channel
+  m.client.emit("evieBan", { m, bo, expiresAt });
 
   return true;
 }
@@ -47,6 +48,7 @@ export async function unBanGuildMember(id: Snowflake, g: Guild) {
   });
 
   // TODO: Run ban hooks such as logging it to a channel
+  if (u) u.client.emit("evieBan", { u, id, g });
 
   return u;
 }

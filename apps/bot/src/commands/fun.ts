@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import fetch from "node-fetch";
-import type { CommandInteraction } from "discord.js";
-import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
+import type { CommandInteraction } from "discord.js";
+import fetch from "node-fetch";
 
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {

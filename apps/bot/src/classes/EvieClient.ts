@@ -14,10 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Enumerable } from "@sapphire/decorators";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { Intents } from "discord.js";
+import { Phisherman } from "./Phisherman";
 
 export class EvieClient extends SapphireClient {
+  /** The phisherman instance used for checking domains */
+  @Enumerable(false)
+  public override phisherman = new Phisherman();
+
   public constructor() {
     super({
       intents: [
@@ -33,5 +39,11 @@ export class EvieClient extends SapphireClient {
       shards: "auto",
       allowedMentions: { users: [], roles: [] },
     });
+  }
+}
+
+declare module "discord.js" {
+  interface Client {
+    readonly phisherman: Phisherman;
   }
 }
