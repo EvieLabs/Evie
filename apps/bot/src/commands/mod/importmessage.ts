@@ -96,11 +96,12 @@ export class ImportMessage extends Command {
     const message = interaction.options.getMessage("message", true);
 
     if (!message) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         `Please provide a valid message.`,
         interaction
       );
+      return;
     }
 
     if (
@@ -108,25 +109,28 @@ export class ImportMessage extends Command {
         message.id
       )
     ) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         `Please don't try and edit a message that is not user-generated.`,
         interaction
       );
+      return;
     }
 
     if (message.author.id !== interaction.client.user?.id) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         `Please Provide a message that was sent by me.`,
         interaction
       );
+      return;
     }
 
     const perms: Permissions = interaction.member?.permissions as Permissions;
 
     if (!perms.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
-      return informNeedsPerms(interaction, PermissionLang.MANAGE_MESSAGES);
+      informNeedsPerms(interaction, PermissionLang.MANAGE_MESSAGES);
+      return;
     }
 
     if (
@@ -134,11 +138,12 @@ export class ImportMessage extends Command {
         .permissionsFor(interaction.member)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         "You do not have permission to send messages in this channel.",
         interaction
       );
+      return;
     }
 
     if (
@@ -146,11 +151,12 @@ export class ImportMessage extends Command {
         ?.permissionsIn(message.channel)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         "I do not have permission to edit messages in this channel.",
         interaction
       );
+      return;
     }
 
     const generatedState = SnowflakeUtil.generate();

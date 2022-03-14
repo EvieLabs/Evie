@@ -34,36 +34,36 @@ export class UnBan extends Command {
     if (!interaction.inCachedGuild()) return;
 
     if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         "You do not have the required permissions to un-ban users.",
         interaction
       );
+      return;
     }
     const target = interaction.options.getString("user");
 
     if (!target) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         "You must specify a user to ban.",
         interaction
       );
+      return;
     }
 
     try {
       const user = await unBanGuildMember(target, interaction.guild);
 
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully unbanned ${user?.username}#${user?.discriminator}`,
         interaction
       );
+      return;
     } catch (e) {
-      return StatusEmbed(
-        StatusEmoji.FAIL,
-        "Failed to un-ban user.",
-        interaction
-      );
+      StatusEmbed(StatusEmoji.FAIL, "Failed to un-ban user.", interaction);
+      return;
     }
   }
 

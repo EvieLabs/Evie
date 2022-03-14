@@ -32,11 +32,12 @@ export class Ban extends Command {
     if (!interaction.inCachedGuild()) return;
 
     if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         "You do not have the required permissions to ban users.",
         interaction
       );
+      return;
     }
     const userToBeBanned = interaction.options.getMember("user");
     const reason = interaction.options.getString("reason");
@@ -44,11 +45,12 @@ export class Ban extends Command {
     const expiresAt = days ? new Date(Date.now() + days * 86400000) : undefined;
 
     if (!userToBeBanned) {
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.FAIL,
         "You must specify a user to ban.",
         interaction
       );
+      return;
     }
 
     if (await punishDB.getBan(userToBeBanned)) {
@@ -63,15 +65,17 @@ export class Ban extends Command {
         },
         expiresAt
       );
-      return await StatusEmbed(
+      await StatusEmbed(
         StatusEmoji.SUCCESS,
         `Banned ${userToBeBanned} (${userToBeBanned.displayName}) ${
           expiresAt ? time(expiresAt, "R") : `indefinitely`
         } for \`${reason ?? "no reason :("}\`.`,
         interaction
       );
+      return;
     } catch (e) {
-      return StatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
+      StatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
+      return;
     }
   }
 
