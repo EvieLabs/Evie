@@ -19,16 +19,11 @@
     "@heroicons/react": "^1.0.5",
     "@mui/material": "^5.2.6",
     "axios": "^0.24.0",
-    "gray-matter": "^4.0.2",
-    "mctext-react": "^1.1.0",
     "next": "latest",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "rss": "^1.2.2"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@types/canvas-confetti": "^1.4.2",
-    "@types/fbemitter": "^2.0.32",
     "@types/node": "16.11.6",
     "@types/react": "17.0.34",
     "@types/react-modal": "^3.13.1",
