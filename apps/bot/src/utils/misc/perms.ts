@@ -18,6 +18,7 @@ import type { CommandInteraction } from "discord.js";
 
 export enum PermissionLang {
   MANAGE_SERVER = "Hey, you must have the `Manage Server` permission to use this command.",
+  MANAGE_MESSAGES = "Hey, you must have the `Manage Messages` permission to use this command.",
 }
 
 export async function informNeedsPerms(

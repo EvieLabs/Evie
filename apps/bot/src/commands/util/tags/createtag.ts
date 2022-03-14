@@ -27,6 +27,7 @@ import {
   CommandInteraction,
   ModalSubmitInteraction,
   Permissions,
+  Snowflake,
   SnowflakeUtil,
 } from "discord.js";
 
@@ -40,15 +41,21 @@ export class CreateTag extends Command {
       return informNeedsPerms(interaction, PermissionLang.MANAGE_SERVER);
     }
 
+    const generatedState = SnowflakeUtil.generate();
+
     const embed = interaction.options.getBoolean("embed") ?? false;
-    await interaction.showModal(CreateTagModal);
-    this.waitForModal(interaction, embed);
+    await interaction.showModal(CreateTagModal(generatedState));
+    this.waitForModal(interaction, embed, generatedState);
   }
 
-  private async waitForModal(interaction: CommandInteraction, embed: boolean) {
+  private async waitForModal(
+    interaction: CommandInteraction,
+    embed: boolean,
+    state: Snowflake
+  ) {
     const submit = (await interaction
       .awaitModalSubmit({
-        filter: (i) => i.customId === "create_tag",
+        filter: (i) => i.customId === `create_tag_${state}`,
         time: 100000,
       })
       .catch(() => {

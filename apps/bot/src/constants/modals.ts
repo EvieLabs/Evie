@@ -14,41 +14,67 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { ModalOptions } from "discord.js";
+import type { ModalOptions, Snowflake } from "discord.js";
 
-export const CreateTagModal = {
-  title: "Create Tag",
-  custom_id: "create_tag",
-  components: [
-    {
-      type: 1,
-      components: [
-        {
-          type: 4,
-          custom_id: "tag_name",
-          label: "Tag Name",
-          style: 1,
-          min_length: 1,
-          max_length: 15,
-          placeholder: "Tag Name",
-          required: true,
-        },
-      ],
-    },
-    {
-      type: 1,
-      components: [
-        {
-          type: 4,
-          custom_id: "tag_content",
-          label: "Tag Content",
-          style: 2,
-          min_length: 1,
-          max_length: 500,
-          placeholder: "Tag Content",
-          required: true,
-        },
-      ],
-    },
-  ],
-} as unknown as ModalOptions;
+export function ImportMessageModal(state: Snowflake) {
+  return {
+    title: "Import Discord Message JSON",
+    custom_id: `import_msgjson_${state}`,
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "json_data",
+            label: "JSON",
+            style: 2,
+            min_length: 1,
+            max_length: 4000,
+            placeholder: "Paste JSON here...",
+            required: true,
+          },
+        ],
+      },
+    ],
+  } as unknown as ModalOptions;
+}
+
+export function CreateTagModal(state: Snowflake) {
+  return {
+    title: "Create Tag",
+    custom_id: `create_tag_${state}`,
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "tag_name",
+            label: "Tag Name",
+            style: 1,
+            min_length: 1,
+            max_length: 15,
+            placeholder: "Tag Name",
+            required: true,
+          },
+        ],
+      },
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "tag_content",
+            label: "Tag Content",
+            style: 2,
+            min_length: 1,
+            max_length: 500,
+            placeholder: "Tag Content",
+            required: true,
+          },
+        ],
+      },
+    ],
+  } as unknown as ModalOptions;
+}
