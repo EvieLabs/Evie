@@ -16,7 +16,6 @@ limitations under the License.
 
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
-import { unBanGuildMember } from "#root/utils/punishments/ban";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
   ApplicationCommandRegistry,
@@ -53,7 +52,10 @@ export class UnBan extends Command {
     }
 
     try {
-      const user = await unBanGuildMember(target, interaction.guild);
+      const user = await interaction.client.punishments.unBanGuildMember(
+        target,
+        interaction.guild
+      );
 
       await StatusEmbed(
         StatusEmoji.SUCCESS,

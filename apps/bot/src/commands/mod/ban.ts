@@ -17,7 +17,6 @@ limitations under the License.
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { punishDB } from "#root/utils/database/punishments";
 import { checkPerm } from "#root/utils/misc/permChecks";
-import { banGuildMember } from "#root/utils/punishments/ban";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
 import {
@@ -58,7 +57,7 @@ export class Ban extends Command {
     }
 
     try {
-      await banGuildMember(
+      await interaction.client.punishments.banGuildMember(
         userToBeBanned,
         {
           reason: reason ?? "No reason provided.",

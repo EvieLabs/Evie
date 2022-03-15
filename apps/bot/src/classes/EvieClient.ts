@@ -17,12 +17,17 @@ limitations under the License.
 import { Enumerable } from "@sapphire/decorators";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { Intents } from "discord.js";
+import { EviePunish } from "./EviePunish";
 import { Phisherman } from "./Phisherman";
 
 export class EvieClient extends SapphireClient {
   /** The phisherman instance used for checking domains */
   @Enumerable(false)
   public override phisherman = new Phisherman();
+
+  /** The EviePunish instance used for punishing people */
+  @Enumerable(false)
+  public override punishments = new EviePunish();
 
   public constructor() {
     super({
@@ -45,5 +50,6 @@ export class EvieClient extends SapphireClient {
 declare module "discord.js" {
   interface Client {
     readonly phisherman: Phisherman;
+    readonly punishments: EviePunish;
   }
 }
