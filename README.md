@@ -19,7 +19,7 @@
     - [x] Bans
     - [ ] Kicks
     - [ ] Warns
-    - [ ] Phishing Detection
+    - [x] Phishing Detection
   - [ ] User log
     - [ ] Messages
     - [ ] Nicknames
