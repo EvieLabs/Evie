@@ -1,5 +1,8 @@
 import type { NextPage } from "next";
 
+const invite =
+  "https://discord.com/oauth2/authorize?client_id=807543126424158238&permissions=518855707712&scope=bot%20applications.commands";
+
 const Home: NextPage = () => {
   return (
     <div>
@@ -19,6 +22,7 @@ const Home: NextPage = () => {
                   <div className="transition duration-500 ease-in-out hover: transform hover:-translate-y-1 hover:scale-550...">
                     <div className="hover: transition duration-500 hover:scale-125">
                       <a
+                        href={invite}
                         id="GFG"
                         className="box-border relative z-30 inline-flex items-center justify-center w-auto px-8 py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-blurple rounded-md cursor-pointer group ring-offset-2 ring-1 ring-indigo-300 ring-offset-indigo-200 hover:ring-offset-indigo-500 ease focus:outline-none"
                       >
@@ -80,7 +84,7 @@ const Home: NextPage = () => {
                 </p>
                 <div className="relative flex flex-col sm:flex-row sm:space-x-4">
                   <a
-                    href="https://discord.com/oauth2/authorize?client_id=807543126424158238&permissions=518855707712&scope=bot%20applications.commands"
+                    href={invite}
                     className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto"
                   >
                     Invite Evie
@@ -156,7 +160,10 @@ const Home: NextPage = () => {
                   can!
                 </p>
                 <div className="relative flex flex-col sm:flex-row sm:space-x-4">
-                  <a className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto">
+                  <a
+                    href={invite}
+                    className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto"
+                  >
                     Invite Evie
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

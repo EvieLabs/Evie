@@ -8,8 +8,8 @@ export default function Header() {
           <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
             <div className="relative flex flex-col md:flex-row">
               <Link href="/">
-                <h1 className="text-3xl text-[#e7008a] font-bold tracking-tight text-center hover:text-[#5000ca] hover:scale-110 transition-all duration-200 ease-in-out">
-                  <img src="/Evie.svg" className="w-10 inline" />
+                <h1 className="text-3xl text-[#FFFFFF] font-bold tracking-tight text-center hover:text-[#7289DA] hover:scale-110 transition-all duration-200 ease-in-out">
+                  <img src="/Evie.svg" className="w-10 inline" />{" "}
                   <span>Evie</span>
                 </h1>
               </Link>
@@ -24,7 +24,11 @@ export default function Header() {
             </div>
           </div>
         </section>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <svg
+          className="-mb-40"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+        >
           <path
             fill="#23272a"
             fillOpacity={1}
