@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Guild } from "discord.js";
-import { dbUtils } from ".";
+import type { Guild, GuildMember, Snowflake } from "discord.js";
+import { dbUtils, prisma } from ".";
 
 /** Gets the ban words list for the specified guild */
 async function getBannedWords(guild: Guild): Promise<string[] | []> {
@@ -25,6 +25,36 @@ async function getBannedWords(guild: Guild): Promise<string[] | []> {
     return result?.bannedWordList || [];
   } catch (error) {
     return [];
+  }
+}
+
+/** Checks if the member has the staff role */
+async function hasModRole(member: GuildMember): Promise<boolean> {
+  try {
+    const result = await dbUtils.getGuild(member.guild);
+
+    if (!result) return false;
+    if (!result?.staffRoleID) return false;
+
+    return member.roles.cache.has(result?.staffRoleID);
+  } catch (error) {
+    return false;
+  }
+}
+
+/** Sets the staff role id for the specified guild */
+async function setStaffRole(guild: Guild, roleId: Snowflake) {
+  try {
+    return await prisma.evieGuild.update({
+      where: {
+        id: guild.id,
+      },
+      data: {
+        staffRoleID: roleId,
+      },
+    });
+  } catch (error) {
+    throw new Error(`Failed to set staff role: ${error}`);
   }
 }
 
@@ -42,4 +72,6 @@ async function getPhishingDetectionSwitch(guild: Guild): Promise<boolean> {
 export const modDB = {
   getBannedWords,
   getPhishingDetectionSwitch,
+  setStaffRole,
+  hasModRole,
 };

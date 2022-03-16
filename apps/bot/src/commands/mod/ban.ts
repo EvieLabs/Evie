@@ -17,7 +17,6 @@ limitations under the License.
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { punishDB } from "#root/utils/database/punishments";
 import { checkPerm } from "#root/utils/misc/permChecks";
-import { banGuildMember } from "#root/utils/punishments/ban";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
 import {
@@ -25,7 +24,11 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
-import { CommandInteraction, Permissions } from "discord.js";
+import {
+  AutocompleteInteraction,
+  CommandInteraction,
+  Permissions,
+} from "discord.js";
 
 export class Ban extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
@@ -58,7 +61,7 @@ export class Ban extends Command {
     }
 
     try {
-      await banGuildMember(
+      await interaction.client.punishments.banGuildMember(
         userToBeBanned,
         {
           reason: reason ?? "No reason provided.",
@@ -76,6 +79,77 @@ export class Ban extends Command {
     } catch (e) {
       StatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
       return;
+    }
+  }
+
+  public override async autocompleteRun(interaction: AutocompleteInteraction) {
+    if (!interaction.inCachedGuild()) return;
+
+    if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
+      return await interaction.respond([
+        {
+          name: "Hey you don't have the required permissions to un-ban users.",
+          value: "notadmin",
+        },
+      ]);
+    }
+
+    const query = interaction.options.getNumber("days") ?? "";
+
+    // when theres no query show some suggestions such as 5 Days, 1 Day, etc.
+    if (!query) {
+      return await interaction.respond([
+        {
+          name: "24 Hours",
+          value: 1,
+        },
+        {
+          name: "3 Day",
+          value: 3,
+        },
+        {
+          name: "1 Week",
+          value: 7,
+        },
+        {
+          name: "1 Month",
+          value: 30,
+        },
+        {
+          name: "1 Year",
+          value: 365,
+        },
+      ]);
+    } else {
+      // @ts-expect-error Argument of type 'number' is not assignable to parameter of type 'string'.
+      const days = parseInt(query);
+      if (isNaN(days)) {
+        return await interaction.respond([
+          {
+            name: "Invalid number.",
+            value: "invalid",
+          },
+        ]);
+      } else {
+        return await interaction.respond([
+          {
+            name: `${days} Days`,
+            value: days,
+          },
+          {
+            name: `${days} Weeks`,
+            value: days * 7,
+          },
+          {
+            name: `${days} Months`,
+            value: days * 30,
+          },
+          {
+            name: `${days} Years`,
+            value: days * 365,
+          },
+        ]);
+      }
     }
   }
 

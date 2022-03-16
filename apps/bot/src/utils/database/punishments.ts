@@ -64,8 +64,57 @@ async function getBan(m: GuildMember) {
   }
 }
 
+/** Gets all the notes for a guild member */
+async function getNotes(m: GuildMember) {
+  try {
+    return await prisma.evieNote.findMany({
+      where: {
+        userId: m.id,
+        guildId: m.guild.id,
+      },
+    });
+  } catch (error) {
+    throw new Error(`Failed to find notes: ${error}`);
+  }
+}
+
+/** Adds a note to the database */
+async function addNote(m: GuildMember, note: string) {
+  try {
+    return await prisma.evieNote.create({
+      data: {
+        id: SnowflakeUtil.generate(),
+        userId: m.id,
+        guildId: m.guild.id,
+        content: note,
+      },
+    });
+  } catch (error) {
+    throw new Error(`Failed to add note: ${error}`);
+  }
+}
+
+/** Deletes an already existing note on the database */
+async function deleteNote(m: GuildMember, g: Guild) {
+  try {
+    return await prisma.evieNote.delete({
+      where: {
+        userId_guildId: {
+          userId: m.id,
+          guildId: g.id,
+        },
+      },
+    });
+  } catch (error) {
+    throw new Error(`Failed to delete note: ${error}`);
+  }
+}
+
 export const punishDB = {
   addBan,
   deleteBan,
   getBan,
+  getNotes,
+  addNote,
+  deleteNote,
 };

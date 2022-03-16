@@ -1107,16 +1107,6 @@
     "@swc/core-win32-ia32-msvc" "1.2.151"
     "@swc/core-win32-x64-msvc" "1.2.151"
 
-"@tictactrip/axios-redis@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@tictactrip/axios-redis/-/axios-redis-2.0.0.tgz#fa6c9a69fd98205415b5c61b0ed52dcca1fc7ef2"
-  integrity sha512-Vy0Ev8X8P9IWX5gbZcvKvhA9iQ1Axn5SwrYKxmFgQaBkNshOE0SSlkk5MrHJ92xX1HwfJVzVh1tOCJSxynFKbg==
-  dependencies:
-    axios "0.24.0"
-    flatted "3.2.4"
-    lodash "4.17.21"
-    redis "3.1.2"
-
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -1718,19 +1708,19 @@ axe-core@^4.3.5:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.4.1.tgz#7dbdc25989298f9ad006645cd396782443757413"
   integrity sha512-gd1kmb21kwNuWr6BQz8fv6GNECPBnUasepcoLbekws23NVBLODdsClRZ+bQ8+9Uomf3Sm3+Vwn0oYG9NvwnJCw==
 
-axios@0.24.0, axios@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
-  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
-  dependencies:
-    follow-redirects "^1.14.4"
-
 axios@^0.21.0:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axios@^0.26.0:
   version "0.26.0"
@@ -2230,7 +2220,7 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-denque@^1.1.0, denque@^1.5.0:
+denque@^1.1.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.5.1.tgz#07f670e29c9a78f8faecb2566a1e2c11929c5cbf"
   integrity sha512-XwE+iZ4D6ZUB7mfYRMb5wByE8L74HCn30FBN7sWnXksWc1LO1bPDl67pBR9o/kC4z/xSNAwkMYcGgqDV3BE3Hw==
@@ -3090,11 +3080,6 @@ flat-cache@^3.0.4:
   dependencies:
     flatted "^3.1.0"
     rimraf "^3.0.2"
-
-flatted@3.2.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
-  integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
 
 flatted@^3.1.0:
   version "3.2.5"
@@ -4025,7 +4010,7 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.truncate/-/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"
   integrity sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=
 
-lodash@4.17.21, lodash@^4.17.14:
+lodash@^4.17.14:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -4892,7 +4877,7 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-redis-commands@1.7.0, redis-commands@^1.7.0:
+redis-commands@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
   integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
@@ -4908,16 +4893,6 @@ redis-parser@^3.0.0:
   integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   dependencies:
     redis-errors "^1.0.0"
-
-redis@3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-3.1.2.tgz#766851117e80653d23e0ed536254677ab647638c"
-  integrity sha512-grn5KoZLr/qrRQVwoSkmzdbw6pwF+/rwODtrOr6vuBRiR/f3rjSTGupbF90Zpqm2oenix8Do6RV7pYEkGwlKkw==
-  dependencies:
-    denque "^1.5.0"
-    redis-commands "^1.7.0"
-    redis-errors "^1.2.0"
-    redis-parser "^3.0.0"
 
 regenerator-runtime@^0.13.4:
   version "0.13.9"
@@ -5239,6 +5214,53 @@ statuses@2.0.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"
   integrity sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==
 
+ste-core@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-core/-/ste-core-2.1.16.tgz#9451b04753f4a3f39fff8f2b7b34c31132ad4635"
+  integrity sha512-GgwwDFSDWbS2Ps1QliUHJPXeomvwZFfG5B10ggp+INmBD618MxwbA1qwFXdXjYGaS8JfiEC6NlpT3fp9PwfNHw==
+
+ste-events@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-events/-/ste-events-2.1.16.tgz#6c053fa10dc6740815a161f16fbdaf324b73c6c9"
+  integrity sha512-DFTYyuiCaNC4rY8td1UB9zfsCtcUE9iy5PdKlkQJ8+7Yv/mjVKqKusfmmfbI9BfjTgawinixypInsc+LWx67HA==
+  dependencies:
+    ste-core "^2.1.16"
+
+ste-promise-events@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-promise-events/-/ste-promise-events-2.1.16.tgz#c1ef5147987d35c082196b2a20ed2087c44e0f88"
+  integrity sha512-An/jUYfuhdj4k0ROwPi+x4UabRlCM8iN4EcmhgkKwKUA0v26dKx2eZ4NtaNEmddV77M3D01mXfE5Ddq+o69ulQ==
+  dependencies:
+    ste-core "^2.1.16"
+
+ste-promise-signals@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-promise-signals/-/ste-promise-signals-2.1.16.tgz#b34b0fb94dec8b52c72afc9781762fbd81501353"
+  integrity sha512-op/OvmTVeq4t4X7+5qTqcFTHgCVdRLNcqgamOfK4t1oeSVNZsxtODqJ7+fJqh4RCx27y4xMWqpB3p9vvdetzEw==
+  dependencies:
+    ste-core "^2.1.16"
+
+ste-promise-simple-events@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-promise-simple-events/-/ste-promise-simple-events-2.1.16.tgz#ec71c34257d7283c93fc0c7d14ff291ae74d2ed1"
+  integrity sha512-jAI0z8oCvcsVQ94kKz2pVtzskI8ODhM4jYJMP4U+K9InONcicKleA+5EKrzGzLjn0WKBd3hegJfM6Vy/Cv5HNA==
+  dependencies:
+    ste-core "^2.1.16"
+
+ste-signals@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-signals/-/ste-signals-2.1.16.tgz#fb507f7a19c8c55481b2f220529e4ba55594d089"
+  integrity sha512-odMJ3xG4AIKIyBCL3to4BIBgEpIzpQsyJgt9MbgOAmyUD3FZBMymM8x5QkW0qXXH9RnHnKcaEOOMw6+DUgx77w==
+  dependencies:
+    ste-core "^2.1.16"
+
+ste-simple-events@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/ste-simple-events/-/ste-simple-events-2.1.16.tgz#94565858719f637747b798e34783a9be61fe25f1"
+  integrity sha512-B4gdrRg9jnbJE8sICjbx9NFb04KJn1WYWiXoon/YsD+3DWii4XyE3rMU6ZeJI6GG2s9mNExloNZMGcC9zSKh8A==
+  dependencies:
+    ste-core "^2.1.16"
+
 stream-events@^1.0.4, stream-events@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/stream-events/-/stream-events-1.0.5.tgz#bbc898ec4df33a4902d892333d47da9bf1c406d5"
@@ -5349,6 +5371,19 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+strongly-typed-events@^2.1.16:
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/strongly-typed-events/-/strongly-typed-events-2.1.16.tgz#5b2d3951f420f1f45515e6901612e5311d770de9"
+  integrity sha512-y3wh36XtzAg0gWEOnVGloWthmUrdLmeGSddkV1yFHrNHBGAtcjTMvp0ESRVIvKWC8+IVyqzacDPuNPmDTXly0g==
+  dependencies:
+    ste-core "^2.1.16"
+    ste-events "^2.1.16"
+    ste-promise-events "^2.1.16"
+    ste-promise-signals "^2.1.16"
+    ste-promise-simple-events "^2.1.16"
+    ste-signals "^2.1.16"
+    ste-simple-events "^2.1.16"
 
 stubs@^3.0.0:
   version "3.0.0"

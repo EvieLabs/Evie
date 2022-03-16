@@ -14,24 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import axios from "axios";
+import { ApplyOptions } from "@sapphire/decorators";
+import { Events, Listener } from "@sapphire/framework";
+import type { Message } from "discord.js";
 
-class Phisherman {
-  private readonly TOKEN = `Bearer :${process.env.PHISHERMAN_TOKEN}`;
+@ApplyOptions<Listener.Options>({
+  once: false,
+  event: Events.MessageCreate,
+})
+export class MessageCreate extends Listener {
+  public async run(message: Message) {
+    if (message.author.bot || !message.inGuild()) return;
 
-  public async checkDomain(domain: string): Promise<boolean> {
-    const res = await axios.get(
-      `https://api.phisherman.gg/v2/domains/check/${domain}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: this.TOKEN,
-        },
-      }
-    );
-
-    const json = await res.data;
-
-    return json.verifiedPhish;
+    message.client.phisherman.scan(message);
   }
 }
