@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="It's time to use Evie in your Discord server! Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!"
         />
-        <meta name="theme-color" content="#FF0000" />
+        <meta name="theme-color" content="#7289DA" />
 
         <link
           rel="apple-touch-icon"

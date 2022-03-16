@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
@@ -8,10 +9,18 @@ export default function Header() {
           <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
             <div className="relative flex flex-col md:flex-row">
               <Link href="/">
-                <h1 className="text-3xl text-[#FFFFFF] font-bold tracking-tight text-center hover:text-[#7289DA] hover:scale-110 transition-all duration-200 ease-in-out">
-                  <img src="/Evie.svg" className="w-10 inline" />{" "}
-                  <span>Evie</span>
-                </h1>
+                <a>
+                  <h1 className="text-3xl text-[#FFFFFF] font-bold tracking-tight text-center hover:text-[#7289DA] hover:scale-110 transition-all duration-200 ease-in-out">
+                    <Image
+                      width={10}
+                      height={10}
+                      alt="Evie Logo"
+                      src="/Evie.svg"
+                      className="w-10 inline"
+                    />{" "}
+                    <span>Evie</span>
+                  </h1>
+                </a>
               </Link>
             </div>
             <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">

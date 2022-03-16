@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-
+import Image from "next/image";
 const invite =
   "https://discord.com/oauth2/authorize?client_id=807543126424158238&permissions=518855707712&scope=bot%20applications.commands";
 
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <div className="grid justify-items-stretch ...">
           <div className="justify-self-center ...">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl leading-none font-extrabold tracking-tight mt-10 mb-8 sm:mt-14 sm:mb-10 text-white text-center">
-              It's time to use Evie in your Discord server.
+              It&apos;s time to use Evie in your Discord server.
             </h1>
             <div className="justify-self-center ...">
               <p className="text-white text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11 text-center">
@@ -120,10 +120,10 @@ const Home: NextPage = () => {
             </div>
             <div className="w-full md:w-1/2">
               <div className="w-full h-auto overflow-hidden rounded-md shadow-blurple sm:rounded-xl">
-                <img
+                <Image
                   src="https://dummyimage.com/1071x695/000000/fff"
-                  width="{948.666666667}"
-                  height="{625.333333333}"
+                  width={1071}
+                  height={695}
                   alt="Animated image of a user setting banned words for their server and then testing if Evie deletes the message with the banned word."
                 />
               </div>
@@ -136,10 +136,10 @@ const Home: NextPage = () => {
           <div className="flex flex-wrap items-center sm:-mx-3">
             <div className="w-full md:w-1/2">
               <div className="w-full h-auto overflow-hidden rounded-md shadow-blurple sm:rounded-xl">
-                <img
+                <Image
                   src="https://dummyimage.com/1071x695/000000/fff"
-                  width="{1071}"
-                  height="{695}"
+                  width={1071}
+                  height={695}
                   alt="Animated image of a user viewing Hypixel stats, TristanSMP Stats, and Server stats"
                 />
               </div>
@@ -154,10 +154,10 @@ const Home: NextPage = () => {
                   <span className="block xl:inline"> Utilities</span>
                 </h1>
                 <p className="mx-auto text-base text-gray-400 sm:max-w-md lg:text-xl md:max-w-3xl">
-                  Ever wanted to search google, check someone's Hypixel stats,
-                  check how much people are on a Minecraft server, check your
-                  TristanSMP stats, and more straight from Discord? Well now you
-                  can!
+                  Ever wanted to search google, check someone&quot;s Hypixel
+                  stats, check how much people are on a Minecraft server, check
+                  your TristanSMP stats, and more straight from Discord? Well
+                  now you can!
                 </p>
                 <div className="relative flex flex-col sm:flex-row sm:space-x-4">
                   <a

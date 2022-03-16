@@ -54,7 +54,7 @@ export default function Footer() {
               </a>
             </div>
             <p className="mt-8 text-base text-center text-gray-400">
-              "keeping that server of yours safe"
+              &quot;keeping that server of yours safe&quot;
             </p>
           </div>
         </section>
