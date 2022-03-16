@@ -70,7 +70,7 @@ Evie is a completely free service and bot. If you like Evie and we have helped y
 [`node.js`]: https://nodejs.org/en/
 [`docker`]: https://www.docker.com/
 [`yarn`]: https://yarnpkg.com/
-[production evie]: https://evie.pw/bot
+[production evie]: https://eviebot.rocks
 
 ## Contributors ✨
 
