@@ -16,8 +16,8 @@ export default function Banner() {
               <p className="ml-3 font-medium text-white truncate">
                 <span className="md:hidden"> Evie is changing! </span>
                 <span className="hidden md:inline">
-                  Evie is Changing! We're currently in the process of building
-                  the future of Evie!
+                  Evie is Changing! We&apos;re currently in the process of
+                  building the future of Evie!
                 </span>
               </p>
             </div>
