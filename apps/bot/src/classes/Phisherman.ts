@@ -43,11 +43,13 @@ export class Phisherman {
         this._onPhishDetected.dispatch(this, {
           successfullyDeleted: true,
           message,
+          url: element,
         });
       } catch (error) {
         this._onPhishDetected.dispatch(this, {
           successfullyDeleted: false,
           message,
+          url: element,
         });
       }
     });
@@ -79,4 +81,5 @@ export class Phisherman {
 type FoundPhishEvent = {
   readonly successfullyDeleted: boolean;
   readonly message: Message;
+  readonly url: string;
 };

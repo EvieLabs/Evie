@@ -14,18 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ApplyOptions } from "@sapphire/decorators";
-import { Events, Listener } from "@sapphire/framework";
-import type { Message } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
-@ApplyOptions<Listener.Options>({
-  once: false,
-  event: Events.MessageCreate,
-})
-export class MessageCreate extends Listener {
-  public async run(message: Message) {
-    if (message.author.bot || !message.inGuild()) return;
-
-    message.client.phisherman.scan(message);
+export class LogEmbed extends MessageEmbed {
+  public constructor(footerText?: string) {
+    super();
+    this.setTimestamp();
+    this.setFooter({
+      text: `Evie${footerText ? ` | ${footerText}` : ""}`,
+      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+    });
   }
 }

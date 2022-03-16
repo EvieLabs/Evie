@@ -17,6 +17,7 @@ limitations under the License.
 import { Enumerable } from "@sapphire/decorators";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { Intents } from "discord.js";
+import { EvieGuildLogger } from "./EvieGuildLogger";
 import { EviePunish } from "./EviePunish";
 import { Phisherman } from "./Phisherman";
 
@@ -28,6 +29,10 @@ export class EvieClient extends SapphireClient {
   /** The EviePunish instance used for punishing people */
   @Enumerable(false)
   public override punishments = new EviePunish();
+
+  /** The EvieGuildLogger instance used for logging events in a specified channel in a guild */
+  @Enumerable(false)
+  public override guildLogger = new EvieGuildLogger(this);
 
   public constructor() {
     super({
@@ -51,5 +56,6 @@ declare module "discord.js" {
   interface Client {
     readonly phisherman: Phisherman;
     readonly punishments: EviePunish;
+    readonly guildLogger: EvieGuildLogger;
   }
 }

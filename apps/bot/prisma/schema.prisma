@@ -25,6 +25,9 @@ model EvieGuild {
   tags                      EvieTag[]
   tempBans                  EvieTempBan[]
   importedMessages          String[]
+  evieNotes                 EvieNote[]
+  logChannelID              String?
+  staffRoleID               String?
 }
 
 model EvieTag {
@@ -42,6 +45,17 @@ model EvieTempBan {
   userId      String
   guildId     String
   expiresAt   DateTime?
+  EvieGuild   EvieGuild? @relation(fields: [evieGuildId], references: [id])
+  evieGuildId String?
+
+  @@unique([userId, guildId])
+}
+
+model EvieNote {
+  id          String     @unique
+  userId      String
+  guildId     String
+  content     String
   EvieGuild   EvieGuild? @relation(fields: [evieGuildId], references: [id])
   evieGuildId String?
 
