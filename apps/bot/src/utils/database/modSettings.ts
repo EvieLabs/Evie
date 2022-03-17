@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Guild, GuildMember, Snowflake } from "discord.js";
+import type { Guild, GuildMember, Snowflake, TextChannel } from "discord.js";
 import { dbUtils, prisma } from ".";
 
 /** Gets the ban words list for the specified guild */
@@ -58,6 +58,22 @@ async function setStaffRole(guild: Guild, roleId: Snowflake) {
   }
 }
 
+/** Sets the log channel id for the specified guild */
+async function setLogChannel(guild: Guild, channel: TextChannel) {
+  try {
+    return await prisma.evieGuild.update({
+      where: {
+        id: guild.id,
+      },
+      data: {
+        logChannelID: channel.id,
+      },
+    });
+  } catch (error) {
+    throw new Error(`Failed to set log channel id: ${error}`);
+  }
+}
+
 /** Gets the phishing detection boolean for the specified guild */
 async function getPhishingDetectionSwitch(guild: Guild): Promise<boolean> {
   try {
@@ -74,4 +90,5 @@ export const modDB = {
   getPhishingDetectionSwitch,
   setStaffRole,
   hasModRole,
+  setLogChannel,
 };

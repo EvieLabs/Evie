@@ -31,6 +31,18 @@ export class Note extends Command {
       );
       return;
     }
+
+    const subcommand = interaction.options.getSubcommand();
+    if (subcommand === "leave") {
+      await this.leave(interaction);
+      return;
+    } else if (subcommand === "delete") {
+      await this.delete(interaction);
+      return;
+    } else if (subcommand === "view") {
+      await this.list(interaction);
+      return;
+    }
   }
 
   public override registerApplicationCommands(

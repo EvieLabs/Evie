@@ -45,11 +45,21 @@ export class TSMP extends Command {
     const user = i.options.getMember("player");
 
     if (!user) {
-      await StatusEmbed(StatusEmoji.FAIL, "You must specify a user to ban.", i);
+      await StatusEmbed(StatusEmoji.FAIL, "You must specify a user.", i);
       return;
     }
 
-    this.acceptMember(i, user);
+    const subcommand = i.options.getSubcommand();
+    if (subcommand === "accept") {
+      this.acceptMember(i, user);
+    } else {
+      await StatusEmbed(
+        StatusEmoji.FAIL,
+        `\`${subcommand}\` has not yet been implemented`,
+        i
+      );
+      return;
+    }
   }
 
   public override async contextMenuRun(i: ContextMenuInteraction) {
@@ -63,7 +73,7 @@ export class TSMP extends Command {
     const user = i.options.getMember("user");
 
     if (!user) {
-      await StatusEmbed(StatusEmoji.FAIL, "You must specify a user to ban.", i);
+      await StatusEmbed(StatusEmoji.FAIL, "You must specify a user.", i);
       return;
     }
 

@@ -16,36 +16,9 @@ limitations under the License.
 
 import { prisma } from "#utils/database/index";
 import { MessageEmbed, TextChannel, type Guild } from "discord.js";
-import type { EvieClient } from "./EvieClient";
-import { LogEmbed } from "./LogEmbed";
 
 export class EvieGuildLogger {
-  constructor(client: EvieClient) {
-    client.phisherman.onPhish.subscribe(async (_, phish) => {
-      if (!phish.message.guild) return;
-
-      const embed = new LogEmbed(`phisherman.gg integration`)
-        .setColor("#4e73df")
-        .setAuthor({
-          name: `${phish.message.author.tag} (${phish.message.author.id})`,
-          iconURL: phish.message.author.displayAvatarURL(),
-        })
-        .setDescription(
-          `${
-            phish.successfullyDeleted ? "Deleted" : "Failed to delete"
-          } a message with a known phishing link`
-        )
-        .addField(
-          "Message",
-          `${phish.message.content} [Jump to message](${phish.message.url})`
-        )
-        .addField("Triggered Link", phish.url);
-
-      await this.log(phish.message.guild, embed);
-    });
-  }
-
-  private async log(guild: Guild, embed: MessageEmbed) {
+  public async log(guild: Guild, embed: MessageEmbed) {
     await prisma.evieGuild
       .findFirst({
         where: {
