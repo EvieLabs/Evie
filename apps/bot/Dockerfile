@@ -12,6 +12,9 @@ RUN yarn
 # Copy code
 COPY . .
 
+# Copy root prisma config
+COPY ../../prisma .
+
 # Compile typescript to javascript
 RUN yarn build
 
