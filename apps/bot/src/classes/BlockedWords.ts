@@ -60,7 +60,11 @@ export class BlockedWords {
       )
       .addField(
         "Message",
-        `${message.content} [Jump to message](${message.url})`
+        `${message.content} ${
+          successfullyDeleted
+            ? `[Jump to message](${message.url})`
+            : `[Jump to context](${message.url})`
+        }`
       )
       .addField("Triggered Word", bannedWord);
 

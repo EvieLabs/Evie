@@ -39,7 +39,11 @@ export class Phisherman {
         )
         .addField(
           "Message",
-          `${phish.message.content} [Jump to message](${phish.message.url})`
+          `${phish.message.content} ${
+            phish.successfullyDeleted
+              ? `[Jump to message](${phish.message.url})`
+              : `[Jump to context](${phish.message.url})`
+          }`
         )
         .addField("Triggered Link", phish.url);
 
