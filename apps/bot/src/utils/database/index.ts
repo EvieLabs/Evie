@@ -35,11 +35,19 @@ async function getGuild(guild: Guild | string): Promise<EvieGuild | null> {
 }
 
 async function createGuild(guild: Guild | string): Promise<EvieGuild> {
-  return await prisma.evieGuild.create({
-    data: {
-      id: typeof guild === "string" ? guild : guild.id,
-    },
-  });
+  try {
+    return await prisma.evieGuild.create({
+      data: {
+        id: typeof guild === "string" ? guild : guild.id,
+      },
+    });
+  } catch (error) {
+    throw new Error(
+      `Failed to create guild for ${
+        typeof guild === "string" ? guild : guild.id
+      }`
+    );
+  }
 }
 
 export const dbUtils = { getGuild, createGuild };

@@ -25,7 +25,13 @@ import type { Guild } from "discord.js";
 })
 export class GuildCreateListener extends Listener {
   public async run(g: Guild) {
-    console.log(`Got added to ${g.name} (${g.id})`);
-    await dbUtils.createGuild(g);
+    console.log(
+      `Got added to ${g.name} (${g.id}) trying to add to database... (Total guilds: ${g.client.guilds.cache.size})`
+    );
+    try {
+      await dbUtils.createGuild(g);
+    } catch (e) {
+      console.error(`Failed to add guild to database. Error: ${e}`);
+    }
   }
 }
