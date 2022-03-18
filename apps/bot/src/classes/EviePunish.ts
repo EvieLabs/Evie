@@ -51,7 +51,6 @@ export class EviePunish {
         throw new Error(`Failed to add ban: ${err}`);
       });
 
-    // TODO: Run ban hooks such as logging it to a channel
     this._onBannedMember.dispatch(this, {
       member: m,
       guild: m.guild,
@@ -71,7 +70,6 @@ export class EviePunish {
       throw new Error(`Failed to delete ban: ${err}`);
     });
 
-    // TODO: Run ban hooks such as logging it to a channel
     this._onUnBannedMember.dispatch(this, {
       guild: g,
       user: u,
