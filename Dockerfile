@@ -4,16 +4,19 @@ FROM node:16.11.1
 WORKDIR /usr/src/app
 
 # Copy package.json
-COPY package*.json ./
+COPY ./apps/bot/package*.json ./
+
+# Copy yarn.lock
+COPY ./yarn.lock ./
 
 # Fetch dependencies
 RUN yarn
 
 # Copy code
-COPY . .
+COPY ./apps/bot .
 
 # Copy root prisma config
-COPY ../../prisma .
+COPY ./prisma .
 
 # Compile typescript to javascript
 RUN yarn build

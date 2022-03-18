@@ -6,10 +6,11 @@ on:
     branches:
       - main
     paths:
-      - "apps/bots/src/**"
+      - "apps/bot/src/**"
       - "Dockerfile"
-      - ".github/workflows/continuous-delivery.yml"
+      - ".github/workflows/cd.yml"
       - "package.json"
+      - "yarn.lock"
 
 jobs:
   PublishEvie:
@@ -32,6 +33,6 @@ jobs:
         uses: docker/build-push-action@309fb9180f2030167151ad947584dc32f6164656
         with:
           push: true
-          context: ./apps/bot
+          context: ./
           tags: |
             ghcr.io/teamevie/evie:latest
