@@ -25,13 +25,14 @@ export class EvieGuildLogger {
           id: guild.id,
         },
       })
-      .then((g) => {
+      .then(async (g) => {
         if (!g) return;
         if (!g.logChannelID) return;
 
-        const channel = guild.client.channels.fetch(g.logChannelID);
+        const channel = await guild.client.channels.fetch(g.logChannelID);
         if (!channel) return;
         if (!(channel instanceof TextChannel)) return;
+
         try {
           channel.send({ embeds: [embed] });
         } catch (e) {
