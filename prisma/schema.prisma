@@ -40,24 +40,22 @@ model EvieTag {
 }
 
 model EvieTempBan {
-  id          String     @unique
-  reason      String
-  userId      String
-  guildId     String
-  expiresAt   DateTime?
-  EvieGuild   EvieGuild? @relation(fields: [evieGuildId], references: [id])
-  evieGuildId String?
+  id        String     @unique
+  reason    String
+  userId    String
+  guildId   String?
+  expiresAt DateTime?
+  EvieGuild EvieGuild? @relation(fields: [guildId], references: [id])
 
   @@unique([userId, guildId])
 }
 
 model EvieNote {
-  id          String     @unique
-  userId      String
-  guildId     String
-  content     String
-  EvieGuild   EvieGuild? @relation(fields: [evieGuildId], references: [id])
-  evieGuildId String?
+  id        String     @unique
+  userId    String
+  guildId   String?
+  content   String
+  EvieGuild EvieGuild? @relation(fields: [guildId], references: [id])
 
   @@unique([userId, guildId])
 }
