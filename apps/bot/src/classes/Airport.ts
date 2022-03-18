@@ -18,7 +18,7 @@ import { axo } from "#root/axologs";
 import { dbUtils } from "#root/utils/database/index";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import type { EvieGuild } from "@prisma/client";
-import { GuildMember, TextChannel } from "discord.js";
+import { GuildMember, Role, TextChannel } from "discord.js";
 import { EvieEmbed } from "./EvieEmbed";
 
 export class Airport {
@@ -26,6 +26,20 @@ export class Airport {
     const config = await dbUtils.getGuild(member.guild);
     if (config?.welcomeMessageEnabled) {
       this.welcomeMember(member, config);
+    }
+
+    if (config?.joinRoleEnabled) {
+      try {
+        if (member.user.bot || !config.joinRoleID) return;
+
+        const role = await member.guild.roles.fetch(config.joinRoleID);
+
+        if (!role || !(role instanceof Role)) return;
+
+        member.roles.add(role, `Auto Join Role`);
+      } catch (error) {
+        axo.err("Failed to apply auto role!");
+      }
     }
   }
 
