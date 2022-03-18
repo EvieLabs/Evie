@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { dbUtils } from "#root/utils/database";
+import { dbUtils } from "#root/utils/database/index";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import type { Guild } from "discord.js";
