@@ -10,23 +10,6 @@
 
 </div>
 
-## What needs to be done before merging with [production evie]
-
-- [ ] Moderation system
-
-  - [ ] Mod action log
-    - [ ] Mod notes
-    - [x] Bans
-    - [ ] Kicks
-    - [ ] Warns
-    - [x] Phishing Detection
-  - [ ] User log
-    - [ ] Messages
-    - [ ] Nicknames
-    - [ ] Roles
-
-- [x] Add a tag system
-
 ## Contributing to Evie
 
 ### Requirements
