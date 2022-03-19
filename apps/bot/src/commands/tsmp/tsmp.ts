@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { EvieEmbed, StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
-import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -133,7 +132,7 @@ export class TSMP extends Command {
           .setName("Accept Player")
           .setType(ApplicationCommandType.User),
       {
-        guildIds: registeredGuilds,
+        guildIds: ["952064632187658261", "901426442242498650"],
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
       }
     );
@@ -166,7 +165,7 @@ export class TSMP extends Command {
               )
           ),
       {
-        guildIds: registeredGuilds,
+        guildIds: ["952064632187658261", "901426442242498650"],
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
       }
     );
