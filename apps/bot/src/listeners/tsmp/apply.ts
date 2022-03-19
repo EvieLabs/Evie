@@ -63,12 +63,12 @@ export class TSMPApplicationButton extends Listener {
     const channel = await makeApplicationChannel(modal.member);
 
     if (!channel) {
-      StatusEmbed(StatusEmoji.FAIL, `Couldn't make application channel`, ogi);
+      StatusEmbed(StatusEmoji.FAIL, `Couldn't make application channel`, modal);
       return;
     }
 
     if (!process.env.TSMP_STAFF_ROLE_ID) {
-      StatusEmbed(StatusEmoji.FAIL, `No staff role set`, ogi);
+      StatusEmbed(StatusEmoji.FAIL, `No staff role set`, modal);
       return;
     }
 
