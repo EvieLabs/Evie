@@ -27,10 +27,10 @@ export async function makeApplicationChannel(applicant: GuildMember) {
     });
   }
 
-  if (applicant.guild.me) {
+  if (applicant.client.user) {
     perms.push({
       // Me
-      id: applicant.guild.me.id,
+      id: applicant.client.user.id,
       allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
     });
   }
