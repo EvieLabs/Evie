@@ -81,7 +81,7 @@ export class TSMPApplicationButton extends Listener {
     }
 
     const application = await channel.send({
-      content: `<@&${process.env.TSMP_STAFF_ROLE_ID}>`,
+      content: `Hey, <@&${process.env.TSMP_STAFF_ROLE_ID}> new application from ${modal.user}!`,
       embeds: [
         (
           await EvieEmbed(modal.guild)
@@ -98,7 +98,10 @@ export class TSMPApplicationButton extends Listener {
           ])
           .setTitle("New Application"),
       ],
-      allowedMentions: { roles: [process.env.TSMP_STAFF_ROLE_ID] },
+      allowedMentions: {
+        roles: [process.env.TSMP_STAFF_ROLE_ID],
+        users: [modal.user.id],
+      },
     });
     return await ReplyStatusEmbed(
       StatusEmoji.SUCCESS,
