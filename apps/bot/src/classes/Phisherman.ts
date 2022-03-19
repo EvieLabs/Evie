@@ -52,7 +52,7 @@ export class Phisherman {
   }
 
   private readonly TOKEN = process.env.PHISHERMAN_TOKEN
-    ? `Bearer :${process.env.PHISHERMAN_TOKEN}`
+    ? process.env.PHISHERMAN_TOKEN
     : null;
 
   private _onPhishDetected = new EventDispatcher<Phisherman, FoundPhishEvent>();
@@ -98,7 +98,7 @@ export class Phisherman {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: this.TOKEN,
+          Authorization: `Bearer ${this.TOKEN}`,
         },
       }
     );
