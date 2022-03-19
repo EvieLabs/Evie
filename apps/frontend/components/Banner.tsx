@@ -14,10 +14,10 @@ export default function Banner() {
                 ></SpeakerphoneIcon>
               </span>
               <p className="ml-3 font-medium text-white truncate">
-                <span className="md:hidden"> Evie is changing! </span>
+                <span className="md:hidden"> We need your help! </span>
                 <span className="hidden md:inline">
-                  Evie is Changing! We&apos;re currently in the process of
-                  building the future of Evie!
+                  The future of Evie is currently being made and we need your
+                  help!
                 </span>
               </p>
             </div>
