@@ -115,6 +115,7 @@ export class CreateTag extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["954547163965300766"],
       }
     );
   }

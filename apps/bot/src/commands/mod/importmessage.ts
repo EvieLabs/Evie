@@ -237,6 +237,7 @@ export class ImportMessage extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["954547076920930354"],
       }
     );
 
@@ -256,6 +257,7 @@ export class ImportMessage extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["954547077650735114"],
       }
     );
   }

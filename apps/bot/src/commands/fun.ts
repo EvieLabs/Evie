@@ -15,7 +15,11 @@ limitations under the License.
 */
 
 import { registeredGuilds } from "#utils/parsers/envUtils";
-import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
+import {
+  ApplicationCommandRegistry,
+  Command,
+  RegisterBehavior,
+} from "@sapphire/framework";
 import type { CommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 
@@ -69,6 +73,8 @@ export class Fun extends Command {
           ),
       {
         guildIds: registeredGuilds,
+        behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["954547161780088864"],
       }
     );
   }

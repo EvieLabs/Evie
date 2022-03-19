@@ -131,6 +131,7 @@ export class UnBan extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["954547076165926942"],
       }
     );
   }
