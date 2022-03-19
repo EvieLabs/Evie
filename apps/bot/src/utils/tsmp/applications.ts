@@ -27,11 +27,11 @@ export async function makeApplicationChannel(applicant: GuildMember) {
     });
   }
 
-  if (process.env.TSMP_GUILD_ID == "952064632187658261") {
+  if (applicant.client.user) {
     perms.push({
-      // Natsirt
-      id: "864676306662195200",
-      allow: ["VIEW_CHANNEL"],
+      // Me
+      id: applicant.client.user.id,
+      allow: ["VIEW_CHANNEL", "MANAGE_CHANNELS"],
     });
   }
 
