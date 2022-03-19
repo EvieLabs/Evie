@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type { Guild, Role, Snowflake } from "discord.js";
-import { dbUtils, prisma } from ".";
+import { dbUtils } from ".";
 import type { Success } from "../../types";
 
 async function isJoinRoleOn(guild: Guild): Promise<boolean> {
@@ -40,7 +40,7 @@ async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
 
 async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
   try {
-    await prisma.evieGuild.update({
+    await guild.client.prisma.evieGuild.update({
       where: {
         id: guild.id,
       },
@@ -59,7 +59,7 @@ async function setJoinRoleEnable(
   enable: boolean
 ): Promise<Success> {
   try {
-    await prisma.evieGuild.update({
+    await guild.client.prisma.evieGuild.update({
       where: {
         id: guild.id,
       },

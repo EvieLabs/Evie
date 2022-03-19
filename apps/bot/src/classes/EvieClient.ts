@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { PrismaClient } from ".prisma/client";
 import { Enumerable } from "@sapphire/decorators";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { Intents } from "discord.js";
@@ -44,6 +45,10 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override guildLogger = new EvieGuildLogger();
 
+  /** The prisma instance used for interacting with the database */
+  @Enumerable(false)
+  public override prisma = new PrismaClient();
+
   public constructor() {
     super({
       intents: [
@@ -69,5 +74,6 @@ declare module "discord.js" {
     readonly guildLogger: EvieGuildLogger;
     readonly blockedWords: BlockedWords;
     readonly airport: Airport;
+    readonly prisma: PrismaClient;
   }
 }

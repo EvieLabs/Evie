@@ -80,13 +80,16 @@ export class CreateTag extends Command {
         });
         return;
       }
-      tagDB.addTag({
-        id: SnowflakeUtil.generate(),
-        name: tag,
-        content,
-        embed,
-        guildId: guild.id,
-      });
+      tagDB.addTag(
+        {
+          id: SnowflakeUtil.generate(),
+          name: tag,
+          content,
+          embed,
+          guildId: guild.id,
+        },
+        guild
+      );
       submit.reply({ content: `Created tag ${tag}`, ephemeral: true });
     } else {
       submit.reply({

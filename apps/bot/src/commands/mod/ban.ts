@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { punishDB } from "#root/utils/database/punishments";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
@@ -35,7 +35,7 @@ export class Ban extends Command {
     if (!interaction.inCachedGuild()) return;
 
     if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You do not have the required permissions to ban users.",
         interaction
@@ -48,7 +48,7 @@ export class Ban extends Command {
     const expiresAt = days ? new Date(Date.now() + days * 86400000) : undefined;
 
     if (!userToBeBanned) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You must specify a user to ban.",
         interaction
@@ -66,9 +66,10 @@ export class Ban extends Command {
         {
           reason: reason ?? "No reason provided.",
         },
-        expiresAt
+        expiresAt,
+        interaction.member
       );
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Banned ${userToBeBanned} (${userToBeBanned.displayName}) ${
           expiresAt ? time(expiresAt, "R") : `indefinitely`
@@ -77,7 +78,7 @@ export class Ban extends Command {
       );
       return;
     } catch (e) {
-      StatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
+      ReplyStatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
       return;
     }
   }

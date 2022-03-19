@@ -39,14 +39,15 @@ export class EviePunish {
   public async banGuildMember(
     m: GuildMember,
     bo: BanOptions,
-    expiresAt?: Date
+    expiresAt?: Date,
+    banner?: GuildMember
   ) {
     await m.ban(bo).catch((err) => {
       throw new Error(`Failed to ban member: ${err}`);
     });
 
     await punishDB
-      .addBan(m, bo.reason ?? "No reason provided.", expiresAt)
+      .addBan(m, bo.reason ?? "No reason provided.", expiresAt, banner)
       .catch((err) => {
         throw new Error(`Failed to add ban: ${err}`);
       });

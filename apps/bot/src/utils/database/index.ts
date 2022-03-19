@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EvieGuild, PrismaClient } from "@prisma/client";
+import type { EvieGuild } from "@prisma/client";
 import type { Guild } from "discord.js";
 
-export const prisma = new PrismaClient();
-
-async function getGuild(guild: Guild | string): Promise<EvieGuild | null> {
+async function getGuild(guild: Guild): Promise<EvieGuild | null> {
   try {
-    const data = await prisma.evieGuild.findFirst({
+    const data = await guild.client.prisma.evieGuild.findFirst({
       where: {
-        id: typeof guild === "string" ? guild : guild.id,
+        id: guild.id,
       },
     });
 
@@ -34,9 +32,9 @@ async function getGuild(guild: Guild | string): Promise<EvieGuild | null> {
   }
 }
 
-async function createGuild(guild: Guild | string): Promise<EvieGuild> {
+async function createGuild(guild: Guild): Promise<EvieGuild> {
   try {
-    return await prisma.evieGuild.create({
+    return await guild.client.prisma.evieGuild.create({
       data: {
         id: typeof guild === "string" ? guild : guild.id,
       },

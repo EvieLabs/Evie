@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type { Guild, GuildMember, Snowflake, TextChannel } from "discord.js";
-import { dbUtils, prisma } from ".";
+import { dbUtils } from ".";
 
 /** Gets the ban words list for the specified guild */
 async function getBannedWords(guild: Guild): Promise<string[] | []> {
@@ -45,7 +45,7 @@ async function hasModRole(member: GuildMember): Promise<boolean> {
 /** Sets the staff role id for the specified guild */
 async function setStaffRole(guild: Guild, roleId: Snowflake) {
   try {
-    return await prisma.evieGuild.update({
+    return await guild.client.prisma.evieGuild.update({
       where: {
         id: guild.id,
       },
@@ -61,7 +61,7 @@ async function setStaffRole(guild: Guild, roleId: Snowflake) {
 /** Sets the log channel id for the specified guild */
 async function setLogChannel(guild: Guild, channel: TextChannel) {
   try {
-    return await prisma.evieGuild.update({
+    return await guild.client.prisma.evieGuild.update({
       where: {
         id: guild.id,
       },

@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EvieEmbed, StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import {
+  EvieEmbed,
+  ReplyStatusEmbed,
+  StatusEmoji,
+} from "#root/classes/EvieEmbed";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -38,13 +42,15 @@ export class TSMP extends Command {
     if (!process.env.TSMP_STAFF_ROLE_ID) return;
 
     const mem: GuildMember = i.member;
-    if (!mem.roles.cache.has(process.env.TSMP_STAFF_ROLE_ID))
-      return StatusEmbed(StatusEmoji.FAIL, "You are not TSMP Staff", i);
+    if (!mem.roles.cache.has(process.env.TSMP_STAFF_ROLE_ID)) {
+      ReplyStatusEmbed(StatusEmoji.FAIL, "You are not TSMP Staff", i);
+      return;
+    }
 
     const user = i.options.getMember("player");
 
     if (!user) {
-      await StatusEmbed(StatusEmoji.FAIL, "You must specify a user.", i);
+      await ReplyStatusEmbed(StatusEmoji.FAIL, "You must specify a user.", i);
       return;
     }
 
@@ -52,7 +58,7 @@ export class TSMP extends Command {
     if (subcommand === "accept") {
       this.acceptMember(i, user);
     } else {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         `\`${subcommand}\` has not yet been implemented`,
         i
@@ -66,13 +72,15 @@ export class TSMP extends Command {
     if (!process.env.TSMP_STAFF_ROLE_ID) return;
 
     const mem: GuildMember = i.member;
-    if (!mem.roles.cache.has(process.env.TSMP_STAFF_ROLE_ID))
-      return StatusEmbed(StatusEmoji.FAIL, "You are not TSMP Staff", i);
+    if (!mem.roles.cache.has(process.env.TSMP_STAFF_ROLE_ID)) {
+      ReplyStatusEmbed(StatusEmoji.FAIL, "You are not TSMP Staff", i);
+      return;
+    }
 
     const user = i.options.getMember("user");
 
     if (!user) {
-      await StatusEmbed(StatusEmoji.FAIL, "You must specify a user.", i);
+      await ReplyStatusEmbed(StatusEmoji.FAIL, "You must specify a user.", i);
       return;
     }
 
@@ -92,7 +100,11 @@ export class TSMP extends Command {
     const r = await i.guild.roles.fetch(TSMPRoles.member);
 
     if (!r)
-      return StatusEmbed(StatusEmoji.FAIL, "Could not find member role", i);
+      return ReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        "Could not find member role",
+        i
+      );
 
     const e = await EvieEmbed(i.guild);
 
@@ -119,7 +131,7 @@ export class TSMP extends Command {
         i.reply({ embeds: [e], content: `${m} Good News!` });
       })
       .catch(() => {
-        StatusEmbed(StatusEmoji.FAIL, "Failed to add member role", i);
+        ReplyStatusEmbed(StatusEmoji.FAIL, "Failed to add member role", i);
       });
   }
 

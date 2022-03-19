@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
@@ -33,7 +33,7 @@ export class UnBan extends Command {
     if (!interaction.inCachedGuild()) return;
 
     if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You do not have the required permissions to un-ban users.",
         interaction
@@ -43,7 +43,7 @@ export class UnBan extends Command {
     const target = interaction.options.getString("user");
 
     if (!target) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You must specify a user to ban.",
         interaction
@@ -57,14 +57,14 @@ export class UnBan extends Command {
         interaction.guild
       );
 
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully unbanned ${user?.username}#${user?.discriminator}`,
         interaction
       );
       return;
     } catch (e) {
-      StatusEmbed(StatusEmoji.FAIL, "Failed to un-ban user.", interaction);
+      ReplyStatusEmbed(StatusEmoji.FAIL, "Failed to un-ban user.", interaction);
       return;
     }
   }

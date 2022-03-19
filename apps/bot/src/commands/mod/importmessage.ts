@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
@@ -46,7 +46,7 @@ export class ImportMessage extends Command {
     const channel = interaction.options.getChannel("channel");
 
     if (!(channel instanceof TextChannel)) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Please provide a valid text channel.",
         interaction
@@ -63,7 +63,7 @@ export class ImportMessage extends Command {
         .permissionsFor(interaction.member)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You do not have permission to send messages in this channel.",
         interaction
@@ -76,7 +76,7 @@ export class ImportMessage extends Command {
         ?.permissionsIn(channel)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "I do not have permission to send messages in this channel.",
         interaction
@@ -96,7 +96,7 @@ export class ImportMessage extends Command {
     const message = interaction.options.getMessage("message", true);
 
     if (!message) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         `Please provide a valid message.`,
         interaction
@@ -109,7 +109,7 @@ export class ImportMessage extends Command {
         message.id
       )
     ) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         `Please don't try and edit a message that is not user-generated.`,
         interaction
@@ -118,7 +118,7 @@ export class ImportMessage extends Command {
     }
 
     if (message.author.id !== interaction.client.user?.id) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         `Please Provide a message that was sent by me.`,
         interaction
@@ -138,7 +138,7 @@ export class ImportMessage extends Command {
         .permissionsFor(interaction.member)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You do not have permission to send messages in this channel.",
         interaction
@@ -151,7 +151,7 @@ export class ImportMessage extends Command {
         ?.permissionsIn(message.channel)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "I do not have permission to edit messages in this channel.",
         interaction
@@ -183,7 +183,7 @@ export class ImportMessage extends Command {
         time: 100000,
       })
       .catch(() => {
-        StatusEmbed(StatusEmoji.FAIL, `Import Timed Out`, interaction);
+        ReplyStatusEmbed(StatusEmoji.FAIL, `Import Timed Out`, interaction);
       })) as ModalSubmitInteraction;
 
     if (!submit) return;
@@ -200,7 +200,7 @@ export class ImportMessage extends Command {
 
           await miscDB.addImportedMessage(message);
 
-          return StatusEmbed(
+          return ReplyStatusEmbed(
             StatusEmoji.SUCCESS,
             `Imported [here](<${message.url}>)!`,
             submit
@@ -211,7 +211,7 @@ export class ImportMessage extends Command {
           const message = await channel.send(json);
           await miscDB.addImportedMessage(message);
 
-          return StatusEmbed(
+          return ReplyStatusEmbed(
             StatusEmoji.SUCCESS,
             `Imported [here](<${message.url}>)!`,
             submit
@@ -219,10 +219,10 @@ export class ImportMessage extends Command {
         }
       } catch (e) {
         console.log(e);
-        await StatusEmbed(StatusEmoji.FAIL, `Failed to import`, submit);
+        await ReplyStatusEmbed(StatusEmoji.FAIL, `Failed to import`, submit);
       }
     } else {
-      await StatusEmbed(StatusEmoji.FAIL, `Missing JSON Data`, submit);
+      await ReplyStatusEmbed(StatusEmoji.FAIL, `Missing JSON Data`, submit);
     }
   }
 

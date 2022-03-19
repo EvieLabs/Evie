@@ -46,6 +46,7 @@ model EvieTempBan {
   guildId   String?
   expiresAt DateTime?
   EvieGuild EvieGuild? @relation(fields: [guildId], references: [id])
+  bannedBy  String?
 
   @@unique([userId, guildId])
 }

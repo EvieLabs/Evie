@@ -20,11 +20,13 @@ import {
   ColorResolvable,
   CommandInteraction,
   ContextMenuInteraction,
+  Message,
   MessageEmbed,
   MessageMentionOptions,
   ModalSubmitInteraction,
   type Guild,
 } from "discord.js";
+import type { APIMessage } from "discord.js/node_modules/discord-api-types/v9";
 
 export enum StatusEmoji {
   SUCCESS = "<a:success:952340083418230874>",
@@ -41,7 +43,18 @@ export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
     });
 }
 
-export async function StatusEmbed(
+export async function StatusEmbed(status: StatusEmoji, description: string) {
+  return new MessageEmbed()
+    .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
+    .setTimestamp()
+    .setFooter({
+      text: "Evie",
+      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+    })
+    .setDescription(`${status} ${description}`);
+}
+
+export async function ReplyStatusEmbed(
   status: StatusEmoji,
   description: string,
   i:
@@ -50,35 +63,25 @@ export async function StatusEmbed(
     | ContextMenuInteraction
     | ButtonInteraction,
   allowedMentions?: MessageMentionOptions
-) {
-  i.replied
+): Promise<Message | Message<boolean> | APIMessage | void> {
+  const embed = new MessageEmbed()
+    .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
+    .setTimestamp()
+    .setFooter({
+      text: "Evie",
+      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+    })
+    .setDescription(`${status} ${description}`);
+
+  return i.replied
     ? i.followUp({
-        embeds: [
-          new MessageEmbed()
-            .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
-            .setTimestamp()
-            .setFooter({
-              text: "Evie",
-              iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
-            })
-            .setDescription(`${status} ${description}`),
-        ],
+        embeds: [embed],
         ephemeral: true,
         allowedMentions: allowedMentions,
       })
     : i.reply({
-        embeds: [
-          new MessageEmbed()
-            .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
-            .setTimestamp()
-            .setFooter({
-              text: "Evie",
-              iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
-            })
-            .setDescription(`${status} ${description}`),
-        ],
+        embeds: [embed],
         ephemeral: true,
         allowedMentions: allowedMentions,
       });
-  return;
 }

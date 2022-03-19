@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type { Guild, Message } from "discord.js";
-import { dbUtils, prisma } from ".";
+import { dbUtils } from ".";
 
 /** Gets all imported messages ever made for the specified guild */
 async function getImportedMessages(guild: Guild): Promise<string[]> {
@@ -33,7 +33,7 @@ async function getImportedMessages(guild: Guild): Promise<string[]> {
 async function addImportedMessage(message: Message) {
   try {
     if (!message.guild) throw new Error("Message is not in a guild.");
-    return await prisma.evieGuild.update({
+    return await message.client.prisma.evieGuild.update({
       where: {
         id: message.guild.id,
       },

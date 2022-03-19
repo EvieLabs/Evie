@@ -17,12 +17,12 @@ limitations under the License.
 import type { Success } from "#root/types";
 import type { EvieTag } from "@prisma/client";
 import type { Guild, Snowflake } from "discord.js";
-import { dbUtils, prisma } from ".";
+import { dbUtils } from ".";
 
 /** Gets the tags for the specified guild */
 async function getTags(guild: Guild): Promise<EvieTag[]> {
   try {
-    const tags = await prisma.evieTag.findMany({
+    const tags = await guild.client.prisma.evieTag.findMany({
       where: {
         guildId: guild?.id,
       },
@@ -39,7 +39,7 @@ async function getTagFromSnowflake(
   tagId: Snowflake
 ): Promise<EvieTag | null> {
   try {
-    const tag = await prisma.evieTag.findFirst({
+    const tag = await guild.client.prisma.evieTag.findFirst({
       where: {
         id: tagId,
         guildId: guild?.id,
@@ -53,10 +53,11 @@ async function getTagFromSnowflake(
 
 /** Deletes specific tag from Snowflake */
 async function deleteTagFromSnowflake(
+  guild: Guild,
   tagId: Snowflake
 ): Promise<EvieTag | null> {
   try {
-    const tag = await prisma.evieTag.delete({
+    const tag = await guild.client.prisma.evieTag.delete({
       where: {
         id: tagId,
       },
@@ -73,13 +74,13 @@ async function deleteClosestTagFromName(
   tagName: string
 ): Promise<EvieTag | null> {
   try {
-    const tag = await prisma.evieTag.findFirst({
+    const tag = await guild.client.prisma.evieTag.findFirst({
       where: {
         name: tagName,
         guildId: guild.id,
       },
     });
-    await prisma.evieTag.delete({
+    await guild.client.prisma.evieTag.delete({
       where: {
         id: tag?.id,
       },
@@ -96,7 +97,7 @@ async function getClosestTagFromName(
   tagName: string
 ): Promise<EvieTag | null> {
   try {
-    const tag = await prisma.evieTag.findFirst({
+    const tag = await guild.client.prisma.evieTag.findFirst({
       where: {
         name: tagName,
         guildId: guild?.id,
@@ -109,11 +110,11 @@ async function getClosestTagFromName(
 }
 
 /** Adds a tag to the database */
-async function addTag(tag: EvieTag): Promise<Success> {
+async function addTag(tag: EvieTag, guild: Guild): Promise<Success> {
   try {
     if (!tag.guildId) throw new Error("Tag must have a guildId");
-    await dbUtils.getGuild(tag.guildId);
-    await prisma.evieTag.create({
+    await dbUtils.getGuild(guild);
+    await guild.client.prisma.evieTag.create({
       data: tag,
     });
     return {

@@ -15,18 +15,23 @@ limitations under the License.
 */
 
 import { Guild, GuildMember, Snowflake, SnowflakeUtil } from "discord.js";
-import { prisma } from ".";
 
 /** Adds a ban to the database */
-async function addBan(m: GuildMember, reason: string, expiresAt?: Date) {
+async function addBan(
+  m: GuildMember,
+  reason: string,
+  expiresAt?: Date,
+  banner?: GuildMember
+) {
   try {
-    return await prisma.evieTempBan.create({
+    return await m.client.prisma.evieTempBan.create({
       data: {
         id: SnowflakeUtil.generate(),
         userId: m.id,
         guildId: m.guild.id,
         reason: reason,
         expiresAt,
+        bannedBy: banner ? banner.id : null,
       },
     });
   } catch (error) {
@@ -37,7 +42,7 @@ async function addBan(m: GuildMember, reason: string, expiresAt?: Date) {
 /** Deletes an already existing ban on the database */
 async function deleteBan(m: Snowflake, g: Guild) {
   try {
-    return await prisma.evieTempBan.delete({
+    return await g.client.prisma.evieTempBan.delete({
       where: {
         userId_guildId: {
           userId: m,
@@ -53,7 +58,7 @@ async function deleteBan(m: Snowflake, g: Guild) {
 /** Gets an already existing ban on the database */
 async function getBan(m: GuildMember) {
   try {
-    return await prisma.evieTempBan.findFirst({
+    return await m.client.prisma.evieTempBan.findFirst({
       where: {
         userId: m.id,
         guildId: m.guild.id,
@@ -67,7 +72,7 @@ async function getBan(m: GuildMember) {
 /** Gets all the notes for a guild member */
 async function getNotes(m: GuildMember) {
   try {
-    return await prisma.evieNote.findMany({
+    return await m.client.prisma.evieNote.findMany({
       where: {
         userId: m.id,
         guildId: m.guild.id,
@@ -81,7 +86,7 @@ async function getNotes(m: GuildMember) {
 /** Adds a note to the database */
 async function addNote(m: GuildMember, note: string) {
   try {
-    return await prisma.evieNote.create({
+    return await m.client.prisma.evieNote.create({
       data: {
         id: SnowflakeUtil.generate(),
         userId: m.id,
@@ -97,7 +102,7 @@ async function addNote(m: GuildMember, note: string) {
 /** Deletes an already existing note on the database */
 async function deleteNote(m: GuildMember, g: Guild) {
   try {
-    return await prisma.evieNote.delete({
+    return await m.client.prisma.evieNote.delete({
       where: {
         userId_guildId: {
           userId: m.id,
