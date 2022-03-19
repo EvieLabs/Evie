@@ -17,7 +17,7 @@ limitations under the License.
 import { botAdmins } from "#root/utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
-import type { Message } from "discord.js";
+import { Message, Permissions } from "discord.js";
 
 @ApplyOptions<Listener.Options>({
   once: false,
@@ -35,7 +35,9 @@ export class MessageCreate extends Listener {
     if (
       botAdmins.includes(message.author.id) &&
       message.content == "e!resetapp" &&
-      message.channel.permissionsFor(message.guild.me)
+      message.channel
+        .permissionsFor(message.guild.me)
+        .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       const status = await message.reply(
         "Resetting global application commands.."
