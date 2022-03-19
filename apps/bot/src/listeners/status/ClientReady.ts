@@ -26,7 +26,6 @@ import type { Client } from "discord.js";
 })
 export class GuildMemberAddListener extends Listener {
   public async run(client: Client) {
-    // every 5 minutes check all the tempbans and unban them
     setInterval(async () => {
       const tempbans = await client.prisma.evieTempBan.findMany({
         where: {

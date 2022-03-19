@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EvieEmbed, StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import {
+  EvieEmbed,
+  ReplyStatusEmbed,
+  StatusEmoji,
+} from "#root/classes/EvieEmbed";
 import { TSMPApplyModal } from "#root/constants/modals";
 import { makeApplicationChannel } from "#root/utils/tsmp/applications";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -50,7 +54,7 @@ export class TSMPApplicationButton extends Listener {
         time: 900000,
       })
       .catch(() => {
-        StatusEmbed(StatusEmoji.FAIL, `Application Timed Out`, ogi);
+        ReplyStatusEmbed(StatusEmoji.FAIL, `Application Timed Out`, ogi);
       })) as ModalSubmitInteraction;
 
     if (!modal) return;
@@ -63,12 +67,16 @@ export class TSMPApplicationButton extends Listener {
     const channel = await makeApplicationChannel(modal.member);
 
     if (!channel) {
-      StatusEmbed(StatusEmoji.FAIL, `Couldn't make application channel`, modal);
+      ReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        `Couldn't make application channel`,
+        modal
+      );
       return;
     }
 
     if (!process.env.TSMP_STAFF_ROLE_ID) {
-      StatusEmbed(StatusEmoji.FAIL, `No staff role set`, modal);
+      ReplyStatusEmbed(StatusEmoji.FAIL, `No staff role set`, modal);
       return;
     }
 
@@ -92,7 +100,7 @@ export class TSMPApplicationButton extends Listener {
       ],
       allowedMentions: { roles: [process.env.TSMP_STAFF_ROLE_ID] },
     });
-    return await StatusEmbed(
+    return await ReplyStatusEmbed(
       StatusEmoji.SUCCESS,
       `Application Sent! The team will review it in ${channel}`,
       modal

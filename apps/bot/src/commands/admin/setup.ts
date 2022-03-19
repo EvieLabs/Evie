@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { modDB } from "#root/utils/database/modSettings";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
@@ -28,7 +28,7 @@ export class Admin extends Command {
     if (
       !(await checkPerm(interaction.member, Permissions.FLAGS.ADMINISTRATOR))
     ) {
-      await StatusEmbed(
+      await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You do not have the required permissions to use this command. (admin)",
         interaction
@@ -50,20 +50,20 @@ export class Admin extends Command {
     const guild = interaction.guild;
     const targetRole = interaction.options.getRole("role");
     if (!targetRole || !guild)
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (missing role and/or guild)",
         interaction
       );
     try {
       await modDB.setStaffRole(guild, targetRole.id);
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully set the staff role to ${targetRole}`,
         interaction
       );
     } catch (e) {
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (database error)",
         interaction
@@ -80,7 +80,7 @@ export class Admin extends Command {
       !(targetChannel instanceof TextChannel) ||
       !guild.me
     )
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (missing channel and/or guild)",
         interaction
@@ -91,7 +91,7 @@ export class Admin extends Command {
         .permissionsFor(guild.me)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "I do not have permission to send messages in chosen log channel.",
         interaction
@@ -100,13 +100,13 @@ export class Admin extends Command {
 
     try {
       await modDB.setLogChannel(guild, targetChannel);
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully set the log channel to ${targetChannel}`,
         interaction
       );
     } catch (e) {
-      return await StatusEmbed(
+      return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (database error)",
         interaction
