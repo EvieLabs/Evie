@@ -20,11 +20,17 @@ export default defineClientAppEnhance(({ app }) => {
   app.use(DiscordMessageComponents, {
     avatars: {
       evie: "https://docs.eviebot.rocks/images/EvieAvatar.png",
+      tristan: "https://cdn.discordapp.com/avatars/97470053615673344/a_687f01f835717fdcd41a2596908fe877.gif"
     },
     profiles: {
       evie: {
         author: "Evie",
-        avatar: "green",
+        avatar: "evie",
+        bot: true,
+      },
+      tristan: {
+        author: "tristan",
+        avatar: "tristan",
         bot: true,
       },
     },
