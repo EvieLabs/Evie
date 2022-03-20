@@ -221,10 +221,18 @@ export class ImportMessage extends Command {
         }
       } catch (e) {
         console.log(e);
-        await ReplyStatusEmbed(StatusEmoji.FAIL, `Failed to import`, submit);
+        await ReplyStatusEmbed(
+          StatusEmoji.FAIL,
+          `Failed to import. For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,
+          submit
+        );
       }
     } else {
-      await ReplyStatusEmbed(StatusEmoji.FAIL, `Missing JSON Data`, submit);
+      await ReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        `Missing JSON Data. For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,
+        submit
+      );
     }
   }
 
