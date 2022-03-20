@@ -11,7 +11,7 @@ import {
   DiscordMessages,
   DiscordReaction,
   DiscordReactions,
-  install as DiscordMessageComponents,
+  install as DiscordMessageComponents
 } from "@discord-message-components/vue";
 import "@discord-message-components/vue/dist/style.css";
 import { defineClientAppEnhance } from "@vuepress/client";
@@ -19,7 +19,7 @@ import { defineClientAppEnhance } from "@vuepress/client";
 export default defineClientAppEnhance(({ app }) => {
   app.use(DiscordMessageComponents, {
     avatars: {
-      evie: "https://eviebot.rocks/images/EvieAvatar.png",
+      evie: "https://docs.eviebot.rocks/images/EvieAvatar.png",
     },
     profiles: {
       evie: {
