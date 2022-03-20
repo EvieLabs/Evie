@@ -6,6 +6,26 @@ The `/importmessage` command allows you to send a message from a valid Discord M
 
 Most people use this command to send fancy embeds that other people in your server can edit if they have the `Manage Messages` permission. This is a great way to make "info" messages that can be edited by your staff team.
 
+## What is Discord Message JSON?
+
+Discord Message JSON is a JSON object that contains all the information needed to send a message. It is a standard format for Discord messages.
+You can learn more about the [`Message Object`](https://discord.com/developers/docs/resources/channel#message-object) on the [Discord Developer Portal](https://discord.com/developers/docs/resources/channel#message-object).
+
+### Can I easily generate a Message Object?
+
+Using a tool such as [Discohook](https://discohook.org/) you can easily create Message Objects.
+
+![Discohook](/images/Discohook.png)
+
+When using Discohook make sure to only modify the `Content` section as we are repurposing Discohook's main focus of sending Webhooks to creating a Message Object. Keep in mind modifing the `Profile` section will also occur in a rejection from Evie as you cannot change a bot's Profile, only Webhooks can do that.
+
+Once done click `JSON Data Editor` and copy the contents.
+
+![Discohook Copying](/images/DiscohookCopy.png)
+
+You can now type `/importmessage <channel>` and paste the copied JSON into the modal that will pop-up after entering the command.
+Evie will attempt to send your message and if it fails you will be notified, otherwise you will be notified when the message has been sent with a link to the message.
+
   <DiscordMessages>
     <DiscordMessage profile="evie">
       <template #interactions>
@@ -13,29 +33,20 @@ Most people use this command to send fancy embeds that other people in your serv
           >importmessage</DiscordInteraction
         >
       </template>
-      <DiscordEmbed slot="embeds" color="#0F52BA" embed-title="Rules">
+	  <DiscordEmbed slot="embeds" color="#00ff00">
+	   <discord-embed-description slot="description">
+	   <img style="width:18px;height:18px;text-indent:-9999px;vertical-align:bottom;object-fit:contain;" src="https://cdn.discordapp.com/emojis/952340083418230874.gif?size=44&quality=lossless" /> Imported here!
+	   </discord-embed-description>
+      </DiscordEmbed>
+    </DiscordMessage>
+	<DiscordMessage profile="evie">
+		<DiscordEmbed slot="embeds" color="#0F52BA" embed-title="Discohook Example">
+		<discord-embed-description slot="description">
+	   	Hello docs.eviebot.rocks!
+	   </discord-embed-description>
         <DiscordEmbedFields slot="fields">
-          <DiscordEmbedField field-title="Respectfulness">
-            This is a friendly server, please only utilize profanity to a
-            minimum. Remember to be respectful towards everyone and do not
-            cause, create or bring controversy to this server.
-          </DiscordEmbedField>
-          <DiscordEmbedField field-title="Server language">
-            This is an English server, please do not speak in any other
-            languages as this can make it hard for the staff to moderate & hard
-            for other members to understand what you are trying to say.
-          </DiscordEmbedField>
-          <DiscordEmbedField field-title="Discord ToS & Guidelines">
-            We strictly follow Discord Community Guidelines, any violation
-            against Discord's ToS & guidelines will result in a ban.
-          </DiscordEmbedField>
-          <DiscordEmbedField field-title="No spamming">
-            No spamming, advertising, or NSFW content. Don't be a jerk or
-            generally obnoxious, nobody likes a troller.
-          </DiscordEmbedField>
-          <DiscordEmbedField field-title="Direct Messages">
-            If you are caught direct messaging someone from this server breaking
-            these rules you will still be punished.
+          <DiscordEmbedField field-title="Field Test">
+            Hey!
           </DiscordEmbedField>
         </DiscordEmbedFields>
       </DiscordEmbed>

@@ -109,7 +109,7 @@ export class ImportMessage extends Command {
         StatusEmoji.FAIL,
         `Please Provide a message that was sent by me.
         This context menu is used to edit messages you made me send.
-        For more information, read the [documentation on this feature]().`,
+        For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,
         interaction
       );
       return;
