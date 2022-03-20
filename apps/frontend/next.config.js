@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["cdn.discordapp.com"]
+    domains: ["cdn.discordapp.com", "dummyimage.com"]
   },
   async redirects() {
     return [

@@ -1,8 +1,7 @@
 {
-  "name": "tristansmp.com",
+  "name": "eviebot-rocks",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "PRIVATE",
   "scripts": {
     "dev": "next",
     "build": "next build",

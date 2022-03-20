@@ -104,6 +104,17 @@ export class ImportMessage extends Command {
       return;
     }
 
+    if (message.author.id !== interaction.client.user?.id) {
+      await ReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        `Please Provide a message that was sent by me.
+        This context menu is used to edit messages you made me send.
+        For more information, read the [documentation on this feature]().`,
+        interaction
+      );
+      return;
+    }
+
     if (
       !(await miscDB.getImportedMessages(interaction.guild)).includes(
         message.id
@@ -112,15 +123,6 @@ export class ImportMessage extends Command {
       await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         `Please don't try and edit a message that is not user-generated.`,
-        interaction
-      );
-      return;
-    }
-
-    if (message.author.id !== interaction.client.user?.id) {
-      await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        `Please Provide a message that was sent by me.`,
         interaction
       );
       return;
