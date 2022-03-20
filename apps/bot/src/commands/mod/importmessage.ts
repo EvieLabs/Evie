@@ -35,6 +35,7 @@ import {
   ContextMenuInteraction,
   Message,
   MessageActionRow,
+  MessageAttachment,
   MessageButton,
   MessageComponentInteraction,
   ModalSubmitInteraction,
@@ -171,20 +172,20 @@ export class ImportMessage extends Command {
 
     const generatedState = SnowflakeUtil.generate();
 
+    // make a new json file with:
+    // JSON.stringify({
+    //   content: message.content,
+    //   embeds: message.embeds,
+    //   components: message.components,
+    // })
+
     await interaction.reply({
       embeds: [
-        (await EvieEmbed(interaction.guild))
-          .setDescription(
-            `Tip: You can copy and paste the existing message JSON into the "JSON Data Editor" on [Discohook](https://discohook.org/) to easily edit the message. Then click continue and paste it back here.`
-          )
-          .addField(
-            `Existing JSON`,
-            `\`\`\`${JSON.stringify({
-              content: message.content,
-              embeds: message.embeds,
-              components: message.components,
-            })}\`\`\``
-          ),
+        (
+          await EvieEmbed(interaction.guild)
+        ).setDescription(
+          `Tip: You can copy and paste the existing message JSON into the "JSON Data Editor" on [Discohook](https://discohook.org/) to easily edit the message. Then click continue and paste it back here.`
+        ),
       ],
       components: [
         new MessageActionRow().addComponents(
@@ -192,6 +193,21 @@ export class ImportMessage extends Command {
             .setLabel("Continue")
             .setStyle("PRIMARY")
             .setCustomId(`countinue_msg_import_${generatedState}`)
+        ),
+      ],
+      files: [
+        new MessageAttachment(
+          Buffer.from(
+            JSON.stringify(
+              {
+                content: message.content || null,
+                embeds: message.embeds || null,
+              },
+              null,
+              2
+            )
+          ),
+          "message.json"
         ),
       ],
       ephemeral: true,
