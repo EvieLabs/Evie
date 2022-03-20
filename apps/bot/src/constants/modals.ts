@@ -50,7 +50,7 @@ export function TSMPApplyModal(state: Snowflake) {
   } as unknown as ModalOptions;
 }
 
-export function ImportMessageModal(state: Snowflake) {
+export function ImportMessageModal(state: Snowflake, value?: string) {
   return {
     title: "Import Discord Message JSON",
     custom_id: `import_msgjson_${state}`,
@@ -67,6 +67,7 @@ export function ImportMessageModal(state: Snowflake) {
             max_length: 4000,
             placeholder: "Paste JSON here...",
             required: true,
+            value,
           },
         ],
       },

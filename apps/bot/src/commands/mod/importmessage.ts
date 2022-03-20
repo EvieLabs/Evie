@@ -35,7 +35,6 @@ import {
   ContextMenuInteraction,
   Message,
   MessageActionRow,
-  MessageAttachment,
   MessageButton,
   MessageComponentInteraction,
   ModalSubmitInteraction,
@@ -172,19 +171,13 @@ export class ImportMessage extends Command {
 
     const generatedState = SnowflakeUtil.generate();
 
-    // make a new json file with:
-    // JSON.stringify({
-    //   content: message.content,
-    //   embeds: message.embeds,
-    //   components: message.components,
-    // })
-
     await interaction.reply({
       embeds: [
         (
           await EvieEmbed(interaction.guild)
         ).setDescription(
-          `Tip: You can copy and paste the existing message JSON into the "JSON Data Editor" on [Discohook](https://discohook.org/) to easily edit the message. Then click continue and paste it back here.`
+          `Tip: You can copy and paste the existing message JSON into the "JSON Data Editor" on [Discohook](https://discohook.org/) to easily edit the message.
+          Press continue to continue.`
         ),
       ],
       components: [
@@ -193,21 +186,6 @@ export class ImportMessage extends Command {
             .setLabel("Continue")
             .setStyle("PRIMARY")
             .setCustomId(`countinue_msg_import_${generatedState}`)
-        ),
-      ],
-      files: [
-        new MessageAttachment(
-          Buffer.from(
-            JSON.stringify(
-              {
-                content: message.content || null,
-                embeds: message.embeds || null,
-              },
-              null,
-              2
-            )
-          ),
-          "message.json"
         ),
       ],
       ephemeral: true,
@@ -235,7 +213,19 @@ export class ImportMessage extends Command {
     collector.on("collect", async (i: ButtonInteraction) => {
       const generatedState = SnowflakeUtil.generate();
 
-      await i.showModal(ImportMessageModal(generatedState));
+      await i.showModal(
+        ImportMessageModal(
+          generatedState,
+          JSON.stringify(
+            {
+              content: existingMessage.content || null,
+              embeds: existingMessage.embeds || null,
+            },
+            null,
+            2
+          )
+        )
+      );
 
       this.waitForModal(
         i,
