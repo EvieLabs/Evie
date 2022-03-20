@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import {
+  EvieEmbed,
+  ReplyStatusEmbed,
+  StatusEmoji,
+} from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
@@ -26,9 +30,13 @@ import {
 } from "@sapphire/framework";
 import { ApplicationCommandType } from "discord-api-types/v9";
 import {
+  ButtonInteraction,
   CommandInteraction,
   ContextMenuInteraction,
   Message,
+  MessageActionRow,
+  MessageButton,
+  MessageComponentInteraction,
   ModalSubmitInteraction,
   Permissions,
   Snowflake,
@@ -163,18 +171,70 @@ export class ImportMessage extends Command {
 
     const generatedState = SnowflakeUtil.generate();
 
-    await interaction.showModal(ImportMessageModal(generatedState));
+    await interaction.reply({
+      embeds: [
+        (await EvieEmbed(interaction.guild))
+          .setDescription(
+            `Tip: You can copy and paste the existing message JSON into the "JSON Data Editor" on [Discohook](https://discohook.org/) to easily edit the message. Then click continue and paste it back here.`
+          )
+          .addField(
+            `Existing JSON`,
+            `\`\`\`${JSON.stringify({
+              content: message.content,
+              embeds: message.embeds,
+              components: message.components,
+            })}\`\`\``
+          ),
+      ],
+      components: [
+        new MessageActionRow().addComponents(
+          new MessageButton()
+            .setLabel("Continue")
+            .setStyle("PRIMARY")
+            .setCustomId(`countinue_msg_import_${generatedState}`)
+        ),
+      ],
+      ephemeral: true,
+    });
 
-    this.waitForModal(
-      interaction as CommandInteraction,
-      message.channel as TextChannel,
-      generatedState,
-      message
-    );
+    await this.waitForButton(interaction, generatedState, message);
+  }
+
+  private async waitForButton(
+    interaction: ContextMenuInteraction,
+    stateflake: Snowflake,
+    existingMessage?: Message
+  ) {
+    if (!interaction.channel) return;
+    if (!existingMessage) return;
+
+    const filter = (i: MessageComponentInteraction) =>
+      i.customId === `countinue_msg_import_${stateflake}` &&
+      i.type === "MESSAGE_COMPONENT";
+
+    const collector = interaction.channel.createMessageComponentCollector({
+      filter,
+      time: 300000,
+    });
+    collector.on("collect", async (i: ButtonInteraction) => {
+      const generatedState = SnowflakeUtil.generate();
+
+      await i.showModal(ImportMessageModal(generatedState));
+
+      this.waitForModal(
+        i,
+        existingMessage.channel as TextChannel,
+        generatedState,
+        existingMessage
+      );
+    });
+    collector.on("end", async () => {
+      ReplyStatusEmbed(StatusEmoji.FAIL, `Import Timed Out`, interaction);
+    });
   }
 
   private async waitForModal(
-    interaction: CommandInteraction,
+    interaction: CommandInteraction | ButtonInteraction,
     channel: TextChannel,
     stateflake: Snowflake,
     existingMessage?: Message
