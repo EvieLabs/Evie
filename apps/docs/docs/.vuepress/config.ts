@@ -1,5 +1,5 @@
-import type { DefaultThemeOptions, ViteBundlerOptions } from "vuepress-vite";
-import { defineUserConfig } from "vuepress-vite";
+import type { DefaultThemeOptions, ViteBundlerOptions } from "vuepress";
+import { defineUserConfig } from "vuepress";
 import sidebar from "./sidebar";
 
 const config = defineUserConfig<DefaultThemeOptions, ViteBundlerOptions>({
