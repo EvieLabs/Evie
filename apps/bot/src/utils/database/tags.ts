@@ -16,6 +16,7 @@ limitations under the License.
 
 import type { Success } from "#root/types";
 import type { EvieTag } from "@prisma/client";
+import Sentry from "@sentry/node";
 import type { Guild, Snowflake } from "discord.js";
 import { dbUtils } from ".";
 
@@ -29,6 +30,7 @@ async function getTags(guild: Guild): Promise<EvieTag[]> {
     });
     return tags || [];
   } catch (error) {
+    Sentry.captureException(error);
     return [];
   }
 }
@@ -47,6 +49,7 @@ async function getTagFromSnowflake(
     });
     return tag || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -64,6 +67,7 @@ async function deleteTagFromSnowflake(
     });
     return tag || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -87,6 +91,7 @@ async function deleteClosestTagFromName(
     });
     return tag || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -105,6 +110,7 @@ async function getClosestTagFromName(
     });
     return tag || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -122,6 +128,7 @@ async function addTag(tag: EvieTag, guild: Guild): Promise<Success> {
       message: "Join role enabled successfully",
     };
   } catch (error) {
+    Sentry.captureException(error);
     return {
       success: false,
       message: "Something went wrong",

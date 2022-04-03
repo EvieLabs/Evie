@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Sentry from "@sentry/node";
 import type { Guild, GuildMember, Snowflake, TextChannel } from "discord.js";
 import { dbUtils } from ".";
 
@@ -24,6 +25,7 @@ async function getBannedWords(guild: Guild): Promise<string[] | []> {
 
     return result?.bannedWordList || [];
   } catch (error) {
+    Sentry.captureException(error);
     return [];
   }
 }
@@ -38,6 +40,7 @@ async function hasModRole(member: GuildMember): Promise<boolean> {
 
     return member.roles.cache.has(result?.staffRoleID);
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }
@@ -54,6 +57,7 @@ async function setStaffRole(guild: Guild, roleId: Snowflake) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to set staff role: ${error}`);
   }
 }
@@ -70,6 +74,7 @@ async function setLogChannel(guild: Guild, channel: TextChannel) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to set log channel id: ${error}`);
   }
 }
@@ -81,6 +86,7 @@ async function getPhishingDetectionSwitch(guild: Guild): Promise<boolean> {
 
     return result?.phishingDetectionEnabled || false;
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }

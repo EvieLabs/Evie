@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import type { EvieGuild } from "@prisma/client";
+import Sentry from "@sentry/node";
 import type { Guild } from "discord.js";
 
 async function getGuild(guild: Guild): Promise<EvieGuild | null> {
@@ -27,6 +28,7 @@ async function getGuild(guild: Guild): Promise<EvieGuild | null> {
 
     return data || (await createGuild(guild));
   } catch (error) {
+    Sentry.captureException(error);
     console.log(error);
     return null;
   }
@@ -40,6 +42,7 @@ async function createGuild(guild: Guild): Promise<EvieGuild> {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(
       `Failed to create guild for ${
         typeof guild === "string" ? guild : guild.id

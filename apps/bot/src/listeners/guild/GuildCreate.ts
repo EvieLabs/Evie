@@ -17,6 +17,7 @@ limitations under the License.
 import { dbUtils } from "#root/utils/database/index";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
+import Sentry from "@sentry/node";
 import type { Guild } from "discord.js";
 
 @ApplyOptions<Listener.Options>({
@@ -31,6 +32,7 @@ export class GuildCreateListener extends Listener {
     try {
       await dbUtils.createGuild(g);
     } catch (e) {
+      Sentry.captureException(e);
       console.error(`Failed to add guild to database. Error: ${e}`);
     }
   }

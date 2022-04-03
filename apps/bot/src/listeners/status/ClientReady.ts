@@ -18,6 +18,7 @@ import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { LogEmbed } from "#root/classes/LogEmbed";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
+import Sentry from "@sentry/node";
 import type { Client } from "discord.js";
 
 @ApplyOptions<Listener.Options>({
@@ -75,6 +76,7 @@ export class GuildMemberAddListener extends Listener {
               )
           );
         } catch (error) {
+          Sentry.captureException(error);
           client.guildLogger.log(
             guild,
             await StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)

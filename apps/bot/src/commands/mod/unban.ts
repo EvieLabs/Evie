@@ -23,6 +23,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import Sentry from "@sentry/node";
 import {
   AutocompleteInteraction,
   CommandInteraction,
@@ -70,6 +71,7 @@ export class UnBan extends Command {
       );
       return;
     } catch (e) {
+      Sentry.captureException(e);
       ReplyStatusEmbed(StatusEmoji.FAIL, "Failed to un-ban user.", interaction);
       return;
     }

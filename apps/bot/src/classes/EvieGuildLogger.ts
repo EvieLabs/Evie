@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { prisma } from "#utils/database/index";
+import Sentry from "@sentry/node";
 import { MessageEmbed, TextChannel, type Guild } from "discord.js";
 
 export class EvieGuildLogger {
   public async log(guild: Guild, embed: MessageEmbed) {
-    await prisma.evieGuild
+    await guild.client.prisma.evieGuild
       .findFirst({
         where: {
           id: guild.id,
@@ -36,6 +36,7 @@ export class EvieGuildLogger {
         try {
           channel.send({ embeds: [embed] });
         } catch (e) {
+          Sentry.captureException(e);
           console.error(e);
         }
       });

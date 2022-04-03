@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Sentry from "@sentry/node";
 import { Guild, GuildMember, Snowflake, SnowflakeUtil } from "discord.js";
 
 /** Adds a ban to the database */
@@ -35,6 +36,7 @@ async function addBan(
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to add ban: ${error}`);
   }
 }
@@ -51,6 +53,7 @@ async function deleteBan(m: Snowflake, g: Guild) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to add ban: ${error}`);
   }
 }
@@ -65,6 +68,7 @@ async function getBan(m: GuildMember) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to find ban: ${error}`);
   }
 }
@@ -79,6 +83,7 @@ async function getNotes(m: GuildMember) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to find notes: ${error}`);
   }
 }
@@ -95,6 +100,7 @@ async function addNote(m: GuildMember, note: string) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to add note: ${error}`);
   }
 }
@@ -111,6 +117,7 @@ async function deleteNote(m: GuildMember, g: Guild) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to delete note: ${error}`);
   }
 }

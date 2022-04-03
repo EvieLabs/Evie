@@ -19,6 +19,7 @@ import { modDB } from "#root/utils/database/modSettings";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
+import Sentry from "@sentry/node";
 import { CommandInteraction, Permissions, TextChannel } from "discord.js";
 
 export class Admin extends Command {
@@ -63,6 +64,7 @@ export class Admin extends Command {
         interaction
       );
     } catch (e) {
+      Sentry.captureException(e);
       return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (database error)",
@@ -106,6 +108,7 @@ export class Admin extends Command {
         interaction
       );
     } catch (e) {
+      Sentry.captureException(e);
       return await ReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (database error)",

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Sentry from "@sentry/node";
 import type { Guild } from "discord.js";
 import { dbUtils } from ".";
 
@@ -24,6 +25,7 @@ async function getEmbedColor(guild: Guild | null): Promise<string> {
     const result = await dbUtils.getGuild(guild);
     return result?.color || "#f47fff";
   } catch (error) {
+    Sentry.captureException(error);
     return "#f47fff";
   }
 }

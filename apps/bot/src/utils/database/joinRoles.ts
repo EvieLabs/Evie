@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Sentry from "@sentry/node";
 import type { Guild, Role, Snowflake } from "discord.js";
 import { dbUtils } from ".";
 import type { Success } from "../../types";
@@ -24,6 +25,7 @@ async function isJoinRoleOn(guild: Guild): Promise<boolean> {
 
     return result?.joinRoleEnabled || false;
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }
@@ -34,6 +36,7 @@ async function getJoinRole(guild: Guild): Promise<Snowflake | null> {
 
     return result?.joinRoleID || null;
   } catch (error) {
+    Sentry.captureException(error);
     return false || null;
   }
 }
@@ -50,6 +53,7 @@ async function setJoinRole(guild: Guild, role: Role): Promise<boolean> {
     });
     return true;
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }
@@ -72,6 +76,7 @@ async function setJoinRoleEnable(
       message: "Join role enabled successfully",
     };
   } catch (error) {
+    Sentry.captureException(error);
     return {
       success: false,
       message: "Something went wrong",

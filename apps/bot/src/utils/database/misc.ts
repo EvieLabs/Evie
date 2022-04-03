@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Sentry from "@sentry/node";
 import type { Guild, Message } from "discord.js";
 import { dbUtils } from ".";
 
@@ -23,6 +24,7 @@ async function getImportedMessages(guild: Guild): Promise<string[]> {
     const eG = await dbUtils.getGuild(guild);
     return eG?.importedMessages || [];
   } catch (error) {
+    Sentry.captureException(error);
     return [];
   }
 }
@@ -44,6 +46,7 @@ async function addImportedMessage(message: Message) {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     throw new Error(`Failed to add imported message: ${error}`);
   }
 }

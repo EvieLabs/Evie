@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Sentry from "@sentry/node";
 import type { Snowflake } from "discord-api-types";
 import type { Guild } from "discord.js";
 import { dbUtils } from ".";
@@ -24,6 +25,7 @@ async function getGoodbyeModuleSwitch(guild: Guild): Promise<boolean> {
     const result = await dbUtils.getGuild(guild);
     return result?.goodbyeMessageEnabled || false;
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }
@@ -34,6 +36,7 @@ async function getGoodbyeChannel(guild: Guild): Promise<Snowflake | null> {
     const result = await dbUtils.getGuild(guild);
     return result?.goodbyeChannel || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -44,6 +47,7 @@ async function getGoodbyeMessage(guild: Guild): Promise<string | null> {
     const result = await dbUtils.getGuild(guild);
     return result?.goodbyeMessage || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -54,6 +58,7 @@ async function getWelcomeModuleSwitch(guild: Guild): Promise<boolean> {
     const result = await dbUtils.getGuild(guild);
     return result?.welcomeMessageEnabled || false;
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }
@@ -64,6 +69,7 @@ async function getWelcomeChannel(guild: Guild): Promise<Snowflake | null> {
     const result = await dbUtils.getGuild(guild);
     return result?.welcomeChannel || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -74,6 +80,7 @@ async function getWelcomeMessage(guild: Guild): Promise<string | null> {
     const result = await dbUtils.getGuild(guild);
     return result?.welcomeMessage || null;
   } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
 }
@@ -84,6 +91,7 @@ async function getWelcomePing(guild: Guild): Promise<boolean> {
     const result = await dbUtils.getGuild(guild);
     return result?.welcomeMessagePingEnabled || false;
   } catch (error) {
+    Sentry.captureException(error);
     return false;
   }
 }

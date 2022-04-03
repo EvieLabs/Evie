@@ -14,19 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { CommandInteraction } from "discord.js";
+import { getRootData } from "@sapphire/pieces";
+import { join } from "path";
 
-import { SlashCommandBuilder } from "@discordjs/builders";
-
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("timeline")
-    .setDescription(
-      "Sends an image of the last timeline generated for tristansmp.com"
-    ),
-  async execute(interaction: CommandInteraction) {
-    await interaction.reply(
-      "https://cdn.discordapp.com/attachments/819719663289106514/890097693014261770/unknown.png"
-    );
-  },
-};
+export const mainFolder = getRootData().root;
+export const rootFolder = join(mainFolder, "..");

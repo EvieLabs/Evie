@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { dbUtils } from "#root/utils/database/index";
+import Sentry from "@sentry/node";
 import type { Message } from "discord.js";
 import { LogEmbed } from "./LogEmbed";
 
@@ -37,6 +38,7 @@ export class BlockedWords {
         }
       }
     } catch (error) {
+      Sentry.captureException(error);
       console.error(error);
     }
   }

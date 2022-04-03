@@ -18,6 +18,7 @@ import { axo } from "#root/axologs";
 import { dbUtils } from "#root/utils/database/index";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import type { EvieGuild } from "@prisma/client";
+import Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
 import { EvieEmbed } from "./EvieEmbed";
 
@@ -38,6 +39,7 @@ export class Airport {
 
         member.roles.add(role, `Auto Join Role`);
       } catch (error) {
+        Sentry.captureException(error);
         axo.err("Failed to apply auto role!");
       }
     }
@@ -82,6 +84,7 @@ export class Airport {
 
       goodbyeChannel.send({ embeds: [goodbyeMessageEmbed] });
     } catch (error) {
+      Sentry.captureException(error);
       axo.err(error);
     }
   }
@@ -124,6 +127,7 @@ export class Airport {
         discordWelcomeChannel.send({ embeds: [welcomeMessageEmbed] });
       }
     } catch (error) {
+      Sentry.captureException(error);
       axo.err(error);
     }
   }

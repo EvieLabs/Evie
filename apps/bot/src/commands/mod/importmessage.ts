@@ -28,6 +28,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import Sentry from "@sentry/node";
 import { ApplicationCommandType } from "discord-api-types/v9";
 import {
   ButtonInteraction,
@@ -286,6 +287,7 @@ export class ImportMessage extends Command {
           );
         }
       } catch (e) {
+        Sentry.captureException(e);
         console.log(e);
         await ReplyStatusEmbed(
           StatusEmoji.FAIL,
