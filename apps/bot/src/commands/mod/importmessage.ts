@@ -28,7 +28,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import { ApplicationCommandType } from "discord-api-types/v9";
 import {
   ButtonInteraction,

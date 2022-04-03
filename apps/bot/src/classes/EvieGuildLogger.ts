@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import { MessageEmbed, TextChannel, type Guild } from "discord.js";
 
 export class EvieGuildLogger {

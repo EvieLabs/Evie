@@ -17,7 +17,7 @@ limitations under the License.
 import { dbUtils } from "#root/utils/database/index";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import type { Guild } from "discord.js";
 
 @ApplyOptions<Listener.Options>({

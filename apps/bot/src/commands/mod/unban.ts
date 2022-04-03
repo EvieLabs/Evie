@@ -23,7 +23,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import {
   AutocompleteInteraction,
   CommandInteraction,

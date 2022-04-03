@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { dbUtils } from "#root/utils/database/index";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import type { Message } from "discord.js";
 import { LogEmbed } from "./LogEmbed";
 

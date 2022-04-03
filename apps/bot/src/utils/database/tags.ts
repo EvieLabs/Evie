@@ -16,7 +16,7 @@ limitations under the License.
 
 import type { Success } from "#root/types";
 import type { EvieTag } from "@prisma/client";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import type { Guild, Snowflake } from "discord.js";
 import { dbUtils } from ".";
 

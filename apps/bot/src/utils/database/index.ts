@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type { EvieGuild } from "@prisma/client";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import type { Guild } from "discord.js";
 
 async function getGuild(guild: Guild): Promise<EvieGuild | null> {

@@ -19,7 +19,7 @@ import { modDB } from "#root/utils/database/modSettings";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import { CommandInteraction, Permissions, TextChannel } from "discord.js";
 
 export class Admin extends Command {

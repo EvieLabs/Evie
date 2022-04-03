@@ -18,7 +18,7 @@ import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { LogEmbed } from "#root/classes/LogEmbed";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import type { Client } from "discord.js";
 
 @ApplyOptions<Listener.Options>({

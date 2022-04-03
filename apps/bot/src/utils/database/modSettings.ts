@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import type { Guild, GuildMember, Snowflake, TextChannel } from "discord.js";
 import { dbUtils } from ".";
 

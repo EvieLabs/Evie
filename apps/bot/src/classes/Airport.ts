@@ -18,7 +18,7 @@ import { axo } from "#root/axologs";
 import { dbUtils } from "#root/utils/database/index";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import type { EvieGuild } from "@prisma/client";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
 import { EvieEmbed } from "./EvieEmbed";
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import extractHostname from "#root/utils/parsers/extractHostname";
-import Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 import axios from "axios";
 import type { Message } from "discord.js";
 import { EventDispatcher } from "strongly-typed-events";
