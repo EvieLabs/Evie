@@ -35,4 +35,4 @@ jobs:
           push: true
           context: ./
           tags: |
-            ghcr.io/teamevie/evie:latest
+            ghcr.io/twisttaan/evie:latest
