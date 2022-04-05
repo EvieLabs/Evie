@@ -21,8 +21,10 @@ export class Ban extends Command {
     if (!interaction.inCachedGuild()) return;
 
     if (
-      !(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS)) ||
-      !(await modDB.hasModRole(interaction.member))
+      !(
+        (await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS)) ||
+        (await modDB.hasModRole(interaction.member))
+      )
     ) {
       await ReplyStatusEmbed(
         StatusEmoji.FAIL,
