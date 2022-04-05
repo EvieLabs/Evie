@@ -16,13 +16,7 @@ limitations under the License.
 
 import { modAction } from "#root/utils/builders/stringBuilder";
 import { punishDB } from "#root/utils/database/punishments";
-import type {
-  BanOptions,
-  Guild,
-  GuildMember,
-  Snowflake,
-  User,
-} from "discord.js";
+import type { BanOptions, Guild, GuildMember, Snowflake } from "discord.js";
 import { LogEmbed } from "./LogEmbed";
 
 export class EviePunish {
@@ -53,7 +47,7 @@ export class EviePunish {
                 m.client.user ? m.client.user.id : "Me"
               })`,
         })
-        .setDescription(modAction(m, "Ban", bo.reason))
+        .setDescription(modAction(m.user, "Ban", bo.reason))
     );
 
     return true;
@@ -68,7 +62,7 @@ export class EviePunish {
       throw new Error(`Failed to unban member: ${err}`);
     });
 
-    await punishDB.deleteBan(id, g).catch((err) => {
+    const data = await punishDB.deleteBan(id, g).catch((err) => {
       throw new Error(`Failed to delete ban: ${err}`);
     });
 
@@ -84,21 +78,9 @@ export class EviePunish {
                   g.client.user ? g.client.user.id : "Me"
                 })`,
           })
-          .setDescription(modAction(user, "Ban", reason))
+          .setDescription(modAction(user, "Undo ban", data.reason))
       );
 
     return user;
   }
 }
-
-type EvieBanEvent = {
-  member: GuildMember;
-  guild: Guild;
-  reason: string | undefined;
-  expiresAt?: Date;
-};
-
-type EvieUnBanEvent = {
-  user: User | null;
-  guild: Guild;
-};
