@@ -12,9 +12,8 @@
   },
   "scripts": {
     "dev": "tsup --watch --onSuccess \"yarn start\"",
-    "start": "yarn preflight && node dist/index.js",
-    "preflight": "node ./scripts/preflight.js",
-    "build": "yarn prisma generate && yarn preflight && tsup",
+    "start": " node dist/index.js",
+    "build": "yarn prisma generate && tsup",
     "pushdb": "yarn prisma db push",
     "docker": "yarn prisma db push && cd ./dist/ && pm2-runtime start index.js",
     "lint": "eslint --fix --ext ts src",
