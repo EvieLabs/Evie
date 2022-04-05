@@ -49,27 +49,28 @@ export class BlockedWords {
     bannedWord: string
   ) {
     if (!message.guild) return;
-    const embed = new LogEmbed(`blocked words`)
-      .setColor("#4e73df")
-      .setAuthor({
-        name: `${message.author.tag} (${message.author.id})`,
-        iconURL: message.author.displayAvatarURL(),
-      })
-      .setDescription(
-        `${
-          successfullyDeleted ? "Deleted" : "Failed to delete"
-        } a message with a banned word`
-      )
-      .addField(
-        "Message",
-        `${message.content} ${
-          successfullyDeleted
-            ? `[Jump to message](${message.url})`
-            : `[Jump to context](${message.url})`
-        }`
-      )
-      .addField("Triggered Word", bannedWord);
-
-    await message.client.guildLogger.log(message.guild, embed);
+    await message.client.guildLogger.log(
+      message.guild,
+      new LogEmbed(`blocked words`)
+        .setColor("#4e73df")
+        .setAuthor({
+          name: `${message.author.tag} (${message.author.id})`,
+          iconURL: message.author.displayAvatarURL(),
+        })
+        .setDescription(
+          `${
+            successfullyDeleted ? "Deleted" : "Failed to delete"
+          } a message with a banned word`
+        )
+        .addField(
+          "Message",
+          `${message.content} ${
+            successfullyDeleted
+              ? `[Jump to message](${message.url})`
+              : `[Jump to context](${message.url})`
+          }`
+        )
+        .addField("Triggered Word", bannedWord)
+    );
   }
 }

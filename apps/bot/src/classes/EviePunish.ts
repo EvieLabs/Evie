@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { modAction } from "#root/utils/builders/stringBuilder";
 import { punishDB } from "#root/utils/database/punishments";
 import type {
   BanOptions,
@@ -22,20 +23,9 @@ import type {
   Snowflake,
   User,
 } from "discord.js";
-import { EventDispatcher } from "strongly-typed-events";
+import { LogEmbed } from "./LogEmbed";
 
 export class EviePunish {
-  private _onBannedMember = new EventDispatcher<EviePunish, EvieBanEvent>();
-  private _onUnBannedMember = new EventDispatcher<EviePunish, EvieUnBanEvent>();
-
-  public get onBan() {
-    return this._onBannedMember.asEvent();
-  }
-
-  public get onUnBan() {
-    return this._onUnBannedMember.asEvent();
-  }
-
   public async banGuildMember(
     m: GuildMember,
     bo: BanOptions,
@@ -52,18 +42,29 @@ export class EviePunish {
         throw new Error(`Failed to add ban: ${err}`);
       });
 
-    this._onBannedMember.dispatch(this, {
-      member: m,
-      guild: m.guild,
-      reason: bo.reason,
-      expiresAt,
-    });
+    m.client.guildLogger.log(
+      m.guild,
+      new LogEmbed(`punishment`)
+        .setColor("#eb564b")
+        .setAuthor({
+          name: banner
+            ? `${banner.user.tag} (${banner.user.id})`
+            : `${m.client.user ? m.client.user.tag : "Me"} (${
+                m.client.user ? m.client.user.id : "Me"
+              })`,
+        })
+        .setDescription(modAction(m, "Ban", bo.reason))
+    );
 
     return true;
   }
 
-  public async unBanGuildMember(id: Snowflake, g: Guild) {
-    const u = await g.bans.remove(id).catch((err) => {
+  public async unBanGuildMember(
+    id: Snowflake,
+    g: Guild,
+    unbanner?: GuildMember
+  ) {
+    const user = await g.bans.remove(id).catch((err) => {
       throw new Error(`Failed to unban member: ${err}`);
     });
 
@@ -71,12 +72,22 @@ export class EviePunish {
       throw new Error(`Failed to delete ban: ${err}`);
     });
 
-    this._onUnBannedMember.dispatch(this, {
-      guild: g,
-      user: u,
-    });
+    if (user)
+      g.client.guildLogger.log(
+        g,
+        new LogEmbed(`punishment`)
+          .setColor("#eb564b")
+          .setAuthor({
+            name: unbanner
+              ? `${unbanner.user.tag} (${unbanner.user.id})`
+              : `${g.client.user ? g.client.user.tag : "Me"} (${
+                  g.client.user ? g.client.user.id : "Me"
+                })`,
+          })
+          .setDescription(modAction(user, "Ban", reason))
+      );
 
-    return u;
+    return user;
   }
 }
 
