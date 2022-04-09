@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.env.example
+.gitignore
+.gitattributes
+.idea
+.vs
+.vscode
+shard.bat
+push.bat
+.env
