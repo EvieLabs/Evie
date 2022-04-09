@@ -1,4 +1,8 @@
 import { EvieClient } from "#classes/EvieClient";
+import {
+  ApplicationCommandRegistries,
+  RegisterBehavior,
+} from "@sapphire/framework";
 import "@sapphire/plugin-hmr/register";
 import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
@@ -9,7 +13,9 @@ import { rootFolder } from "./constants/paths";
 /** The running EvieClient */
 export const client = new EvieClient();
 
-client.fetchPrefix = () => "slashies.";
+ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
+  RegisterBehavior.Overwrite
+);
 
 console.log(`Root folder: ${rootFolder}`);
 
