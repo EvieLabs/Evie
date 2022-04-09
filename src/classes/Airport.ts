@@ -1,4 +1,3 @@
-import { axo } from "#root/axologs";
 import { dbUtils } from "#root/utils/database/index";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import type { EvieGuild } from "@prisma/client";
@@ -24,7 +23,6 @@ export class Airport {
         member.roles.add(role, `Auto Join Role`);
       } catch (error) {
         Sentry.captureException(error);
-        axo.err("Failed to apply auto role!");
       }
     }
   }
@@ -69,7 +67,6 @@ export class Airport {
       goodbyeChannel.send({ embeds: [goodbyeMessageEmbed] });
     } catch (error) {
       Sentry.captureException(error);
-      axo.err(error);
     }
   }
 
@@ -112,7 +109,6 @@ export class Airport {
       }
     } catch (error) {
       Sentry.captureException(error);
-      axo.err(error);
     }
   }
 }
