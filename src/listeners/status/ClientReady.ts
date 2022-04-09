@@ -60,7 +60,7 @@ export class GuildMemberAddListener extends Listener {
               )
           );
         } catch (error) {
-          Sentry.captureException(error);
+          Sentry.captureException(error); // heres the amazing bug
           client.guildLogger.log(
             guild,
             await StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)

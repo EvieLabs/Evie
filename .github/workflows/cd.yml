@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "apps/bot/src/**"
+      - "src/**"
       - "Dockerfile"
       - ".github/workflows/cd.yml"
       - "package.json"

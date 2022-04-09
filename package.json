@@ -1,12 +1,15 @@
 {
-  "name": "turborepo-basic-shared",
-  "version": "0.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "type": "module",
+  "name": "evie-bot",
+  "version": "1.0.0",
+  "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
+  "main": "dist/index.js",
+  "imports": {
+    "#root/*": "./dist/*.js",
+    "#types/*": "./dist/types/*.js",
+    "#utils/*": "./dist/utils/*.js",
+    "#constants/*": "./dist/constants/*.js",
+    "#classes/*": "./dist/classes/*.js"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint"
@@ -19,21 +22,64 @@
     ]
   },
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "dev": "tsup --watch --onSuccess \"yarn start\"",
+    "start": " node dist/index.js",
+    "build": "yarn prisma generate && tsup",
+    "pushdb": "yarn prisma db push",
+    "docker": "yarn prisma db push && cd ./dist/ && pm2-runtime start index.js",
+    "lint": "eslint --fix --ext ts src",
+    "compose": "docker-compose up --env-file ./apps/bot/.env --build"
+  },
+  "keywords": [],
+  "author": "Tristan Camejo <contact@tristancamejo.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "@prisma/client": "^3.11.0",
+    "@sapphire/decorators": "^4.2.5",
+    "@sapphire/framework": "next",
+    "@sapphire/plugin-hmr": "^1.2.0",
+    "@sapphire/plugin-logger": "^2.1.3",
+    "@sentry/integrations": "^6.19.3",
+    "@sentry/node": "^6.19.3",
+    "@sentry/tracing": "^6.19.3",
+    "@swc/core": "^1.2.150",
+    "axios": "^0.26.0",
+    "bad-words": "^3.0.4",
+    "bufferutil": "^4.0.6",
+    "discord.js": "github:monbrey/discord.js#modals",
+    "dotenv": "^10.0.0",
+    "erlpack": "discord/erlpack",
+    "firebase-admin": "^10.0.2",
+    "glob": "^7.2.0",
+    "ioredis": "^4.28.5",
+    "minecraft-server-util": "^3.6.1",
+    "ms": "^2.1.3",
+    "node-fetch": "2.6.1",
+    "pm2": "^5.2.0",
+    "strongly-typed-events": "^2.1.16",
+    "systeminformation": "^5.9.7",
+    "top.gg": "^2.3.2",
+    "utf-8-validate": "^5.0.9",
+    "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
+    "@sapphire/eslint-config": "^4.3.0",
+    "@sapphire/ts-config": "^3.3.2",
+    "@types/bad-words": "^3.0.1",
+    "@types/ioredis": "^4.28.8",
+    "@types/ms": "^0.7.31",
+    "@types/node": "^17.0.21",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "7.32.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
-    "lint-staged": "^12.3.5",
-    "prettier": "^2.5.1",
-    "turbo": "latest"
-  },
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
-  },
-  "packageManager": "yarn@1.22.17"
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
+    "prisma": "^3.11.0",
+    "tsup": "5.12.1",
+    "typescript": "^4.5.5"
+  }
 }
