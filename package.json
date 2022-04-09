@@ -51,7 +51,6 @@
     "discord.js": "github:monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
     "erlpack": "discord/erlpack",
-    "firebase-admin": "^10.0.2",
     "glob": "^7.2.0",
     "node-fetch": "2.6.1",
     "pm2": "^5.2.0",
