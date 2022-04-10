@@ -21,15 +21,15 @@
 ## How to start your Evie dev environment
 
 1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
-2. Clone the repo, and switch to the `rewrite` branch.
+2. Clone the repo.
 3. Install deps with by typing `yarn`.
-4. Copy `.env.example` to a new file `.env` file located in `apps/bot`.
-5. Go into the `apps/bot` directory. `cd apps/bot`
-6. Type `yarn build` to build the Prisma schema.
-7. Code away.
-8. Make a volume for the database with `docker volume create --name=postgres`.
-9. Start the database with `docker-compose up --build postgres` this will only start the database container.
-10. Update the environment variable `DATABASE_URL` in `/apps/bot` with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
+4. Copy `.env.example` to a new file `.env` file.
+5. Type `yarn build` to build the Prisma schema.
+6. Code away.
+7. Make a volume for the database with `docker volume create --name=postgres`.
+8. Start the database with `docker-compose up --build postgres` this will only start the database container.
+9. Update the environment variable `DATABASE_URL` in `/apps/bot` with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
+10. Before testing make sure to push the schema to the database with `yarn pushdb`
 11. Test with `yarn dev` Every save will automatically build and restart the bot.
 12. Push your changes.
 13. Make a PR.
