@@ -4,14 +4,14 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import axios from "axios";
 import type { CommandInteraction } from "discord.js";
-import fetch from "node-fetch";
 
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
     if (subcommand == "shiba") {
-      const res = await fetch(
+      const res = await axios.get(
         `http://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true`,
         {
           headers: {
@@ -20,17 +20,13 @@ export class Fun extends Command {
         }
       );
 
-      const respros = await res.json();
-
-      const dog = respros[0];
-
-      interaction.reply(dog.toString());
+      interaction.reply(res.data[0]);
     } else if (subcommand == "evie") {
       async function randomEvie() {
-        const res = await fetch(
+        const res = await axios.get(
           `https://raw.githubusercontent.com/twisttaan/AxolotlBotAPI/main/evie.txt`
         );
-        const pics: string[] = (await res.text()).trim().split("\n");
+        const pics: string[] = (await res.data).trim().split("\n");
         return pics[Math.floor(Math.random() * pics.length)];
       }
       interaction.reply(await randomEvie());
