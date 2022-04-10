@@ -17,7 +17,6 @@ export class GuildCreateListener extends Listener {
       await dbUtils.createGuild(g);
     } catch (e) {
       Sentry.captureException(e);
-      console.error(`Failed to add guild to database. Error: ${e}`);
     }
   }
 }
