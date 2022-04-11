@@ -22,14 +22,20 @@ export class GuildMemberAddListener extends Listener {
 
       for (const tempban of tempbans) {
         if (!tempban.guildId) return;
-
-        const guild = await client.guilds.fetch(tempban.guildId);
-        const user = (await guild.bans.fetch(tempban.id)).user;
-
-        if (!user) return;
-
         try {
-          await guild.members.unban(user);
+          const guild = await client.guilds.fetch(tempban.guildId);
+          const user = (await guild.bans.fetch(tempban.id)).user;
+
+          if (!user) return;
+
+          await guild.members
+            .unban(user)
+            .catch(() =>
+              client.guildLogger.log(
+                guild,
+                StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)
+              )
+            );
           await client.prisma.evieTempBan.delete({
             where: {
               id: tempban.id,
@@ -61,10 +67,6 @@ export class GuildMemberAddListener extends Listener {
           );
         } catch (error) {
           Sentry.captureException(error); // heres the amazing bug
-          client.guildLogger.log(
-            guild,
-            await StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)
-          );
         }
       }
     }, 300000);
