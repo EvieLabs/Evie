@@ -3,6 +3,7 @@ import {
   ApplicationCommandRegistries,
   RegisterBehavior,
 } from "@sapphire/framework";
+import "@sapphire/plugin-api/register";
 import "@sapphire/plugin-hmr/register";
 import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
