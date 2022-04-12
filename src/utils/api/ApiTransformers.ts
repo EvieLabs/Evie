@@ -1,3 +1,4 @@
+// https://github.com/skyra-project/skyra/blob/main/src/lib/api/ApiTransformers.ts
 import {
   ChannelTypeString,
   isDMChannel,
