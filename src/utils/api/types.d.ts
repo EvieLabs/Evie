@@ -10,7 +10,7 @@ export interface PartialOauthFlattenedGuild
 export interface OauthFlattenedGuild extends PartialOauthFlattenedGuild {
   permissions: string;
   manageable: boolean;
-  skyraIsIn: boolean;
+  evieIsIn: boolean;
 }
 
 export interface OauthFlattenedUser {

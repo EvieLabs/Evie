@@ -3,11 +3,29 @@ import { flattenGuild } from "#root/utils/api/ApiTransformers";
 import type {
   OauthFlattenedGuild,
   PartialOauthFlattenedGuild,
+  TransformedLoginData,
 } from "#root/utils/api/types";
+import { container } from "@sapphire/framework";
+import type { LoginData } from "@sapphire/plugin-api";
 import type { RESTAPIPartialCurrentUserGuild } from "discord-api-types/v9";
 import { Permissions, type Guild, type GuildMember } from "discord.js";
 import { modDB } from "../database/modSettings";
 import { checkPerm } from "../misc/permChecks";
+
+export async function transformOauthGuildsAndUser({
+  user,
+  guilds,
+}: LoginData): Promise<TransformedLoginData> {
+  if (!user || !guilds) return { user, guilds };
+
+  const { client } = container;
+  const userId = user.id;
+
+  const transformedGuilds = await Promise.all(
+    guilds.map((guild) => transformGuild(client, userId, guild))
+  );
+  return { user, transformedGuilds };
+}
 
 export async function canManage(
   guild: Guild,
@@ -82,6 +100,6 @@ export async function transformGuild(
     ...serialized,
     permissions: data.permissions,
     manageable: await getManageable(userId, data, guild),
-    skyraIsIn: typeof guild !== "undefined",
+    evieIsIn: typeof guild !== "undefined",
   };
 }

@@ -1,3 +1,4 @@
+import { transformOauthGuildsAndUser } from "#root/utils/api/transformers";
 import { getNumberSecret, getSecret } from "#root/utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
 import { Enumerable } from "@sapphire/decorators";
@@ -43,7 +44,9 @@ export class EvieClient extends SapphireClient {
           cookie: getSecret("COOKIE_NAME"),
           redirect: getSecret("REDIRECT_URL"),
           scopes: ["identify", "guilds"],
+          transformers: [transformOauthGuildsAndUser],
         },
+        origin: getSecret("ORIGIN_URL"),
         listenOptions: {
           port: getNumberSecret("API_PORT") || 4000,
         },

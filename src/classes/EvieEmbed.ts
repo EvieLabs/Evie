@@ -27,7 +27,7 @@ export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
     });
 }
 
-export async function StatusEmbed(status: StatusEmoji, description: string) {
+export function StatusEmbed(status: StatusEmoji, description: string) {
   return new MessageEmbed()
     .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
     .setTimestamp()
