@@ -8,6 +8,8 @@ COPY ./package*.json ./
 
 # Copy yarn.lock
 COPY ./yarn.lock ./
+COPY .yarn ./
+COPY .yarnrc.yml ./
 
 # Fetch dependencies
 RUN yarn install
