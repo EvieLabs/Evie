@@ -3,19 +3,11 @@ FROM node:16.11.1
 # Create app directory
 WORKDIR /usr/src/app
 
-# Copy package.json
-COPY ./package*.json ./
-
-# Copy yarn.lock
-COPY ./yarn.lock ./
-COPY .yarn ./
-COPY .yarnrc.yml ./
+# Copy code
+COPY . .
 
 # Fetch dependencies
 RUN yarn install
-
-# Copy code
-COPY . .
 
 # Compile typescript to javascript
 RUN yarn build
