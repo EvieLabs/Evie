@@ -8,7 +8,7 @@ import {
 } from "@sapphire/plugin-api";
 import { createCanvas, loadImage } from "canvas";
 
-@ApplyOptions<RouteOptions>({ route: "/render/stats" })
+@ApplyOptions<RouteOptions>({ route: "/render/stats.png" })
 export class StatsRoute extends Route {
   public async [methods.GET](_request: ApiRequest, response: ApiResponse) {
     const users = this.container.client.guilds.cache.reduce(
