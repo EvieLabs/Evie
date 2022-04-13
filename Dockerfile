@@ -10,7 +10,7 @@ COPY ./package*.json ./
 COPY ./yarn.lock ./
 
 # Fetch dependencies
-RUN yarn
+RUN yarn install
 
 # Copy code
 COPY . .
