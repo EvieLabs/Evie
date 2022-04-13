@@ -49,6 +49,7 @@
     "axios": "^0.26.0",
     "bad-words": "^3.0.4",
     "bufferutil": "^4.0.6",
+    "canvas": "^2.9.1",
     "discord.js": "github:monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
     "erlpack": "discord/erlpack",
