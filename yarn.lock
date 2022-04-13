@@ -931,6 +931,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/pidusage@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@types/pidusage@npm:2.0.2"
+  checksum: 6d032deb5e6a4a2849f1146950b51acb0a0a7154b16910afad750b5e4e7b0d95d9a5b1c96d859af99048198c6bbe38b8339daf36d9d59fa6b29c59ec5e5ffc9d
+  languageName: node
+  linkType: hard
+
 "@types/psl@npm:^1.1.0":
   version: 1.1.0
   resolution: "@types/psl@npm:1.1.0"
@@ -2685,6 +2692,7 @@ __metadata:
     "@swc/core": ^1.2.150
     "@types/bad-words": ^3.0.1
     "@types/node": ^17.0.21
+    "@types/pidusage": ^2.0.2
     "@types/pug": ^2.0.6
     "@typescript-eslint/eslint-plugin": ^5.14.0
     "@typescript-eslint/parser": ^5.18.0
@@ -2702,6 +2710,7 @@ __metadata:
     husky: ^7.0.4
     lint-staged: ^12.3.7
     node-fetch: 2.6.1
+    pidusage: ^3.0.0
     pm2: ^5.2.0
     prettier: ^2.6.2
     prisma: ^3.11.0
@@ -4283,7 +4292,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pidusage@npm:~3.0":
+"pidusage@npm:^3.0.0, pidusage@npm:~3.0":
   version: 3.0.0
   resolution: "pidusage@npm:3.0.0"
   dependencies:
