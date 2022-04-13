@@ -62,7 +62,7 @@ export class Ban extends Command {
       );
       await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
-        `Banned ${userToBeBanned} (${userToBeBanned.displayName}) ${
+        `Banned ${userToBeBanned} (${userToBeBanned.id}) ${
           expiresAt ? time(expiresAt, "R") : `indefinitely`
         } for \`${reason ?? "no reason :("}\`.`,
         interaction
