@@ -4,9 +4,12 @@ dist
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-node_modules
-.pnp
+/node_modules
+/.pnp
 .pnp.js
+.yarn/cache
+.yarn/install-state.gz
+.yarn/build-state.yml
 
 # testing
 coverage

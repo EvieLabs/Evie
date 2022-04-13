@@ -26,7 +26,7 @@
     "start": " node dist/index.js",
     "build": "yarn prisma generate && tsup",
     "pushdb": "yarn prisma db push",
-    "docker": "yarn prisma db push && cd ./dist/ && pm2-runtime start index.js",
+    "docker": "yarn prisma db push && pm2-runtime start ./dist/index.js",
     "lint": "eslint --fix --ext ts src",
     "compose": "docker-compose up --env-file ./apps/bot/.env --build"
   },
@@ -52,10 +52,11 @@
     "canvas": "^2.9.1",
     "discord.js": "github:monbrey/discord.js#modals",
     "dotenv": "^10.0.0",
-    "erlpack": "discord/erlpack",
     "glob": "^7.2.0",
     "node-fetch": "2.6.1",
+    "node-html-to-image": "^3.2.4",
     "pm2": "^5.2.0",
+    "pug": "^3.0.2",
     "strongly-typed-events": "^2.1.16",
     "utf-8-validate": "^5.0.9",
     "zlib-sync": "^0.1.7"
@@ -65,6 +66,7 @@
     "@sapphire/ts-config": "^3.3.2",
     "@types/bad-words": "^3.0.1",
     "@types/node": "^17.0.21",
+    "@types/pug": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.18.0",
     "babel-eslint": "^10.1.0",
@@ -77,5 +79,6 @@
     "prisma": "^3.11.0",
     "tsup": "5.12.1",
     "typescript": "^4.6.3"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }

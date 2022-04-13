@@ -1,0 +1,20 @@
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  script(src='https://cdn.tailwindcss.com')
+section.py-20.bg-white
+  .container.max-w-6xl.mx-auto
+    h2.text-4xl.font-bold.tracking-tight.text-center #{botName} Stats
+    .grid.grid-cols-4.gap-8.mt-10(class='sm:grid-cols-8 lg:grid-cols-12 sm:px-8 xl:px-0')
+      .relative.flex.flex-col.items-center.justify-between.col-span-4.px-8.py-12.space-y-4.overflow-hidden.bg-gray-100(class='sm:rounded-xl')
+        .p-3.text-white.bg-blue-500.rounded-full
+          svg.h-5.w-5(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 20 20' fill='currentColor')
+            path(d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z')
+        h4.text-xl.font-medium.text-gray-700 Users
+        p.text-base.text-center.text-gray-500 #{users}
+      .flex.flex-col.items-center.justify-between.col-span-4.px-8.py-12.space-y-4.bg-gray-100(class='sm:rounded-xl')
+        .p-3.text-white.bg-blue-500.rounded-full
+          svg.h-5.w-5(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 20 20' fill='currentColor')
+            path(fill-rule='evenodd' d='M2 5a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm14 1a1 1 0 11-2 0 1 1 0 012 0zM2 13a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2zm14 1a1 1 0 11-2 0 1 1 0 012 0z' clip-rule='evenodd')
+        h4.text-xl.font-medium.text-gray-700 Guilds
+        p.text-base.text-center.text-gray-500 #{guilds}
