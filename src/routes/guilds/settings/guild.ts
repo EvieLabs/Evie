@@ -11,8 +11,8 @@ import {
   RouteOptions,
 } from "@sapphire/plugin-api";
 
-@ApplyOptions<RouteOptions>({ route: "/guilds/:guild" })
-export class GuildRoute extends Route {
+@ApplyOptions<RouteOptions>({ route: "/guilds/settings/:guild" })
+export class GuildSettings extends Route {
   @authenticated()
   public async [methods.GET](request: ApiRequest, response: ApiResponse) {
     const guildId = request.params.guild;
@@ -28,6 +28,21 @@ export class GuildRoute extends Route {
     if (!(await canManage(guild, member)))
       return response.error(HttpCodes.Forbidden);
 
-    return response.json({ ...flattenGuild(guild) });
+    const settings = await this.container.client.prisma.evieGuild.findFirst({
+      where: {
+        id: guildId,
+      },
+    });
+    if (!settings) return response.error(HttpCodes.BadRequest);
+
+    // send the guild and settings, but make sure to remove importedMessages from the settings
+
+    return response.json({
+      ...flattenGuild(guild),
+      settings: {
+        ...settings,
+        importedMessages: undefined,
+      },
+    });
   }
 }
