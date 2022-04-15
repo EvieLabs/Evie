@@ -27,9 +27,9 @@ export class UserRoute extends Route {
 
     const guilds: FlattenedGuild[] = [];
     for (const guild of client.guilds.cache.values()) {
-      if ((await guild.members.fetch(user.id).catch(() => null)) === null)
-        continue;
-      guilds.push(flattenGuild(guild));
+      if (guild.members.cache.has(user.id)) {
+        guilds.push(flattenGuild(guild));
+      }
     }
     return response.json({
       user: flattenUser(user),
