@@ -3,7 +3,7 @@ import { getNumberSecret, getSecret } from "#root/utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
 import { Enumerable } from "@sapphire/decorators";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
-import { Intents } from "discord.js";
+import { Intents, Options } from "discord.js";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
 import { EvieGuildLogger } from "./EvieGuildLogger";
@@ -51,11 +51,19 @@ export class EvieClient extends SapphireClient {
           port: getNumberSecret("API_PORT") || 4000,
         },
       },
+      makeCache: Options.cacheEverything(),
+      sweepers: {
+        ...Options.defaultSweeperSettings,
+        messages: {
+          interval: 190,
+          lifetime: 900,
+        },
+      },
       intents: [
         Intents.FLAGS.GUILDS,
-        "GUILD_MESSAGES",
-        "GUILD_MEMBERS",
-        Intents.FLAGS.GUILD_VOICE_STATES,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_BANS,
+        Intents.FLAGS.GUILD_MESSAGES,
       ],
       logger: {
         level: LogLevel.Info,
