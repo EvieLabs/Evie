@@ -44,6 +44,7 @@ export function flattenGuild(guild: Guild): FlattenedGuild {
     explicitContentFilter: guild.explicitContentFilter,
     features: guild.features,
     icon: guild.icon,
+    iconURL: guild.iconURL(),
     id: guild.id,
     joinedTimestamp: guild.joinedTimestamp,
     mfaLevel: guild.mfaLevel,
@@ -94,7 +95,7 @@ export interface FlattenedGuild
     | "verified"
   > {
   channels: FlattenedGuildChannel[];
-
+  iconURL: string;
   roles: FlattenedRole[];
 }
 
