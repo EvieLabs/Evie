@@ -3,7 +3,7 @@ import { LogEmbed } from "#root/classes/LogEmbed";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
-import type { Client } from "discord.js";
+import { Client, Constants } from "discord.js";
 
 @ApplyOptions<Listener.Options>({
   once: false,
@@ -24,7 +24,17 @@ export class GuildMemberAddListener extends Listener {
         if (!tempban.guildId) return;
         try {
           const guild = await client.guilds.fetch(tempban.guildId);
-          const user = (await guild.bans.fetch(tempban.id)).user;
+          const user = (
+            await guild.bans.fetch(tempban.id).catch(async (err) => {
+              if (err.code == Constants.APIErrors.UNKNOWN_BAN) {
+                await client.prisma.evieTempBan.delete({
+                  where: {
+                    id: tempban.id,
+                  },
+                });
+              }
+            })
+          )?.user;
 
           if (!user) return;
 
@@ -66,7 +76,7 @@ export class GuildMemberAddListener extends Listener {
               )
           );
         } catch (error) {
-          Sentry.captureException(error); // heres the amazing bug
+          Sentry.captureException(error);
         }
       }
     }, 300000);
