@@ -8,7 +8,7 @@ import {
 } from "@sapphire/plugin-api";
 
 @ApplyOptions<RouteOptions>({ route: "" })
-export class UserRoute extends Route {
+export class HelloWorld extends Route {
   public [methods.GET](_request: ApiRequest, response: ApiResponse) {
     response.json({ message: "Hello World" });
   }

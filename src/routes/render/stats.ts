@@ -9,7 +9,7 @@ import {
 import { createCanvas, loadImage } from "canvas";
 
 @ApplyOptions<RouteOptions>({ route: "/render/stats.png" })
-export class StatsRoute extends Route {
+export class RenderStatsRoute extends Route {
   public async [methods.GET](_request: ApiRequest, response: ApiResponse) {
     const users = this.container.client.guilds.cache.reduce(
       (acc, guild) => acc + guild.memberCount,
