@@ -1,4 +1,3 @@
-import { MiscDB } from "#utils/database/embedSettings";
 import {
   ButtonInteraction,
   ColorResolvable,
@@ -19,7 +18,11 @@ export enum StatusEmoji {
 
 export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
   return new MessageEmbed()
-    .setColor((await MiscDB.getEmbedColor(guild)) as ColorResolvable)
+    .setColor(
+      (guild
+        ? await guild.client.db.FetchGuildProperty(guild, "color")
+        : "FUCHSIA") as ColorResolvable
+    )
     .setTimestamp()
     .setFooter({
       text: "Evie",

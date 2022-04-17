@@ -20,7 +20,7 @@ export class EviePunish {
         throw new Error(`Failed to add ban: ${err}`);
       });
 
-    m.client.guildLogger.log(
+    m.client.guildLogger.modLog(
       m.guild,
       new LogEmbed(`punishment`)
         .setColor("#eb564b")
@@ -51,7 +51,7 @@ export class EviePunish {
     });
 
     if (user)
-      g.client.guildLogger.log(
+      g.client.guildLogger.modLog(
         g,
         new LogEmbed(`punishment`)
           .setColor("#eb564b")

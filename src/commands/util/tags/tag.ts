@@ -1,5 +1,4 @@
 import { EvieEmbed } from "#root/classes/EvieEmbed";
-import { tagDB } from "#root/utils/database/tags";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
   ApplicationCommandRegistry,
@@ -19,9 +18,16 @@ export class Tag extends Command {
     if (!query) return;
     if (!interaction.member) return;
 
-    const tag = await tagDB.getTagFromSnowflake(interaction.guild, query);
+    const tag = await (
+      await interaction.client.db.FetchTags(interaction.guild)
+    ).find((tag) => tag.id === query);
     if (!tag) {
-      const tag = await tagDB.getClosestTagFromName(interaction.guild, query);
+      const tag = await (
+        await interaction.client.db.FetchTags(interaction.guild)
+      ).find(
+        // find the tag with the closest name
+        (tag) => tag.name === query.split(" ")[0]
+      );
       if (tag) {
         const e = await EvieEmbed(interaction.guild);
         e.setTitle(tag.name);
@@ -68,7 +74,7 @@ export class Tag extends Command {
 
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
     if (!interaction.guild) return;
-    const tagData = await tagDB.getTags(interaction.guild);
+    const tagData = await interaction.client.db.FetchTags(interaction.guild);
     const query = interaction.options.getString("query") ?? "";
 
     if (tagData.length == 0) {

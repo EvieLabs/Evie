@@ -7,56 +7,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model EvieGuild {
-  id                        String        @unique
-  bannedWordList            String[]
-  color                     String?
-  defaultBannedWordList     Boolean?
-  goodbyeChannel            String?
-  goodbyeMessage            String?
-  goodbyeMessageEnabled     Boolean?
-  joinRoleEnabled           Boolean?
-  joinRoleID                String?
-  phishingDetectionEnabled  Boolean?
-  welcomeChannel            String?
-  welcomeMessage            String?
-  welcomeMessageEnabled     Boolean?
-  welcomeMessagePingEnabled Boolean?
-  tags                      EvieTag[]
-  tempBans                  EvieTempBan[]
-  importedMessages          String[]
-  evieNotes                 EvieNote[]
-  logChannelID              String?
-  staffRoleID               String?
+model GuildSettings {
+  id String @id
+
+  moderationSettings ModerationSettings?
+  airportSettings    AirportSettings?
+
+  tags             EvieTag[]
+  tempBans         EvieTempBan[]
+  importedMessages String[]
+  logChannel       String?
+
+  color         String  @default("#f47fff")
+  moderatorRole String?
+}
+
+model ModerationSettings {
+  guildId String        @id
+  guild   GuildSettings @relation(fields: [guildId], references: [id])
+
+  logChannel String?
+
+  blockedWords      String[]
+  phishingDetection Boolean  @default(false)
+}
+
+model AirportSettings {
+  guildId String        @id
+  guild   GuildSettings @relation(fields: [guildId], references: [id])
+
+  channel       String?
+  arrives       Boolean @default(false)
+  arriveMessage String  @default("Welcome to our server!")
+  departs       Boolean @default(false)
+  departMessage String  @default("Goodbye!")
+
+  joinRole     String  @default("")
+  giveJoinRole Boolean @default(false)
+
+  ping Boolean @default(false)
 }
 
 model EvieTag {
-  id        String     @unique
+  id        String         @unique
   name      String
   content   String
   embed     Boolean
-  evieGuild EvieGuild? @relation(fields: [guildId], references: [id])
+  evieGuild GuildSettings? @relation(fields: [guildId], references: [id])
   guildId   String?
 }
 
 model EvieTempBan {
-  id        String     @unique
+  id        String         @unique
   reason    String
   userId    String
   guildId   String?
   expiresAt DateTime?
-  EvieGuild EvieGuild? @relation(fields: [guildId], references: [id])
+  EvieGuild GuildSettings? @relation(fields: [guildId], references: [id])
   bannedBy  String?
-
-  @@unique([userId, guildId])
-}
-
-model EvieNote {
-  id        String     @unique
-  userId    String
-  guildId   String?
-  content   String
-  EvieGuild EvieGuild? @relation(fields: [guildId], references: [id])
 
   @@unique([userId, guildId])
 }

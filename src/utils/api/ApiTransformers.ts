@@ -44,7 +44,8 @@ export function flattenGuild(guild: Guild): FlattenedGuild {
     explicitContentFilter: guild.explicitContentFilter,
     features: guild.features,
     icon: guild.icon,
-    iconURL: guild.iconURL(),
+    iconURL:
+      guild.iconURL() ?? "https://cdn.discordapp.com/embed/avatars/0.png",
     id: guild.id,
     joinedTimestamp: guild.joinedTimestamp,
     mfaLevel: guild.mfaLevel,

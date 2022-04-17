@@ -6,6 +6,7 @@ import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { Intents, Options } from "discord.js";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
+import { DatabaseTools } from "./DatabaseTools";
 import { EvieGuildLogger } from "./EvieGuildLogger";
 import { EviePunish } from "./EviePunish";
 import { Phisherman } from "./Phisherman";
@@ -31,9 +32,13 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override guildLogger = new EvieGuildLogger();
 
-  /** The prisma instance used for interacting with the database */
+  /** The prisma instance used for directly interacting with the database */
   @Enumerable(false)
   public override prisma = new PrismaClient();
+
+  /** The database tools instance used for easily interacting with the database */
+  @Enumerable(false)
+  public override db = new DatabaseTools();
 
   public constructor() {
     super({
@@ -83,5 +88,6 @@ declare module "discord.js" {
     readonly blockedWords: BlockedWords;
     readonly airport: Airport;
     readonly prisma: PrismaClient;
+    readonly db: DatabaseTools;
   }
 }

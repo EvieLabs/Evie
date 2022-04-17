@@ -28,11 +28,7 @@ export class GuildSettings extends Route {
     if (!(await canManage(guild, member)))
       return response.error(HttpCodes.Forbidden);
 
-    const settings = await this.container.client.prisma.evieGuild.findFirst({
-      where: {
-        id: guildId,
-      },
-    });
+    const settings = await this.container.client.db.FetchGuildSettings(guild);
     if (!settings) return response.error(HttpCodes.BadRequest);
 
     // send the guild and settings, but make sure to remove importedMessages from the settings
