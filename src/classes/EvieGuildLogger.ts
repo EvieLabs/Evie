@@ -4,16 +4,30 @@ import { MessageEmbed, TextChannel, type Guild } from "discord.js";
 export class EvieGuildLogger {
   public async log(guild: Guild, embed: MessageEmbed) {
     try {
-      const g = await guild.client.prisma.evieGuild.findFirst({
-        where: {
-          id: guild.id,
-        },
-      });
+      const guildSettings = await guild.client.db.FetchGuildSettings(guild);
+      if (!guildSettings.logChannel) return;
 
-      if (!g) return;
-      if (!g.logChannelID) return;
+      const channel = await guild.client.channels.fetch(
+        guildSettings.logChannel
+      );
+      if (!channel) return;
+      if (!(channel instanceof TextChannel)) return;
 
-      const channel = await guild.client.channels.fetch(g.logChannelID);
+      await channel.send({ embeds: [embed] });
+    } catch (e) {
+      Sentry.captureException(e);
+      console.log(e);
+    }
+  }
+
+  public async modLog(guild: Guild, embed: MessageEmbed) {
+    try {
+      const guildSettings = await guild.client.db.FetchGuildSettings(guild);
+      if (!guildSettings.moderationSettings?.logChannel) return;
+
+      const channel = await guild.client.channels.fetch(
+        guildSettings.moderationSettings.logChannel
+      );
       if (!channel) return;
       if (!(channel instanceof TextChannel)) return;
 

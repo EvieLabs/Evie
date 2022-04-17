@@ -9,7 +9,6 @@ import { container } from "@sapphire/framework";
 import type { LoginData } from "@sapphire/plugin-api";
 import type { RESTAPIPartialCurrentUserGuild } from "discord-api-types/v9";
 import { Permissions, type Guild, type GuildMember } from "discord.js";
-import { modDB } from "../database/modSettings";
 import { checkPerm } from "../misc/permChecks";
 
 export async function transformOauthGuildsAndUser({
@@ -35,7 +34,7 @@ export async function canManage(
 
   return (
     (await checkPerm(member, Permissions.FLAGS.BAN_MEMBERS)) ||
-    (await modDB.hasModRole(member))
+    (await member.client.db.HasModRole(member))
   );
 }
 
@@ -93,6 +92,7 @@ export async function transformGuild(
           vanityURLCode: null,
           verificationLevel: "NONE",
           verified: false,
+          iconURL: `https://cdn.discordapp.com/icons/${data.id}/${data.icon}.webp`,
         }
       : flattenGuild(guild);
 

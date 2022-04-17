@@ -1,5 +1,4 @@
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
-import { modDB } from "#root/utils/database/modSettings";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
@@ -41,7 +40,14 @@ export class Admin extends Command {
         interaction
       );
     try {
-      await modDB.setStaffRole(guild, targetRole.id);
+      await guild.client.prisma.guildSettings.update({
+        where: {
+          id: guild.id,
+        },
+        data: {
+          moderatorRole: targetRole.id,
+        },
+      });
       return await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully set the staff role to ${targetRole}`,
@@ -85,7 +91,18 @@ export class Admin extends Command {
     }
 
     try {
-      await modDB.setLogChannel(guild, targetChannel);
+      await guild.client.prisma.guildSettings.update({
+        where: {
+          id: guild.id,
+        },
+        data: {
+          moderationSettings: {
+            update: {
+              logChannel: targetChannel.id,
+            },
+          },
+        },
+      });
       return await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully set the log channel to ${targetChannel}`,

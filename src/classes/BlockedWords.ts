@@ -1,4 +1,3 @@
-import { dbUtils } from "#root/utils/database/index";
 import * as Sentry from "@sentry/node";
 import type { Message } from "discord.js";
 import { LogEmbed } from "./LogEmbed";
@@ -8,10 +7,9 @@ export class BlockedWords {
     if (!message.inGuild()) return;
     if (message.author.bot) return;
     try {
-      const gConfig = await dbUtils.getGuild(message.guild);
-      if (!gConfig) return;
-
-      const blockedWords = gConfig.bannedWordList;
+      const blockedWords = (
+        await message.client.db.FetchGuildSettings(message.guild)
+      ).moderationSettings?.blockedWords;
       if (!blockedWords) return;
 
       for (const word of blockedWords) {

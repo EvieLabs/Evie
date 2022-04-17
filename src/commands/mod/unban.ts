@@ -1,5 +1,4 @@
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
-import { modDB } from "#root/utils/database/modSettings";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
@@ -18,10 +17,12 @@ export class UnBan extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
 
+    const { client } = interaction;
+
     if (
       !(
         (await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS)) ||
-        !(await modDB.hasModRole(interaction.member))
+        !(await client.db.HasModRole(interaction.member))
       )
     ) {
       await ReplyStatusEmbed(

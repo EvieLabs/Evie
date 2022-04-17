@@ -1,22 +1,23 @@
-import { dbUtils } from "#root/utils/database/index";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
-import type { EvieGuild } from "@prisma/client";
+import type { AirportSettings } from "@prisma/client";
 import * as Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
 import { EvieEmbed } from "./EvieEmbed";
 
 export class Airport {
   public async onJoin(member: GuildMember) {
-    const config = await dbUtils.getGuild(member.guild);
-    if (config?.welcomeMessageEnabled) {
-      this.welcomeMember(member, config);
+    const settings = await member.client.db.FetchGuildSettings(member.guild);
+    if (settings?.airportSettings?.arriveMessage) {
+      this.welcomeMember(member, settings.airportSettings);
     }
 
-    if (config?.joinRoleEnabled) {
+    if (settings?.airportSettings?.giveJoinRole) {
       try {
-        if (member.user.bot || !config.joinRoleID) return;
+        if (member.user.bot || !settings.airportSettings.joinRole) return;
 
-        const role = await member.guild.roles.fetch(config.joinRoleID);
+        const role = await member.guild.roles.fetch(
+          settings.airportSettings.joinRole
+        );
 
         if (!role || !(role instanceof Role)) return;
 
@@ -28,23 +29,21 @@ export class Airport {
   }
 
   public async onLeave(member: GuildMember) {
-    const config = await dbUtils.getGuild(member.guild);
-    if (config?.welcomeMessageEnabled) {
-      this.farewellMember(member, config);
+    const settings = await member.client.db.FetchGuildSettings(member.guild);
+    if (settings?.airportSettings?.departs) {
+      this.departMember(member, settings.airportSettings);
     }
   }
 
-  private async farewellMember(member: GuildMember, config: EvieGuild) {
+  private async departMember(member: GuildMember, config: AirportSettings) {
     try {
-      if (!config.goodbyeChannel) return;
+      if (!config.channel) return;
 
-      const goodbyeMessage = config.goodbyeMessage
-        ? await placeholderParser(config.goodbyeMessage, member)
+      const goodbyeMessage = config.departMessage
+        ? await placeholderParser(config.departMessage, member)
         : "";
 
-      const goodbyeChannel = await member.client.channels.fetch(
-        config.goodbyeChannel
-      );
+      const goodbyeChannel = await member.client.channels.fetch(config.channel);
 
       if (!goodbyeChannel || !(goodbyeChannel instanceof TextChannel)) return;
 
@@ -70,16 +69,16 @@ export class Airport {
     }
   }
 
-  private async welcomeMember(member: GuildMember, config: EvieGuild) {
+  private async welcomeMember(member: GuildMember, config: AirportSettings) {
     try {
-      if (!config.welcomeChannel) return;
+      if (!config.channel) return;
 
-      const welcomeMessage = config.welcomeMessage
-        ? await placeholderParser(config.welcomeMessage, member)
+      const welcomeMessage = config.arriveMessage
+        ? await placeholderParser(config.arriveMessage, member)
         : "";
 
       const discordWelcomeChannel = await member.client.channels.fetch(
-        config.welcomeChannel
+        config.channel
       );
 
       if (
@@ -99,7 +98,7 @@ export class Airport {
             : "At an unknown time"
         }`
       );
-      if (config.welcomeMessagePingEnabled) {
+      if (config.ping) {
         discordWelcomeChannel.send({
           content: `${member}`,
           embeds: [welcomeMessageEmbed],

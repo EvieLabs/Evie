@@ -1,12 +1,14 @@
 import * as Sentry from "@sentry/node";
 import type { Guild, Message } from "discord.js";
-import { dbUtils } from ".";
 
 /** Gets all imported messages ever made for the specified guild */
 async function getImportedMessages(guild: Guild): Promise<string[]> {
   try {
-    const eG = await dbUtils.getGuild(guild);
-    return eG?.importedMessages || [];
+    console.log("wooosh!");
+    return ((await guild.client.db.FetchGuildProperty(
+      guild,
+      "importedMessages"
+    )) ?? []) as [];
   } catch (error) {
     Sentry.captureException(error);
     return [];
@@ -19,7 +21,7 @@ async function getImportedMessages(guild: Guild): Promise<string[]> {
 async function addImportedMessage(message: Message) {
   try {
     if (!message.guild) throw new Error("Message is not in a guild.");
-    return await message.client.prisma.evieGuild.update({
+    return await message.client.prisma.guildSettings.update({
       where: {
         id: message.guild.id,
       },

@@ -1,5 +1,5 @@
 import { CreateTagModal } from "#constants/modals";
-import { tagDB } from "#root/utils/database/tags";
+import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import {
@@ -58,28 +58,37 @@ export class CreateTag extends Command {
     if (tag && content) {
       const { guild } = interaction;
       if (!guild) {
-        submit.reply({
-          content: "You must be in a guild to create a tag.",
-          ephemeral: true,
-        });
+        ReplyStatusEmbed(
+          StatusEmoji.FAIL,
+          "You must be in a guild to create a tag.",
+          submit
+        );
+
         return;
       }
-      tagDB.addTag(
-        {
-          id: SnowflakeUtil.generate(),
-          name: tag,
-          content,
-          embed,
-          guildId: guild.id,
-        },
-        guild
-      );
-      submit.reply({ content: `Created tag ${tag}`, ephemeral: true });
+
+      return await interaction.client.prisma.evieTag
+        .create({
+          data: {
+            id: SnowflakeUtil.generate(),
+            name: tag,
+            content: content,
+            embed: embed,
+            guildId: guild.id,
+          },
+        })
+        .catch(() => {
+          return ReplyStatusEmbed(
+            StatusEmoji.FAIL,
+            "Failed to create tag.",
+            submit
+          );
+        })
+        .then(() => {
+          ReplyStatusEmbed(StatusEmoji.SUCCESS, `Created tag ${tag}`, submit);
+        });
     } else {
-      submit.reply({
-        content: "Tag creation failed.",
-        ephemeral: true,
-      });
+      ReplyStatusEmbed(StatusEmoji.FAIL, "Tag creation failed.", submit);
     }
   }
 
