@@ -55,6 +55,64 @@ export class DatabaseTools {
     }
   }
 
+  public async UpdateGuildSettings(
+    guild: Guild,
+    settingsPatch: Partial<GuildSettings>
+  ) {
+    try {
+      return await guild.client.prisma.guildSettings.update({
+        where: {
+          id: guild.id,
+        },
+        data: {
+          ...settingsPatch,
+          id: undefined,
+        },
+      });
+    } catch (error) {
+      Sentry.captureException(error);
+      throw error;
+    }
+  }
+
+  public async UpdateModSettings(
+    guild: Guild,
+    settingsPatch: Partial<ModerationSettings>
+  ) {
+    try {
+      return await guild.client.prisma.moderationSettings.update({
+        where: {
+          guildId: guild.id,
+        },
+        data: {
+          ...settingsPatch,
+          guildId: undefined,
+        },
+      });
+    } catch (error) {
+      Sentry.captureException(error);
+      throw error;
+    }
+  }
+
+  public async UpdateAirPortSettings(
+    guild: Guild,
+    settingsPatch: Partial<AirportSettings>
+  ) {
+    console.log(settingsPatch);
+    try {
+      return await guild.client.prisma.airportSettings.update({
+        where: {
+          guildId: guild.id,
+        },
+        data: settingsPatch,
+      });
+    } catch (error) {
+      Sentry.captureException(error);
+      throw error;
+    }
+  }
+
   public async HasModRole(member: GuildMember): Promise<boolean> {
     try {
       const result = await this.FetchGuildSettings(member.guild);
