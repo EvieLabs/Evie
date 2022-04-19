@@ -4,6 +4,7 @@ import {
   type FlattenedGuild,
 } from "#root/utils/api/ApiTransformers";
 import { authenticated } from "#root/utils/api/decorators";
+import { canManage } from "#root/utils/api/transformers";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApiRequest,
@@ -28,7 +29,10 @@ export class UserRoute extends Route {
     const guilds: FlattenedGuild[] = [];
     for (const guild of client.guilds.cache.values()) {
       if (guild.members.cache.has(user.id)) {
-        guilds.push(flattenGuild(guild));
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (await canManage(guild, guild.members.cache.get(user.id)!)) {
+          guilds.push(flattenGuild(guild));
+        }
       }
     }
     return response.json({
