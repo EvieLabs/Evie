@@ -4,7 +4,6 @@ import type { Guild, Message } from "discord.js";
 /** Gets all imported messages ever made for the specified guild */
 async function getImportedMessages(guild: Guild): Promise<string[]> {
   try {
-    console.log("wooosh!");
     return ((await guild.client.db.FetchGuildProperty(
       guild,
       "importedMessages"

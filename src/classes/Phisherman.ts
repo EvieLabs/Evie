@@ -1,9 +1,9 @@
 import extractHostname from "#root/utils/parsers/extractHostname";
+import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
 import axios from "axios";
 import type { Message } from "discord.js";
 import { EventDispatcher } from "strongly-typed-events";
-import { client } from "..";
 import { LogEmbed } from "./LogEmbed";
 
 export class Phisherman {
@@ -32,7 +32,7 @@ export class Phisherman {
         )
         .addField("Triggered Link", phish.url);
 
-      await client.guildLogger.log(phish.message.guild, embed);
+      await phish.message.client.guildLogger.log(phish.message.guild, embed);
     });
   }
 
@@ -74,7 +74,7 @@ export class Phisherman {
 
   private async checkDomain(domain: string): Promise<boolean> {
     if (!this.TOKEN) {
-      console.log(
+      container.logger.warn(
         "WARNING `PHISHERMAN_TOKEN` IS NULL! PHISHING SCAMS WILL BE NOT SCANNED!"
       );
       return false;

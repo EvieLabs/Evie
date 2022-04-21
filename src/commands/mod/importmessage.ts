@@ -272,7 +272,6 @@ export class ImportMessage extends Command {
         }
       } catch (e) {
         Sentry.captureException(e);
-        console.log(e);
         await ReplyStatusEmbed(
           StatusEmoji.FAIL,
           `Failed to import. For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,

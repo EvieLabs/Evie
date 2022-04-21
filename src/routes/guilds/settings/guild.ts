@@ -63,8 +63,6 @@ export class GuildSettingsRoute extends Route {
 
     const requestBody = request.body as Partial<GuildSettings>;
 
-    console.log(requestBody);
-
     const data = await this.container.client.db.UpdateGuildSettings(
       guild,
       requestBody

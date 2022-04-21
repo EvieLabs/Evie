@@ -19,11 +19,11 @@ export class ResetApp extends Command {
     await message.client.application?.commands.set([]);
     await status.edit("Resetting per guild commands...");
     message.client.guilds.cache.forEach(async (guild) => {
-      console.log(`Resetting commands for ${guild.name}...`);
+      this.container.logger.info(`Resetting commands for ${guild.name}...`);
       await message.client.application?.commands
         .set([], guild.id)
-        .catch(console.error);
-      console.log(`Reset commands for ${guild.name}`);
+        .catch(this.container.logger.error);
+      this.container.logger.info(`Reset commands for ${guild.name}`);
     });
     return await status.edit("Done!");
   }

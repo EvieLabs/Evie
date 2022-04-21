@@ -99,7 +99,6 @@ export class DatabaseTools {
     guild: Guild,
     settingsPatch: Partial<AirportSettings>
   ) {
-    console.log(settingsPatch);
     try {
       return await guild.client.prisma.airportSettings.update({
         where: {

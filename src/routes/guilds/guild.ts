@@ -15,7 +15,6 @@ import {
 export class GuildRoute extends Route {
   @authenticated()
   public async [methods.GET](request: ApiRequest, response: ApiResponse) {
-    console.log(request.params);
     const guildId = request.params.guild;
     const guild = await this.container.client.guilds.fetch(guildId);
     if (!guild) return response.error(HttpCodes.BadRequest);

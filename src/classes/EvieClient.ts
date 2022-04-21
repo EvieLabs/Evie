@@ -10,6 +10,7 @@ import { DatabaseTools } from "./DatabaseTools";
 import { EvieGuildLogger } from "./EvieGuildLogger";
 import { EviePunish } from "./EviePunish";
 import { Phisherman } from "./Phisherman";
+import { Stats } from "./Stats";
 
 export class EvieClient extends SapphireClient {
   /** The phisherman instance used for checking domains */
@@ -39,6 +40,10 @@ export class EvieClient extends SapphireClient {
   /** The database tools instance used for easily interacting with the database */
   @Enumerable(false)
   public override db = new DatabaseTools();
+
+  /** The stats instance used for grabbing statistics of the current bot */
+  @Enumerable(false)
+  public override stats = new Stats();
 
   public constructor() {
     super({
@@ -89,5 +94,6 @@ declare module "discord.js" {
     readonly airport: Airport;
     readonly prisma: PrismaClient;
     readonly db: DatabaseTools;
+    readonly stats: Stats;
   }
 }

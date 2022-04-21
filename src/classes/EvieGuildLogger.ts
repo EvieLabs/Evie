@@ -16,7 +16,6 @@ export class EvieGuildLogger {
       await channel.send({ embeds: [embed] });
     } catch (e) {
       Sentry.captureException(e);
-      console.log(e);
     }
   }
 
@@ -34,7 +33,6 @@ export class EvieGuildLogger {
       await channel.send({ embeds: [embed] });
     } catch (e) {
       Sentry.captureException(e);
-      console.log(e);
     }
   }
 }

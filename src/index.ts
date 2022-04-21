@@ -1,6 +1,7 @@
 import { EvieClient } from "#classes/EvieClient";
 import {
   ApplicationCommandRegistries,
+  container,
   RegisterBehavior,
 } from "@sapphire/framework";
 import "@sapphire/plugin-api/register";
@@ -12,13 +13,13 @@ import "dotenv/config";
 import { rootFolder } from "./constants/paths";
 
 /** The running EvieClient */
-export const client = new EvieClient();
+const client = new EvieClient();
 
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
   RegisterBehavior.Overwrite
 );
 
-console.log(`Root folder: ${rootFolder}`);
+container.logger.info(`Root folder: ${rootFolder}`);
 
 if (process.env.SENTRY_URL) {
   Sentry.init({
