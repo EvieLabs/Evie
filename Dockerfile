@@ -15,5 +15,8 @@ RUN yarn build
 # Install pm2
 RUN npm install pm2 -g
 
+# Production mode
+ENV NODE_ENV="production"
+
 # Entrypoint
 CMD [ "yarn", "docker" ]

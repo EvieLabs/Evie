@@ -76,7 +76,10 @@ export class EvieClient extends SapphireClient {
         Intents.FLAGS.GUILD_MESSAGES,
       ],
       logger: {
-        level: LogLevel.Info,
+        level:
+          getSecret("NODE_ENV", false) === "production"
+            ? LogLevel.Info
+            : LogLevel.Debug,
       },
       loadMessageCommandListeners: true,
       shards: "auto",
