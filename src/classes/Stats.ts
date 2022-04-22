@@ -1,38 +1,16 @@
+import type { CommandStats } from "@prisma/client";
 import { container } from "@sapphire/framework";
-import { Collection } from "discord.js";
 
 export class Stats {
-  private interactionsUsed = new Collection<string, number>();
-
-  public constructor() {
-    container.client.on("interactionCreate", (interaction) => {
-      if (!interaction.isCommand()) return;
-
-      const old = this.interactionsUsed.get(interaction.commandName);
-      if (!old)
-        return void this.interactionsUsed.set(interaction.commandName, 1);
-      return void this.interactionsUsed.set(interaction.commandName, old + 1);
-    });
-  }
-
-  public get commandStats(): { commandName: string; used: number }[] {
-    try {
-      return this.interactionsUsed
-        .map((used, commandName) => ({
-          commandName,
-          used,
-        }))
-        .sort((a, b) => b.used - a.used);
-    } finally {
-      this.interactionsUsed.clear();
-    }
-  }
-
   public get users(): number {
     return container.client.guilds.cache.reduce(
       (acc, guild) => acc + guild.memberCount,
       0
     );
+  }
+
+  public async getCommandStats(): Promise<CommandStats[]> {
+    return await container.client.prisma.commandStats.findMany();
   }
 
   public get guilds(): number {

@@ -27,10 +27,14 @@ export class InfluxManager extends Schedule {
           container.client.stats.unavailableGuilds
         );
 
-      container.client.stats.commandStats.map((command) => {
-        point.intField(command.commandName, command.used);
+      const commandPoint = new Point("commands");
+      const commandStats = await container.client.stats.getCommandStats();
+
+      commandStats.forEach((stat) => {
+        commandPoint.intField(stat.name, stat.uses);
       });
 
+      this.writeApi.writePoint(commandPoint);
       this.writeApi.writePoint(point);
     } catch (error) {
       Sentry.captureException(error);
