@@ -8,7 +8,7 @@ import {
 import type { CommandInteraction } from "discord.js";
 
 @ApplyOptions<ListenerOptions>({ event: Events.ChatInputCommandRun })
-export class UserListener extends Listener {
+export class ChatInputCommandRunListener extends Listener {
   public async run(_: CommandInteraction, command: ChatInputCommand) {
     await this.container.client.prisma.commandStats.upsert({
       where: {

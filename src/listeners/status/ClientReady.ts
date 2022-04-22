@@ -8,7 +8,7 @@ import type { Client } from "discord.js";
   once: false,
   event: Events.ClientReady,
 })
-export class GuildMemberAddListener extends Listener {
+export class ClientReadyListener extends Listener {
   public async run(client: Client) {
     new TempBans("*/10 * * * *", client);
     if (process.env.INFLUX_URL) new InfluxManager("*/15 * * * * *", client);
