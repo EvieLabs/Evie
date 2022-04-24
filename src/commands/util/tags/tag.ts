@@ -22,12 +22,9 @@ export class Tag extends Command {
       await interaction.client.db.FetchTags(interaction.guild)
     ).find((tag) => tag.id === query);
     if (!tag) {
-      const tag = await (
+      const tag = (
         await interaction.client.db.FetchTags(interaction.guild)
-      ).find(
-        // find the tag with the closest name
-        (tag) => tag.name === query.split(" ")[0]
-      );
+      ).find((tag) => tag.name === query.split(" ")[0]);
       if (tag) {
         const e = await EvieEmbed(interaction.guild);
         e.setTitle(tag.name);
