@@ -1,12 +1,17 @@
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
+  ChatInputCommand,
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
 import axios from "axios";
 import type { CommandInteraction } from "discord.js";
 
+@ApplyOptions<ChatInputCommand.Options>({
+  description: "Fun Commands",
+})
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     const subcommand = interaction.options.getSubcommand();
@@ -40,7 +45,7 @@ export class Fun extends Command {
       (builder) =>
         builder
           .setName(this.name)
-          .setDescription("Fun Commands")
+          .setDescription(this.description)
           .addSubcommand((subcommand) =>
             subcommand
               .setName("evie")
