@@ -1,12 +1,8 @@
 import { container } from "@sapphire/framework";
-import type { Client } from "discord.js";
 import cron from "node-cron";
 
 export class Schedule {
-  public constructor(
-    private readonly cronExpression: string,
-    private readonly client: Client
-  ) {
+  public constructor(private readonly cronExpression: string) {
     container.logger.debug(
       `[SCHEDULE]: Loaded new schedule ${this.constructor.name} for ${this.cronExpression}`
     );
@@ -16,12 +12,12 @@ export class Schedule {
           this.constructor.name
         }...`
       );
-      this.execute(this.client);
+      this.execute();
     });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async execute(client: Client) {
+  public async execute() {
     throw new Error("Method not implemented.");
   }
 }

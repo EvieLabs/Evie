@@ -1,11 +1,13 @@
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { LogEmbed } from "#root/classes/LogEmbed";
 import { Schedule } from "#root/classes/Schedule";
+import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
-import { Client, Constants } from "discord.js";
+import { Constants } from "discord.js";
 
 export class TempBans extends Schedule {
-  override async execute(client: Client) {
+  override async execute() {
+    const { client } = container;
     const tempbans = await client.prisma.evieTempBan.findMany({
       where: {
         expiresAt: {
