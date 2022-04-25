@@ -5,8 +5,11 @@ import type {
 } from "@prisma/client";
 import * as Sentry from "@sentry/node";
 import type { Guild, GuildMember } from "discord.js";
+import { EvieCache } from "./EvieCache";
 
 export class DatabaseTools {
+  public cache = new EvieCache();
+
   public async FetchGuildSettings(guild: Guild): Promise<
     GuildSettings & {
       moderationSettings: ModerationSettings | null;
