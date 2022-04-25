@@ -6,3 +6,11 @@ export const modAction = (member: User, action: string, reason?: string) => {
           **Reason**: ${reason ?? "No reason provided."}
          `;
 };
+
+export function trimArray(a: string[], b = 10) {
+  if (a.length > b) {
+    const c = a.length - b;
+    (a = a.slice(0, b)), a.push(`${c} more...`);
+  }
+  return a;
+}

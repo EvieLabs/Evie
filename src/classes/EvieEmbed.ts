@@ -1,6 +1,6 @@
+import { eviePink } from "#root/constants/config";
 import {
   ButtonInteraction,
-  ColorResolvable,
   CommandInteraction,
   ContextMenuInteraction,
   Message,
@@ -16,18 +16,17 @@ export enum StatusEmoji {
   FAIL = "<a:fail:952340157858709594>",
 }
 
-export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
-  return new MessageEmbed()
-    .setColor(
-      (guild
-        ? await guild.client.db.FetchGuildProperty(guild, "color")
-        : "FUCHSIA") as ColorResolvable
-    )
-    .setTimestamp()
-    .setFooter({
-      text: "Evie",
-      iconURL: "https://evie.pw/assets/EvieIcon.png",
+export class EvieEmbed extends MessageEmbed {
+  public constructor(public guild?: Guild | null) {
+    super({
+      color: guild ? guild.client.db.cache.embedColor(guild) : eviePink,
+      timestamp: Date.now().toString(),
+      footer: {
+        text: "Evie",
+        iconURL: "https://evie.pw/assets/EvieIcon.png",
+      },
     });
+  }
 }
 
 export class StatusEmbed extends MessageEmbed {
@@ -51,7 +50,8 @@ export async function ReplyStatusEmbed(
     | CommandInteraction
     | ModalSubmitInteraction
     | ContextMenuInteraction
-    | ButtonInteraction,
+    | ButtonInteraction
+    | Message,
   allowedMentions?: MessageMentionOptions
 ): Promise<Message | Message<boolean> | APIMessage | void> {
   const embed = new MessageEmbed()
@@ -62,6 +62,9 @@ export async function ReplyStatusEmbed(
       iconURL: "https://evie.pw/assets/EvieIcon.png",
     })
     .setDescription(`${status} ${description}`);
+
+  if (i instanceof Message)
+    return i.reply({ embeds: [embed], allowedMentions: allowedMentions });
 
   return i.replied
     ? i.followUp({

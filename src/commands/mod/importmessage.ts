@@ -158,9 +158,7 @@ export class ImportMessage extends Command {
 
     await interaction.reply({
       embeds: [
-        (
-          await EvieEmbed(interaction.guild)
-        ).setDescription(
+        new EvieEmbed(interaction.guild).setDescription(
           `Tip: You can copy and paste the existing message JSON into the "JSON Data Editor" on [Discohook](https://discohook.org/) to easily edit the message.
           Press continue to continue.`
         ),
