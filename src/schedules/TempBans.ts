@@ -39,7 +39,7 @@ export class TempBans extends Schedule {
           .catch(() =>
             client.guildLogger.log(
               guild,
-              StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)
+              new StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)
             )
           );
         await client.prisma.evieTempBan.delete({

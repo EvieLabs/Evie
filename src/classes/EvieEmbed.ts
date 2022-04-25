@@ -26,19 +26,22 @@ export async function EvieEmbed(guild: Guild | null): Promise<MessageEmbed> {
     .setTimestamp()
     .setFooter({
       text: "Evie",
-      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+      iconURL: "https://evie.pw/assets/EvieIcon.png",
     });
 }
 
-export function StatusEmbed(status: StatusEmoji, description: string) {
-  return new MessageEmbed()
-    .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
-    .setTimestamp()
-    .setFooter({
-      text: "Evie",
-      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
-    })
-    .setDescription(`${status} ${description}`);
+export class StatusEmbed extends MessageEmbed {
+  constructor(public status: StatusEmoji, public statusMessage: string) {
+    super({
+      color: status === StatusEmoji.SUCCESS ? 0x00ff00 : 0xff0000,
+      timestamp: Date.now().toString(),
+      footer: {
+        text: "Evie",
+        iconURL: "https://evie.pw/assets/EvieIcon.png",
+      },
+      description: `${status} ${statusMessage}`,
+    });
+  }
 }
 
 export async function ReplyStatusEmbed(
@@ -56,7 +59,7 @@ export async function ReplyStatusEmbed(
     .setTimestamp()
     .setFooter({
       text: "Evie",
-      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+      iconURL: "https://evie.pw/assets/EvieIcon.png",
     })
     .setDescription(`${status} ${description}`);
 
