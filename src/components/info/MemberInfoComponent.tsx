@@ -1,4 +1,4 @@
-import { Embed } from "#root/lib/reacord/library/main";
+import { Embed } from "#reacord/main";
 import { capitalizeEachWord, trimArray } from "#utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
 import type { GuildMember } from "discord.js";
