@@ -14,3 +14,9 @@ export function trimArray(a: string[], b = 10) {
   }
   return a;
 }
+
+export function capitalizeEachWord(str: string) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}

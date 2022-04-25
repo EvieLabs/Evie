@@ -4,14 +4,16 @@
     "outDir": "../dist",
     "rootDir": ".",
     "baseUrl": ".",
+    "jsx": "react",
     "noEmit": true,
     "paths": {
       "#root/*": ["*"],
       "#types/*": ["types/*"],
       "#utils/*": ["utils/*"],
       "#classes/*": ["classes/*"],
-      "#constants/*": ["constants/*"]
+      "#constants/*": ["constants/*"],
+      "#reacord/*": ["lib/reacord/library/*"]
     }
   },
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts", "./**/*.tsx"]
 }

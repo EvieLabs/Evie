@@ -1,3 +1,4 @@
+import { ReacordDiscordJs } from "#reacord/main";
 import { transformOauthGuildsAndUser } from "#root/utils/api/transformers";
 import { getNumberSecret, getSecret } from "#root/utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
@@ -44,6 +45,9 @@ export class EvieClient extends SapphireClient {
   /** The stats instance used for grabbing statistics of the current bot */
   @Enumerable(false)
   public override stats = new Stats();
+
+  @Enumerable(false)
+  public override reacord: ReacordDiscordJs = new ReacordDiscordJs(this);
 
   public constructor() {
     super({
@@ -98,5 +102,6 @@ declare module "discord.js" {
     readonly prisma: PrismaClient;
     readonly db: DatabaseTools;
     readonly stats: Stats;
+    readonly reacord: ReacordDiscordJs;
   }
 }
