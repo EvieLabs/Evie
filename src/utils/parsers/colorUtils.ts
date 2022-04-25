@@ -1,7 +1,3 @@
-function hexStringToHexNumber(hexString: string): number {
-  return parseInt(hexString, 16);
+export function hexStringToHexNumber(rrggbb: string) {
+  return parseInt(rrggbb.replace("#", ""), 16);
 }
-
-export const ColorUtils = {
-  hexStringToHexNumber,
-};
