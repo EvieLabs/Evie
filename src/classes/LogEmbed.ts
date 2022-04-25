@@ -6,7 +6,7 @@ export class LogEmbed extends MessageEmbed {
     this.setTimestamp();
     this.setFooter({
       text: `Evie${footerText ? ` | ${footerText}` : ""}`,
-      iconURL: "https://eviebot.rocks/assets/EvieIcon.png",
+      iconURL: "https://evie.pw/assets/EvieIcon.png",
     });
   }
 }
