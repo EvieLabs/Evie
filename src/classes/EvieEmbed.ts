@@ -54,14 +54,7 @@ export async function ReplyStatusEmbed(
     | Message,
   allowedMentions?: MessageMentionOptions
 ): Promise<Message | Message<boolean> | APIMessage | void> {
-  const embed = new MessageEmbed()
-    .setColor(status === StatusEmoji.SUCCESS ? "#00ff00" : "#ff0000")
-    .setTimestamp()
-    .setFooter({
-      text: "Evie",
-      iconURL: "https://evie.pw/assets/EvieIcon.png",
-    })
-    .setDescription(`${status} ${description}`);
+  const embed = new StatusEmbed(status, description);
 
   if (i instanceof Message)
     return i.reply({ embeds: [embed], allowedMentions: allowedMentions });
