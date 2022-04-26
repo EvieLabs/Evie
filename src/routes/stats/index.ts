@@ -15,16 +15,10 @@ export class StatsRoute extends Route {
     const stats = await pidusage.default(process.pid);
 
     response.json({
-      users: this.container.client.guilds.cache.reduce(
-        (acc, guild) => acc + guild.memberCount,
-        0
-      ),
-      guilds: this.container.client.guilds.cache.reduce((acc) => acc + 1, 0),
+      users: this.container.client.stats.users,
+      guilds: this.container.client.stats.guilds,
       cpuUsage: parseFloat((stats.cpu / cpus().length).toFixed(2)),
-      wsPing: this.container.client.ws.ping,
-      unavailableGuilds: this.container.client.guilds.cache.filter(
-        (guild) => !guild.available
-      ).size,
+      wsPing: this.container.client.stats.wsPing,
     });
   }
 }
