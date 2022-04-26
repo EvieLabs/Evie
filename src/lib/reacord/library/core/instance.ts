@@ -1,3 +1,4 @@
+import type { User } from "discord.js";
 import type { ReactNode } from "react";
 
 /**
@@ -5,6 +6,9 @@ import type { ReactNode } from "react";
  * @category Core
  */
 export type ReacordInstance = {
+  /** The original user triggering the instance */
+  originalUser?: User;
+
   /** Render some JSX to this instance (edits the message) */
   render: (content: ReactNode) => void;
 

@@ -1,10 +1,10 @@
-import * as React from "react"
-import { raise } from "../../helpers/raise"
-import type { ReacordInstance } from "./instance"
+import * as React from "react";
+import { raise } from "../../helpers/raise";
+import type { ReacordInstance } from "./instance";
 
-const Context = React.createContext<ReacordInstance | undefined>(undefined)
+const Context = React.createContext<ReacordInstance | undefined>(undefined);
 
-export const InstanceProvider = Context.Provider
+export const InstanceProvider = Context.Provider;
 
 /**
  * Get the associated instance for the current component.
@@ -16,5 +16,5 @@ export function useInstance(): ReacordInstance {
   return (
     React.useContext(Context) ??
     raise("Could not find instance, was this component rendered via Reacord?")
-  )
+  );
 }

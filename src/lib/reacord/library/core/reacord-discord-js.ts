@@ -43,10 +43,27 @@ export class ReacordDiscordJs extends Reacord {
    */
   override send(
     channelId: string,
-    initialContent?: React.ReactNode
+    initialContent?: React.ReactNode,
+    originalUser?: Discord.User
   ): ReacordInstance {
     return this.createInstance(
       this.createChannelRenderer(channelId),
+      originalUser,
+      initialContent
+    );
+  }
+
+  /**
+   * Replys to a message in a channel.
+   * @see https://reacord.mapleleaf.dev/guides/sending-messages
+   */
+  override messageReply(
+    message: Discord.Message,
+    initialContent?: React.ReactNode
+  ): ReacordInstance {
+    return this.createInstance(
+      this.createChannelRenderer(message.channelId),
+      message.author,
       initialContent
     );
   }
@@ -61,6 +78,7 @@ export class ReacordDiscordJs extends Reacord {
   ): ReacordInstance {
     return this.createInstance(
       this.createInteractionReplyRenderer(interaction),
+      interaction.user,
       initialContent
     );
   }
@@ -75,6 +93,7 @@ export class ReacordDiscordJs extends Reacord {
   ): ReacordInstance {
     return this.createInstance(
       this.createEphemeralInteractionReplyRenderer(interaction),
+      interaction.user,
       initialContent
     );
   }
@@ -261,12 +280,14 @@ export class ReacordDiscordJs extends Reacord {
         reply: (content?: ReactNode) =>
           this.createInstance(
             this.createInteractionReplyRenderer(interaction),
+            interaction.user,
             content
           ),
 
         ephemeralReply: (content: ReactNode) =>
           this.createInstance(
             this.createEphemeralInteractionReplyRenderer(interaction),
+            interaction.user,
             content
           ),
       },
