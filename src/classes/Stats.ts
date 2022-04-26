@@ -1,6 +1,5 @@
 import type { CommandStats } from "@prisma/client";
 import { container } from "@sapphire/framework";
-
 export class Stats {
   public get users(): number {
     return container.client.guilds.cache.reduce(
@@ -14,10 +13,6 @@ export class Stats {
   }
 
   public get guilds(): number {
-    return container.client.guilds.cache.reduce((acc) => acc + 1, 0);
-  }
-
-  public get cpuUsage(): number {
     return container.client.guilds.cache.reduce((acc) => acc + 1, 0);
   }
 

@@ -20,7 +20,6 @@ export class InfluxManager extends Schedule {
       const point = new Point("stats")
         .intField("users", container.client.stats.users)
         .intField("guilds", container.client.stats.guilds)
-        .floatField("cpuUsage", container.client.stats.cpuUsage)
         .intField("wsPing", container.client.stats.wsPing)
         .intField(
           "unavailableGuilds",
