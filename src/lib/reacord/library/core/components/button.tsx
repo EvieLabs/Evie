@@ -1,5 +1,7 @@
+import { container } from "@sapphire/framework";
+import type { User } from "discord.js";
 import { nanoid } from "nanoid";
-import React from "react";
+import React, { useEffect } from "react";
 import lang from "../../../../../utils/lang";
 import { ReacordElement } from "../../internal/element.js";
 import type { ComponentInteraction } from "../../internal/interaction";
@@ -7,7 +9,6 @@ import type { MessageOptions } from "../../internal/message";
 import { getNextActionRow } from "../../internal/message";
 import { Node } from "../../internal/node.js";
 import type { ComponentEvent } from "../component-event";
-import { useInstance } from "../instance-context.js";
 import type { ButtonSharedProps } from "./button-shared-props";
 
 /**
@@ -24,6 +25,11 @@ export type ButtonProps = ButtonSharedProps & {
    * Happens when a user clicks the button.
    */
   onClick: (event: ButtonClickEvent) => void;
+
+  /**
+   * The target of the button.
+   */
+  user?: User;
 };
 
 /**
@@ -35,12 +41,19 @@ export type ButtonClickEvent = ComponentEvent;
  * @category Button
  */
 export function Button(props: ButtonProps) {
-  const instance = useInstance();
+  useEffect(() => {
+    container.logger.debug(
+      `Created a button with props: ${JSON.stringify({
+        user: `${props.user?.username}(${props.user?.id})`,
+        style: props.style,
+        disabled: props.disabled,
+        emoji: props.emoji,
+        label: props.label,
+      })}`
+    );
+  }, []);
   return (
-    <ReacordElement
-      props={props}
-      createNode={() => new ButtonNode(props, instance)}
-    />
+    <ReacordElement props={props} createNode={() => new ButtonNode(props)} />
   );
 }
 
@@ -60,30 +73,30 @@ class ButtonNode extends Node<ButtonProps> {
 
   override handleComponentInteraction(interaction: ComponentInteraction) {
     if (
-      this.instance.originalUser &&
-      interaction.event.user.id !== this.instance.originalUser.id
-    ) {
-      if (interaction.raw.replied)
-        interaction.followUp({
-          content: lang.messageComponentNotForYou,
-          embeds: [],
-          actionRows: [],
-          ephemeral: true,
-        });
-      else
-        interaction.reply({
-          content: lang.messageComponentNotForYou,
-          embeds: [],
-          actionRows: [],
-          ephemeral: true,
-        });
-      return false;
-    }
-
-    if (
       interaction.type === "button" &&
       interaction.customId === this.customId
     ) {
+      if (this.props.user && interaction.event.user.id !== this.props.user.id) {
+        container.logger.debug(
+          `[Reacord] The non original user ${interaction.event.user.username}(${interaction.event.user.id}) clicked the button. Meant for ${this.props.user.username}(${this.props.user.id})`
+        );
+
+        interaction.raw.replied
+          ? interaction.followUp({
+              content: lang.messageComponentNotForYou,
+              embeds: [],
+              actionRows: [],
+              ephemeral: true,
+            })
+          : interaction.reply({
+              content: lang.messageComponentNotForYou,
+              embeds: [],
+              actionRows: [],
+              ephemeral: true,
+            });
+
+        return false;
+      }
       this.props.onClick(interaction.event);
       return true;
     }

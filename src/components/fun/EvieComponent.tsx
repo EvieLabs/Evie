@@ -1,8 +1,9 @@
 import { Button, Embed } from "#reacord/main";
 import axios from "axios";
+import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";
 
-export default function EvieComponent() {
+export default function EvieComponent(props: { user: User }) {
   const [image, setImage] = useState<string>();
 
   async function randomEvie() {
@@ -24,6 +25,7 @@ export default function EvieComponent() {
         image={{ url: image ?? "" }}
       />
       <Button
+        user={props.user}
         label="Another One"
         onClick={() => {
           randomEvie();

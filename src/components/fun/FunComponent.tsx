@@ -1,20 +1,16 @@
-import { Button, Option, Select, useInstance } from "#reacord/main";
-import React, { useEffect, useState } from "react";
+import { Button, Option, Select } from "#reacord/main";
+import type { User } from "discord.js";
+import React, { useState } from "react";
 import EvieComponent from "./EvieComponent";
 
-export default function FunComponent() {
+export default function FunComponent(props: { user: User }) {
   const [value, setValue] = useState<string>();
   const [component, setComponent] = useState<JSX.Element | undefined>();
-  const instance = useInstance();
-
-  useEffect(() => {
-    console.log(instance.originalUser);
-  }, []);
-
   return (
     <>
       {component}
       <Select
+        user={props.user}
         placeholder="choose a dog type"
         value={value}
         onChangeValue={setValue}
@@ -27,6 +23,7 @@ export default function FunComponent() {
         />
       </Select>
       <Button
+        user={props.user}
         label="confirm"
         style="primary"
         disabled={value == undefined}
@@ -34,7 +31,7 @@ export default function FunComponent() {
           if (value) {
             switch (value) {
               case "evie":
-                setComponent(<EvieComponent />);
+                setComponent(<EvieComponent user={props.user} />);
                 break;
             }
           }

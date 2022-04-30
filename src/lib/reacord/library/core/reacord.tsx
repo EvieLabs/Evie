@@ -1,4 +1,3 @@
-import type { User } from "discord.js";
 import type { ReactNode } from "react";
 import React from "react";
 import type { ComponentInteraction } from "../internal/interaction";
@@ -42,11 +41,7 @@ export abstract class Reacord {
     return this.config.maxInstances ?? 50;
   }
 
-  protected createInstance(
-    renderer: Renderer,
-    originalUser?: User,
-    initialContent?: ReactNode
-  ) {
+  protected createInstance(renderer: Renderer, initialContent?: ReactNode) {
     if (this.renderers.length > this.maxInstances) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.deactivate(this.renderers[0]!);
@@ -57,7 +52,6 @@ export abstract class Reacord {
     const container = reconciler.createContainer(renderer, 0, false, {});
 
     const instance: ReacordInstance = {
-      originalUser,
       render: (content: ReactNode) => {
         reconciler.updateContainer(
           <InstanceProvider value={instance}>{content}</InstanceProvider>,

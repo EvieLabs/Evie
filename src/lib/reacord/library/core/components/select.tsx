@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { container } from "@sapphire/framework";
+import type { User } from "discord.js";
 import { nanoid } from "nanoid";
-import type { ReactNode } from "react";
-import React from "react";
+import React, { ReactNode, useEffect } from "react";
 import lang from "../../../../../utils/lang";
 import { isInstanceOf } from "../../../helpers/is-instance-of";
 import { ReacordElement } from "../../internal/element.js";
@@ -14,7 +14,6 @@ import type {
 } from "../../internal/message";
 import { Node } from "../../internal/node.js";
 import type { ComponentEvent } from "../component-event";
-import { useInstance } from "../instance-context";
 import { OptionNode } from "./option-node";
 
 /**
@@ -71,6 +70,11 @@ export type SelectProps = {
    * Convenience shorthand for `onChange`, which receives all selected values.
    */
   onChangeMultiple?: (values: string[], event: SelectChangeEvent) => void;
+
+  /**
+   * The target of the button.
+   */
+  user?: User;
 };
 
 /**
@@ -85,13 +89,17 @@ export type SelectChangeEvent = ComponentEvent & {
  * @category Select
  */
 export function Select(props: SelectProps) {
-  const instance = useInstance();
-
+  useEffect(() => {
+    container.logger.debug(
+      `Created a select with props: ${JSON.stringify({
+        user: props.user?.id,
+        value: props.value,
+        values: props.values,
+      })}`
+    );
+  }, []);
   return (
-    <ReacordElement
-      props={props}
-      createNode={() => new SelectNode(props, instance)}
-    >
+    <ReacordElement props={props} createNode={() => new SelectNode(props)}>
       {props.children}
     </ReacordElement>
   );
@@ -149,12 +157,9 @@ class SelectNode extends Node<SelectProps> {
 
     if (!isSelectInteraction) return false;
 
-    if (
-      this.instance.originalUser &&
-      interaction.event.user.id !== this.instance.originalUser.id
-    ) {
+    if (this.props.user && interaction.event.user.id !== this.props.user.id) {
       container.logger.debug(
-        `Ignoring select interaction from ${interaction.event.user.id} (not original user)`
+        `[Reacord] The non original user ${interaction.event.user.username}(${interaction.event.user.id}) clicked the select. Meant for ${this.props.user.username}(${this.props.user.id})`
       );
 
       interaction.raw.replied

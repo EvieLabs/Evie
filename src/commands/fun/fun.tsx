@@ -15,7 +15,10 @@ import React from "react";
 })
 export class Fun extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
-    interaction.client.reacord.reply(interaction, <FunComponent />);
+    interaction.client.reacord.reply(
+      interaction,
+      <FunComponent user={interaction.user} />
+    );
   }
 
   public override registerApplicationCommands(
