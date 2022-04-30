@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import React from "react";
+import lang from "../../../../../utils/lang";
 import { ReacordElement } from "../../internal/element.js";
 import type { ComponentInteraction } from "../../internal/interaction";
 import type { MessageOptions } from "../../internal/message";
@@ -62,11 +63,20 @@ class ButtonNode extends Node<ButtonProps> {
       this.instance.originalUser &&
       interaction.event.user.id !== this.instance.originalUser.id
     ) {
-      interaction.reply({
-        content: "You can't click this button.",
-        embeds: [],
-        actionRows: [],
-      });
+      if (interaction.raw.replied)
+        interaction.followUp({
+          content: lang.messageComponentNotForYou,
+          embeds: [],
+          actionRows: [],
+          ephemeral: true,
+        });
+      else
+        interaction.reply({
+          content: lang.messageComponentNotForYou,
+          embeds: [],
+          actionRows: [],
+          ephemeral: true,
+        });
       return false;
     }
 

@@ -1,3 +1,4 @@
+import type { MessageComponentInteraction } from "discord.js";
 import type { ComponentEvent } from "../core/component-event";
 import type { ButtonClickEvent, SelectChangeEvent } from "../main";
 import type { Message, MessageOptions } from "./message";
@@ -32,4 +33,5 @@ export type BaseComponentInteraction<
   customId: string;
   update(options: MessageOptions): Promise<void>;
   deferUpdate(): Promise<void>;
+  raw: MessageComponentInteraction;
 };

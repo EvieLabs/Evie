@@ -7,6 +7,7 @@ export type MessageOptions = {
   content: string;
   embeds: EmbedOptions[];
   actionRows: ActionRow[];
+  ephemeral: boolean;
 };
 
 export type ActionRow = ActionRowItem[];
