@@ -25,6 +25,7 @@ export default function EvieComponent(props: { user: User }) {
         image={{ url: image ?? "" }}
       />
       <Button
+        style="primary"
         user={props.user}
         label="Another One"
         onClick={() => {

@@ -9,31 +9,34 @@ export default function FunComponent(props: { user: User }) {
   return (
     <>
       {component}
-      <Select
-        user={props.user}
-        placeholder="choose a dog type"
-        value={value}
-        onChangeValue={setValue}
-      >
-        <Option
-          description="Send a random picture of Evie"
-          label="Evie"
-          emoji="<:Evie:940139203222716426>"
-          value="evie"
-        />
-      </Select>
+      {component ? undefined : (
+        <Select
+          user={props.user}
+          placeholder="Select activity..."
+          value={value}
+          onChangeValue={setValue}
+        >
+          <Option
+            description="Send a random picture of Evie"
+            label="Evie"
+            emoji="<:Evie:940139203222716426>"
+            value="evie"
+          />
+        </Select>
+      )}
       <Button
         user={props.user}
-        label="confirm"
-        style="primary"
+        label={component ? "Go back" : "Confirm"}
+        style={component ? "secondary" : "primary"}
         disabled={value == undefined}
         onClick={() => {
-          if (value) {
-            switch (value) {
-              case "evie":
-                setComponent(<EvieComponent user={props.user} />);
-                break;
-            }
+          if (component) return setComponent(undefined);
+          if (!value) return;
+
+          switch (value) {
+            case "evie":
+              setComponent(<EvieComponent user={props.user} />);
+              break;
           }
         }}
       />
