@@ -1,3 +1,4 @@
+import { container } from "@sapphire/framework";
 import * as Discord from "discord.js";
 import type { ReactNode } from "react";
 import type { Except } from "type-fest";
@@ -47,6 +48,20 @@ export class ReacordDiscordJs extends Reacord {
   ): ReacordInstance {
     return this.createInstance(
       this.createChannelRenderer(channelId),
+      initialContent
+    );
+  }
+
+  /**
+   * Replys to a message in a channel.
+   * @see https://reacord.mapleleaf.dev/guides/sending-messages
+   */
+  override messageReply(
+    message: Discord.Message,
+    initialContent?: React.ReactNode
+  ): ReacordInstance {
+    return this.createInstance(
+      this.createChannelRenderer(message.channelId),
       initialContent
     );
   }
@@ -229,6 +244,7 @@ export class ReacordDiscordJs extends Reacord {
     };
 
     const baseProps: Except<ComponentInteraction, "type"> = {
+      raw: interaction,
       id: interaction.id,
       customId: interaction.customId,
       update: async (options: MessageOptions) => {
@@ -239,16 +255,32 @@ export class ReacordDiscordJs extends Reacord {
         await interaction.deferUpdate();
       },
       reply: async (options) => {
-        const message = await interaction.reply({
-          ...getDiscordMessageOptions(options),
-          fetchReply: true,
-        });
-        return createReacordMessage(message as Discord.Message);
+        try {
+          const message = interaction.replied
+            ? await interaction.followUp({
+                ...getDiscordMessageOptions(options),
+                fetchReply: true,
+                ephemeral: options.ephemeral,
+              })
+            : await interaction.reply({
+                ...getDiscordMessageOptions(options),
+                fetchReply: true,
+                ephemeral: options.ephemeral,
+              });
+          return createReacordMessage(message as Discord.Message);
+        } catch (e) {
+          // TODO: Handle this "better"
+          container.logger.debug(
+            `[Reacord] Ignoring failed reply due to render cycle`
+          );
+          return createReacordMessage({} as Discord.Message);
+        }
       },
       followUp: async (options) => {
         const message = await interaction.followUp({
           ...getDiscordMessageOptions(options),
           fetchReply: true,
+          ephemeral: options.ephemeral,
         });
         return createReacordMessage(message as Discord.Message);
       },

@@ -3,6 +3,7 @@
     "sourceType": "module",
     "ecmaVersion": "latest"
   },
+  "ignorePatterns": ["dist/**/*.js"],
   "extends": [
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended"
