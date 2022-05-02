@@ -1,4 +1,5 @@
 import { container } from "@sapphire/framework";
+import * as Sentry from "@sentry/node";
 import * as Discord from "discord.js";
 import type { ReactNode } from "react";
 import type { Except } from "type-fest";
@@ -270,6 +271,7 @@ export class ReacordDiscordJs extends Reacord {
           return createReacordMessage(message as Discord.Message);
         } catch (e) {
           // TODO: Handle this "better"
+          Sentry.captureException(e);
           container.logger.debug(
             `[Reacord] Ignoring failed reply due to render cycle`
           );
