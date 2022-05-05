@@ -49,6 +49,9 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override reacord: ReacordDiscordJs = new ReacordDiscordJs(this);
 
+  @Enumerable(false)
+  public override startedAt = new Date();
+
   public constructor() {
     super({
       api: {
@@ -103,5 +106,6 @@ declare module "discord.js" {
     readonly db: DatabaseTools;
     readonly stats: Stats;
     readonly reacord: ReacordDiscordJs;
+    readonly startedAt: Date;
   }
 }

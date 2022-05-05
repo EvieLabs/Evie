@@ -58,7 +58,7 @@ export function Button(props: ButtonProps) {
 }
 
 class ButtonNode extends Node<ButtonProps> {
-  private customId = nanoid();
+  private customId = `reacord-${nanoid()}`;
 
   override modifyMessageOptions(options: MessageOptions): void {
     getNextActionRow(options).push({
