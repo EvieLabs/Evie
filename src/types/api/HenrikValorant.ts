@@ -1,0 +1,31 @@
+export interface GetHenrikAPI<T> {
+  status: number;
+  data?: T;
+}
+
+export interface AccountData {
+  puuid: string;
+  region: string;
+  account_level: number;
+  name: string;
+  tag: string;
+  card: PlayerCard;
+  last_update: string;
+}
+
+export interface PlayerCard {
+  small: string;
+  large: string;
+  wide: string;
+  id: string;
+}
+
+export interface MMRDataV1 {
+  currenttier: number;
+  currenttierpatched: string;
+  ranking_in_tier: number;
+  mmr_change_to_last_game: number;
+  elo: number;
+  name: string;
+  tag: string;
+}
