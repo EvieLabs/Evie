@@ -20,12 +20,18 @@ export interface PlayerCard {
   id: string;
 }
 
-export interface MMRDataV1 {
+export interface MMRDataV2 {
+  name: string;
+  tag: string;
+  puuid: string;
+  current_data: CurrentData;
+}
+
+export interface CurrentData {
   currenttier: number;
   currenttierpatched: string;
   ranking_in_tier: number;
   mmr_change_to_last_game: number;
   elo: number;
-  name: string;
-  tag: string;
+  games_needed_for_rating: number;
 }

@@ -4,7 +4,7 @@ import { getCompTierEmoji } from "#root/lib/valorant/emojis";
 import type {
   AccountData,
   GetHenrikAPI,
-  MMRDataV1,
+  MMRDataV2,
 } from "#types/api/HenrikValorant";
 import axios from "axios";
 import type { User } from "discord.js";
@@ -16,12 +16,12 @@ export default function ValorantCompStats(props: {
 }) {
   const { accountData } = props;
 
-  const [compStats, setCompStats] = useState<GetHenrikAPI<MMRDataV1> | null>();
+  const [compStats, setCompStats] = useState<GetHenrikAPI<MMRDataV2> | null>();
 
   useEffect(() => {
     axios
-      .get<GetHenrikAPI<MMRDataV1>>(
-        `${HenrikAPIRoot}/valorant/v1/mmr/ap/tristan/${accountData.tag}`
+      .get<GetHenrikAPI<MMRDataV2>>(
+        `${HenrikAPIRoot}/valorant/v2/mmr/ap/${accountData.name}/${accountData.tag}`
       )
       .then((res) => {
         setCompStats(res.data);
@@ -46,11 +46,13 @@ export default function ValorantCompStats(props: {
             {compStats?.data ? (
               <>
                 {a} **Rank**:{" "}
-                {getCompTierEmoji(compStats.data.currenttierpatched)}{" "}
-                {compStats.data.currenttierpatched} {l}
-                {a} **Elo**: {compStats.data.elo} {l}
+                {getCompTierEmoji(
+                  compStats.data.current_data.currenttierpatched
+                )}{" "}
+                {compStats.data.current_data.currenttierpatched} {l}
+                {a} **Elo**: {compStats.data.current_data.elo} {l}
                 {a} **MMR Change since last game**:{" "}
-                {compStats.data.mmr_change_to_last_game}
+                {compStats.data.current_data.mmr_change_to_last_game}
               </>
             ) : (
               "Loading..."
