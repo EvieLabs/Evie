@@ -1,6 +1,6 @@
 import { Embed } from "#reacord/main";
 import { HenrikAPIRoot } from "#root/constants/index";
-import { getCompTierEmoji } from "#root/lib/valorant/emojis";
+import { getCompTierEmoji, getPeakSeason } from "#root/lib/valorant/emojis";
 import type {
   AccountData,
   GetHenrikAPI,
@@ -52,7 +52,11 @@ export default function ValorantCompStats(props: {
                 {compStats.data.current_data.currenttierpatched} {l}
                 {a} **Elo**: {compStats.data.current_data.elo} {l}
                 {a} **MMR Change since last game**:{" "}
-                {compStats.data.current_data.mmr_change_to_last_game}
+                {compStats.data.current_data.mmr_change_to_last_game} {l}
+                {a} **Peak Rank**:{" "}
+                {getCompTierEmoji(
+                  getPeakSeason(compStats.data).final_rank_patched
+                )}
               </>
             ) : (
               "Loading..."

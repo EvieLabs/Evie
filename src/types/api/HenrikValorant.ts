@@ -25,6 +25,24 @@ export interface MMRDataV2 {
   tag: string;
   puuid: string;
   current_data: CurrentData;
+  by_season: BySeason;
+}
+
+export interface BySeason {
+  [season: string]: Season;
+}
+
+export interface Season {
+  wins: number;
+  number_of_games: number;
+  final_rank: number;
+  final_rank_patched: string;
+  act_rank_wins: ActRankWin[];
+}
+
+export interface ActRankWin {
+  patched_tier: string;
+  tier: number;
 }
 
 export interface CurrentData {
