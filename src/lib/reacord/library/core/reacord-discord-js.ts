@@ -31,10 +31,22 @@ export class ReacordDiscordJs extends Reacord {
     super(config);
 
     client.on("interactionCreate", (interaction) => {
-      if (interaction.isMessageComponent()) {
-        this.handleComponentInteraction(
-          this.createReacordComponentInteraction(interaction)
-        );
+      if (interaction.isButton()) {
+        if (!interaction.customId.startsWith("reacord-")) return;
+
+        if (interaction.isMessageComponent()) {
+          this.handleComponentInteraction(
+            this.createReacordComponentInteraction(interaction)
+          );
+        }
+      } else if (interaction.isSelectMenu()) {
+        if (!interaction.customId.startsWith("reacord-")) return;
+
+        if (interaction.isMessageComponent()) {
+          this.handleComponentInteraction(
+            this.createReacordComponentInteraction(interaction)
+          );
+        }
       }
     });
   }
@@ -77,6 +89,20 @@ export class ReacordDiscordJs extends Reacord {
   ): ReacordInstance {
     return this.createInstance(
       this.createInteractionReplyRenderer(interaction),
+      initialContent
+    );
+  }
+
+  /**
+   * Sends a message as a reply to a command interaction.
+   * @see https://reacord.mapleleaf.dev/guides/sending-messages
+   */
+  override editReply(
+    interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction,
+    initialContent?: React.ReactNode
+  ): ReacordInstance {
+    return this.createInstance(
+      this.createInteractionEditReplyRenderer(interaction),
       initialContent
     );
   }
@@ -126,6 +152,31 @@ export class ReacordDiscordJs extends Reacord {
         const message = await interaction.reply({
           ...getDiscordMessageOptions(options),
           fetchReply: true,
+        });
+        return createReacordMessage(message as Discord.Message);
+      },
+      followUp: async (options) => {
+        const message = await interaction.followUp({
+          ...getDiscordMessageOptions(options),
+          fetchReply: true,
+        });
+        return createReacordMessage(message as Discord.Message);
+      },
+    });
+  }
+
+  private createInteractionEditReplyRenderer(
+    interaction:
+      | Discord.CommandInteraction
+      | Discord.ContextMenuInteraction
+      | Discord.MessageComponentInteraction
+  ) {
+    return new InteractionReplyRenderer({
+      type: "command",
+      id: interaction.id,
+      reply: async (options) => {
+        const message = await interaction.editReply({
+          ...getDiscordMessageOptions(options),
         });
         return createReacordMessage(message as Discord.Message);
       },

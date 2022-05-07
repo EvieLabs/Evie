@@ -29,6 +29,7 @@ export abstract class Reacord {
   abstract send(...args: unknown[]): ReacordInstance;
   abstract messageReply(...args: unknown[]): ReacordInstance;
   abstract reply(...args: unknown[]): ReacordInstance;
+  abstract editReply(...args: unknown[]): ReacordInstance;
   abstract ephemeralReply(...args: unknown[]): ReacordInstance;
 
   protected handleComponentInteraction(interaction: ComponentInteraction) {
