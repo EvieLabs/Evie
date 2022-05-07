@@ -1,6 +1,7 @@
 import { Embed } from "#reacord/main";
 import { HenrikAPIRoot } from "#root/constants/index";
-import { getCompTierEmoji, getPeakSeason } from "#root/lib/valorant/emojis";
+import type { ResponseWrapper } from "#root/types/api/APIResponses";
+import ShapedCompStats from "#root/utils/valorant/ShapedCompStats";
 import type {
   AccountData,
   GetHenrikAPI,
@@ -14,21 +15,27 @@ export default function ValorantCompStats(props: {
   user: User;
   accountData: AccountData;
 }) {
-  const { accountData } = props;
-
-  const [compStats, setCompStats] = useState<GetHenrikAPI<MMRDataV2> | null>();
+  const [compStats, setCompStats] =
+    useState<ResponseWrapper<ShapedCompStats> | null>();
 
   useEffect(() => {
     axios
       .get<GetHenrikAPI<MMRDataV2>>(
-        `${HenrikAPIRoot}/valorant/v2/mmr/ap/${accountData.name}/${accountData.tag}`
+        `${HenrikAPIRoot}/valorant/v2/mmr/ap/${props.accountData.name}/${props.accountData.tag}`
       )
       .then((res) => {
-        setCompStats(res.data);
+        if (!res.data.data)
+          return setCompStats({
+            success: false,
+          });
+        return setCompStats({
+          success: true,
+          data: new ShapedCompStats(res.data.data),
+        });
       })
       .catch(() => {
         setCompStats({
-          status: 404,
+          success: false,
         });
       });
   }, []);
@@ -38,25 +45,22 @@ export default function ValorantCompStats(props: {
 
   return (
     <>
-      <Embed title={`${accountData.name}#${accountData.tag} Competitive Stats`}>
-        {compStats?.status === 404 ? (
+      <Embed
+        title={`${props.accountData.name}#${props.accountData.tag} Competitive Stats`}
+      >
+        {!compStats?.success ? (
           <>{a} **No competitive stats found**</>
         ) : (
           <>
             {compStats?.data ? (
               <>
-                {a} **Rank**:{" "}
-                {getCompTierEmoji(
-                  compStats.data.current_data.currenttierpatched
-                )}{" "}
-                {compStats.data.current_data.currenttierpatched} {l}
-                {a} **Elo**: {compStats.data.current_data.elo} {l}
+                {a} **Rank**: {compStats.data.currentRating.rank.discordEmoji}{" "}
+                {compStats.data.currentRating.rank.name} {l}
+                {a} **Elo**: {compStats.data.currentRating.elo} {l}
                 {a} **MMR Change since last game**:{" "}
-                {compStats.data.current_data.mmr_change_to_last_game} {l}
-                {a} **Peak Rank**:{" "}
-                {getCompTierEmoji(
-                  getPeakSeason(compStats.data).final_rank_patched
-                )}
+                {compStats.data.currentRating.mmrChangeToLastGame} {l}
+                {a} **Peak Rank**: {compStats.data.peakSeason.rank.discordEmoji}{" "}
+                {compStats.data.peakSeason.rank.name} {l}
               </>
             ) : (
               "Loading..."

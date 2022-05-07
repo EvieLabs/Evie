@@ -1,5 +1,11 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import {
+  EditReplyStatusEmbed,
+  ReplyStatusEmbed,
+  StatusEmoji,
+} from "#root/classes/EvieEmbed";
 import ValorantStatsComponent from "#root/components/stats/ValorantStatsComponent";
+import { HenrikAPIRoot } from "#root/constants/index";
+import type { AccountData, GetHenrikAPI } from "#root/types/api/HenrikValorant";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -8,6 +14,8 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import { captureException } from "@sentry/node";
+import axios from "axios";
 import type { CommandInteraction } from "discord.js";
 import React from "react";
 
@@ -26,14 +34,30 @@ export class ValorantStats extends Command {
         interaction
       );
 
-    return void interaction.client.reacord.reply(
-      interaction,
-      <ValorantStatsComponent
-        user={interaction.user}
-        username={username}
-        tag={tag}
-      />
-    );
+    await interaction.deferReply();
+
+    try {
+      const res = await axios.get<GetHenrikAPI<AccountData>>(
+        `${HenrikAPIRoot}/valorant/v1/account/${username}/${tag}`
+      );
+
+      if (!res.data.data) throw new Error("No data found.");
+
+      return void interaction.client.reacord.editReply(
+        interaction,
+        <ValorantStatsComponent
+          user={interaction.user}
+          account={res.data.data}
+        />
+      );
+    } catch (e) {
+      captureException(e);
+      return void EditReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        "No account found.",
+        interaction
+      );
+    }
   }
 
   public override registerApplicationCommands(
