@@ -35,5 +35,7 @@ if (process.env.SENTRY_URL) {
   });
 }
 
+client.on("debug", (m) => container.logger.debug(m));
+
 /** Login to the client */
 client.login(process.env.CLIENT_TOKEN);
