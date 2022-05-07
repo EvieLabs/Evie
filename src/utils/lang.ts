@@ -7,7 +7,7 @@ export enum Emojis {
 const lang = {
   needAdminPerms:
     "You do not have the required permissions to use this command. (admin)",
-  messageComponentNotForYou: `This button is not for you! Please refrain from clicking it ${Emojis.evieWristSlap}`,
+  messageComponentNotForYou: `This button is not for you! ${Emojis.evieWristSlap}`,
   reacordInteractionExpired: `This instance has expired and no longer exists! Try re-running the command.`,
 };
 
