@@ -71,3 +71,25 @@ export async function ReplyStatusEmbed(
         allowedMentions: allowedMentions,
       });
 }
+
+export async function EditReplyStatusEmbed(
+  status: StatusEmoji,
+  description: string,
+  i:
+    | CommandInteraction
+    | ModalSubmitInteraction
+    | ContextMenuInteraction
+    | ButtonInteraction
+    | Message,
+  allowedMentions?: MessageMentionOptions
+): Promise<Message | Message<boolean> | APIMessage | void> {
+  const embed = new StatusEmbed(status, description);
+
+  if (i instanceof Message)
+    return i.edit({ embeds: [embed], allowedMentions: allowedMentions });
+
+  return i.editReply({
+    embeds: [embed],
+    allowedMentions: allowedMentions,
+  });
+}
