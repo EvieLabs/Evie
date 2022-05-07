@@ -48,23 +48,26 @@ export default function ValorantCompStats(props: {
       <Embed
         title={`${props.accountData.name}#${props.accountData.tag} Competitive Stats`}
       >
-        {!compStats?.success ? (
-          <>{a} **No competitive stats found**</>
+        {!compStats ? (
+          <>
+            <>{a} **Loading...**</>
+          </>
+        ) : compStats.success && compStats.data ? (
+          <>
+            {a} **Rank**: {compStats.data.currentRating.rank.discordEmoji}{" "}
+            {compStats.data.currentRating.rank.name} {l}
+            {a} **Elo**: {compStats.data.currentRating.elo} {l}
+            {a} **MMR Change since last game**:{" "}
+            {compStats.data.currentRating.mmrChangeToLastGame} {l}
+            {a} **Peak Rank**: {compStats.data.peakSeason.rank.discordEmoji}{" "}
+            {compStats.data.peakSeason.rank.name} {l}
+          </>
         ) : (
           <>
-            {compStats?.data ? (
-              <>
-                {a} **Rank**: {compStats.data.currentRating.rank.discordEmoji}{" "}
-                {compStats.data.currentRating.rank.name} {l}
-                {a} **Elo**: {compStats.data.currentRating.elo} {l}
-                {a} **MMR Change since last game**:{" "}
-                {compStats.data.currentRating.mmrChangeToLastGame} {l}
-                {a} **Peak Rank**: {compStats.data.peakSeason.rank.discordEmoji}{" "}
-                {compStats.data.peakSeason.rank.name} {l}
-              </>
-            ) : (
-              "Loading..."
-            )}
+            {a} **Error**:{" "}
+            {compStats.success
+              ? "No data found for this account."
+              : "An error occurred."}
           </>
         )}
       </Embed>
