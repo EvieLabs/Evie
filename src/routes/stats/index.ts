@@ -12,7 +12,7 @@ import * as pidusage from "pidusage";
 @ApplyOptions<RouteOptions>({ route: "/stats" })
 export class StatsRoute extends Route {
   public async [methods.GET](_request: ApiRequest, response: ApiResponse) {
-    const stats = await pidusage.default(process.pid);
+    const stats = await pidusage.default(process.pid, { usePs: true });
 
     response.json({
       users: this.container.client.stats.users,
