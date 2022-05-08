@@ -5,33 +5,38 @@ import { LogEmbed } from "./LogEmbed";
 
 export class EviePunish {
   public async banGuildMember(
-    m: GuildMember,
-    bo: BanOptions,
+    member: GuildMember,
+    banOptions: BanOptions,
     expiresAt?: Date,
     banner?: GuildMember
   ) {
-    await m.ban(bo).catch((err) => {
+    await member.ban(banOptions).catch((err) => {
       throw new Error(`Failed to ban member: ${err}`);
     });
 
     await punishDB
-      .addBan(m, bo.reason ?? "No reason provided.", expiresAt, banner)
+      .addBan(
+        member,
+        banOptions.reason ?? "No reason provided.",
+        expiresAt,
+        banner
+      )
       .catch((err) => {
         throw new Error(`Failed to add ban: ${err}`);
       });
 
-    m.client.guildLogger.modLog(
-      m.guild,
+    member.client.guildLogger.modLog(
+      member.guild,
       new LogEmbed(`punishment`)
         .setColor("#eb564b")
         .setAuthor({
           name: banner
             ? `${banner.user.tag} (${banner.user.id})`
-            : `${m.client.user ? m.client.user.tag : "Me"} (${
-                m.client.user ? m.client.user.id : "Me"
+            : `${member.client.user ? member.client.user.tag : "Me"} (${
+                member.client.user ? member.client.user.id : "Me"
               })`,
         })
-        .setDescription(modAction(m.user, "Ban", bo.reason))
+        .setDescription(modAction(member.user, "Ban", banOptions.reason))
     );
 
     return true;
@@ -39,27 +44,27 @@ export class EviePunish {
 
   public async unBanGuildMember(
     id: Snowflake,
-    g: Guild,
-    unbanner?: GuildMember
+    guild: Guild,
+    unBanner?: GuildMember
   ) {
-    const user = await g.bans.remove(id).catch((err) => {
+    const user = await guild.bans.remove(id).catch((err) => {
       throw new Error(`Failed to unban member: ${err}`);
     });
 
-    const data = await punishDB.deleteBan(id, g).catch((err) => {
+    const data = await punishDB.deleteBan(id, guild).catch((err) => {
       throw new Error(`Failed to delete ban: ${err}`);
     });
 
     if (user)
-      g.client.guildLogger.modLog(
-        g,
+      guild.client.guildLogger.modLog(
+        guild,
         new LogEmbed(`punishment`)
           .setColor("#eb564b")
           .setAuthor({
-            name: unbanner
-              ? `${unbanner.user.tag} (${unbanner.user.id})`
-              : `${g.client.user ? g.client.user.tag : "Me"} (${
-                  g.client.user ? g.client.user.id : "Me"
+            name: unBanner
+              ? `${unBanner.user.tag} (${unBanner.user.id})`
+              : `${guild.client.user ? guild.client.user.tag : "Me"} (${
+                  guild.client.user ? guild.client.user.id : "Me"
                 })`,
           })
           .setDescription(modAction(user, "Undo ban", data.reason))
