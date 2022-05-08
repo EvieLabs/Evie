@@ -389,6 +389,6 @@ export class ResetApp extends Command {
       }
     });
 
-    await message.channel.send("Done!");
+    await message.reply("Done!");
   }
 }
