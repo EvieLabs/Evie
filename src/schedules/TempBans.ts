@@ -1,5 +1,4 @@
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
-import { LogEmbed } from "#root/classes/LogEmbed";
 import { Schedule } from "#root/classes/Schedule";
 import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
@@ -48,29 +47,11 @@ export class TempBans extends Schedule {
           },
         });
 
-        await client.guildLogger.log(
-          guild,
-          new LogEmbed(`temp ban expired`)
-            .setColor("#4e73df")
-            .setAuthor({
-              name: `${user.tag} (${user.id})`,
-              iconURL: user.displayAvatarURL(),
-            })
-            .setDescription(`The temp ban on ${user.tag} has expired`)
-            .addField(
-              "Original reason",
-              `${tempban.reason ?? "No reason given"}`
-            )
-            .addField(
-              "Was banned by",
-              `${
-                tempban.bannedBy
-                  ? (await guild.members.fetch(tempban.bannedBy)).user ??
-                    `Unkown (${tempban.bannedBy})`
-                  : "Unknown"
-              }`
-            )
-        );
+        client.guildLogger.modAction(guild, {
+          action: "Unban",
+          target: user,
+          reason: `Temp-ban expired`, // TODO: Track mod action messages and reference the message link
+        });
       } catch (error) {
         Sentry.captureException(error);
       }
