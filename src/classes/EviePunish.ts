@@ -25,19 +25,12 @@ export class EviePunish {
         throw new Error(`Failed to add ban: ${err}`);
       });
 
-    member.client.guildLogger.modLog(
-      member.guild,
-      new LogEmbed(`punishment`)
-        .setColor("#eb564b")
-        .setAuthor({
-          name: banner
-            ? `${banner.user.tag} (${banner.user.id})`
-            : `${member.client.user ? member.client.user.tag : "Me"} (${
-                member.client.user ? member.client.user.id : "Me"
-              })`,
-        })
-        .setDescription(modAction(member.user, "Ban", banOptions.reason))
-    );
+    member.guild.client.guildLogger.modAction(member.guild, {
+      action: "Ban",
+      target: member.user,
+      moderator: banner?.user,
+      reason: banOptions.reason,
+    });
 
     return true;
   }
