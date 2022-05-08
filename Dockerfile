@@ -1,19 +1,29 @@
-FROM node:16.11.1
+FROM node:16-buster-slim
 
 # Create app directory
 WORKDIR /usr/src/app
 
-# Copy code
-COPY . .
+RUN apt-get update && \
+	apt-get upgrade -y --no-install-recommends && \
+	apt-get install -y --no-install-recommends build-essential python3 libfontconfig1 dumb-init && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/*
 
 # Fetch dependencies
+COPY yarn.lock .
+COPY package.json .
+COPY .yarnrc.yml .
+COPY .yarn/ .yarn/
+
 RUN yarn install
 
-# Compile typescript to javascript
-RUN yarn build
+# Compile
+COPY tsconfig.base.json tsconfig.base.json
+COPY tsup.config.ts tsup.config.ts
+COPY src/ src/
+COPY prisma/schema.prisma prisma/schema.prisma
 
-# Install pm2
-RUN npm install pm2 -g
+RUN yarn build
 
 # Production mode
 ENV NODE_ENV="production"
