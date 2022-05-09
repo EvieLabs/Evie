@@ -1,5 +1,10 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import {
+  EditReplyStatusEmbed,
+  ReplyStatusEmbed,
+  StatusEmoji,
+} from "#root/classes/EvieEmbed";
 import { punishDB } from "#root/utils/database/punishments";
+import lang from "#root/utils/lang";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
@@ -17,30 +22,17 @@ import {
 } from "discord.js";
 @ApplyOptions<Command.Options>({
   description: "Ban a user",
+  preconditions: ["ModOrBanPermsOnly"],
 })
 export class Ban extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
-
-    const { client } = interaction.member;
-
-    if (
-      !(
-        (await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS)) ||
-        (await client.db.HasModRole(interaction.member))
-      )
-    ) {
-      await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "You do not have the required permissions to ban users.",
-        interaction
-      );
-      return;
-    }
     const userToBeBanned = interaction.options.getMember("user");
     const reason = interaction.options.getString("reason");
-    const days = interaction.options.getNumber("days");
-    const expiresAt = days ? new Date(Date.now() + days * 86400000) : undefined;
+    const days = interaction.options.getString("days");
+    const expiresAt = days
+      ? new Date(Date.now() + parseInt(days) * 86400000)
+      : undefined;
 
     if (!userToBeBanned) {
       await ReplyStatusEmbed(
@@ -50,6 +42,8 @@ export class Ban extends Command {
       );
       return;
     }
+
+    await interaction.deferReply();
 
     if (await punishDB.getBan(userToBeBanned)) {
       await punishDB.deleteBan(userToBeBanned.id, interaction.guild);
@@ -64,7 +58,7 @@ export class Ban extends Command {
         expiresAt,
         interaction.member
       );
-      await ReplyStatusEmbed(
+      await EditReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Banned ${userToBeBanned} (${userToBeBanned.id}) ${
           expiresAt ? time(expiresAt, "R") : `indefinitely`
@@ -85,42 +79,42 @@ export class Ban extends Command {
     if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
       return await interaction.respond([
         {
-          name: "Hey you don't have the required permissions to un-ban users.",
+          name: lang.commandModeratorOnlyNoEmoji,
           value: "notadmin",
         },
       ]);
     }
 
-    const query = interaction.options.getNumber("days") ?? "";
+    const query = interaction.options.getString("days") ?? "0";
 
     // when theres no query show some suggestions such as 5 Days, 1 Day, etc.
     if (!query) {
       return await interaction.respond([
         {
           name: "24 Hours",
-          value: 1,
+          value: `${1}`,
         },
         {
           name: "3 Day",
-          value: 3,
+          value: `${3}`,
         },
         {
           name: "1 Week",
-          value: 7,
+          value: `${7}`,
         },
         {
           name: "1 Month",
-          value: 30,
+          value: `${30}`,
         },
         {
           name: "1 Year",
-          value: 365,
+          value: `${365}`,
         },
       ]);
     } else {
-      // @ts-expect-error Argument of type 'number' is not assignable to parameter of type 'string'.
       const days = parseInt(query);
-      if (isNaN(days)) {
+
+      if (days === 0) {
         return await interaction.respond([
           {
             name: "Invalid number.",
@@ -131,19 +125,19 @@ export class Ban extends Command {
         return await interaction.respond([
           {
             name: `${days} Days`,
-            value: days,
+            value: `${days}`,
           },
           {
             name: `${days} Weeks`,
-            value: days * 7,
+            value: `${days * 7}`,
           },
           {
             name: `${days} Months`,
-            value: days * 30,
+            value: `${days * 30}`,
           },
           {
             name: `${days} Years`,
-            value: days * 365,
+            value: `${days * 365}`,
           },
         ]);
       }
@@ -167,7 +161,7 @@ export class Ban extends Command {
           {
             name: "days",
             description: "Days to ban the user for",
-            type: "NUMBER",
+            type: "STRING",
             required: false,
             autocomplete: true,
           },

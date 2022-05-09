@@ -1,4 +1,8 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import {
+  EditReplyStatusEmbed,
+  ReplyStatusEmbed,
+  StatusEmoji,
+} from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -15,26 +19,12 @@ import {
 } from "discord.js";
 @ApplyOptions<Command.Options>({
   description: "Un-ban a user",
+  preconditions: ["ModOrBanPermsOnly"],
 })
 export class UnBan extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
 
-    const { client } = interaction;
-
-    if (
-      !(
-        (await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS)) ||
-        !(await client.db.HasModRole(interaction.member))
-      )
-    ) {
-      await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "You do not have the required permissions to un-ban users.",
-        interaction
-      );
-      return;
-    }
     const target = interaction.options.getString("user");
     const reason = interaction.options.getString("reason");
 
@@ -47,6 +37,8 @@ export class UnBan extends Command {
       return;
     }
 
+    await interaction.deferReply();
+
     try {
       const user = await interaction.client.punishments.unBanGuildMember(
         target,
@@ -55,7 +47,7 @@ export class UnBan extends Command {
         interaction.member
       );
 
-      await ReplyStatusEmbed(
+      await EditReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully unbanned ${user?.username}#${user?.discriminator}`,
         interaction
@@ -63,7 +55,11 @@ export class UnBan extends Command {
       return;
     } catch (e) {
       Sentry.captureException(e);
-      ReplyStatusEmbed(StatusEmoji.FAIL, "Failed to un-ban user.", interaction);
+      EditReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        "Failed to un-ban user.",
+        interaction
+      );
       return;
     }
   }
