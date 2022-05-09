@@ -7,6 +7,7 @@ import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -28,7 +29,9 @@ import {
   SnowflakeUtil,
   TextChannel,
 } from "discord.js";
-
+@ApplyOptions<Command.Options>({
+  description: "Sends Discord Message JSON as a message",
+})
 export class ImportMessage extends Command {
   public override async chatInputRun(
     interaction: CommandInteraction
@@ -303,7 +306,7 @@ export class ImportMessage extends Command {
     registry.registerChatInputCommand(
       {
         name: this.name,
-        description: "Sends Discord Message JSON as a message",
+        description: this.description,
         options: [
           {
             name: "channel",

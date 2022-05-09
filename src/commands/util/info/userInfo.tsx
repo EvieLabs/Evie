@@ -1,6 +1,7 @@
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import MemberInfoComponent from "#root/components/info/MemberInfoComponent";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
   Args,
@@ -10,7 +11,9 @@ import {
 import { ApplicationCommandType } from "discord-api-types/v9";
 import type { ContextMenuInteraction, Message } from "discord.js";
 import React from "react";
-
+@ApplyOptions<Command.Options>({
+  description: "View info on a user",
+})
 export class UserInfo extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
     super(context, {

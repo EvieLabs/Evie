@@ -1,11 +1,14 @@
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
 import { CommandInteraction, Permissions, TextChannel } from "discord.js";
-
-export class Admin extends Command {
+@ApplyOptions<Command.Options>({
+  description: "Setup Evie for your server",
+})
+export class Setup extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
 
@@ -125,7 +128,7 @@ export class Admin extends Command {
       (builder) =>
         builder
           .setName(this.name)
-          .setDescription("Setup Evie for your server")
+          .setDescription(this.description)
           .addSubcommand((subcommand) =>
             subcommand
               .setName("set_staff")

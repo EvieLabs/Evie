@@ -3,6 +3,7 @@ import { punishDB } from "#root/utils/database/punishments";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -14,7 +15,9 @@ import {
   CommandInteraction,
   Permissions,
 } from "discord.js";
-
+@ApplyOptions<Command.Options>({
+  description: "Ban a user",
+})
 export class Ban extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
@@ -153,7 +156,7 @@ export class Ban extends Command {
     registry.registerChatInputCommand(
       {
         name: this.name,
-        description: "Ban a user",
+        description: this.description,
         options: [
           {
             name: "user",

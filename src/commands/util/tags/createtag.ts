@@ -2,6 +2,7 @@ import { CreateTagModal } from "#constants/modals";
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -14,7 +15,9 @@ import {
   Snowflake,
   SnowflakeUtil,
 } from "discord.js";
-
+@ApplyOptions<Command.Options>({
+  description: "Creates a new tag",
+})
 export class CreateTag extends Command {
   public override async chatInputRun(
     interaction: CommandInteraction
@@ -98,7 +101,7 @@ export class CreateTag extends Command {
     registry.registerChatInputCommand(
       {
         name: this.name,
-        description: "Creates a new tag",
+        description: this.description,
         options: [
           {
             name: "embed",

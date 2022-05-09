@@ -1,12 +1,15 @@
 import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
 import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
-
+@ApplyOptions<Command.Options>({
+  description: "Send a tag",
+})
 export class Tag extends Command {
   public override async chatInputRun(
     interaction: CommandInteraction
@@ -111,7 +114,7 @@ export class Tag extends Command {
     registry.registerChatInputCommand(
       {
         name: this.name,
-        description: "Send a tag",
+        description: this.description,
         options: [
           {
             name: "query",

@@ -1,6 +1,7 @@
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -12,7 +13,9 @@ import {
   CommandInteraction,
   Permissions,
 } from "discord.js";
-
+@ApplyOptions<Command.Options>({
+  description: "Un-ban a user",
+})
 export class UnBan extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
@@ -110,7 +113,7 @@ export class UnBan extends Command {
     registry.registerChatInputCommand(
       {
         name: this.name,
-        description: "Un-ban a user",
+        description: this.description,
         options: [
           {
             name: "user",

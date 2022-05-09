@@ -1,16 +1,13 @@
+import { ApplyOptions } from "@sapphire/decorators";
 import { Command } from "@sapphire/framework";
 import axios from "axios";
 import type { Message } from "discord.js";
 
-export class ResetApp extends Command {
-  public constructor(context: Command.Context, options: Command.Options) {
-    super(context, {
-      ...options,
-      name: "valmojis",
-      preconditions: ["OwnerOnly"],
-    });
-  }
-
+@ApplyOptions<Command.Options>({
+  name: "valmojis",
+  preconditions: ["OwnerOnly"],
+})
+export class ValMojis extends Command {
   private readonly tiers = [
     {
       tier: 3,
