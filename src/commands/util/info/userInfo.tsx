@@ -13,18 +13,11 @@ import type { ContextMenuInteraction, Message } from "discord.js";
 import React from "react";
 @ApplyOptions<Command.Options>({
   description: "View info on a user",
+  name: "userinfo",
+  aliases: ["ui"],
+  preconditions: ["GuildOnly"],
 })
 export class UserInfo extends Command {
-  public constructor(context: Command.Context, options: Command.Options) {
-    super(context, {
-      ...options,
-      name: "userinfo",
-      aliases: ["ui"],
-      description: "User Info",
-      preconditions: ["GuildOnly"],
-    });
-  }
-
   public override async messageRun(message: Message, args: Args) {
     const member = await args.pick("member").catch(() => message.member);
     if (!member)
