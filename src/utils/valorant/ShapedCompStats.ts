@@ -20,15 +20,18 @@ export default class ShapedCompStats {
     rank: {
       name: this.raw.current_data.currenttierpatched,
       id: this.raw.current_data.currenttier,
+      elo: this.raw.current_data.elo,
       discordEmoji: this.getCompTierEmoji(
         this.raw.current_data.currenttierpatched
       ),
     },
     wins: this.raw.current_data.ranking_in_tier,
     games: this.raw.current_data.games_needed_for_rating,
-    elo: this.raw.current_data.elo,
     placementGamesLeft: this.raw.current_data.games_needed_for_rating,
-    mmrChangeToLastGame: this.raw.current_data.mmr_change_to_last_game,
+    rrChangeToLastGame:
+      this.raw.current_data.mmr_change_to_last_game > 0
+        ? `+${this.raw.current_data.mmr_change_to_last_game}`
+        : this.raw.current_data.mmr_change_to_last_game,
   };
 
   public constructor(private raw: MMRDataV2) {}

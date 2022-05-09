@@ -58,9 +58,8 @@ export default function ValorantCompStats(props: {
             {compStats.data.currentRating.rank.name} {l}
             {a} **Peak Rank**: {compStats.data.peakSeason.rank.discordEmoji}{" "}
             {compStats.data.peakSeason.rank.name} {l}
-            {a} **Elo**: {compStats.data.currentRating.elo} {l}
-            {a} **RR Change since last game**:{" "}
-            {compStats.data.currentRating.mmrChangeToLastGame} {l}
+            {a} **Rank Rating**: {compStats.data.currentRating.rank.elo} (
+            {compStats.data.currentRating.rrChangeToLastGame}) {l}
           </>
         ) : (
           <>
