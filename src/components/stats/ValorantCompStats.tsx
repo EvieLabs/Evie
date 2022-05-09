@@ -21,7 +21,7 @@ export default function ValorantCompStats(props: {
   useEffect(() => {
     axios
       .get<GetHenrikAPI<MMRDataV2>>(
-        `${HenrikAPIRoot}/valorant/v2/mmr/ap/${props.accountData.name}/${props.accountData.tag}`
+        `${HenrikAPIRoot}/valorant/v2/mmr/${props.accountData.region}/${props.accountData.name}/${props.accountData.tag}`
       )
       .then((res) => {
         if (!res.data.data)
