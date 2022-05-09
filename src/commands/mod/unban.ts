@@ -36,6 +36,7 @@ export class UnBan extends Command {
       return;
     }
     const target = interaction.options.getString("user");
+    const reason = interaction.options.getString("reason");
 
     if (!target) {
       await ReplyStatusEmbed(
@@ -49,7 +50,9 @@ export class UnBan extends Command {
     try {
       const user = await interaction.client.punishments.unBanGuildMember(
         target,
-        interaction.guild
+        interaction.guild,
+        reason ?? "No reason provided.",
+        interaction.member
       );
 
       await ReplyStatusEmbed(
@@ -121,6 +124,12 @@ export class UnBan extends Command {
             type: "STRING",
             required: true,
             autocomplete: true,
+          },
+          {
+            name: "reason",
+            description: "The reason for un-banning the user",
+            type: "STRING",
+            required: false,
           },
         ],
       },

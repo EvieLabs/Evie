@@ -1,7 +1,6 @@
-import { modAction } from "#root/utils/builders/stringBuilder";
 import { punishDB } from "#root/utils/database/punishments";
+import { container } from "@sapphire/framework";
 import type { BanOptions, Guild, GuildMember, Snowflake } from "discord.js";
-import { LogEmbed } from "./LogEmbed";
 
 export class EviePunish {
   public async banGuildMember(
@@ -38,30 +37,24 @@ export class EviePunish {
   public async unBanGuildMember(
     id: Snowflake,
     guild: Guild,
-    unBanner?: GuildMember
+    reason: string,
+    moderator?: GuildMember
   ) {
     const user = await guild.bans.remove(id).catch((err) => {
-      throw new Error(`Failed to unban member: ${err}`);
+      throw new Error(`Failed to reverse ban: ${err}`);
     });
 
-    const data = await punishDB.deleteBan(id, guild).catch((err) => {
+    await punishDB.deleteBan(id, guild).catch((err) => {
       throw new Error(`Failed to delete ban: ${err}`);
     });
 
     if (user)
-      guild.client.guildLogger.modLog(
-        guild,
-        new LogEmbed(`punishment`)
-          .setColor("#eb564b")
-          .setAuthor({
-            name: unBanner
-              ? `${unBanner.user.tag} (${unBanner.user.id})`
-              : `${guild.client.user ? guild.client.user.tag : "Me"} (${
-                  guild.client.user ? guild.client.user.id : "Me"
-                })`,
-          })
-          .setDescription(modAction(user, "Undo ban", data.reason))
-      );
+      container.client.guildLogger.modAction(guild, {
+        action: "Reverse Ban",
+        target: user,
+        moderator: moderator?.user || undefined,
+        reason: moderator?.user ? reason : `${reason} (Unknown moderator)`,
+      });
 
     return user;
   }
