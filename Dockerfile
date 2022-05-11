@@ -19,7 +19,6 @@ RUN yarn install
 
 # Compile
 COPY tsconfig.base.json tsconfig.base.json
-COPY tsup.config.ts tsup.config.ts
 COPY src/ src/
 COPY prisma/schema.prisma prisma/schema.prisma
 
