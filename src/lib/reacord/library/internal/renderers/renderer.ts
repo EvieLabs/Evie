@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Subject } from "rxjs";
 import { concatMap } from "rxjs/operators";
 import { Container } from "../container.js";
@@ -46,6 +47,7 @@ export abstract class Renderer {
     this.updates.next({ action: "destroy" });
   }
 
+  // @ts-ignore - not my design decision
   handleComponentInteraction(interaction: ComponentInteraction) {
     this.componentInteraction = interaction;
 
@@ -67,6 +69,7 @@ export abstract class Renderer {
       content: "",
       embeds: [],
       actionRows: [],
+      ephemeral: false,
     };
     for (const node of this.nodes) {
       node.modifyMessageOptions(options);
