@@ -5,7 +5,6 @@
     "rootDir": ".",
     "baseUrl": ".",
     "jsx": "react",
-    "noEmit": true,
     "paths": {
       "#root/*": ["*"],
       "#types/*": ["types/*"],
@@ -15,5 +14,5 @@
       "#reacord/*": ["lib/reacord/library/*"]
     }
   },
-  "include": ["./**/*.ts", "./**/*.tsx"]
+  "include": ["."]
 }
