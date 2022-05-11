@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isObject } from "./is-object";
 
@@ -11,7 +12,7 @@ export function pruneNullishValues<T>(input: T): PruneNullishValues<T> {
   }
 
   const result: any = {};
-  // @ts-expect-error ???
+  // @ts-ignore ???
   for (const [key, value] of Object.entries(input)) {
     if (value != undefined) {
       result[key] = pruneNullishValues(value);
