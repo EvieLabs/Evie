@@ -27,7 +27,6 @@
     "start": "node dist/index.js",
     "build": "yarn prisma generate && tsc -p src",
     "pushdb": "yarn prisma db push",
-    "docker": "yarn prisma db push && yarn start",
     "lint": "eslint --fix --ext ts src",
     "compose": "docker-compose up --env-file ./apps/bot/.env --build"
   },
