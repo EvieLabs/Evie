@@ -12,7 +12,7 @@ services:
   bot:
     image: "ghcr.io/teamevie/evie:latest"
     env_file:
-      - "./apps/bot/.env"
+      - ".env"
     environment:
       - DATABASE_URL=postgresql://postgres:internalpassword@postgres:5432/bot?schema=public
     restart: "always"
