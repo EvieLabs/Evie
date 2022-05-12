@@ -20,3 +20,10 @@ export function capitalizeEachWord(str: string) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
+
+export function pluralize(str: string, count: number) {
+  if (count === 1) {
+    return str;
+  }
+  return `${str}s`;
+}
