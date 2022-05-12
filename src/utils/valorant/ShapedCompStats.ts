@@ -1,5 +1,5 @@
 import { ValorantTierEmojis } from "#root/constants/index";
-import type { MMRDataV2, Season } from "#root/types/api/HenrikValorant";
+import type { MMRDataV2, Season } from "#root/types/api/Henrik/HenrikValorant";
 
 export default class ShapedCompStats {
   private readonly rawPeakSeason: Season = this.getPeakSeason();
