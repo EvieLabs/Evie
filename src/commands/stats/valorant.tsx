@@ -5,7 +5,10 @@ import {
 } from "#root/classes/EvieEmbed";
 import ValorantStatsComponent from "#root/components/stats/ValorantStatsComponent";
 import { HenrikAPIRoot } from "#root/constants/index";
-import type { AccountData, GetHenrikAPI } from "#root/types/api/HenrikValorant";
+import type {
+  AccountData,
+  GetHenrikAPI,
+} from "#root/types/api/Henrik/HenrikValorant";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {

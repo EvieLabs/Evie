@@ -1,9 +1,10 @@
 import { Button, Option, Select } from "#reacord/main";
+import type { AccountData } from "#root/types/api/Henrik/HenrikValorant";
 import { Emojis } from "#root/utils/lang";
-import type { AccountData } from "#types/api/HenrikValorant";
 import type { User } from "discord.js";
 import React, { useState } from "react";
 import ValorantCompStats from "./ValorantCompStats";
+import ValorantGameStats from "./ValorantGameStats";
 import ValorantUserInfo from "./ValorantUserInfo";
 
 export default function ValorantStatsComponent(props: {
@@ -29,16 +30,22 @@ export default function ValorantStatsComponent(props: {
                 onChangeValue={setValue}
               >
                 <Option
-                  description={`Check out ${account.name}'s info on VALORANT.`}
+                  description={`${account.name}'s region, level, banner and more.`}
                   label="Player Info"
-                  emoji={Emojis.valorantLogo}
+                  emoji={Emojis.valorantFade}
                   value="info"
                 />
                 <Option
-                  description={`Check out ${account.name}'s competitive stats on VALORANT.`}
+                  description={`${account.name}'s rank rating, peak rank, and more.`}
                   label="Competitive Stats"
-                  emoji={Emojis.valorantRadiant}
+                  emoji={Emojis.valorantLogo}
                   value="comp"
+                />
+                <Option
+                  description={`${account.name}'s Winrate, KDA, Most used agent and more.`}
+                  label="Game Stats"
+                  emoji={Emojis.valorantRadiant}
+                  value="game"
                 />
               </Select>
             )}
@@ -64,6 +71,14 @@ export default function ValorantStatsComponent(props: {
                   case "comp":
                     setComponent(
                       <ValorantCompStats
+                        user={props.user}
+                        accountData={account}
+                      />
+                    );
+                    break;
+                  case "game":
+                    setComponent(
+                      <ValorantGameStats
                         user={props.user}
                         accountData={account}
                       />

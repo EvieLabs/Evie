@@ -2,6 +2,7 @@ export enum Emojis {
   evieWristSlap = "<:evieWS:969902527325831208>",
   valorantLogo = "<:valorant:971373514152095755>",
   valorantRadiant = "<:radiant:971675273911218196>",
+  valorantFade = "<:fade:973184566321893417>",
 }
 
 const lang = {
