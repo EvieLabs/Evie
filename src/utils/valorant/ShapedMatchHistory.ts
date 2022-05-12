@@ -1,4 +1,5 @@
 import { MatchHistoryDataV3, Team } from "#root/types/api/Henrik/MatchStats";
+import type { AgentUsed } from "./types";
 
 export default class ShapedMatchHistory {
   public constructor(
@@ -8,6 +9,10 @@ export default class ShapedMatchHistory {
   public round = (num: number): number =>
     Math.round((num + Number.EPSILON) * 100) / 100;
 
+  public get trackedGames(): number {
+    return this.raw.length;
+  }
+
   public overview = {
     kills: this.kills,
     deaths: this.deaths,
@@ -15,7 +20,28 @@ export default class ShapedMatchHistory {
     wins: this.gamesWon,
     losses: this.gamesLost,
     winRatio: this.round(this.winLossRatio),
+    agentsUsed: this.agentsUsed.sort((a, b) => b.timesUsed - a.timesUsed),
   };
+
+  private get agentsUsed(): AgentUsed[] {
+    const agents: AgentUsed[] = [];
+    this.raw.map((match) => {
+      const player = match.players.all_players.find(
+        (player) => player.puuid === this.puuid
+      );
+      if (!player) return;
+      const agent = agents.find((a) => a.agentName === player.character);
+      if (agent) {
+        agent.timesUsed++;
+      } else {
+        agents.push({
+          agentName: player.character,
+          timesUsed: 1,
+        });
+      }
+    });
+    return agents;
+  }
 
   private get killDeathRatio(): number {
     if (this.kills === 0) {
