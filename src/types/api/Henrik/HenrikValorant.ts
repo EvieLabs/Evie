@@ -53,3 +53,5 @@ export interface CurrentData {
   elo: number;
   games_needed_for_rating: number;
 }
+
+export * from "./MatchStats";

@@ -1,12 +1,12 @@
 import { Embed } from "#reacord/main";
 import { HenrikAPIRoot } from "#root/constants/index";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
-import ShapedCompStats from "#root/utils/valorant/ShapedCompStats";
 import type {
   AccountData,
   GetHenrikAPI,
   MMRDataV2,
-} from "#types/api/HenrikValorant";
+} from "#root/types/api/Henrik/HenrikValorant";
+import ShapedCompStats from "#root/utils/valorant/ShapedCompStats";
 import axios from "axios";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";
