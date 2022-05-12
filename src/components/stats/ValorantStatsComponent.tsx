@@ -42,7 +42,7 @@ export default function ValorantStatsComponent(props: {
                   value="comp"
                 />
                 <Option
-                  description={`${account.name}'s Accuracy, Winrate, KDA, and more.`}
+                  description={`${account.name}'s Winrate, KDA, Most used agent and more.`}
                   label="Game Stats"
                   emoji={Emojis.valorantRadiant}
                   value="game"
