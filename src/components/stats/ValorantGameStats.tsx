@@ -6,6 +6,7 @@ import type {
   GetHenrikAPI,
   MatchHistoryDataV3,
 } from "#root/types/api/Henrik/HenrikValorant";
+import { pluralize } from "#root/utils/builders/stringBuilder";
 import ShapedMatchHistory from "#root/utils/valorant/ShapedMatchHistory";
 import axios from "axios";
 import type { User } from "discord.js";
@@ -43,12 +44,21 @@ export default function ValorantGameStats(props: {
   const a = "➤";
   const l = "\n";
   const { data, success } = gameStats || {};
-  const { overview } = data || {};
+  const { overview, trackedGames } = data || {};
 
   return (
     <>
       <Embed
         title={`${props.accountData.name}#${props.accountData.tag} Game Stats`}
+        footer={{
+          text:
+            success && data && overview && trackedGames
+              ? `Tracked from ${trackedGames} ${pluralize(
+                  "game",
+                  trackedGames
+                )}`
+              : "Loading...",
+        }}
       >
         {!gameStats ? (
           <>
@@ -56,9 +66,10 @@ export default function ValorantGameStats(props: {
           </>
         ) : success && data && overview ? (
           <>
-            {a} **KD**: {overview.kdr} {l}
-            {a} **Win Ratio**: {overview.winRatio} ({overview.wins}-
+            {a} **KD**: {overview.kdr}% {l}
+            {a} **Win Ratio**: {overview.winRatio}% ({overview.wins}-
             {overview.losses}) {l}
+            {a} **Most Played Agent** {overview.agentsUsed[0].agentName} {l}
           </>
         ) : (
           <>
