@@ -1,7 +1,7 @@
 import { punishDB } from "#root/utils/database/punishments";
 import { container } from "@sapphire/framework";
+import * as Sentry from "@sentry/node";
 import type { BanOptions, Guild, GuildMember, Snowflake } from "discord.js";
-
 export class EviePunish {
   public async banGuildMember(
     member: GuildMember,
@@ -45,7 +45,7 @@ export class EviePunish {
     });
 
     await punishDB.deleteBan(id, guild).catch((err) => {
-      throw new Error(`Failed to delete ban: ${err}`);
+      Sentry.captureMessage(`Failed to delete ban from database: ${err}`);
     });
 
     if (user)
