@@ -17,7 +17,7 @@ export class GuildBanAddListener extends Listener {
       (log) => (log.target as User).id === user.id
     );
     if (!log) return;
-    if (log.executor?.id == this.container.client?.user?.id) return;
+    if (log.executor?.id == this.container.client.user?.id) return;
 
     return void this.container.client.guildLogger.modAction(guild, {
       action: "Manual Ban (Not via Evie)",
