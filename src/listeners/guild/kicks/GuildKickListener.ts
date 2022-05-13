@@ -1,14 +1,14 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { AuditLogEvent } from "discord-api-types/v9";
-import type { GuildBan, User } from "discord.js";
+import type { GuildMember, User } from "discord.js";
 
 @ApplyOptions<Listener.Options>({
   once: false,
   event: Events.GuildMemberRemove,
 })
 export class GuildKickListener extends Listener {
-  public async run({ guild, user }: GuildBan) {
+  public async run({ guild, user }: GuildMember) {
     const auditLogs = await guild.fetchAuditLogs({
       limit: 10,
       type: AuditLogEvent.MemberKick,
