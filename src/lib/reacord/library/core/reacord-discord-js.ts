@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
 import * as Discord from "discord.js";
@@ -133,6 +134,7 @@ export class ReacordDiscordJs extends Reacord {
           raise(`Channel ${channelId} is not a text channel`);
         }
 
+        // @ts-ignore v13.7 Moment
         const message = await channel.send(getDiscordMessageOptions(options));
         return createReacordMessage(message);
       },
@@ -300,6 +302,7 @@ export class ReacordDiscordJs extends Reacord {
       id: interaction.id,
       customId: interaction.customId,
       update: async (options: MessageOptions) => {
+        // @ts-ignore yes
         await interaction.update(getDiscordMessageOptions(options));
       },
       deferUpdate: async () => {
@@ -382,6 +385,7 @@ export class ReacordDiscordJs extends Reacord {
 function createReacordMessage(message: Discord.Message): Message {
   return {
     edit: async (options) => {
+      // @ts-ignore v13.7 Moment
       await message.edit(getDiscordMessageOptions(options));
     },
     delete: async () => {
@@ -403,11 +407,21 @@ function createEphemeralReacordMessage(): Message {
   };
 }
 
-// TODO: this could be a part of the core library,
-// and also handle some edge cases, e.g. empty messages
 function getDiscordMessageOptions(
   reacordOptions: MessageOptions
-): Discord.MessageOptions {
+): Discord.InteractionReplyOptions;
+
+function getDiscordMessageOptions(
+  reacordOptions: MessageOptions
+): Discord.InteractionUpdateOptions;
+
+function getDiscordMessageOptions(
+  reacordOptions: MessageOptions
+): Discord.MessageEditOptions;
+
+// TODO: this could be a part of the core library,
+// and also handle some edge cases, e.g. empty messages
+function getDiscordMessageOptions(reacordOptions: MessageOptions): any {
   const options: Discord.MessageOptions = {
     content: reacordOptions.content || null,
     embeds: reacordOptions.embeds,
@@ -447,5 +461,5 @@ function getDiscordMessageOptions(
     options.content = "_ _";
   }
 
-  return options;
+  return options as any;
 }

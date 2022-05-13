@@ -257,7 +257,7 @@ function flattenChannelFallback(channel: Channel): FlattenedChannel {
 }
 
 export interface FlattenedChannel {
-  createdTimestamp: number;
+  createdTimestamp: number | null;
 
   id: string;
 
