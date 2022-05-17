@@ -56,10 +56,15 @@ model AirportSettings {
 }
 
 model EvieTag {
-  id        String         @unique
-  name      String
-  content   String
-  embed     Boolean
+  id      String  @unique
+  name    String
+  content String
+  embed   Boolean
+
+  online Boolean @default(false)
+  slug   String? @unique
+  link   String?
+
   evieGuild GuildSettings? @relation(fields: [guildId], references: [id])
   guildId   String?
 }
