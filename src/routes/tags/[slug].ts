@@ -9,7 +9,7 @@ import {
 } from "@sapphire/plugin-api";
 
 @ApplyOptions<RouteOptions>({ route: "/tags/:slug" })
-export class StatsRoute extends Route {
+export class TagRoute extends Route {
   public async [methods.GET](request: ApiRequest, response: ApiResponse) {
     const slug = request.params.slug;
     if (!slug) return response.error(HttpCodes.BadRequest);
