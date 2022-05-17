@@ -25,9 +25,10 @@
   "scripts": {
     "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",
     "start": "node dist/index.js",
-    "start:withdbupdate": "yarn pushdb && node dist/index.js",
+    "start:withdbupdate": "yarn pushdb:force && node dist/index.js",
     "build": "yarn prisma generate && tsc -p src",
     "pushdb": "yarn prisma db push",
+    "pushdb:force": "yarn prisma db push --accept-data-loss",
     "lint": "eslint --fix --ext ts src",
     "clean": "rimraf dist"
   },
