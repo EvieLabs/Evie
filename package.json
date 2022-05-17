@@ -25,6 +25,7 @@
   "scripts": {
     "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",
     "start": "node dist/index.js",
+    "start:withdbupdate": "yarn pushdb && node dist/index.js",
     "build": "yarn prisma generate && tsc -p src",
     "pushdb": "yarn prisma db push",
     "lint": "eslint --fix --ext ts src",
