@@ -1,4 +1,5 @@
 import { EvieEmbed } from "#root/classes/EvieEmbed";
+import ShapeTagsToChoices from "#root/utils/database/ShapeTagsToChoices";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -74,39 +75,7 @@ export class Tag extends Command {
   }
 
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
-    if (!interaction.guild) return;
-    const tagData = await interaction.client.db.FetchTags(interaction.guild);
-    const query = interaction.options.getString("query") ?? "";
-
-    if (tagData.length == 0) {
-      return await interaction.respond([
-        {
-          name: "📌Create a new tag with /createtag",
-          value: "create",
-        },
-      ]);
-    }
-
-    const tags = tagData
-      .filter(
-        (tag) =>
-          tag.name.toLowerCase().includes(query.toLowerCase()) ||
-          tag.content.toLowerCase().includes(query.toLowerCase())
-      )
-      .slice(0, 5)
-      .map((tag) => ({
-        name: tag.name,
-        id: tag.id,
-      }));
-
-    return await interaction.respond(
-      tags.map((tag) => {
-        return {
-          name: `📌${tag.name}`,
-          value: tag.id,
-        };
-      })
-    );
+    await interaction.respond(await ShapeTagsToChoices(interaction));
   }
 
   public override registerApplicationCommands(
