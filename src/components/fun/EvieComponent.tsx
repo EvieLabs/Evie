@@ -1,4 +1,5 @@
 import { Button, Embed } from "#reacord/main";
+import { colors } from "#root/constants/config";
 import axios from "axios";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";
@@ -21,6 +22,7 @@ export default function EvieComponent(props: { user: User }) {
   return (
     <>
       <Embed
+        color={colors.evieGrey}
         description={image ? undefined : "Loading..."}
         image={{ url: image ?? "" }}
       />

@@ -1,4 +1,4 @@
-import { eviePink } from "#root/constants/config";
+import { colors } from "#root/constants/config";
 import { hexStringToHexNumber } from "#root/utils/parsers/colorUtils";
 import type { Guild, Snowflake } from "discord.js";
 
@@ -7,7 +7,7 @@ export class EvieCache {
 
   public embedColor(guild: Guild): number {
     this.setEmbedColor(guild);
-    return this.embedColors.get(guild.id) || eviePink;
+    return this.embedColors.get(guild.id) || colors.eviePink;
   }
 
   public async setEmbedColor(guild: Guild): Promise<void> {

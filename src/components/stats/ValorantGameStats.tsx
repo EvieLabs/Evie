@@ -1,4 +1,5 @@
 import { Embed } from "#reacord/main";
+import { colors } from "#root/constants/config";
 import { HenrikAPIRoot } from "#root/constants/index";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
 import type {
@@ -49,6 +50,7 @@ export default function ValorantGameStats(props: {
   return (
     <>
       <Embed
+        color={colors.evieGrey}
         title={`${props.accountData.name}#${props.accountData.tag} Game Stats`}
         footer={{
           text:

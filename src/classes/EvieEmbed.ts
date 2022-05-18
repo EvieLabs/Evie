@@ -1,4 +1,4 @@
-import { eviePink } from "#root/constants/config";
+import { colors } from "#root/constants/config";
 import {
   ButtonInteraction,
   CommandInteraction,
@@ -19,12 +19,8 @@ export enum StatusEmoji {
 export class EvieEmbed extends MessageEmbed {
   public constructor(public guild?: Guild | null) {
     super({
-      color: guild ? guild.client.db.cache.embedColor(guild) : eviePink,
+      color: colors.evieGrey,
       timestamp: Date.now().toString(),
-      footer: {
-        text: "Evie",
-        iconURL: "https://evie.pw/assets/EvieIcon.png",
-      },
     });
   }
 }
@@ -32,12 +28,8 @@ export class EvieEmbed extends MessageEmbed {
 export class StatusEmbed extends MessageEmbed {
   constructor(public status: StatusEmoji, public statusMessage: string) {
     super({
-      color: status === StatusEmoji.SUCCESS ? 0x00ff00 : 0xff0000,
+      color: status === StatusEmoji.SUCCESS ? colors.evieGrey : 0xff0000,
       timestamp: Date.now().toString(),
-      footer: {
-        text: "Evie",
-        iconURL: "https://evie.pw/assets/EvieIcon.png",
-      },
       description: `${status} ${statusMessage}`,
     });
   }
