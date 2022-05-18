@@ -9,6 +9,7 @@ import {
 import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 @ApplyOptions<Command.Options>({
   description: "Send a tag",
+  preconditions: ["GuildOnly"],
 })
 export class Tag extends Command {
   public override async chatInputRun(
