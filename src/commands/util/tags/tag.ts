@@ -23,9 +23,9 @@ export class Tag extends Command {
     if (!query) return;
     if (!interaction.member) return;
 
-    const tag = await (
-      await interaction.client.db.FetchTags(interaction.guild)
-    ).find((tag) => tag.id === query);
+    const tag = (await interaction.client.db.FetchTags(interaction.guild)).find(
+      (tag) => tag.id === query
+    );
     if (!tag) {
       const tag = (
         await interaction.client.db.FetchTags(interaction.guild)
