@@ -1,16 +1,17 @@
+import { botAdmins } from "#root/utils/parsers/envUtils";
 import { Precondition } from "@sapphire/framework";
 import type { CommandInteraction, Message } from "discord.js";
 
 export class OwnerOnlyPrecondition extends Precondition {
   public override chatInputRun(i: CommandInteraction) {
-    return i.user.id === "97470053615673344"
+    return botAdmins.includes(i.user.id)
       ? this.ok()
-      : this.error({ message: "Only tristan can use this command!" });
+      : this.error({ message: "Hey! You don't have permissions to use this!" });
   }
   public override messageRun(m: Message) {
-    return m.author.id === "97470053615673344"
+    return botAdmins.includes(m.author.id)
       ? this.ok()
-      : this.error({ message: "Only tristan can use this command!" });
+      : this.error({ message: "Hey! You don't have permissions to use this!" });
   }
 }
 
