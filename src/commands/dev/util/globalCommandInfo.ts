@@ -3,6 +3,7 @@ import {
   ReplyStatusEmbed,
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
+import ShapeGlobalCommandsToChoices from "#root/utils/misc/ShapeGlobalCommandsToChoices";
 import { adminGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -51,26 +52,7 @@ export class GlobalCommandInfo extends Command {
   }
 
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
-    const commands = await this.container.client.application?.commands.fetch();
-    const query = interaction.options.getString("query") ?? "";
-
-    return interaction.respond(
-      commands
-        ? commands
-            .map((command) => ({
-              name: command.name,
-              value: command.id,
-            }))
-            .filter((command) =>
-              command.name.toLowerCase().includes(query.toLowerCase())
-            )
-        : [
-            {
-              name: "No commands found",
-              value: "none",
-            },
-          ]
-    );
+    await interaction.respond(await ShapeGlobalCommandsToChoices(interaction));
   }
 
   public override registerApplicationCommands(
