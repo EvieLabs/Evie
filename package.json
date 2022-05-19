@@ -63,6 +63,7 @@
     "react-reconciler": "^0.27.0",
     "rxjs": "^7.5.5",
     "strongly-typed-events": "^2.1.16",
+    "tslib": "^2.4.0",
     "utf-8-validate": "^5.0.9",
     "zlib-sync": "^0.1.7"
   },

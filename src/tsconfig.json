@@ -5,6 +5,9 @@
     "rootDir": ".",
     "baseUrl": ".",
     "jsx": "react",
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/",
     "paths": {
       "#root/*": ["*"],
       "#types/*": ["types/*"],

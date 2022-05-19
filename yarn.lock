@@ -2506,6 +2506,7 @@ __metadata:
     rxjs: ^7.5.5
     strongly-typed-events: ^2.1.16
     tsc-watch: ^5.0.3
+    tslib: ^2.4.0
     type-fest: ^2.12.2
     typescript: ^4.6.3
     utf-8-validate: ^5.0.9
@@ -5082,6 +5083,13 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "tslib@npm:2.4.0"
+  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
   languageName: node
   linkType: hard
 
