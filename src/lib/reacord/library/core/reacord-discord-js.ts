@@ -113,7 +113,10 @@ export class ReacordDiscordJs extends Reacord {
    * @see https://reacord.mapleleaf.dev/guides/sending-messages
    */
   override ephemeralReply(
-    interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction,
+    interaction:
+      | Discord.CommandInteraction
+      | Discord.ContextMenuInteraction
+      | Discord.ModalSubmitInteraction,
     initialContent?: React.ReactNode
   ): ReacordInstance {
     return this.createInstance(
@@ -197,6 +200,7 @@ export class ReacordDiscordJs extends Reacord {
       | Discord.CommandInteraction
       | Discord.ContextMenuInteraction
       | Discord.MessageComponentInteraction
+      | Discord.ModalSubmitInteraction
   ) {
     return new InteractionReplyRenderer({
       type: "command",
