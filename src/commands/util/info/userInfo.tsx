@@ -62,6 +62,7 @@ export class UserInfo extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["962564724904591440"],
       }
     );
   }

@@ -102,6 +102,7 @@ export class Purge extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["974652396825354250"],
       }
     );
   }

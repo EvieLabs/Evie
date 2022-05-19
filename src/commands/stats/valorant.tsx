@@ -86,6 +86,7 @@ export class ValorantStats extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["971746099360575518"],
       }
     );
   }

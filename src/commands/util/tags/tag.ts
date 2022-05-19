@@ -104,7 +104,7 @@ export class Tag extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
-        idHints: ["954547164539912294"],
+        idHints: ["954566145183191090"],
       }
     );
   }

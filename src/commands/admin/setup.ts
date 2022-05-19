@@ -153,6 +153,7 @@ export class Setup extends Command {
           ),
       {
         guildIds: registeredGuilds,
+        idHints: ["954566054632366101"],
       }
     );
   }

@@ -65,6 +65,7 @@ export class Pastelia extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["975653008203464714"],
       }
     );
   }

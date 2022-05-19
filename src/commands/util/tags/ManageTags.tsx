@@ -227,7 +227,7 @@ export class ManageTags extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
-        idHints: ["954547163965300766"],
+        idHints: ["976395420555153438"],
       }
     );
   }
