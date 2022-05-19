@@ -13,29 +13,31 @@ import {
   SnowflakeUtil,
   User,
 } from "discord.js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
   const [tag, setTag] = useState(props._tag);
 
-  const updateTag = async () => {
-    await container.client.prisma.evieTag.update({
-      where: { id: tag.id },
-      data: {
-        link: tag.link,
-        name: tag.name,
-        content: tag.content,
-        online: tag.online,
-      },
-    });
-    console.log("Updated tag");
-  };
+  useEffect(() => {
+    (async () => {
+      await container.client.prisma.evieTag.update({
+        where: { id: tag.id },
+        data: {
+          link: tag.link,
+          name: tag.name,
+          content: tag.content,
+          online: tag.online,
+        },
+      });
+      container.logger.info("owo");
+    })();
+  }, [tag]);
 
   return (
     <>
       <Embed
         color={colors.evieGrey}
-        title={`Edit \`tag.name\``}
+        title={`Edit \`${tag.name}\``}
         description={`**Content**: ${tag.content}
         **Accessible online**: ${
           tag.online && tag.slug
@@ -53,7 +55,6 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
             ...tag,
             online: !tag.online,
           });
-          updateTag();
         }}
       />
       <Button
@@ -115,12 +116,10 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
         slug: slug,
       },
     });
-    setTag(newTag);
 
-    return void ReplyStatusEmbed(
-      StatusEmoji.SUCCESS,
-      `Slug changed to \`${slug}\``,
-      submit
+    return void interaction.client.reacord.ephemeralReply(
+      submit,
+      <EditTagMenu _tag={newTag} user={interaction.user} />
     );
   }
 }
