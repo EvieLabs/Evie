@@ -345,6 +345,7 @@ export class ReacordDiscordJs extends Reacord {
         message,
         user,
         guild,
+        interaction,
 
         reply: (content?: ReactNode) =>
           this.createInstance(

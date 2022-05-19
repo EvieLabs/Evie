@@ -1,3 +1,4 @@
+import type * as Discord from "discord.js";
 import type { ReactNode } from "react";
 import type { ReacordInstance } from "./instance";
 
@@ -41,6 +42,8 @@ export type ComponentEvent = {
    * shown only to the user who triggered it.
    */
   ephemeralReply(content?: ReactNode): ReacordInstance;
+
+  interaction: Discord.MessageComponentInteraction;
 };
 
 /**
