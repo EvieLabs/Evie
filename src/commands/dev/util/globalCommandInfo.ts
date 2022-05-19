@@ -11,7 +11,11 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
-import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
+import {
+  AutocompleteInteraction,
+  CommandInteraction,
+  SnowflakeUtil,
+} from "discord.js";
 @ApplyOptions<Command.Options>({
   description: "Get information about global commands.",
   preconditions: ["OwnerOnly"],
@@ -36,8 +40,10 @@ export class GlobalCommandInfo extends Command {
     embed.setTitle(command.name);
     embed.setDescription(`${a} **Description**: \`${command.description}\`
     ${a} **ID**: \`${command.id}\`
-    ${a} **Registered**: ${(time(command.createdAt), "R")})}`);
-
+    ${a} **Registered**: ${time(
+      SnowflakeUtil.deconstruct(command.id).date,
+      "R"
+    )}`);
     interaction.reply({
       embeds: [embed],
       ephemeral: true,
