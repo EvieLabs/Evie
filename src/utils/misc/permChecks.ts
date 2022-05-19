@@ -9,9 +9,13 @@ export async function checkPerm(
 }
 
 export async function boostsEvie(user: User): Promise<boolean> {
-  const member = await container.client.guilds
-    .resolve("819106797028769844")
-    ?.members.fetch(user.id);
-  if (!member) return false;
-  return !!member.premiumSince;
+  try {
+    const member = await (
+      await container.client.guilds.fetch("819106797028769844")
+    )?.members.fetch(user.id);
+    if (!member) return false;
+    return member.premiumSince !== null;
+  } catch (e) {
+    return false;
+  }
 }

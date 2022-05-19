@@ -62,7 +62,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
         user={props.user}
         label="Change Slug"
         onClick={async (i) => {
-          if (!boostsEvie(i.interaction.user))
+          if (!(await boostsEvie(i.interaction.user)))
             return ReplyStatusEmbed(
               StatusEmoji.FAIL,
               lang.boosterOnly,
