@@ -70,7 +70,7 @@ export class ManageTags extends Command {
   }
 
   private async deleteTag(interaction: CommandInteraction) {
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: true });
     if (!interaction.guild) return;
     const query = interaction.options.getString("query");
     if (!query) return;
