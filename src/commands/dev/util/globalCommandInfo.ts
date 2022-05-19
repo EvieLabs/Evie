@@ -37,6 +37,11 @@ export class GlobalCommandInfo extends Command {
     embed.setDescription(`${a} **Description**: \`${command.description}\`
     ${a} **ID**: \`${command.id}\`
     ${a} **Registered**: ${(time(command.createdAt), "R")})}`);
+
+    interaction.reply({
+      embeds: [embed],
+      ephemeral: true,
+    });
   }
 
   public override async autocompleteRun(interaction: AutocompleteInteraction) {
