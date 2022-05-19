@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { EvieClient } from "#classes/EvieClient";
 import {
   ApplicationCommandRegistries,
@@ -9,7 +11,6 @@ import "@sapphire/plugin-hmr/register";
 import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
-import "dotenv/config";
 import { rootFolder } from "./constants/paths";
 
 /** The running EvieClient */
