@@ -64,7 +64,13 @@ export function CreateTagModal(state: Snowflake) {
   } as unknown as ModalOptions;
 }
 
-export function ChangeSlugModal(state: Snowflake) {
+export function ChangeSlugModal(
+  state: Snowflake,
+  existing?: {
+    slug?: string;
+    redirect?: string;
+  }
+) {
   return {
     title: "Change Slug",
     custom_id: `change_slug_${state}`,
@@ -81,6 +87,23 @@ export function ChangeSlugModal(state: Snowflake) {
             max_length: 15,
             placeholder: "Slug",
             required: true,
+            value: existing?.slug,
+          },
+        ],
+      },
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "redirect",
+            label: "Redirect Link",
+            style: 2,
+            min_length: 1,
+            max_length: 500,
+            placeholder: "Redirect Link",
+            required: true,
+            value: existing?.redirect,
           },
         ],
       },

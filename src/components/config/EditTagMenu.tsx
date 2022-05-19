@@ -60,7 +60,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
       <Button
         style="primary"
         user={props.user}
-        label="Change Slug"
+        label="Online Settings"
         onClick={async (i) => {
           if (!(await boostsEvie(i.interaction.user)))
             return ReplyStatusEmbed(
@@ -69,7 +69,12 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
               i.interaction
             );
           const generatedState = SnowflakeUtil.generate();
-          await i.interaction.showModal(ChangeSlugModal(generatedState));
+          await i.interaction.showModal(
+            ChangeSlugModal(generatedState, {
+              slug: props._tag.slug ?? undefined,
+              redirect: props._tag.link ?? undefined,
+            })
+          );
           waitForModal(i.interaction, generatedState);
         }}
       />
@@ -86,7 +91,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
       })
       .catch(() => {
         interaction.followUp({
-          content: "Slug modal timed out.",
+          content: "Edit modal timed out.",
           ephemeral: true,
         });
       })) as ModalSubmitInteraction;
