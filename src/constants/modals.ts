@@ -63,3 +63,27 @@ export function CreateTagModal(state: Snowflake) {
     ],
   } as unknown as ModalOptions;
 }
+
+export function ChangeSlugModal(state: Snowflake) {
+  return {
+    title: "Change Slug",
+    custom_id: `change_slug_${state}`,
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            custom_id: "slug",
+            label: "Slug",
+            style: 1,
+            min_length: 1,
+            max_length: 15,
+            placeholder: "Slug",
+            required: true,
+          },
+        ],
+      },
+    ],
+  } as unknown as ModalOptions;
+}

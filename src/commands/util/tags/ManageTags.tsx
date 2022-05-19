@@ -4,6 +4,7 @@ import {
   ReplyStatusEmbed,
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
+import EditTagMenu from "#root/components/config/EditTagMenu";
 import ShapeTagsToChoices from "#root/utils/database/ShapeTagsToChoices";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -19,6 +20,7 @@ import {
   Snowflake,
   SnowflakeUtil,
 } from "discord.js";
+import React from "react";
 
 @ApplyOptions<Command.Options>({
   description: "Manage tags",
@@ -36,7 +38,35 @@ export class ManageTags extends Command {
       case "delete": {
         return void this.deleteTag(interaction);
       }
+      case "edit": {
+        return void this.editTag(interaction);
+      }
     }
+  }
+
+  private async editTag(interaction: CommandInteraction) {
+    await interaction.deferReply({ ephemeral: true });
+    if (!interaction.guild) return;
+    const query = interaction.options.getString("query");
+    if (!query) return;
+
+    const tags = await interaction.client.db.FetchTags(interaction.guild);
+
+    const tag =
+      tags.find((tag) => tag.id === query) ??
+      tags.find((tag) => tag.name === query.split(" ")[0]);
+
+    if (!tag)
+      return void EditReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        "Tag not found.",
+        interaction
+      );
+
+    return void interaction.client.reacord.editReply(
+      interaction,
+      <EditTagMenu _tag={tag} user={interaction.user} />
+    );
   }
 
   private async deleteTag(interaction: CommandInteraction) {
@@ -174,6 +204,18 @@ export class ManageTags extends Command {
             deleteSub //
               .setName("delete")
               .setDescription("Delete a tag")
+              .addStringOption((query) =>
+                query //
+                  .setName("query")
+                  .setDescription("The name of the tag")
+                  .setRequired(true)
+                  .setAutocomplete(true)
+              )
+          )
+          .addSubcommand((deleteSub) =>
+            deleteSub //
+              .setName("edit")
+              .setDescription("Edit a tag")
               .addStringOption((query) =>
                 query //
                   .setName("query")
