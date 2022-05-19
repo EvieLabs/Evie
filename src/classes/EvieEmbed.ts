@@ -4,6 +4,7 @@ import {
   CommandInteraction,
   ContextMenuInteraction,
   Message,
+  MessageComponentInteraction,
   MessageEmbed,
   MessageMentionOptions,
   ModalSubmitInteraction,
@@ -43,7 +44,8 @@ export async function ReplyStatusEmbed(
     | ModalSubmitInteraction
     | ContextMenuInteraction
     | ButtonInteraction
-    | Message,
+    | Message
+    | MessageComponentInteraction,
   allowedMentions?: MessageMentionOptions
 ): Promise<Message | Message<boolean> | APIMessage | void> {
   const embed = new StatusEmbed(status, description);
@@ -72,7 +74,8 @@ export async function EditReplyStatusEmbed(
     | ModalSubmitInteraction
     | ContextMenuInteraction
     | ButtonInteraction
-    | Message,
+    | Message
+    | MessageComponentInteraction,
   allowedMentions?: MessageMentionOptions
 ): Promise<Message | Message<boolean> | APIMessage | void> {
   const embed = new StatusEmbed(status, description);
