@@ -21,12 +21,17 @@ export class TagRoute extends Route {
       },
     });
 
-    if (!tag) return response.error(HttpCodes.BadRequest);
+    if (!tag || !tag.guildId) return response.error(HttpCodes.BadRequest);
+
+    const guild = await this.container.client.guilds.fetch(tag.guildId);
+
+    if (!guild) return response.error(HttpCodes.BadRequest);
 
     return response.json({
       name: tag.name,
       content: tag.content,
       link: tag.link,
+      guildName: guild.name,
     });
   }
 }
