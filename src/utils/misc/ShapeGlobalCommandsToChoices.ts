@@ -7,7 +7,9 @@ import type {
 export default async function (
   interaction: AutocompleteInteraction
 ): Promise<ApplicationCommandOptionChoiceData[]> {
-  const commands = await container.client.application?.commands.fetch();
+  const commands =
+    container.client.application?.commands.cache ??
+    (await container.client.application?.commands.fetch());
   const query = interaction.options.getString("query") ?? "";
 
   return commands
