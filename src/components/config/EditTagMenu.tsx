@@ -100,6 +100,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
     if (!submit.fields) return;
 
     const slug = submit.fields.getTextInputValue("slug");
+    const redirect = submit.fields.getTextInputValue("redirect");
 
     if (!slug)
       return void ReplyStatusEmbed(
@@ -119,6 +120,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
       where: { id: tag.id },
       data: {
         slug: slug,
+        link: redirect,
       },
     });
 
