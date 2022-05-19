@@ -5,6 +5,8 @@ export enum Emojis {
   valorantFade = "<:fade:973184566321893417>",
 }
 
+export const discordServerInvite = "https://discord.gg/Sx9QzpVC7r";
+
 const lang = {
   needAdminPerms:
     "You do not have the required permissions to use this command. (admin)",
@@ -13,6 +15,8 @@ const lang = {
   commandModeratorOnly: `This command is only available to moderators. ${Emojis.evieWristSlap}`,
   commandModeratorOnlyNoEmoji: `This command is only available to moderators. ${Emojis.evieWristSlap}`,
   notInCachedGuild: `You are not in a cached guild. Try re-running the command.`,
+  boosterOnly: `Sorry, this feature is only available for people who boost our [server](${discordServerInvite}).
+  While we try to keep as many features as possible free, we still want to make some profits in return weather that be in Discord server boosts or from donations.`,
 };
 
 export default lang;
