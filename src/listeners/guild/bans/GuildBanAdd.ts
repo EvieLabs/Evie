@@ -33,6 +33,7 @@ export class GuildBanAddListener extends Listener {
       if (error.code !== Constants.APIErrors.MISSING_PERMISSIONS) {
         return;
       }
+      return;
     }
   }
 }
