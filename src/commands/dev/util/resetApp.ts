@@ -6,7 +6,7 @@ export class ResetApp extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
     super(context, {
       ...options,
-      name: "reset app",
+      name: "resetapp",
       aliases: ["reset"],
       description: "resets the application commands",
       preconditions: ["OwnerOnly"],
