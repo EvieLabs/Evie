@@ -40,7 +40,7 @@ export class Pastelia extends Command {
       });
 
       const { data } = response;
-      await message.delete();
+      // await message.delete(); TODO: Add config option
       return void interaction.reply(
         `Uploaded code block to [Pastelia](<https://pastelia.dev/${data}>).`
       );
