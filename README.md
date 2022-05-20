@@ -1,59 +1,72 @@
 <div align="center">
 <img src="https://github.com/TeamEvie.png" width="15%" class="round" style="border-radius: 50%;">
 
-# Evie [![DiscordInvite](https://discord.com/api/guilds/819106797028769844/embed.png)](https://evie.pw/discord)
+<br />
 
-[![Status](https://top.gg/api/widget/status/807543126424158238.svg?noavatar=true)](https://top.gg/bot/807543126424158238)
+[![top.gg](https://top.gg/api/widget/upvotes/807543126424158238.svg?noavatar=true)](https://top.gg/bot/807543126424158238)
 [![GitHub stars](https://img.shields.io/github/stars/TeamEvie/Evie?style=flat-square)](https://github.com/TeamEvie/Evie/stargazers)
-
-> Hey thanks for being interested in the future of Evie!
+[![DiscordInvite](https://discord.com/api/guilds/819106797028769844/embed.png)](https://evie.pw/discord)
 
 </div>
 
-## Contributing to Evie
+## Features like no other! [¹](a "ok maybe not") ![bap](https://cdn.discordapp.com/emojis/785701845300412436.png?size=32)
 
-### Requirements
+### Moderation ![bap](https://cdn.discordapp.com/emojis/785674459083964466.png?size=32)
 
-- [`Node.js`]: To run [`yarn`]
-- [`Docker`]: To be able to spin up a testing environment like production
-- [`yarn`]: To manage dependencies
+Evie features a very powerful moderation engine, allowing you to ban, kick, temp role, timeout, and more.
 
-## How to start your Evie dev environment
+### Utility ![charm](https://cdn.discordapp.com/emojis/785676180229455905.png?size=32)
 
-1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
-2. Clone the repo.
-3. Install deps with by typing `yarn`.
-4. Copy `.env.example` to a new file `.env` file.
-5. Type `yarn build` to build the Prisma schema.
-6. Code away.
-7. Make a volume for the database with `docker volume create --name=postgres`.
-8. Start the database with `docker-compose up --build postgres` this will only start the database container.
-9. Update the environment variable `DATABASE_URL` in `/apps/bot` with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
-10. Before testing make sure to push the schema to the database with `yarn pushdb`
-11. Test with `yarn dev` Every save will automatically build and restart the bot.
-12. Push your changes.
-13. Make a PR.
+Evie comes with heaps of helpful utilities to construct your server, lookup information, and more.
 
-**Tip:** When working in a monorepo such as this, when running `yarn dev` in the root directory, it will run `yarn dev` in every apps subdirectory. So make sure to run `yarn dev` in the `apps/bot` directory.
+### Stats ![hmm](https://cdn.discordapp.com/emojis/785675913341042718.png?size=32)
+
+Evie can look up information and statistics both inside and outside of Discord, – for example user information and VALORANT statistics.
+
+## Get started! ![charm](https://cdn.discordapp.com/emojis/785701961902719028.png?size=32)
+
+1. Invite Evie! **[Default Permissions Invite](https://evie.pw/invite) or [Permission-less Invite](https://discord.com/oauth2/authorize?scope=bot%20applications.commands&client_id=807543126424158238)**
+2. Setup Evie the way you want! **[Manage Guilds](https://evie.pw/guilds) or `/setup`**
+3. Use Evie! **[Support and Community Server](https://discord.gg/Sx9QzpVC7r)**
 
 ## Need help?
 
-If you need help with contributing to Evie or have any questions, please join the [Discord server](https://evie.pw/discord).
+If you don't understand something, discovered a bug, are having issues, or want to talk about Evie and other "nerdy" Discord topics, please join our official Discord server for support and general chit chat with our community. **[Invite](https://discord.gg/Sx9QzpVC7r)**
 
 ## Support Evie
 
-Evie is a completely free service and bot. If you like Evie and we have helped your Discord server somehow, please consider sponsoring us on [GitHub Sponsors](https://github.com/sponsors/twisttaan). The money we get from sponsorships helps us to keep the service running.
+The official public hosted Evie is a completely free service (except for some "extra" features that are just novelty). If you like Evie and she has helped your Discord server somehow, please consider sponsoring me on [GitHub Sponsors](https://github.com/sponsors/twisttaan). The money we get from sponsorships helps us to keep Evie running.
 
 > Thanks to all our sponsors:
 >
 > <img src="https://sponsors.harjyotsahni.com/twisttaan.svg"><img>
+
+## Contributing to Evie ![charm](https://cdn.discordapp.com/emojis/874847641111003136.png?size=32)
+
+### Requirements
+
+- [`Node.js`]: JavaScript runtime
+- [`Docker`]: Run postgres locally without much work
+- [`yarn`]: To manage dependencies and run scripts
+
+## How to start your Evie dev environment
+
+1. Install yarn if you haven't done so yet, `npm i -g yarn` or `sudo npm i -g yarn` if on a unix system.
+2. Fork/Clone the repo.
+3. Install deps with by typing `yarn`.
+4. Copy `.env.example` to a new file `.env` file.
+5. Type `yarn build` to build the Prisma schema.
+6. Make a volume for the postgres database with `docker volume create --name=postgres`.
+7. Start the database with `docker-compose up --build postgres` this will only start the postgres container.
+8. Update the environment variable `DATABASE_URL` in `/apps/bot` with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
+9. Before testing make sure to push the schema to the database with `yarn pushdb` (you will need to re-run this every time you make changes to `prisma/schema.prisma`)
+10. Test with `yarn dev`. Every time you save a file the running instance will automatically stop, build and restart.
 
 <!----------------- Quick-Links --------------->
 
 [`node.js`]: https://nodejs.org/en/
 [`docker`]: https://www.docker.com/
 [`yarn`]: https://yarnpkg.com/
-[production evie]: https://eviebot.rocks
 
 ## Contributors ✨
 
