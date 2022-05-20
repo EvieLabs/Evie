@@ -29,7 +29,6 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
           online: tag.online,
         },
       });
-      container.logger.info("owo");
     })();
   }, [tag]);
 
