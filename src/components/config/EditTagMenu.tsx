@@ -6,6 +6,7 @@ import lang from "#root/utils/lang";
 import { boostsEvie } from "#root/utils/misc/permChecks";
 import type { EvieTag } from "@prisma/client";
 import { container } from "@sapphire/framework";
+import { captureException } from "@sentry/node";
 import {
   MessageComponentInteraction,
   ModalSubmitInteraction,
@@ -48,17 +49,6 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
       <Button
         style="primary"
         user={props.user}
-        label={tag.online ? "Hide Online" : "Show Online"}
-        onClick={() => {
-          setTag({
-            ...tag,
-            online: !tag.online,
-          });
-        }}
-      />
-      <Button
-        style="primary"
-        user={props.user}
         label="Online Settings"
         onClick={async (i) => {
           if (!(await boostsEvie(i.interaction.user)))
@@ -77,6 +67,19 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
           waitForModal(i.interaction, generatedState);
         }}
       />
+      {tag.slug ? (
+        <Button
+          style="primary"
+          user={props.user}
+          label={tag.online ? "Hide Online" : "Show Online"}
+          onClick={() => {
+            setTag({
+              ...tag,
+              online: !tag.online,
+            });
+          }}
+        />
+      ) : null}
     </>
   );
   async function waitForModal(
@@ -97,35 +100,39 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
 
     if (!submit) return;
     if (!submit.fields) return;
+    try {
+      const slug = submit.fields.getTextInputValue("slug");
+      const redirect = submit.fields.getTextInputValue("redirect");
 
-    const slug = submit.fields.getTextInputValue("slug");
-    const redirect = submit.fields.getTextInputValue("redirect");
+      if (!slug)
+        return void ReplyStatusEmbed(
+          StatusEmoji.FAIL,
+          "No slug provided.",
+          submit
+        );
 
-    if (!slug)
-      return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "No slug provided.",
-        submit
+      if (slug.match(/^[a-zA-Z0-9-]{1,32}$/) === null)
+        return void ReplyStatusEmbed(
+          StatusEmoji.FAIL,
+          "Slug must be alphanumeric and no more than 32 characters long.",
+          submit
+        );
+
+      const newTag = await container.client.prisma.evieTag.update({
+        where: { id: tag.id },
+        data: {
+          slug: slug,
+          link: redirect,
+        },
+      });
+
+      return void interaction.client.reacord.ephemeralReply(
+        submit,
+        <EditTagMenu _tag={newTag} user={interaction.user} />
       );
-
-    if (slug.match(/^[a-zA-Z0-9-]{1,32}$/) === null)
-      return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Slug must be alphanumeric and no more than 32 characters long.",
-        submit
-      );
-
-    const newTag = await container.client.prisma.evieTag.update({
-      where: { id: tag.id },
-      data: {
-        slug: slug,
-        link: redirect,
-      },
-    });
-
-    return void interaction.client.reacord.ephemeralReply(
-      submit,
-      <EditTagMenu _tag={newTag} user={interaction.user} />
-    );
+    } catch (e) {
+      ReplyStatusEmbed(StatusEmoji.FAIL, "Something went wrong.", submit);
+      return void captureException(e);
+    }
   }
 }
