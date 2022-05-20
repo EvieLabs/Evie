@@ -102,7 +102,7 @@ export function ChangeSlugModal(
             min_length: 1,
             max_length: 500,
             placeholder: "Redirect Link",
-            required: true,
+            required: false,
             value: existing?.redirect,
           },
         ],
