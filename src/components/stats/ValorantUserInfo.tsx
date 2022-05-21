@@ -1,5 +1,5 @@
 import { Embed } from "#reacord/main";
-import { colors } from "#root/Enums";
+import { EvieColors } from "#root/Enums";
 import type { AccountData } from "#root/types/api/Henrik/HenrikValorant";
 import type { User } from "discord.js";
 import React from "react";
@@ -15,7 +15,7 @@ export default function ValorantUserInfo(props: {
   return (
     <>
       <Embed
-        color={colors.evieGrey}
+        color={EvieColors.evieGrey}
         title={data ? `${data.name}#${data.tag}` : "Loading..."}
         image={{ url: data?.card.wide ?? "" }}
       >

@@ -1,4 +1,4 @@
-import { colors } from "#root/Enums";
+import { EvieColors } from "#root/Enums";
 import { hexStringToHexNumber } from "#root/utils/parsers/colorUtils";
 import type { Guild, Snowflake } from "discord.js";
 
@@ -7,7 +7,7 @@ export class EvieCache {
 
   public embedColor(guild: Guild): number {
     this.setEmbedColor(guild);
-    return this.embedColors.get(guild.id) || colors.eviePink;
+    return this.embedColors.get(guild.id) || EvieColors.eviePink;
   }
 
   public async setEmbedColor(guild: Guild): Promise<void> {

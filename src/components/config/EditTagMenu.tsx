@@ -1,7 +1,7 @@
 import { Button, Embed } from "#reacord/main";
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { ChangeSlugModal } from "#root/constants/modals";
-import { colors } from "#root/Enums";
+import { EvieColors } from "#root/Enums";
 import lang from "#root/utils/lang";
 import { boostsEvie } from "#root/utils/misc/permChecks";
 import type { EvieTag } from "@prisma/client";
@@ -36,7 +36,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
   return (
     <>
       <Embed
-        color={colors.evieGrey}
+        color={EvieColors.evieGrey}
         title={`Edit \`${tag.name}\``}
         description={`**Content**: ${tag.content}
         **Accessible online**: ${

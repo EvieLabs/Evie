@@ -1,6 +1,6 @@
 import { Embed } from "#reacord/main";
 import { HenrikAPIRoot } from "#root/constants/index";
-import { colors } from "#root/Enums";
+import { EvieColors } from "#root/Enums";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
 import type {
   AccountData,
@@ -47,7 +47,7 @@ export default function ValorantCompStats(props: {
   return (
     <>
       <Embed
-        color={colors.evieGrey}
+        color={EvieColors.evieGrey}
         title={`${props.accountData.name}#${props.accountData.tag} Competitive Stats`}
       >
         {!compStats ? (

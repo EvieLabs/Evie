@@ -1,4 +1,4 @@
-import { colors } from "#root/Enums";
+import { EvieColors } from "#root/Enums";
 import {
   ButtonInteraction,
   CommandInteraction,
@@ -20,7 +20,7 @@ export enum StatusEmoji {
 export class EvieEmbed extends MessageEmbed {
   public constructor(public guild?: Guild | null) {
     super({
-      color: colors.evieGrey,
+      color: EvieColors.evieGrey,
       timestamp: Date.now().toString(),
     });
   }
@@ -29,7 +29,7 @@ export class EvieEmbed extends MessageEmbed {
 export class StatusEmbed extends MessageEmbed {
   constructor(public status: StatusEmoji, public statusMessage: string) {
     super({
-      color: status === StatusEmoji.SUCCESS ? colors.evieGrey : 0xff0000,
+      color: status === StatusEmoji.SUCCESS ? EvieColors.evieGrey : 0xff0000,
       timestamp: Date.now().toString(),
       description: `${status} ${statusMessage}`,
     });

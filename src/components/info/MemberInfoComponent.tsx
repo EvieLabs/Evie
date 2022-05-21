@@ -1,5 +1,5 @@
 import { Embed } from "#reacord/main";
-import { colors } from "#root/Enums";
+import { EvieColors } from "#root/Enums";
 import { capitalizeEachWord, trimArray } from "#utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
 import type { GuildMember } from "discord.js";
@@ -14,7 +14,7 @@ export default function MemberInfoComponent(props: { member: GuildMember }) {
   return (
     <>
       <Embed
-        color={colors.evieGrey}
+        color={EvieColors.evieGrey}
         thumbnail={{ url: user.displayAvatarURL() }}
         title={`${user.tag} (${user.id})`}
         fields={[
