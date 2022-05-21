@@ -9,7 +9,10 @@ import { Constants, DiscordAPIError, GuildMember, User } from "discord.js";
   event: Events.GuildMemberUpdate,
 })
 export class GuildMemberUpdateListener extends Listener {
-  public async run(oldMember: GuildMember, { user, guild }: GuildMember) {
+  public async run(
+    oldMember: GuildMember,
+    { user, guild, communicationDisabledUntil }: GuildMember
+  ) {
     try {
       const auditLogs = await guild.fetchAuditLogs({
         limit: 10,
@@ -37,17 +40,18 @@ export class GuildMemberUpdateListener extends Listener {
       if (!timeoutUpdate) return;
       const timedOut = !Boolean(timeoutUpdate.old && !timeoutUpdate.new);
       if (!timedOut)
-        return void this.container.client.guildLogger.modAction(guild, {
+        return void this.container.client.punishments.createModAction(guild, {
           action: "Un-timeout",
           target: user,
           moderator: log?.executor || undefined,
         });
 
-      return void this.container.client.guildLogger.modAction(guild, {
+      return void this.container.client.punishments.createModAction(guild, {
         action: "Timeout",
         target: user,
         reason: log.reason ? log.reason : `No reason provided.`,
         moderator: log?.executor || undefined,
+        expiresAt: communicationDisabledUntil ?? undefined,
       });
     } catch (error) {
       if (!(error instanceof DiscordAPIError)) return captureException(error);

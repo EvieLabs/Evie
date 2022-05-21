@@ -21,7 +21,6 @@ model GuildSettings {
   airportSettings    AirportSettings?
 
   tags             EvieTag[]
-  tempBans         EvieTempBan[]
   importedMessages String[]
   logChannel       String?
 
@@ -69,14 +68,12 @@ model EvieTag {
   guildId   String?
 }
 
-model EvieTempBan {
-  id        String         @unique
-  reason    String
-  userId    String
-  guildId   String?
-  expiresAt DateTime?
-  EvieGuild GuildSettings? @relation(fields: [guildId], references: [id])
-  bannedBy  String?
-
-  @@unique([userId, guildId])
+model ModAction {
+  id          String    @id
+  type        String
+  reason      String
+  targetID    String
+  guildId     String?
+  expiresAt   DateTime?
+  moderatorID String?
 }

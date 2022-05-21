@@ -1,9 +1,20 @@
+import { time } from "@discordjs/builders";
+import type { ModAction } from "@prisma/client";
 import type { User } from "discord.js";
 
-export const modAction = (member: User, action: string, reason?: string) => {
-  return `**Member**: \`${member.tag}\` (${member.id})
-          **Action**: ${action}
-          ${reason ? `**Reason**: ${reason}` : ""}
+export const modActionDescription = (
+  action: ModAction & {
+    target: User;
+  }
+) => {
+  return `**Member**: \`${action.target.tag}\` (${action.target.id})
+          **Action**: ${action.type}
+          ${action.reason ? `**Reason**: ${action.reason}` : ""}
+          ${
+            action.expiresAt
+              ? `**Expires**: ${time(action.expiresAt, "R")}`
+              : ""
+          }
          `;
 };
 

@@ -3,7 +3,6 @@ import {
   ReplyStatusEmbed,
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
-import { punishDB } from "#root/utils/database/punishments";
 import lang from "#root/utils/lang";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
@@ -23,6 +22,7 @@ import {
 @ApplyOptions<Command.Options>({
   description: "Ban a user",
   preconditions: ["ModOrBanPermsOnly"],
+  requiredClientPermissions: ["BAN_MEMBERS"],
 })
 export class Ban extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
@@ -45,10 +45,6 @@ export class Ban extends Command {
 
     await interaction.deferReply();
 
-    if (await punishDB.getBan(userToBeBanned)) {
-      await punishDB.deleteBan(userToBeBanned.id, interaction.guild);
-    }
-
     try {
       await interaction.client.punishments.banGuildMember(
         userToBeBanned,
@@ -68,7 +64,12 @@ export class Ban extends Command {
       return;
     } catch (e) {
       Sentry.captureException(e);
-      ReplyStatusEmbed(StatusEmoji.FAIL, "Failed to ban user.", interaction);
+      console.log(e);
+      EditReplyStatusEmbed(
+        StatusEmoji.FAIL,
+        "Failed to ban user.",
+        interaction
+      );
       return;
     }
   }

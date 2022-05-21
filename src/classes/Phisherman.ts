@@ -32,7 +32,10 @@ export class Phisherman {
         )
         .addField("Triggered Link", phish.url);
 
-      await phish.message.client.guildLogger.log(phish.message.guild, embed);
+      await phish.message.client.guildLogger.sendEmbedToLogChannel(
+        phish.message.guild,
+        embed
+      );
     });
   }
 

@@ -154,4 +154,19 @@ export class DatabaseTools {
       throw error;
     }
   }
+
+  /** Fetches every mod action targeted at a member */
+  public async getModActions(m: GuildMember) {
+    try {
+      return await m.client.prisma.modAction.findMany({
+        where: {
+          targetID: m.id,
+          guildId: m.guild.id,
+        },
+      });
+    } catch (error) {
+      Sentry.captureException(error);
+      throw new Error(`Failed to find infractions: ${error}`);
+    }
+  }
 }

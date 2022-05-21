@@ -21,7 +21,7 @@ export class GuildBanAddListener extends Listener {
       if (!log) return;
       if (log.executor?.id == this.container.client.user?.id) return;
 
-      return void this.container.client.guildLogger.modAction(guild, {
+      return void this.container.client.punishments.createModAction(guild, {
         action: "Manual Ban (Not via Evie)",
         target: user,
         reason: log.reason ? log.reason : `No reason provided.`,

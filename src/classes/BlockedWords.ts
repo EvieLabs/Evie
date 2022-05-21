@@ -31,7 +31,7 @@ export class BlockedWords {
     bannedWord: string
   ) {
     if (!message.guild) return;
-    await message.client.guildLogger.log(
+    await message.client.guildLogger.sendEmbedToLogChannel(
       message.guild,
       new LogEmbed(`blocked words`)
         .setColor("#4e73df")

@@ -20,6 +20,7 @@ import {
 @ApplyOptions<Command.Options>({
   description: "Un-ban a user",
   preconditions: ["ModOrBanPermsOnly"],
+  requiredClientPermissions: ["BAN_MEMBERS"],
 })
 export class UnBan extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
