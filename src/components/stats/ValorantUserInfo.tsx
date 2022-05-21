@@ -1,5 +1,5 @@
 import { Embed } from "#reacord/main";
-import { colors } from "#root/constants/config";
+import { colors } from "#root/Enums";
 import type { AccountData } from "#root/types/api/Henrik/HenrikValorant";
 import type { User } from "discord.js";
 import React from "react";

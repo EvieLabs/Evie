@@ -1,5 +1,5 @@
 import { Embed } from "#reacord/main";
-import { colors } from "#root/constants/config";
+import { colors } from "#root/Enums";
 import { capitalizeEachWord, trimArray } from "#utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
 import type { GuildMember } from "discord.js";

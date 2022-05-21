@@ -1,4 +1,4 @@
-import { colors } from "#root/constants/config";
+import { colors } from "#root/Enums";
 import { MessageEmbed } from "discord.js";
 
 export class LogEmbed extends MessageEmbed {

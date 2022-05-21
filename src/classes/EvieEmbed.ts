@@ -1,4 +1,4 @@
-import { colors } from "#root/constants/config";
+import { colors } from "#root/Enums";
 import {
   ButtonInteraction,
   CommandInteraction,

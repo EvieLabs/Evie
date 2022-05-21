@@ -1,5 +1,5 @@
 import { Button, Embed } from "#reacord/main";
-import { colors } from "#root/constants/config";
+import { colors } from "#root/Enums";
 import axios from "axios";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";

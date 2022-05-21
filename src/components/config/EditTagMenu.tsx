@@ -1,7 +1,7 @@
 import { Button, Embed } from "#reacord/main";
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
-import { colors } from "#root/constants/config";
 import { ChangeSlugModal } from "#root/constants/modals";
+import { colors } from "#root/Enums";
 import lang from "#root/utils/lang";
 import { boostsEvie } from "#root/utils/misc/permChecks";
 import type { EvieTag } from "@prisma/client";

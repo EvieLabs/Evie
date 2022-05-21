@@ -1,6 +1,6 @@
 import { Embed } from "#reacord/main";
-import { colors } from "#root/constants/config";
 import { HenrikAPIRoot } from "#root/constants/index";
+import { colors } from "#root/Enums";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
 import type {
   AccountData,

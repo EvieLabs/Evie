@@ -1,4 +1,4 @@
-import { colors } from "#root/constants/config";
+import { colors } from "#root/Enums";
 import { hexStringToHexNumber } from "#root/utils/parsers/colorUtils";
 import type { Guild, Snowflake } from "discord.js";
 
