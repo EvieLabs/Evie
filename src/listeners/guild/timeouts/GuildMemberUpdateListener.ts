@@ -59,7 +59,7 @@ export class GuildMemberUpdateListener extends Listener {
       if (error.code !== Constants.APIErrors.MISSING_PERMISSIONS) {
         return;
       }
-      return;
+      return captureException(error);
     }
   }
 }
