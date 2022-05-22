@@ -13,6 +13,8 @@ export class EvieGuildLogger {
       const channel = await guild.client.channels.fetch(channelId);
       if (!channel) return null;
       if (!(channel instanceof TextChannel)) return null;
+      if (channel.guildId !== guild.id)
+        throw new Error("Channel is not in the requested guild.");
 
       return await channel.send({ embeds: [embed] });
     } catch (e) {
@@ -33,6 +35,8 @@ export class EvieGuildLogger {
       if (!channel) throw new Error("Channel not found.");
       if (!(channel instanceof TextChannel))
         throw new Error("Channel is not a text channel.");
+      if (channel.guildId !== guild.id)
+        throw new Error("Channel is not in the requested guild.");
 
       return channel;
     } catch (e) {
