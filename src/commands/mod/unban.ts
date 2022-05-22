@@ -77,8 +77,12 @@ export class UnBan extends Command {
       ]);
     }
 
-    const bans = await interaction.guild.bans.fetch();
-    const query = interaction.options.getString("query") ?? "";
+    const bans =
+      interaction.guild.bans.cache.size !== 0
+        ? interaction.guild.bans.cache
+        : await interaction.guild.bans.fetch();
+
+    const query = interaction.options.getString("user") ?? "";
 
     if (bans.size == 0) {
       return await interaction.respond([
@@ -89,21 +93,20 @@ export class UnBan extends Command {
       ]);
     }
 
-    const sortedBans = bans
-      .filter(
-        (ban) =>
-          ban.user.tag.toLowerCase().includes(query.toLowerCase()) ||
-          ban.user.id.includes(query.toLowerCase())
-      )
-      .sort((a, b) => a.user.tag.localeCompare(b.user.tag));
-
     return await interaction.respond(
-      sortedBans.map((ban) => {
-        return {
-          name: `🚫${ban.user.username}#${ban.user.discriminator}`,
-          value: ban.user.id,
-        };
-      })
+      bans
+
+        .map((ban) => {
+          return {
+            name: `🚫${ban.user.username}#${ban.user.discriminator}`,
+            value: ban.user.id,
+          };
+        })
+        .filter(
+          (ban) =>
+            ban.name.toLowerCase().includes(query.toLowerCase()) ||
+            ban.value.toLowerCase().includes(query.toLowerCase())
+        )
     );
   }
 
