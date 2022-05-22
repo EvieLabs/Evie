@@ -24,17 +24,18 @@ export class EvieGuildLogger {
   public async sendEmbedToModChannel(guild: Guild, embed: MessageEmbed) {
     try {
       const guildSettings = await guild.client.db.FetchGuildSettings(guild);
-      if (!guildSettings.moderationSettings?.logChannel) return;
+      if (!guildSettings.moderationSettings?.logChannel) return null;
 
       const channel = await guild.client.channels.fetch(
         guildSettings.moderationSettings.logChannel
       );
-      if (!channel) return;
-      if (!(channel instanceof TextChannel)) return;
+      if (!channel) return null;
+      if (!(channel instanceof TextChannel)) return null;
 
-      await channel.send({ embeds: [embed] });
+      return await channel.send({ embeds: [embed] });
     } catch (e) {
       Sentry.captureException(e);
+      return null;
     }
   }
 }
