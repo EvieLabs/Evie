@@ -109,12 +109,6 @@ export class EviePunish {
 
     if (!oppositeAction) return;
 
-    console.log(`looking for`, {
-      targetID: newOptions.target.id,
-      guildId: guild.id,
-      typeId: oppositeAction,
-    });
-
     const modAction = await container.client.prisma.modAction
       .findFirst({
         where: {
