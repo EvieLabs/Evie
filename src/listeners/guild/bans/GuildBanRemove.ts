@@ -1,3 +1,4 @@
+import { ModActionType } from "#root/Enums";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
@@ -23,6 +24,7 @@ export class GuildBanRemoveListener extends Listener {
 
       return void this.container.client.punishments.createModAction(guild, {
         action: "Manual Reverse Ban (Not via Evie)",
+        type: ModActionType.Unban,
         target: user,
         reason: log.reason ? log.reason : `No reason provided.`,
         moderator: log?.executor || undefined,

@@ -1,3 +1,4 @@
+import { ModActionType } from "#root/Enums";
 import { modActionDescription } from "#root/utils/builders/stringBuilder";
 import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
@@ -8,7 +9,8 @@ export class EviePunish {
   public async createModAction(
     guild: Guild,
     options: {
-      action: string;
+      action?: string;
+      type: ModActionType;
       target: User;
       moderator?: User;
       reason?: string;
@@ -24,6 +26,7 @@ export class EviePunish {
             targetID: options.target.id,
             moderatorID: options.moderator?.id,
             reason: options.reason ?? "No reason provided.",
+            typeId: options.type,
             type: options.action,
             expiresAt: options.expiresAt,
           },
@@ -71,6 +74,7 @@ export class EviePunish {
 
     this.createModAction(member.guild, {
       action: "Ban",
+      type: ModActionType.Ban,
       target: member.user,
       moderator: banner?.user,
       reason: banOptions.reason,
@@ -93,6 +97,7 @@ export class EviePunish {
     if (user)
       this.createModAction(guild, {
         action: "Reverse Ban",
+        type: ModActionType.Unban,
         target: user,
         moderator: moderator?.user || undefined,
         reason: moderator?.user ? reason : `${reason} (Unknown moderator)`,

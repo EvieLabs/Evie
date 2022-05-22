@@ -1,5 +1,6 @@
 import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { Schedule } from "#root/classes/Schedule";
+import { ModActionType } from "#root/Enums";
 import { container } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
 import { Constants, DiscordAPIError } from "discord.js";
@@ -34,7 +35,8 @@ export class TempBans extends Schedule {
           );
 
         return void client.punishments.createModAction(guild, {
-          action: "Unban",
+          action: "Tempban Expired",
+          type: ModActionType.Unban,
           target: user,
           reason: `Temp-ban expired`, // TODO: Track mod action messages and reference the message link
         });

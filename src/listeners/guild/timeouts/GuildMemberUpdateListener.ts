@@ -1,3 +1,4 @@
+import { ModActionType } from "#root/Enums";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
@@ -42,12 +43,14 @@ export class GuildMemberUpdateListener extends Listener {
       if (!timedOut)
         return void this.container.client.punishments.createModAction(guild, {
           action: "Un-timeout",
+          type: ModActionType.UnTimeout,
           target: user,
           moderator: log?.executor || undefined,
         });
 
       return void this.container.client.punishments.createModAction(guild, {
         action: "Timeout",
+        type: ModActionType.Timeout,
         target: user,
         reason: log.reason ? log.reason : `No reason provided.`,
         moderator: log?.executor || undefined,

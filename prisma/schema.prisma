@@ -70,7 +70,8 @@ model EvieTag {
 
 model ModAction {
   id          String    @id
-  type        String
+  type        String?
+  typeId      Int
   reason      String
   targetID    String
   guildId     String?

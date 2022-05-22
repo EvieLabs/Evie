@@ -1,3 +1,4 @@
+import { ModActionType } from "#root/Enums";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
@@ -22,6 +23,7 @@ export class GuildBanAddListener extends Listener {
       if (log.executor?.id == this.container.client.user?.id) return;
 
       return void this.container.client.punishments.createModAction(guild, {
+        type: ModActionType.Ban,
         action: "Manual Ban (Not via Evie)",
         target: user,
         reason: log.reason ? log.reason : `No reason provided.`,
