@@ -74,7 +74,7 @@ model ModAction {
   typeId      Int
   reason      String
   targetID    String
-  guildId     String?
+  guildId     String
   expiresAt   DateTime?
   moderatorID String?
 }
