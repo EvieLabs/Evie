@@ -18,6 +18,17 @@ export class EviePunish {
     }
   ) {
     try {
+      if (
+        !(
+          await container.client.prisma.moderationSettings.findFirst({
+            where: {
+              guildId: guild.id,
+            },
+          })
+        )?.logChannel
+      )
+        return;
+
       await container.client.prisma.modAction
         .create({
           data: {
