@@ -1,22 +1,18 @@
-import { ModActionType } from "#root/Enums";
+import { ModActionType, OppositeModActionType } from "#root/Enums";
 import { modActionDescription } from "#root/utils/builders/stringBuilder";
 import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
-import type { BanOptions, Guild, GuildMember, Snowflake } from "discord.js";
-import { SnowflakeUtil, User } from "discord.js";
+import {
+  BanOptions,
+  Guild,
+  GuildMember,
+  Snowflake,
+  SnowflakeUtil,
+  User,
+} from "discord.js";
 import { LogEmbed } from "./LogEmbed";
 export class EviePunish {
-  public async createModAction(
-    guild: Guild,
-    options: {
-      action?: string;
-      type: ModActionType;
-      target: User;
-      moderator?: User;
-      reason?: string;
-      expiresAt?: Date;
-    }
-  ) {
+  public async createModAction(guild: Guild, options: ModActionOptions) {
     try {
       if (
         !(
@@ -43,30 +39,50 @@ export class EviePunish {
           },
         })
         .then(async (savedAction) => {
-          await container.client.guildLogger
-            .sendEmbedToModChannel(
-              guild,
-              new LogEmbed(`moderation`)
-                .setColor("#eb564b")
-                .setAuthor({
-                  name: options.moderator
-                    ? `${options.moderator.tag} (${options.moderator.id})`
-                    : `${
-                        container.client.user ? container.client.user.tag : "Me"
-                      } (${
-                        container.client.user ? container.client.user.id : "Me"
-                      })`,
-                })
-                .setDescription(
-                  modActionDescription({
-                    ...savedAction,
-                    target: options.target,
+          const channel = await container.client.guildLogger.getModChannel(
+            guild
+          );
+
+          const ogCaseAction = await this.findOriginalModAction(guild, options);
+
+          await channel
+            .send({
+              embeds: [
+                new LogEmbed(`moderation`)
+                  .setColor("#eb564b")
+                  .setAuthor({
+                    name: options.moderator
+                      ? `${options.moderator.tag} (${options.moderator.id})`
+                      : `${
+                          container.client.user
+                            ? container.client.user.tag
+                            : "Me"
+                        } (${
+                          container.client.user
+                            ? container.client.user.id
+                            : "Me"
+                        })`,
                   })
-                )
-                .setFooter({
-                  text: savedAction.id,
-                })
-            )
+                  .setDescription(
+                    modActionDescription(
+                      {
+                        ...savedAction,
+                        target: options.target,
+                      },
+                      ogCaseAction
+                        ? {
+                            action: ogCaseAction,
+                            channel,
+                          }
+                        : undefined
+                    )
+                  )
+                  .setFooter({
+                    text: savedAction.id,
+                  }),
+              ],
+            })
+
             .then(async (msg) => {
               if (!msg) return;
               return await container.client.prisma.modAction.update({
@@ -83,6 +99,38 @@ export class EviePunish {
       Sentry.captureException(e);
       throw new Error("Failed to create mod action in database");
     }
+  }
+
+  private async findOriginalModAction(
+    guild: Guild,
+    newOptions: ModActionOptions
+  ) {
+    const oppositeAction = OppositeModActionType(newOptions.type);
+
+    if (!oppositeAction) return;
+
+    console.log(`looking for`, {
+      targetID: newOptions.target.id,
+      guildId: guild.id,
+      typeId: oppositeAction,
+    });
+
+    const modAction = await container.client.prisma.modAction
+      .findFirst({
+        where: {
+          targetID: newOptions.target.id,
+          guildId: guild.id,
+          typeId: oppositeAction,
+        },
+      })
+      .catch((err) => {
+        Sentry.captureException(err);
+        return;
+      });
+
+    if (!modAction) return;
+
+    return modAction;
   }
 
   public async banGuildMember(
@@ -129,3 +177,12 @@ export class EviePunish {
     return user;
   }
 }
+
+export type ModActionOptions = {
+  action?: string;
+  type: ModActionType;
+  target: User;
+  moderator?: User;
+  reason?: string;
+  expiresAt?: Date;
+};

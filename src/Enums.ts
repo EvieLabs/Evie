@@ -11,3 +11,13 @@ export enum ModActionType {
   Timeout = 4,
   UnTimeout = 5,
 }
+
+export const OppositeModActionType = (type: ModActionType) => {
+  switch (type) {
+    case ModActionType.Unban:
+      return ModActionType.Ban;
+    case ModActionType.UnTimeout:
+      return ModActionType.Timeout;
+  }
+  return null;
+};

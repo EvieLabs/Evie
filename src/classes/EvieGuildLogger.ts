@@ -21,16 +21,28 @@ export class EvieGuildLogger {
     }
   }
 
-  public async sendEmbedToModChannel(guild: Guild, embed: MessageEmbed) {
+  public async getModChannel(guild: Guild) {
     try {
       const guildSettings = await guild.client.db.FetchGuildSettings(guild);
-      if (!guildSettings.moderationSettings?.logChannel) return null;
+      if (!guildSettings.moderationSettings?.logChannel)
+        throw new Error("No channel set.");
 
       const channel = await guild.client.channels.fetch(
         guildSettings.moderationSettings.logChannel
       );
-      if (!channel) return null;
-      if (!(channel instanceof TextChannel)) return null;
+      if (!channel) throw new Error("Channel not found.");
+      if (!(channel instanceof TextChannel))
+        throw new Error("Channel is not a text channel.");
+
+      return channel;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async sendEmbedToModChannel(guild: Guild, embed: MessageEmbed) {
+    try {
+      const channel = await this.getModChannel(guild);
 
       return await channel.send({ embeds: [embed] });
     } catch (e) {
