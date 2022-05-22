@@ -28,6 +28,7 @@ export class UnBan extends Command {
 
     const target = interaction.options.getString("user");
     const reason = interaction.options.getString("reason");
+    const show = !interaction.options.getBoolean("show") ?? false;
 
     if (!target) {
       await ReplyStatusEmbed(
@@ -38,7 +39,7 @@ export class UnBan extends Command {
       return;
     }
 
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: show });
 
     try {
       const user = await interaction.client.punishments.unBanGuildMember(
@@ -129,6 +130,12 @@ export class UnBan extends Command {
             name: "reason",
             description: "The reason for un-banning the user",
             type: "STRING",
+            required: false,
+          },
+          {
+            name: "show",
+            description: "Send the message non-ephemerally",
+            type: "BOOLEAN",
             required: false,
           },
         ],

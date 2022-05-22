@@ -27,9 +27,12 @@ import {
 export class Ban extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
+
     const userToBeBanned = interaction.options.getMember("user");
     const reason = interaction.options.getString("reason");
     const days = interaction.options.getString("days");
+    const show = !interaction.options.getBoolean("show") ?? false;
+
     const expiresAt = days
       ? new Date(Date.now() + parseInt(days) * 86400000)
       : undefined;
@@ -43,7 +46,7 @@ export class Ban extends Command {
       return;
     }
 
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: show });
 
     try {
       await interaction.client.punishments.banGuildMember(
@@ -170,6 +173,12 @@ export class Ban extends Command {
             name: "reason",
             description: "Reason for the ban",
             type: "STRING",
+            required: false,
+          },
+          {
+            name: "show",
+            description: "Send the message non-ephemerally",
+            type: "BOOLEAN",
             required: false,
           },
         ],
