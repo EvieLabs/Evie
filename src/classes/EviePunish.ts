@@ -32,33 +32,45 @@ export class EviePunish {
           },
         })
         .then(async (savedAction) => {
-          container.client.guildLogger.sendEmbedToModChannel(
-            guild,
-            new LogEmbed(`moderation`)
-              .setColor("#eb564b")
-              .setAuthor({
-                name: options.moderator
-                  ? `${options.moderator.tag} (${options.moderator.id})`
-                  : `${
-                      container.client.user ? container.client.user.tag : "Me"
-                    } (${
-                      container.client.user ? container.client.user.id : "Me"
-                    })`,
-              })
-              .setDescription(
-                modActionDescription({
-                  ...savedAction,
-                  target: options.target,
+          await container.client.guildLogger
+            .sendEmbedToModChannel(
+              guild,
+              new LogEmbed(`moderation`)
+                .setColor("#eb564b")
+                .setAuthor({
+                  name: options.moderator
+                    ? `${options.moderator.tag} (${options.moderator.id})`
+                    : `${
+                        container.client.user ? container.client.user.tag : "Me"
+                      } (${
+                        container.client.user ? container.client.user.id : "Me"
+                      })`,
                 })
-              )
-              .setFooter({
-                text: savedAction.id,
-              })
-          );
+                .setDescription(
+                  modActionDescription({
+                    ...savedAction,
+                    target: options.target,
+                  })
+                )
+                .setFooter({
+                  text: savedAction.id,
+                })
+            )
+            .then(async (msg) => {
+              if (!msg) return;
+              return await container.client.prisma.modAction.update({
+                where: {
+                  id: savedAction.id,
+                },
+                data: {
+                  logMessageID: msg.id,
+                },
+              });
+            });
         });
     } catch (e) {
       Sentry.captureException(e);
-      throw new Error("Failed to create infraction in database");
+      throw new Error("Failed to create mod action in database");
     }
   }
 
