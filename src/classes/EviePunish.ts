@@ -107,7 +107,7 @@ export class EviePunish {
   ) {
     const oppositeAction = OppositeModActionType(newOptions.type);
 
-    if (!oppositeAction) return;
+    if (!oppositeAction) return null;
 
     const modAction = await container.client.prisma.modAction
       .findFirst({
@@ -122,7 +122,7 @@ export class EviePunish {
         return;
       });
 
-    if (!modAction) return;
+    if (!modAction) return null;
 
     return modAction;
   }
