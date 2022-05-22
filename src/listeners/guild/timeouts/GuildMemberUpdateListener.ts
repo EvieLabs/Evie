@@ -59,9 +59,8 @@ export class GuildMemberUpdateListener extends Listener {
     } catch (error) {
       if (!(error instanceof DiscordAPIError)) return captureException(error);
 
-      if (error.code !== Constants.APIErrors.MISSING_PERMISSIONS) {
-        return;
-      }
+      if (error.code === Constants.APIErrors.MISSING_PERMISSIONS) return;
+
       return captureException(error);
     }
   }
