@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { EditReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -12,10 +12,12 @@ export class Setup extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild()) return;
 
+    await interaction.deferReply();
+
     if (
       !(await checkPerm(interaction.member, Permissions.FLAGS.ADMINISTRATOR))
     ) {
-      await ReplyStatusEmbed(
+      await EditReplyStatusEmbed(
         StatusEmoji.FAIL,
         "You do not have the required permissions to use this command. (admin)",
         interaction
@@ -37,7 +39,7 @@ export class Setup extends Command {
     const guild = interaction.guild;
     const targetRole = interaction.options.getRole("role");
     if (!targetRole || !guild)
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (missing role and/or guild)",
         interaction
@@ -51,14 +53,14 @@ export class Setup extends Command {
           moderatorRole: targetRole.id,
         },
       });
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully set the staff role to ${targetRole}`,
         interaction
       );
     } catch (e) {
       Sentry.captureException(e);
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (database error)",
         interaction
@@ -75,7 +77,7 @@ export class Setup extends Command {
       !(targetChannel instanceof TextChannel) ||
       !guild.me
     )
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (missing channel and/or guild)",
         interaction
@@ -86,7 +88,7 @@ export class Setup extends Command {
         .permissionsFor(guild.me)
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.FAIL,
         "I do not have permission to send messages in chosen log channel.",
         interaction
@@ -106,14 +108,14 @@ export class Setup extends Command {
           },
         },
       });
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `Successfully set the log channel to ${targetChannel}`,
         interaction
       );
     } catch (e) {
       Sentry.captureException(e);
-      return await ReplyStatusEmbed(
+      return await EditReplyStatusEmbed(
         StatusEmoji.FAIL,
         "Something went wrong... (database error)",
         interaction
