@@ -17,6 +17,7 @@ import type { CommandInteraction } from "discord.js";
 export class Purge extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild() || !interaction.channel) return;
+
     const messages = interaction.options.getInteger("messages");
     const userFilter = interaction.options.getUser("user");
 
@@ -45,6 +46,7 @@ export class Purge extends Command {
         });
 
         await interaction.channel.bulkDelete(filteredMessages);
+
         return void (await ReplyStatusEmbed(
           StatusEmoji.SUCCESS,
           `${filteredMessages.size} messages purged.`,
@@ -62,6 +64,7 @@ export class Purge extends Command {
 
     try {
       await interaction.channel.bulkDelete(messages);
+
       return void (await ReplyStatusEmbed(
         StatusEmoji.SUCCESS,
         `${messages} messages purged.`,
