@@ -17,6 +17,7 @@ const lang = {
   notInCachedGuild: `You are not in a cached guild. Try re-running the command.`,
   boosterOnly: `Sorry, this feature is only available for people who boost our [server](${discordServerInvite}).
   While we try to keep as many features as possible free, we still want to make some profits in return weather that be in Discord server boosts or from donations.`,
+  noModOrTarget: `You need to specify a moderator and/or target.`,
 };
 
 export default lang;
