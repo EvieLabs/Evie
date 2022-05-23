@@ -97,7 +97,6 @@ export class EviePunish {
         });
     } catch (e) {
       Sentry.captureException(e);
-      throw new Error("Failed to create mod action in database");
     }
   }
 
