@@ -69,13 +69,15 @@ model EvieTag {
 }
 
 model ModAction {
-  id           String    @id
-  type         String?
-  typeId       Int
-  reason       String
-  targetID     String
-  guildId      String
-  expiresAt    DateTime?
-  moderatorID  String?
-  logMessageID String?
+  id            String    @id
+  type          String?
+  typeId        Int
+  reason        String
+  targetID      String
+  guildId       String
+  expiresAt     DateTime?
+  moderatorID   String?
+  logMessageID  String?
+  moderatorName String?
+  targetName    String    @default("Unknown")
 }
