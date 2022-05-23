@@ -46,6 +46,7 @@ export class Airport {
       const goodbyeChannel = await member.client.channels.fetch(config.channel);
 
       if (!goodbyeChannel || !(goodbyeChannel instanceof TextChannel)) return;
+      if (goodbyeChannel.guildId !== config.guildId) return;
 
       const goodbyeMessageEmbed = new EvieEmbed();
       goodbyeMessageEmbed.setDescription(goodbyeMessage.toString());
@@ -86,6 +87,8 @@ export class Airport {
         !(discordWelcomeChannel instanceof TextChannel)
       )
         return;
+
+      if (discordWelcomeChannel.guildId !== config.guildId) return;
 
       const welcomeMessageEmbed = new EvieEmbed();
 
