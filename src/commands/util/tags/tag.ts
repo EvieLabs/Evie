@@ -31,7 +31,7 @@ export class Tag extends Command {
         await interaction.client.db.FetchTags(interaction.guild)
       ).find((tag) => tag.name === query.split(" ")[0]);
       if (tag) {
-        const e = new EvieEmbed(interaction.guild);
+        const e = new EvieEmbed();
         e.setTitle(tag.name);
         e.setDescription(tag.content);
         if (tag.embed) {
@@ -50,7 +50,7 @@ export class Tag extends Command {
       }
       return;
     }
-    const e = new EvieEmbed(interaction.guild);
+    const e = new EvieEmbed();
     e.setTitle(tag.name);
     e.setDescription(tag.content);
     if (tag.embed) {

@@ -8,7 +8,6 @@ import {
   MessageEmbed,
   MessageMentionOptions,
   ModalSubmitInteraction,
-  type Guild,
 } from "discord.js";
 import type { APIMessage } from "discord.js/node_modules/discord-api-types/v9";
 
@@ -18,7 +17,7 @@ export enum StatusEmoji {
 }
 
 export class EvieEmbed extends MessageEmbed {
-  public constructor(public guild?: Guild | null) {
+  public constructor() {
     super({
       color: EvieColors.evieGrey,
       timestamp: Date.now().toString(),

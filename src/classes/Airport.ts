@@ -47,7 +47,7 @@ export class Airport {
 
       if (!goodbyeChannel || !(goodbyeChannel instanceof TextChannel)) return;
 
-      const goodbyeMessageEmbed = new EvieEmbed(member.guild);
+      const goodbyeMessageEmbed = new EvieEmbed();
       goodbyeMessageEmbed.setDescription(goodbyeMessage.toString());
 
       goodbyeMessageEmbed.addField(
@@ -87,7 +87,7 @@ export class Airport {
       )
         return;
 
-      const welcomeMessageEmbed = new EvieEmbed(member.guild);
+      const welcomeMessageEmbed = new EvieEmbed();
 
       welcomeMessageEmbed.setDescription(welcomeMessage.toString());
       welcomeMessageEmbed.addField(
