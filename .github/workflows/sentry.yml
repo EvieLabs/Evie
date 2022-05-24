@@ -30,6 +30,9 @@ jobs:
         run: yarn --immutable
       - name: Build code
         run: yarn build
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
@@ -39,3 +42,4 @@ jobs:
         with:
           environment: production
           sourcemaps: "./dist"
+          version: ${{ steps.package-version.outputs.current-version}}
