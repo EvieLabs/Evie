@@ -32,33 +32,41 @@ export default function CasesComponent(props: {
   );
 
   const [page, setPage] = useState<number>(0);
+  const CASES_PER_PAGE = 4;
 
   return (
     <>
       <Embed
         color={EvieColors.evieGrey}
-        description={
-          casesFormatted.slice(page * 4, (page + 1) * 4).join("\n\n") +
-          "\n" +
-          `... and ${cases.length - (page + 1) * 4} more`
-        }
-      />
-      <Button
-        style="primary"
-        user={user}
-        label="<-"
-        onClick={() => {
-          setPage((page) => Math.max(0, page - 1));
+        description={casesFormatted
+          .slice(page * CASES_PER_PAGE, (page + 1) * CASES_PER_PAGE)
+          .join("\n\n")}
+        footer={{
+          text: `Page ${page + 1} of ${Math.ceil(
+            cases.length / CASES_PER_PAGE
+          )}`,
         }}
       />
-      <Button
-        style="primary"
-        user={user}
-        label="->"
-        onClick={() => {
-          setPage((page) => Math.min(cases.length - 1, page + 1));
-        }}
-      />
+      {cases.length > 4 && (
+        <>
+          <Button
+            style="primary"
+            user={user}
+            label="<-"
+            onClick={() => {
+              setPage((page) => Math.max(0, page - 1));
+            }}
+          />
+          <Button
+            style="primary"
+            user={user}
+            label="->"
+            onClick={() => {
+              setPage((page) => Math.min(cases.length - 1, page + 1));
+            }}
+          />
+        </>
+      )}
     </>
   );
 }
