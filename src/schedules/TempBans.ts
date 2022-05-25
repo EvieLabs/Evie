@@ -38,7 +38,7 @@ export class TempBans extends Schedule {
           action: "Tempban Expired",
           type: ModActionType.Unban,
           target: user,
-          reason: `Temp-ban expired`, // TODO: Track mod action messages and reference the message link
+          reason: `Temp-ban expired`,
         });
       } catch (error) {
         if (!(error instanceof DiscordAPIError))
