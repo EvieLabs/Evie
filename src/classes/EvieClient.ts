@@ -1,7 +1,7 @@
-import { ReacordDiscordJs } from "#reacord/main";
 import { transformOauthGuildsAndUser } from "#utils/api/transformers";
 import { getNumberSecret, getSecret } from "#utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
+import { ReacordDiscordJs } from "@evie/reacord";
 import { Enumerable } from "@sapphire/decorators";
 import { LogLevel, SapphireClient } from "@sapphire/framework";
 import { Intents, Options } from "discord.js";

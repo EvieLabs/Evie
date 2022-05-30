@@ -1,4 +1,3 @@
-import { Embed } from "#reacord/main";
 import { HenrikAPIRoot } from "#root/constants/index";
 import { EvieColors } from "#root/Enums";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
@@ -9,6 +8,7 @@ import type {
 } from "#root/types/api/Henrik/HenrikValorant";
 import { pluralize } from "#root/utils/builders/stringBuilder";
 import ShapedMatchHistory from "#root/utils/valorant/ShapedMatchHistory";
+import { Embed } from "@evie/reacord";
 import axios from "axios";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";

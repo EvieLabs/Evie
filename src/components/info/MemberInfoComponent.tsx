@@ -1,7 +1,7 @@
-import { Embed } from "#reacord/main";
 import { EvieColors } from "#root/Enums";
 import { capitalizeEachWord, trimArray } from "#utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
+import { Embed } from "@evie/reacord";
 import type { GuildMember } from "discord.js";
 import React from "react";
 

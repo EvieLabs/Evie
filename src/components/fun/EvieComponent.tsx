@@ -1,5 +1,5 @@
-import { Button, Embed } from "#reacord/main";
 import { EvieColors } from "#root/Enums";
+import { Button, Embed } from "@evie/reacord";
 import axios from "axios";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";

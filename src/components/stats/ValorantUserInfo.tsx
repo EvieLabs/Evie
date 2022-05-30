@@ -1,6 +1,6 @@
-import { Embed } from "#reacord/main";
 import { EvieColors } from "#root/Enums";
 import type { AccountData } from "#root/types/api/Henrik/HenrikValorant";
+import { Embed } from "@evie/reacord";
 import type { User } from "discord.js";
 import React from "react";
 

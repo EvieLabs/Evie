@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "module-alias/register";
 
 import { EvieClient } from "#classes/EvieClient";
 import {

@@ -1,4 +1,3 @@
-import { Embed } from "#reacord/main";
 import { HenrikAPIRoot } from "#root/constants/index";
 import { EvieColors } from "#root/Enums";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
@@ -8,6 +7,7 @@ import type {
   MMRDataV2,
 } from "#root/types/api/Henrik/HenrikValorant";
 import ShapedCompStats from "#root/utils/valorant/ShapedCompStats";
+import { Embed } from "@evie/reacord";
 import axios from "axios";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";

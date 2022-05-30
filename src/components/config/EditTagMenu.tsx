@@ -1,9 +1,9 @@
-import { Button, Embed } from "#reacord/main";
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { ChangeSlugModal } from "#root/constants/modals";
 import { EvieColors } from "#root/Enums";
 import lang from "#root/utils/lang";
 import { boostsEvie } from "#root/utils/misc/permChecks";
+import { Button, Embed } from "@evie/reacord";
 import type { EvieTag } from "@prisma/client";
 import { container } from "@sapphire/framework";
 import { captureException } from "@sentry/node";

@@ -14,7 +14,7 @@
       "#utils/*": ["utils/*"],
       "#classes/*": ["classes/*"],
       "#constants/*": ["constants/*"],
-      "#reacord/*": ["lib/reacord/library/*"]
+      "@evie/reacord": ["lib/reacord/library/main.ts"]
     }
   },
   "include": ["."]

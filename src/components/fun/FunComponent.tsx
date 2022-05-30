@@ -1,4 +1,4 @@
-import { Button, Option, Select } from "#reacord/main";
+import { Button, Option, Select } from "@evie/reacord";
 import type { User } from "discord.js";
 import React, { useState } from "react";
 import EvieComponent from "./EvieComponent";

@@ -1,10 +1,10 @@
-import { Button, Embed } from "#reacord/main";
 import { EvieColors } from "#root/Enums";
 import {
   constructMessageLink,
   removeIndents,
 } from "#root/utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
+import { Button, Embed } from "@evie/reacord";
 import type { ModAction } from "@prisma/client";
 import { SnowflakeUtil, TextChannel, User } from "discord.js";
 import React, { useState } from "react";
