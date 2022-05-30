@@ -14,7 +14,9 @@
       "#utils/*": ["utils/*"],
       "#classes/*": ["classes/*"],
       "#constants/*": ["constants/*"],
-      "@evie/reacord": ["lib/reacord/library/main.ts"]
+      "@evie/reacord": ["lib/reacord/library/main.ts"],
+      "@evie/fetch": ["lib/fetch/fetch.ts"],
+      "@evie/valorant": ["lib/valorant/index.ts"]
     }
   },
   "include": ["."]

@@ -4,12 +4,8 @@ import {
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import ValorantStatsComponent from "#root/components/stats/ValorantStatsComponent";
-import { HenrikAPIRoot } from "#root/constants/index";
-import type {
-  AccountData,
-  GetHenrikAPI,
-} from "#root/types/api/Henrik/HenrikValorant";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { fetchAccountData } from "@evie/valorant";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -18,7 +14,6 @@ import {
   RegisterBehavior,
 } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
-import axios from "axios";
 import type { CommandInteraction } from "discord.js";
 import React from "react";
 
@@ -40,18 +35,14 @@ export class ValorantStats extends Command {
     await interaction.deferReply();
 
     try {
-      const res = await axios.get<GetHenrikAPI<AccountData>>(
-        `${HenrikAPIRoot}/valorant/v1/account/${username}/${tag}`
-      );
-
-      if (!res.data.data) throw new Error("No data found.");
+      const res = await fetchAccountData({
+        name: username,
+        tag,
+      });
 
       return void interaction.client.reacord.editReply(
         interaction,
-        <ValorantStatsComponent
-          user={interaction.user}
-          account={res.data.data}
-        />
+        <ValorantStatsComponent user={interaction.user} account={res} />
       );
     } catch (e) {
       captureException(e);

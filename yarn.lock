@@ -2518,6 +2518,7 @@ __metadata:
     tslib: ^2.4.0
     type-fest: ^2.12.2
     typescript: ^4.6.3
+    undici: ^5.3.0
     utf-8-validate: ^5.0.9
     zlib-sync: ^0.1.7
   languageName: unknown
@@ -5219,6 +5220,13 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 6bf45caf847062420592e711bc9c28bf5f9a9a7fa8245343b81493e4ededae33f1774009d1234d911422d1646a2c839f44e1a23ecb111b40a60ac2ea4c1482a8
+  languageName: node
+  linkType: hard
+
+"undici@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "undici@npm:5.3.0"
+  checksum: b81ec73f0dbab3b6804a5fe221ed29e564934723a5c8babdd23dfefc250efc46a49447c8bc7af5cef6c270d2d1613c64bfe12c4113ca5672f613d8bd7057e5ea
   languageName: node
   linkType: hard
 

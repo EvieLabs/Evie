@@ -1,5 +1,3 @@
-export const HenrikAPIRoot = "https://api.henrikdev.xyz";
-
 export const ValorantTierEmojis = [
   {
     name: "iron_1",

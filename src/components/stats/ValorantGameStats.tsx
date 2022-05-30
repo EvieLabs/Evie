@@ -1,15 +1,12 @@
-import { HenrikAPIRoot } from "#root/constants/index";
 import { EvieColors } from "#root/Enums";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
-import type {
-  AccountData,
-  GetHenrikAPI,
-  MatchHistoryDataV3,
-} from "#root/types/api/Henrik/HenrikValorant";
 import { pluralize } from "#root/utils/builders/stringBuilder";
-import ShapedMatchHistory from "#root/utils/valorant/ShapedMatchHistory";
 import { Embed } from "@evie/reacord";
-import axios from "axios";
+import {
+  AccountData,
+  fetchMatchHistory,
+  ShapedMatchHistory,
+} from "@evie/valorant";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";
 
@@ -21,18 +18,16 @@ export default function ValorantGameStats(props: {
     useState<ResponseWrapper<ShapedMatchHistory> | null>();
 
   useEffect(() => {
-    axios
-      .get<GetHenrikAPI<MatchHistoryDataV3[]>>(
-        `${HenrikAPIRoot}/valorant/v3/matches/${props.accountData.region}/${props.accountData.name}/${props.accountData.tag}`
-      )
+    fetchMatchHistory({
+      region: props.accountData.region,
+      name: props.accountData.name,
+      tag: props.accountData.tag,
+      puuid: props.accountData.puuid,
+    })
       .then((res) => {
-        if (!res.data.data)
-          return setGameStats({
-            success: false,
-          });
         return setGameStats({
           success: true,
-          data: new ShapedMatchHistory(res.data.data, props.accountData.puuid),
+          data: res,
         });
       })
       .catch(() => {

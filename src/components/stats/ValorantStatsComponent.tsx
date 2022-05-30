@@ -1,6 +1,6 @@
-import type { AccountData } from "#root/types/api/Henrik/HenrikValorant";
 import { Emojis } from "#root/utils/lang";
 import { Button, Option, Select } from "@evie/reacord";
+import type { AccountData } from "@evie/valorant";
 import type { User } from "discord.js";
 import React, { useState } from "react";
 import ValorantCompStats from "./ValorantCompStats";

@@ -1,4 +1,4 @@
-import type { PlayerCard } from "./HenrikValorant";
+import type { PlayerCard } from "./types";
 
 export interface MatchHistoryDataV3 {
   metadata: MatchMetadata;

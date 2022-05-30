@@ -1,14 +1,7 @@
-import { HenrikAPIRoot } from "#root/constants/index";
 import { EvieColors } from "#root/Enums";
 import type { ResponseWrapper } from "#root/types/api/APIResponses";
-import type {
-  AccountData,
-  GetHenrikAPI,
-  MMRDataV2,
-} from "#root/types/api/Henrik/HenrikValorant";
-import ShapedCompStats from "#root/utils/valorant/ShapedCompStats";
 import { Embed } from "@evie/reacord";
-import axios from "axios";
+import { AccountData, fetchCompStats, ShapedCompStats } from "@evie/valorant";
 import type { User } from "discord.js";
 import React, { useEffect, useState } from "react";
 
@@ -20,18 +13,15 @@ export default function ValorantCompStats(props: {
     useState<ResponseWrapper<ShapedCompStats> | null>();
 
   useEffect(() => {
-    axios
-      .get<GetHenrikAPI<MMRDataV2>>(
-        `${HenrikAPIRoot}/valorant/v2/mmr/${props.accountData.region}/${props.accountData.name}/${props.accountData.tag}`
-      )
+    fetchCompStats({
+      region: props.accountData.region,
+      name: props.accountData.name,
+      tag: props.accountData.tag,
+    })
       .then((res) => {
-        if (!res.data.data)
-          return setCompStats({
-            success: false,
-          });
         return setCompStats({
           success: true,
-          data: new ShapedCompStats(res.data.data),
+          data: res,
         });
       })
       .catch(() => {

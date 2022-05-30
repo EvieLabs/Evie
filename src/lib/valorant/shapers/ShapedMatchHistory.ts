@@ -1,4 +1,4 @@
-import { MatchHistoryDataV3, Team } from "#root/types/api/Henrik/MatchStats";
+import { MatchHistoryDataV3, Team } from "../types/types";
 import type { AgentUsed } from "./types";
 
 export default class ShapedMatchHistory {
