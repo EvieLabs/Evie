@@ -1,6 +1,7 @@
 import { ModActionType, OppositeModActionType } from "#root/Enums";
 import { modActionDescription } from "#root/utils/builders/stringBuilder";
 import { container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import {
   BanOptions,
@@ -34,7 +35,9 @@ export class EviePunish {
             targetName: options.target.username,
             moderatorID: options.moderator?.id,
             moderatorName: options.moderator?.username,
-            reason: options.reason ?? "No reason provided.",
+            reason:
+              options.reason ??
+              (await resolveKey(guild, "modules/punish:noReason")),
             typeId: options.type,
             type: options.action,
             expiresAt: options.expiresAt,
@@ -58,11 +61,11 @@ export class EviePunish {
                       : `${
                           container.client.user
                             ? container.client.user.tag
-                            : "Me"
+                            : await resolveKey(guild, "modules/punish:me")
                         } (${
                           container.client.user
                             ? container.client.user.id
-                            : "Me"
+                            : await resolveKey(guild, "modules/punish:me")
                         })`,
                   })
                   .setDescription(
@@ -139,7 +142,7 @@ export class EviePunish {
     });
 
     this.createModAction(member.guild, {
-      action: "Ban",
+      action: await resolveKey(member.guild, "modules/punish:ban"),
       type: ModActionType.Ban,
       target: member.user,
       moderator: banner?.user,
@@ -162,11 +165,13 @@ export class EviePunish {
 
     if (user)
       this.createModAction(guild, {
-        action: "Reverse Ban",
+        action: await resolveKey(guild, "modules/punish:reverseBan"),
         type: ModActionType.Unban,
         target: user,
         moderator: moderator?.user || undefined,
-        reason: moderator?.user ? reason : `${reason} (Unknown moderator)`,
+        reason: moderator?.user
+          ? reason
+          : `${reason} ${await resolveKey(guild, "modules/punish:unknownMod")}`,
       });
 
     return user;
