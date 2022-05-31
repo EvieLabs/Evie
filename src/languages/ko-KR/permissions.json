@@ -1,0 +1,6 @@
+{
+  "admin": "이 명령을 실행할 권한이 없어요. (관리자)",
+  "mod": "이 명령은 관리자만 사용할 수 있어요.",
+  "component": "다른 사용자의 {{type}}이에요.",
+  "boost": "이 기능은 Evie+ 회원만 사용할 수 있어요! 저희 [지원/커뮤니티 서버](https://discord.gg/Sx9QzpVC7r)를 부스팅 해주시거나 [GitHub에서 저를 스폰서](https://github.com/sponsors/twisttaan) 해주세요."
+}
