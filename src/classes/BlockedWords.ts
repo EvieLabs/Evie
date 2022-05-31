@@ -1,3 +1,4 @@
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import type { Message } from "discord.js";
 import { LogEmbed } from "./LogEmbed";
@@ -33,26 +34,45 @@ export class BlockedWords {
     if (!message.guild) return;
     await message.client.guildLogger.sendEmbedToLogChannel(
       message.guild,
-      new LogEmbed(`blocked words`)
+      new LogEmbed(
+        await resolveKey(message.guild, "modules/blockedWords:blockedWords")
+      )
         .setColor("#4e73df")
         .setAuthor({
           name: `${message.author.tag} (${message.author.id})`,
           iconURL: message.author.displayAvatarURL(),
         })
         .setDescription(
-          `${
-            successfullyDeleted ? "Deleted" : "Failed to delete"
-          } a message with a banned word`
+          successfullyDeleted
+            ? await resolveKey(
+                message.guild,
+                "modules/blockedwords:successfullyDeleted"
+              )
+            : await resolveKey(
+                message.guild,
+                "modules/blockedwords:failedToDelete"
+              )
         )
         .addField(
           "Message",
           `${message.content} ${
             successfullyDeleted
-              ? `[Jump to message](${message.url})`
-              : `[Jump to context](${message.url})`
+              ? await resolveKey(
+                  message.guild,
+                  "modules/blockedwords:jumpToMessage",
+                  { message }
+                )
+              : await resolveKey(
+                  message.guild,
+                  "modules/blockedwords:jumpToContext",
+                  { message }
+                )
           }`
         )
-        .addField("Triggered Word", bannedWord)
+        .addField(
+          await resolveKey(message.guild, "modules/blockedwords:wordTrigger"),
+          bannedWord
+        )
     );
   }
 }
