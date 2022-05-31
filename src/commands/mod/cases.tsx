@@ -4,7 +4,6 @@ import {
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import CasesComponent from "#root/components/info/CasesComponent";
-import lang from "#root/utils/lang";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -12,6 +11,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import { CommandInteraction, SnowflakeUtil } from "discord.js";
 import React from "react";
@@ -30,7 +30,7 @@ export class Cases extends Command {
     if (!moderator && !target) {
       return void ReplyStatusEmbed(
         StatusEmoji.FAIL,
-        lang.noModOrTarget,
+        await resolveKey(interaction, "commands/mod/cases:noModOrTarget"),
         interaction
       );
     }

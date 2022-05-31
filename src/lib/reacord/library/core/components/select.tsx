@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import type { User } from "discord.js";
 import { nanoid } from "nanoid";
 import React, { ReactNode, useEffect } from "react";
-import lang from "../../../../../utils/lang";
 import { isInstanceOf } from "../../../helpers/is-instance-of";
 import { ReacordElement } from "../../internal/element.js";
 import type { ComponentInteraction } from "../../internal/interaction";
@@ -162,20 +162,33 @@ class SelectNode extends Node<SelectProps> {
         `[Reacord] The non original user ${interaction.event.user.username}(${interaction.event.user.id}) clicked the select. Meant for ${this.props.user.username}(${this.props.user.id})`
       );
 
-      interaction.raw.replied
-        ? interaction.followUp({
-            content: lang.messageComponentNotForYou,
-            embeds: [],
-            actionRows: [],
-            ephemeral: true,
-          })
-        : interaction.reply({
-            content: lang.messageComponentNotForYou,
-            embeds: [],
-            actionRows: [],
-            ephemeral: true,
-          });
-
+      (async () => {
+        interaction.raw.replied
+          ? interaction.followUp({
+              content: await resolveKey(
+                interaction.raw,
+                "permissions:component",
+                {
+                  type: "select menu",
+                }
+              ),
+              embeds: [],
+              actionRows: [],
+              ephemeral: true,
+            })
+          : interaction.reply({
+              content: await resolveKey(
+                interaction.raw,
+                "permissions:component",
+                {
+                  type: "select menu",
+                }
+              ),
+              embeds: [],
+              actionRows: [],
+              ephemeral: true,
+            });
+      })();
       return false;
     }
 

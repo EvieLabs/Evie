@@ -3,7 +3,6 @@ import {
   ReplyStatusEmbed,
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
-import lang from "#root/utils/lang";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
@@ -13,6 +12,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import {
   AutocompleteInteraction,
@@ -83,7 +83,7 @@ export class Ban extends Command {
     if (!(await checkPerm(interaction.member, Permissions.FLAGS.BAN_MEMBERS))) {
       return await interaction.respond([
         {
-          name: lang.commandModeratorOnlyNoEmoji,
+          name: await resolveKey(interaction.guild, "permissions:mod"),
           value: "notadmin",
         },
       ]);

@@ -9,6 +9,7 @@ import {
 } from "@sapphire/framework";
 import "@sapphire/plugin-api/register";
 import "@sapphire/plugin-hmr/register";
+import "@sapphire/plugin-i18next/register";
 import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";

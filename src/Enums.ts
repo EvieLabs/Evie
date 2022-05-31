@@ -3,6 +3,13 @@ export enum EvieColors {
   evieGrey = 0x2f3136,
 }
 
+export enum Emojis {
+  evieWristSlap = "<:evieWS:969902527325831208>",
+  valorantLogo = "<:valorant:971373514152095755>",
+  valorantRadiant = "<:radiant:971675273911218196>",
+  valorantFade = "<:fade:973184566321893417>",
+}
+
 export enum ModActionType {
   Kick = 0,
   Softban = 1,

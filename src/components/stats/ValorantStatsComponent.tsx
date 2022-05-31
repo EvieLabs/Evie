@@ -1,4 +1,4 @@
-import { Emojis } from "#root/utils/lang";
+import { Emojis } from "#root/Enums";
 import { Button, Option, Select } from "@evie/reacord";
 import type { AccountData } from "@evie/valorant";
 import type { User } from "discord.js";

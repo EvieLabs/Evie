@@ -1,11 +1,11 @@
 import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
 import { ChangeSlugModal } from "#root/constants/modals";
 import { EvieColors } from "#root/Enums";
-import lang from "#root/utils/lang";
 import { boostsEvie } from "#root/utils/misc/permChecks";
 import { Button, Embed } from "@evie/reacord";
 import type { EvieTag } from "@prisma/client";
 import { container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import { captureException } from "@sentry/node";
 import {
   MessageComponentInteraction,
@@ -54,7 +54,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
           if (!(await boostsEvie(i.interaction.user)))
             return ReplyStatusEmbed(
               StatusEmoji.FAIL,
-              lang.boosterOnly,
+              await resolveKey(i.interaction, "permissions:boost"),
               i.interaction
             );
           const generatedState = SnowflakeUtil.generate();

@@ -1,8 +1,8 @@
 import { container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import type { User } from "discord.js";
 import { nanoid } from "nanoid";
 import React, { useEffect } from "react";
-import lang from "../../../../../utils/lang";
 import { ReacordElement } from "../../internal/element.js";
 import type { ComponentInteraction } from "../../internal/interaction";
 import type { MessageOptions } from "../../internal/message";
@@ -81,19 +81,33 @@ class ButtonNode extends Node<ButtonProps> {
           `[Reacord] The non original user ${interaction.event.user.username}(${interaction.event.user.id}) clicked the button. Meant for ${this.props.user.username}(${this.props.user.id})`
         );
 
-        interaction.raw.replied
-          ? interaction.followUp({
-              content: lang.messageComponentNotForYou,
-              embeds: [],
-              actionRows: [],
-              ephemeral: true,
-            })
-          : interaction.reply({
-              content: lang.messageComponentNotForYou,
-              embeds: [],
-              actionRows: [],
-              ephemeral: true,
-            });
+        (async () => {
+          interaction.raw.replied
+            ? interaction.followUp({
+                content: await resolveKey(
+                  interaction.raw,
+                  "permissions:component",
+                  {
+                    type: "button",
+                  }
+                ),
+                embeds: [],
+                actionRows: [],
+                ephemeral: true,
+              })
+            : interaction.reply({
+                content: await resolveKey(
+                  interaction.raw,
+                  "permissions:component",
+                  {
+                    type: "button",
+                  }
+                ),
+                embeds: [],
+                actionRows: [],
+                ephemeral: true,
+              });
+        })();
 
         return false;
       }

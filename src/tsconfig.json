@@ -19,5 +19,5 @@
       "@evie/valorant": ["lib/valorant/index.ts"]
     }
   },
-  "include": ["."]
+  "include": [".", "./**/*.json"]
 }

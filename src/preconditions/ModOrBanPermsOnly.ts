@@ -1,6 +1,6 @@
-import lang from "#root/utils/lang";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { Precondition } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import {
   CommandInteraction,
   GuildMember,
@@ -8,20 +8,23 @@ import {
   Permissions,
 } from "discord.js";
 export class ModOrBanPermsOnlyPrecondition extends Precondition {
-  public override chatInputRun(interaction: CommandInteraction) {
+  public override async chatInputRun(interaction: CommandInteraction) {
     if (!interaction.inCachedGuild())
       return this.error({
-        message: lang.notInCachedGuild,
+        message: await resolveKey(interaction, "errors:notInCachedGuild"),
         context: { silent: true },
       });
-    return this.checkPerm(interaction.member);
+    return this.checkPerm(interaction.member, interaction);
   }
 
   public override messageRun(message: Message) {
-    return this.checkPerm(message.member);
+    return this.checkPerm(message.member, message);
   }
 
-  private async checkPerm(member: GuildMember | null) {
+  private async checkPerm(
+    member: GuildMember | null,
+    messageOrInteraction: Message | CommandInteraction
+  ) {
     if (!member)
       return this.error({
         message:
@@ -33,7 +36,7 @@ export class ModOrBanPermsOnlyPrecondition extends Precondition {
       (await this.container.client.db.HasModRole(member))
       ? this.ok()
       : this.error({
-          message: lang.commandModeratorOnly,
+          message: await resolveKey(messageOrInteraction, "permissions:mod"),
           context: { silent: true },
         });
   }
