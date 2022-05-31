@@ -3,7 +3,8 @@ import { getNumberSecret, getSecret } from "#utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { Enumerable } from "@sapphire/decorators";
-import { LogLevel, SapphireClient } from "@sapphire/framework";
+import { container, LogLevel, SapphireClient } from "@sapphire/framework";
+import type { InternationalizationContext } from "@sapphire/plugin-i18next/dist/lib/types";
 import { Intents, Options } from "discord.js";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
@@ -66,6 +67,21 @@ export class EvieClient extends SapphireClient {
         origin: getSecret("ORIGIN_URL"),
         listenOptions: {
           port: getNumberSecret("API_PORT") || 4000,
+        },
+      },
+      i18n: {
+        fetchLanguage: async (context: InternationalizationContext) => {
+          if (!context.interactionLocale) return "en-US";
+
+          let langCode = "en-US";
+
+          container.i18n.languages.forEach((_, languageFolderName) => {
+            if (languageFolderName.startsWith(`${context.interactionLocale}`)) {
+              langCode = languageFolderName;
+            }
+          });
+
+          return langCode;
         },
       },
       makeCache: Options.cacheEverything(),
