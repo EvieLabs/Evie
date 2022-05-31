@@ -72,6 +72,7 @@ export class EvieClient extends SapphireClient {
       i18n: {
         fetchLanguage: async (context: InternationalizationContext) => {
           if (!context.interactionLocale) return "en-US";
+          if (context.interactionLocale === "en") return "en-US"; // Removes the chance of picking en-AU instead of en-US
 
           let langCode = "en-US";
 
