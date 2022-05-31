@@ -1,5 +1,6 @@
 import extractHostname from "#root/utils/parsers/extractHostname";
 import { container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import axios from "axios";
 import type { Message } from "discord.js";
@@ -18,19 +19,32 @@ export class Phisherman {
           iconURL: phish.message.author.displayAvatarURL(),
         })
         .setDescription(
-          `${
-            phish.successfullyDeleted ? "Deleted" : "Failed to delete"
-          } a message with a known phishing link`
+          phish.successfullyDeleted
+            ? await resolveKey(
+                phish.message.guild,
+                "modules/phish:successfullyDeleted"
+              )
+            : await resolveKey(
+                phish.message.guild,
+                "modules/phish:failedToDelete"
+              )
         )
         .addField(
           "Message",
           `${phish.message.content} ${
             phish.successfullyDeleted
-              ? `[Jump to message](${phish.message.url})`
-              : `[Jump to context](${phish.message.url})`
+              ? await resolveKey(phish.message, "misc:jumpToContext", {
+                  message: phish.message,
+                })
+              : await resolveKey(phish.message, "misc:jumpToContext", {
+                  message: phish.message,
+                })
           }`
         )
-        .addField("Triggered Link", phish.url);
+        .addField(
+          await resolveKey(phish.message.guild, "modules/phish:linkTrigger"),
+          phish.url
+        );
 
       await phish.message.client.guildLogger.sendEmbedToLogChannel(
         phish.message.guild,
