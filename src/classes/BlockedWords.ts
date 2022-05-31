@@ -57,16 +57,12 @@ export class BlockedWords {
           "Message",
           `${message.content} ${
             successfullyDeleted
-              ? await resolveKey(
-                  message.guild,
-                  "modules/blockedwords:jumpToMessage",
-                  { message }
-                )
-              : await resolveKey(
-                  message.guild,
-                  "modules/blockedwords:jumpToContext",
-                  { message }
-                )
+              ? await resolveKey(message.guild, "misc:jumpToMessage", {
+                  message,
+                })
+              : await resolveKey(message.guild, "misc:jumpToContext", {
+                  message,
+                })
           }`
         )
         .addField(

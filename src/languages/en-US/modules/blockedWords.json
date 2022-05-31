@@ -2,7 +2,5 @@
   "blockedWords": "Blocked Words",
   "successfullyDeleted": "Successfully deleted a message with a blocked word.",
   "failedToDelete": "Failed to delete a message with a blocked word.",
-  "wordTrigger": "Triggered by",
-  "jumpToMessage": "[Jump to message]({{message.url}})",
-  "jumpToContext": "[Jump to message]({{message.url}})"
+  "wordTrigger": "Triggered by"
 }
