@@ -1,5 +1,7 @@
 import placeholderParser from "#root/utils/parsers/placeholderParser";
+import { time } from "@discordjs/builders";
 import type { AirportSettings } from "@prisma/client";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
 import { EvieEmbed } from "./EvieEmbed";
@@ -21,7 +23,10 @@ export class Airport {
 
         if (!role || !(role instanceof Role)) return;
 
-        member.roles.add(role, `Auto Join Role`);
+        member.roles.add(
+          role,
+          await resolveKey(member.guild, "modules/airport:autoRoleReason")
+        );
       } catch (error) {
         Sentry.captureException(error);
       }
@@ -52,15 +57,19 @@ export class Airport {
       goodbyeMessageEmbed.setDescription(goodbyeMessage.toString());
 
       goodbyeMessageEmbed.addField(
-        `${member.displayName} left the server`,
+        await resolveKey(member.guild, "modules/airport:leftServer", {
+          name: member.displayName,
+        }),
         `<t:${Math.trunc(Date.now() / 1000)}:R>`
       );
       goodbyeMessageEmbed.addField(
-        `${member.displayName} joined the server originally`,
+        await resolveKey(member.guild, "modules/airport:joinedOriginally", {
+          name: member.displayName,
+        }),
         `${
           member.joinedAt
-            ? `<t:${Math.trunc(member.joinedAt.getTime() / 1000)}:R>`
-            : "At an unknown time"
+            ? time(member.joinedAt, "R")
+            : await resolveKey(member.guild, "modules/airport:unknownTime")
         }`
       );
 
@@ -94,11 +103,13 @@ export class Airport {
 
       welcomeMessageEmbed.setDescription(welcomeMessage.toString());
       welcomeMessageEmbed.addField(
-        `${member.displayName} joined the server`,
+        await resolveKey(member.guild, "modules/airport:joinServer", {
+          name: member.displayName,
+        }),
         `${
           member.joinedAt
-            ? `<t:${Math.trunc(member.joinedAt.getTime() / 1000)}:R>`
-            : "At an unknown time"
+            ? time(member.joinedAt, "R")
+            : await resolveKey(member.guild, "modules/airport:unknownTime")
         }`
       );
       if (config.ping) {
