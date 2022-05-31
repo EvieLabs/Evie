@@ -1,6 +1,6 @@
 {
-  "admin": "You do not have the required permissions to use this command. (admin)",
-  "mod": "This command is only available to moderators.",
-  "component": "This {{type}} is not for you!",
-  "boost": "This feature is only available to Evie+ members! Boost our [support/community server](https://discord.gg/Sx9QzpVC7r) or [Sponsor me on GitHub](https://github.com/sponsors/twisttaan). We strive to keep as many features as possible free of charge, but I would love to have something in return, whether it's from a GitHub sponsorship (to help pay for infrastructure and my work) or Discord server boosts (reward our community)."
+  "admin": "이 명령을 실행할 권한이 없어요. (관리자)",
+  "mod": "이 명령은 관리자만 사용할 수 있어요.",
+  "component": "다른 사용자의 {{type}}이에요.",
+  "boost": "이 기능은 Evie+ 회원만 사용할 수 있어요! 저희 [지원/커뮤니티 서버](https://discord.gg/Sx9QzpVC7r)를 부스팅 해주시거나 [GitHub에서 저를 스폰서](https://github.com/sponsors/twisttaan) 해주세요."
 }
