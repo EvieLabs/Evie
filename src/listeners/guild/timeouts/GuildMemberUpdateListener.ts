@@ -12,8 +12,22 @@ import { Constants, DiscordAPIError, GuildMember, User } from "discord.js";
 export class GuildMemberUpdateListener extends Listener {
   public async run(
     oldMember: GuildMember,
-    { user, guild, communicationDisabledUntil }: GuildMember
+    {
+      user,
+      guild,
+      communicationDisabledUntil,
+      communicationDisabledUntilTimestamp,
+    }: GuildMember
   ) {
+    if (
+      (communicationDisabledUntilTimestamp
+        ? communicationDisabledUntilTimestamp < Date.now()
+        : false) ||
+      oldMember.communicationDisabledUntilTimestamp ===
+        communicationDisabledUntilTimestamp
+    )
+      return;
+
     try {
       const auditLogs = await guild.fetchAuditLogs({
         limit: 10,
