@@ -86,10 +86,7 @@ class ButtonNode extends Node<ButtonProps> {
             ? interaction.followUp({
                 content: await resolveKey(
                   interaction.raw,
-                  "permissions:component",
-                  {
-                    type: "button",
-                  }
+                  "permissions:buttonNotYours"
                 ),
                 embeds: [],
                 actionRows: [],
@@ -98,10 +95,7 @@ class ButtonNode extends Node<ButtonProps> {
             : interaction.reply({
                 content: await resolveKey(
                   interaction.raw,
-                  "permissions:component",
-                  {
-                    type: "button",
-                  }
+                  "permissions:buttonNotYours"
                 ),
                 embeds: [],
                 actionRows: [],

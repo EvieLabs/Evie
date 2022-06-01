@@ -167,10 +167,7 @@ class SelectNode extends Node<SelectProps> {
           ? interaction.followUp({
               content: await resolveKey(
                 interaction.raw,
-                "permissions:component",
-                {
-                  type: "select menu",
-                }
+                "permissions:selectNotYours"
               ),
               embeds: [],
               actionRows: [],
@@ -179,10 +176,7 @@ class SelectNode extends Node<SelectProps> {
           : interaction.reply({
               content: await resolveKey(
                 interaction.raw,
-                "permissions:component",
-                {
-                  type: "select menu",
-                }
+                "permissions:selectNotYours"
               ),
               embeds: [],
               actionRows: [],
