@@ -1,11 +1,8 @@
-import { transformOauthGuildsAndUser } from "#utils/api/transformers";
-import { getNumberSecret, getSecret } from "#utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
+import { EvieClientOptions } from "@evie/config";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { Enumerable } from "@sapphire/decorators";
-import { container, LogLevel, SapphireClient } from "@sapphire/framework";
-import type { InternationalizationContext } from "@sapphire/plugin-i18next/dist/lib/types";
-import { Intents, Options } from "discord.js";
+import { SapphireClient } from "@sapphire/framework";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
 import { DatabaseTools } from "./DatabaseTools";
@@ -54,61 +51,7 @@ export class EvieClient extends SapphireClient {
   public override startedAt = new Date();
 
   public constructor() {
-    super({
-      api: {
-        auth: {
-          id: getSecret("DISCORD_CLIENT_ID"),
-          secret: getSecret("DISCORD_SECRET"),
-          cookie: getSecret("COOKIE_NAME"),
-          redirect: getSecret("REDIRECT_URL"),
-          scopes: ["identify", "guilds"],
-          transformers: [transformOauthGuildsAndUser],
-        },
-        origin: getSecret("ORIGIN_URL"),
-        listenOptions: {
-          port: getNumberSecret("API_PORT") || 4000,
-        },
-      },
-      i18n: {
-        fetchLanguage: async (context: InternationalizationContext) => {
-          if (!context.interactionLocale) return "en-US";
-          if (context.interactionLocale === "en") return "en-US"; // Removes the chance of picking en-AU instead of en-US
-
-          let langCode = "en-US";
-
-          container.i18n.languages.forEach((_, languageFolderName) => {
-            if (languageFolderName.startsWith(`${context.interactionLocale}`)) {
-              langCode = languageFolderName;
-            }
-          });
-
-          return langCode;
-        },
-      },
-      makeCache: Options.cacheEverything(),
-      sweepers: {
-        ...Options.defaultSweeperSettings,
-        messages: {
-          interval: 190,
-          lifetime: 900,
-        },
-      },
-      intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_BANS,
-        Intents.FLAGS.GUILD_MESSAGES,
-      ],
-      logger: {
-        level:
-          getSecret("NODE_ENV", false) === "production"
-            ? LogLevel.Info
-            : LogLevel.Debug,
-      },
-      loadMessageCommandListeners: true,
-      shards: "auto",
-      allowedMentions: { users: [], roles: [] },
-    });
+    super(EvieClientOptions);
   }
 }
 

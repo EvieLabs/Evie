@@ -16,7 +16,8 @@
       "#constants/*": ["constants/*"],
       "@evie/reacord": ["lib/reacord/library/main.ts"],
       "@evie/fetch": ["lib/fetch/fetch.ts"],
-      "@evie/valorant": ["lib/valorant/index.ts"]
+      "@evie/valorant": ["lib/valorant/index.ts"],
+      "@evie/config": ["lib/config/index.ts"]
     }
   },
   "include": [".", "./**/*.json"]
