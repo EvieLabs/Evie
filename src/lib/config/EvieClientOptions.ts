@@ -1,4 +1,4 @@
-import { getSecret } from "#utils/parsers/envUtils";
+import { getSecret, prefixes } from "#utils/parsers/envUtils";
 import { LogLevel } from "@sapphire/framework";
 import { ClientOptions, Intents, Options } from "discord.js";
 import { APIOptions } from "./client/api";
@@ -7,6 +7,9 @@ import { i18nOptions } from "./client/i18n";
 export const EvieClientOptions: ClientOptions = {
   ...APIOptions,
   ...i18nOptions,
+  defaultPrefix: prefixes,
+  caseInsensitivePrefixes: true,
+  caseInsensitiveCommands: true,
   makeCache: Options.cacheEverything(),
   sweepers: {
     ...Options.defaultSweeperSettings,
