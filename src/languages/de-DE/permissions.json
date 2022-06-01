@@ -1,6 +1,7 @@
 {
-  "admin": "You do not have the required permissions to use this command. (admin)",
-  "mod": "This command is only available to moderators.",
-  "component": "This {{type}} is not for you!",
-  "boost": "This feature is only available to Evie+ members! Boost our [support/community server](https://discord.gg/Sx9QzpVC7r) or [Sponsor me on GitHub](https://github.com/sponsors/twisttaan). We strive to keep as many features as possible free of charge, but I would love to have something in return, whether it's from a GitHub sponsorship (to help pay for infrastructure and my work) or Discord server boosts (reward our community)."
+  "admin": "Du hast nicht die benötigten Rechte um diesen Befehl zu nutzen. (Administrator)",
+  "mod": "Dieser Befehl ist nur für Moderatoren verfügbar.",
+  "buttonNotYours": "Dieser Knopf ist nicht für dich!",
+  "selectNotYours": "Dieses Dropdown-Menü ist nicht für dich!",
+  "boost": "Diese Funktion ist nur für Evie+ Mitglieder verfügbar! Booste unseren [support/community server](https://discord.gg/Sx9QzpVC7r) oder [Sponsor mich auf GitHub](https://github.com/sponsors/twisttaan). Wir bemühen uns so viele Funktionen wie möglich kostenlos anzubieten, aber ich würde gerne etwas zurück haben, sei es GitHub Sponsorship (um die Infrastruktur und meine Arbeit zu bezahlen) oder Discord Server Boosts (Belohnung an die Community)."
 }

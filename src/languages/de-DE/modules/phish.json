@@ -1,5 +1,5 @@
 {
-  "successfullyDeleted": "Successfully deleted a message with a known phishing link.",
-  "failedToDelete": "Failed to delete a message with a known phishing link.",
-  "linkTrigger": "Triggered Link"
+  "successfullyDeleted": "Eine Nachricht mit einem bekannten Phishing Link wurde erfolgreich gelöscht.",
+  "failedToDelete": "Eine Nachricht mit einem bekannten Phishing Link konnte nicht gelöscht werden.",
+  "linkTrigger": "Ausgelöster Link"
 }
