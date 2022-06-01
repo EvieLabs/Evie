@@ -1,7 +1,7 @@
 {
   "noReason": "No reason provided.",
-  "me": "Me",
-  "ban": "Ban",
+  "me": "나",
+  "ban": "밴",
   "reverseBan": "Reverse Ban",
   "unknownMod": "Unknown moderator"
 }
