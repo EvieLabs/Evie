@@ -1,0 +1,4 @@
+{
+  "jumpToMessage": "[메세지로 가기]({{message.url}})",
+  "jumpToContext": "[Jump to message]({{message.url}})"
+}

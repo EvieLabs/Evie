@@ -1,0 +1,5 @@
+{
+  "successfullyDeleted": "Successfully deleted a message with a known phishing link.",
+  "failedToDelete": "Failed to delete a message with a known phishing link.",
+  "linkTrigger": "Triggered Link"
+}

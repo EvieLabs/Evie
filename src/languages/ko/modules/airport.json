@@ -1,0 +1,7 @@
+{
+  "autoRoleReason": "서버 입장 시 역할",
+  "leftServer": "{{name}}이(가) 서버를 떠났습니다",
+  "joinedOriginally": "{{name}}이(가) 서버에 입장함",
+  "unknownTime": "때 알 수 없음",
+  "joinServer": "{{name}}이(가) 서버에 입장했습니다"
+}
