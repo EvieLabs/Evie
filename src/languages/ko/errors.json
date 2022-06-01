@@ -1,0 +1,4 @@
+{
+  "notInCachedGuild": "이 서버는 캐시되지 않은 것 같아요. 명령을 다시 실행 해보세요.",
+  "commandError": "An error occurred while running the command. Please try again later."
+}
