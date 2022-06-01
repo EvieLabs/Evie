@@ -1,7 +1,7 @@
 {
-  "noReason": "No reason provided.",
-  "me": "Me",
+  "noReason": "Keine Begründung erhalten.",
+  "me": "Ich",
   "ban": "Ban",
   "reverseBan": "Reverse Ban",
-  "unknownMod": "Unknown moderator"
+  "unknownMod": "Unbekannter Moderator"
 }
