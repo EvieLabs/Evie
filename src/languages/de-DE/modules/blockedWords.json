@@ -1,6 +1,6 @@
 {
-  "blockedWords": "Blocked Words",
-  "successfullyDeleted": "Successfully deleted a message with a blocked word.",
-  "failedToDelete": "Failed to delete a message with a blocked word.",
-  "wordTrigger": "Triggered by"
+  "blockedWords": "Blockierte Wörter",
+  "successfullyDeleted": "Eine Nachricht mit einem blockierten Wort wurde erfolgreich gelöscht.",
+  "failedToDelete": "Eine Nachricht mit einem blockierten Wort konnte nicht gelöscht werden.",
+  "wordTrigger": "Ausgelöst von"
 }
