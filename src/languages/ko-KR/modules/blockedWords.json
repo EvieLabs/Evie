@@ -1,6 +1,6 @@
 {
-  "blockedWords": "Blocked Words",
-  "successfullyDeleted": "Successfully deleted a message with a blocked word.",
-  "failedToDelete": "Failed to delete a message with a blocked word.",
-  "wordTrigger": "Triggered by"
+  "blockedWords": "차단된 단어",
+  "successfullyDeleted": "차단된 단어가 포함된 메세지를 삭제했습니다.",
+  "failedToDelete": "차단된 단어가 포함된 메세지를 삭제하지 못했습니다.",
+  "wordTrigger": "대상"
 }
