@@ -6,6 +6,7 @@
 [![top.gg](https://top.gg/api/widget/upvotes/807543126424158238.svg?noavatar=true)](https://top.gg/bot/807543126424158238)
 [![GitHub stars](https://img.shields.io/github/stars/TeamEvie/Evie?style=flat-square)](https://github.com/TeamEvie/Evie/stargazers)
 [![DiscordInvite](https://discord.com/api/guilds/819106797028769844/embed.png)](https://evie.pw/discord)
+[![Crowdin](https://badges.crowdin.net/eviebot/localized.svg)](https://crowdin.com/project/eviebot)
 
 </div>
 
@@ -18,6 +19,10 @@ Evie features a very powerful moderation engine, allowing you to ban, kick, temp
 ### Utility ![charm](https://cdn.discordapp.com/emojis/785676180229455905.png?size=32)
 
 Evie comes with heaps of helpful utilities to construct your server, lookup information, and more.
+
+### Multiple languages ![jam](https://cdn.discordapp.com/emojis/785675950926200874.png?size=32)
+
+Evie supports a wide variety of languages, allowing non-English users to use Evie in their native language. Contributing translations on [Crowdin](https://crwd.in/eviebot) is encouraged!
 
 ### Stats ![hmm](https://cdn.discordapp.com/emojis/785675913341042718.png?size=32)
 
