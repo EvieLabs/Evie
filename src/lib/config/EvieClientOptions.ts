@@ -5,8 +5,8 @@ import { APIOptions } from "./client/api";
 import { i18nOptions } from "./client/i18n";
 
 export const EvieClientOptions: ClientOptions = {
-  ...APIOptions,
-  ...i18nOptions,
+  api: APIOptions,
+  i18n: i18nOptions,
   defaultPrefix: prefixes,
   caseInsensitivePrefixes: true,
   caseInsensitiveCommands: true,
