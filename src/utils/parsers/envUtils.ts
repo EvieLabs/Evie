@@ -10,8 +10,8 @@ export const adminGuilds = process.env.ADMIN_GUILD_IDS
   ? process.env.ADMIN_GUILD_IDS.split(",")
   : ["0"];
 
-export const prefixes = process.env.CMD_PREFIXS
-  ? process.env.CMD_PREFIXS.split(",")
+export const prefixes = process.env.CMD_PREFIXES
+  ? process.env.CMD_PREFIXES.split(",")
   : ["dev!"];
 
 export function getSecret(key: string, required = true): string {
