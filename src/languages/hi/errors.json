@@ -1,4 +1,4 @@
 {
-  "notInCachedGuild": "This server doesn't seem to be cached, try re-running the command.",
-  "commandError": "An error occurred while running the command. Please try again later."
+  "notInCachedGuild": "ऐसा लगता है कि यह सर्वर उपलब्ध नहीं है, आदेश को फिर से चलाने का प्रयास करें।",
+  "commandError": "आदेश चलाते समय एक गलती हुई। बाद में पुन: प्रयास करें।"
 }
