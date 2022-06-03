@@ -1044,11 +1044,11 @@ __metadata:
   linkType: hard
 
 "@types/react-reconciler@npm:^0":
-  version: 0.26.6
-  resolution: "@types/react-reconciler@npm:0.26.6"
+  version: 0.26.7
+  resolution: "@types/react-reconciler@npm:0.26.7"
   dependencies:
     "@types/react": "*"
-  checksum: 5c96f40338f2ccc544018610b42f467945450a8448b042ce5a052a3a45820ccd028b1fb65157c99f5889a10cd1e17093252c54c56a002bc64acadd6d5a9e4b08
+  checksum: 4122d2b08580f775d0aeae9bd10b68248f894096ed14c0ebbc143ef712e21b159e89d0c628bd95dd3329947fc1ee94a0cb1d2d32b32b1d5d225e70030e91e58f
   languageName: node
   linkType: hard
 
