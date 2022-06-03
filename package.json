@@ -77,7 +77,7 @@
   },
   "devDependencies": {
     "@sapphire/eslint-config": "^4.3.6",
-    "@sapphire/ts-config": "^3.3.2",
+    "@sapphire/ts-config": "^3.3.4",
     "@types/lodash": "^4",
     "@types/module-alias": "^2",
     "@types/node": "^17.0.21",
