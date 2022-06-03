@@ -54,7 +54,7 @@
     "@sentry/integrations": "^6.19.3",
     "@sentry/node": "^6.19.3",
     "@sentry/tracing": "^6.19.3",
-    "@swc/core": "^1.2.150",
+    "@swc/core": "^1.2.196",
     "axios": "^0.26.0",
     "bufferutil": "^4.0.6",
     "canvas": "^2.9.1",
