@@ -611,14 +611,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/plugin-logger@npm:^2.1.3":
-  version: 2.2.0
-  resolution: "@sapphire/plugin-logger@npm:2.2.0"
+"@sapphire/plugin-logger@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@sapphire/plugin-logger@npm:2.2.1"
   dependencies:
-    "@sapphire/time-utilities": ^1.6.0
+    "@sapphire/time-utilities": ^1.7.3
     colorette: ^2.0.16
     tslib: ^2.3.1
-  checksum: 4c95a078a36a8aeb75c41c1282b42b50a732ac3b118089d11e60498b702676eee6745ecd69bf9b778adb7fa39c2884d6629a6e4048b15ccd390262d3b0a4ee02
+  checksum: 7c5e72a8fa762dfce35cc76d1265f678e0fbd4b899853a2fd80b7b4191192636c5de2bea74d16e980a3a3a19d82df7875934b6d0c4b20621d07f4c0534979fbb
   languageName: node
   linkType: hard
 
@@ -661,12 +661,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/time-utilities@npm:^1.6.0, @sapphire/time-utilities@npm:^1.7.0":
+"@sapphire/time-utilities@npm:^1.7.0":
   version: 1.7.0
   resolution: "@sapphire/time-utilities@npm:1.7.0"
   dependencies:
     "@sapphire/utilities": ^3.4.0
   checksum: af2efcd9489bec41bd8cff8c5b8d567651d13767d2dcdcb421e60d3bda510e1c06c1e2b87d06f15d42ea81690edec7fa6c448fc4926f47d03d7a6cede2e2899a
+  languageName: node
+  linkType: hard
+
+"@sapphire/time-utilities@npm:^1.7.3":
+  version: 1.7.4
+  resolution: "@sapphire/time-utilities@npm:1.7.4"
+  dependencies:
+    "@sapphire/utilities": ^3.6.2
+  checksum: fb4a32d81fd99966297912cd41c751a8bb792f401e92d538c2611922c535da79683d1918ed897e7daf0880f7c139a03100922fb128ca27a596163e6c5bcead8c
   languageName: node
   linkType: hard
 
@@ -2623,7 +2632,7 @@ __metadata:
     "@sapphire/plugin-api": ^3.2.1
     "@sapphire/plugin-hmr": ^1.2.0
     "@sapphire/plugin-i18next": next
-    "@sapphire/plugin-logger": ^2.1.3
+    "@sapphire/plugin-logger": ^2.2.1
     "@sapphire/ts-config": ^3.3.2
     "@sentry/integrations": ^6.19.3
     "@sentry/node": ^6.19.3
