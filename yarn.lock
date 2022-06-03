@@ -2513,7 +2513,7 @@ __metadata:
     tslib: ^2.4.0
     type-fest: ^2.13.0
     typescript: ^4.7.2
-    undici: ^5.3.0
+    undici: ^5.4.0
     utf-8-validate: ^5.0.9
     zlib-sync: ^0.1.7
   languageName: unknown
@@ -5255,10 +5255,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "undici@npm:5.3.0"
-  checksum: b81ec73f0dbab3b6804a5fe221ed29e564934723a5c8babdd23dfefc250efc46a49447c8bc7af5cef6c270d2d1613c64bfe12c4113ca5672f613d8bd7057e5ea
+"undici@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "undici@npm:5.4.0"
+  checksum: 2852397ee1dbb2b3ad58166520ec30f4f0143895f6e7b157dbedfac4e43b522a710a3927be61a67b2ae791190973f206d30785564ece7675e08133427cebaaa1
   languageName: node
   linkType: hard
 
