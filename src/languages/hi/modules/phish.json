@@ -1,5 +1,5 @@
 {
-  "successfullyDeleted": "Successfully deleted a message with a known phishing link.",
-  "failedToDelete": "Failed to delete a message with a known phishing link.",
-  "linkTrigger": "Triggered Link"
+  "successfullyDeleted": "ज्ञात फ़िशिंग लिंक वाले संदेश को सफलतापूर्वक हटा दिया गया।",
+  "failedToDelete": "ज्ञात फ़िशिंग लिंक वाले संदेश को हटाने में विफल।",
+  "linkTrigger": "लिंक के बदौलत हुआ"
 }

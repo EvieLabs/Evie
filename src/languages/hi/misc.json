@@ -1,4 +1,4 @@
 {
-  "jumpToMessage": "[Jump to message]({{message.url}})",
-  "jumpToContext": "[Jump to message]({{message.url}})"
+  "jumpToMessage": "[मैसेज पर जाये]({{message.url}})",
+  "jumpToContext": "[मैसेज पर जाये]({{message.url}})"
 }
