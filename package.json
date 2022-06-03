@@ -76,7 +76,7 @@
     "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
-    "@sapphire/eslint-config": "^4.3.5",
+    "@sapphire/eslint-config": "^4.3.6",
     "@sapphire/ts-config": "^3.3.2",
     "@types/lodash": "^4",
     "@types/module-alias": "^2",
