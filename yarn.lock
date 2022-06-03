@@ -679,13 +679,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/ts-config@npm:^3.3.2":
-  version: 3.3.2
-  resolution: "@sapphire/ts-config@npm:3.3.2"
+"@sapphire/ts-config@npm:^3.3.4":
+  version: 3.3.4
+  resolution: "@sapphire/ts-config@npm:3.3.4"
   dependencies:
     tslib: ^2.3.1
-    typescript: ^4.6.2
-  checksum: c826552b627204035714bae75fc68ccf4c1bdd07b87933df093de48d7c82a794474d18756ad2e3022d0eec894973dfc246419ef34f1288105e3f193085bf19ce
+    typescript: ^4.6.3
+  checksum: c26dee331e17dd1762caa499ca6f1d1ee22fe781a5486575ead625c399678fbf3b33cf963a4f48aad04df5d515a4b3d2f80a03272d2413894d96f799d5f5ca87
   languageName: node
   linkType: hard
 
@@ -2633,7 +2633,7 @@ __metadata:
     "@sapphire/plugin-hmr": ^1.2.0
     "@sapphire/plugin-i18next": next
     "@sapphire/plugin-logger": ^2.2.1
-    "@sapphire/ts-config": ^3.3.2
+    "@sapphire/ts-config": ^3.3.4
     "@sentry/integrations": ^6.19.3
     "@sentry/node": ^6.19.3
     "@sentry/tracing": ^6.19.3
@@ -5367,16 +5367,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.6.2":
-  version: 4.6.2
-  resolution: "typescript@npm:4.6.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 8a44ed7e6f6c4cb1ebe8cf236ecda2fb119d84dcf0fbd77e707b2dfea1bbcfc4e366493a143513ce7f57203c75da9d4e20af6fe46de89749366351046be7577c
-  languageName: node
-  linkType: hard
-
 "typescript@npm:^4.6.3":
   version: 4.6.3
   resolution: "typescript@npm:4.6.3"
@@ -5394,16 +5384,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 5163585e6b56410f77d5483b698d9489bbee8902c99029eb70cf6d21525a186530ce19a00951af84eefd4a131cc51d0959f5118e25e70ab61f45ac4057dbd1ef
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>":
-  version: 4.6.2
-  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 40b493a71747fb89fa70df104e2c4a5e284b43750af5bea024090a5261cefa387f7a9372411b13030f7bf5555cee4275443d08805642ae5c74ef76740854a4c7
   languageName: node
   linkType: hard
 
