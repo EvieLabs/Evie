@@ -289,10 +289,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@influxdata/influxdb-client@npm:^1.24.0":
-  version: 1.24.0
-  resolution: "@influxdata/influxdb-client@npm:1.24.0"
-  checksum: 3f2eeb46720d7fc7e6490fc052feddef2271fe2f6315875407b899192d94cdb9c20794e88f7d6d7be6f241f91297663116adde3db28c9577f80538137ff2a60d
+"@influxdata/influxdb-client@npm:^1.26.0":
+  version: 1.26.0
+  resolution: "@influxdata/influxdb-client@npm:1.26.0"
+  checksum: a42eafd1bf911f057ce833e534afd86ff3f2cc17fb9e62b64a10bebff73208f0166dcba1a818c0c9264afffce857195c9b0d68a4fba290f178fc086a56469a00
   languageName: node
   linkType: hard
 
@@ -2615,7 +2615,7 @@ __metadata:
   dependencies:
     "@discordjs/builders": ^0.12.0
     "@discordjs/rest": ^0.3.0
-    "@influxdata/influxdb-client": ^1.24.0
+    "@influxdata/influxdb-client": ^1.26.0
     "@prisma/client": latest
     "@sapphire/decorators": ^4.3.4
     "@sapphire/eslint-config": ^4.3.5
