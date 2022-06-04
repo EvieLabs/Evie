@@ -8,6 +8,8 @@ export enum Emojis {
   valorantLogo = "<:valorant:971373514152095755>",
   valorantRadiant = "<:radiant:971675273911218196>",
   valorantFade = "<:fade:973184566321893417>",
+  slashCommand = "<:slash:982630315493318716>",
+  contextMenu = "<:contextMenu:982631122074755124>",
 }
 
 export enum ModActionType {
