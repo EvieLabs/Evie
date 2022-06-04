@@ -62,24 +62,26 @@ export class Cases extends Command {
           SnowflakeUtil.deconstruct(a.id).date.getTime()
       );
 
-      const casesFormatted = cases.map((case_) =>
-        removeIndents(
-          `**Case**: [#${case_.id}](${constructMessageLink(
-            modLog,
-            case_.logMessageID ?? case_.id
-          )})
+      const casesFormatted = cases.map((case_) => {
+        return {
+          description: removeIndents(
+            `**Case**: [#${case_.id}](${constructMessageLink(
+              modLog,
+              case_.logMessageID ?? case_.id
+            )}) (${case_.type || `\`${case_.typeId}\``})
       **Reason**: ${case_.reason}
       ${`**Moderator**: ${case_.moderatorName ?? "Automated"} (\`${
         case_.moderatorID ?? "Automated"
       }\`)`}
       ${`**Target**: ${case_.targetName} (\`${case_.targetID}\`)`}
       ${`**Time**: ${time(SnowflakeUtil.deconstruct(case_.id).date)}`}`
-        )
-      );
+          ),
+        };
+      });
 
       return void interaction.client.reacord.editReply(
         interaction,
-        <PaginateComponent blocks={casesFormatted} user={interaction.user} />
+        <PaginateComponent pages={casesFormatted} user={interaction.user} />
       );
     } catch (e) {
       Sentry.captureException(e);
