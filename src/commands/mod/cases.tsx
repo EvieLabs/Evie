@@ -3,8 +3,13 @@ import {
   ReplyStatusEmbed,
   StatusEmoji,
 } from "#root/classes/EvieEmbed";
-import CasesComponent from "#root/components/info/CasesComponent";
+import PaginateComponent from "#root/components/info/PaginateComponent";
+import {
+  constructMessageLink,
+  removeIndents,
+} from "#root/utils/builders/stringBuilder";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { time } from "@discordjs/builders";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -15,6 +20,7 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import { CommandInteraction, SnowflakeUtil } from "discord.js";
 import React from "react";
+
 @ApplyOptions<Command.Options>({
   description: "View cases",
   preconditions: ["ModOrBanPermsOnly"],
@@ -56,9 +62,24 @@ export class Cases extends Command {
           SnowflakeUtil.deconstruct(a.id).date.getTime()
       );
 
+      const casesFormatted = cases.map((case_) =>
+        removeIndents(
+          `**Case**: [#${case_.id}](${constructMessageLink(
+            modLog,
+            case_.logMessageID ?? case_.id
+          )})
+      **Reason**: ${case_.reason}
+      ${`**Moderator**: ${case_.moderatorName ?? "Automated"} (\`${
+        case_.moderatorID ?? "Automated"
+      }\`)`}
+      ${`**Target**: ${case_.targetName} (\`${case_.targetID}\`)`}
+      ${`**Time**: ${time(SnowflakeUtil.deconstruct(case_.id).date)}`}`
+        )
+      );
+
       return void interaction.client.reacord.editReply(
         interaction,
-        <CasesComponent modLog={modLog} cases={cases} user={interaction.user} />
+        <PaginateComponent blocks={casesFormatted} user={interaction.user} />
       );
     } catch (e) {
       Sentry.captureException(e);
