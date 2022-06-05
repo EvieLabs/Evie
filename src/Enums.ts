@@ -10,6 +10,7 @@ export enum Emojis {
   valorantFade = "<:fade:973184566321893417>",
   slashCommand = "<:slash:982630315493318716>",
   contextMenu = "<:contextMenu:982631122074755124>",
+  topgg = "<:topgg:982864774012485683>",
 }
 
 export enum EvieEvent {
