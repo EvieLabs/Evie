@@ -20,10 +20,14 @@ export class Help extends Command {
     const categories: { [key: string]: Command[] } = {};
     for (const command of commandStore) {
       if (command.category) {
-        if (!categories[command.category]) {
-          categories[command.category] = [];
+        const parsedCategory = `${command.category}${
+          command.subCategory ? `/${command.subCategory}` : ""
+        }`;
+
+        if (!categories[parsedCategory]) {
+          categories[parsedCategory] = [];
         }
-        categories[command.category].push(command);
+        categories[parsedCategory].push(command);
       }
     }
     return categories;
@@ -51,7 +55,7 @@ export class Help extends Command {
             description: disclaimer,
           },
           ...Object.keys(commands).map((category) => ({
-            title: ``,
+            title: category,
             description: commands[category]
               .map((command) =>
                 removeIndents(`
