@@ -31,7 +31,7 @@ export default function PaginateComponent(props: {
             style="primary"
             disabled={pages.indexOf(page) === 0}
             user={user}
-            label="<-"
+            label="←"
             onClick={() => {
               setPage(pages[pages.indexOf(page) - 1]);
             }}
@@ -40,7 +40,7 @@ export default function PaginateComponent(props: {
             style="primary"
             disabled={pages.indexOf(page) === pages.length - 1}
             user={user}
-            label="->"
+            label="→"
             onClick={() => {
               setPage(pages[pages.indexOf(page) + 1]);
             }}
