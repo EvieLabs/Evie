@@ -18,7 +18,8 @@
       "@evie/fetch": ["lib/fetch/fetch.ts"],
       "@evie/valorant": ["lib/valorant/index.ts"],
       "@evie/config": ["lib/config/index.ts"],
-      "@evie/shapers": ["lib/shapers/index.ts"]
+      "@evie/shapers": ["lib/shapers/index.ts"],
+      "@evie/home": ["lib/home/index.ts"]
     }
   },
   "include": [".", "./**/*.json"]

@@ -15,7 +15,8 @@
     "@evie/fetch": "dist/lib/fetch/fetch.js",
     "@evie/valorant": "dist/lib/valorant/index.js",
     "@evie/config": "dist/lib/config/index.js",
-    "@evie/shapers": "dist/lib/shapers/index.js"
+    "@evie/shapers": "dist/lib/shapers/index.js",
+    "@evie/home": "dist/lib/home/index.js"
   },
   "husky": {
     "hooks": {

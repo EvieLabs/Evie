@@ -1,6 +1,8 @@
 import type { EvieEvent } from "#root/Enums";
+import { getSecret } from "#root/utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
 import { EvieClientOptions } from "@evie/config";
+import { Kennel } from "@evie/home";
 import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
@@ -52,6 +54,9 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override startedAt = new Date();
 
+  @Enumerable(false)
+  public override kennel = new Kennel(getSecret("KENNEL_ID"));
+
   public constructor() {
     super(EvieClientOptions);
   }
@@ -69,6 +74,7 @@ declare module "discord.js" {
     readonly stats: Stats;
     readonly reacord: ReacordDiscordJs;
     readonly startedAt: Date;
+    readonly kennel: Kennel;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }
