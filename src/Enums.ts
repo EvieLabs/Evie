@@ -11,6 +11,7 @@ export enum Emojis {
   slashCommand = "<:slash:982630315493318716>",
   contextMenu = "<:contextMenu:982631122074755124>",
   topgg = "<:topgg:982864774012485683>",
+  discordListSpace = "<:discordlistspace:982903545068150794>",
 }
 
 export enum EvieEvent {
