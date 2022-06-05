@@ -3,6 +3,7 @@ import { Emojis } from "#root/Enums";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Command, container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 
 import type { Message } from "discord.js";
 import React from "react";
@@ -46,18 +47,19 @@ export class Help extends Command {
         user={message.author}
         pages={[
           {
-            title: "Evie",
+            title: await resolveKey(message, "commands/help:welcome"),
             description: disclaimer,
           },
           ...Object.keys(commands).map((category) => ({
-            title: category,
+            title: ``,
             description: commands[category]
               .map((command) =>
                 removeIndents(`
-                 ${command.contextMenuRun ? Emojis.contextMenu : ""} ** ${
+                • ${command.messageRun ? "ev!" : ""}\`${command.name}\` ${
                   command.chatInputRun ? Emojis.slashCommand : ""
-                } ${command.messageRun ? "ev!" : ""}\`${command.name}\`** 
-            > ${command.description} 
+                }${command.contextMenuRun ? Emojis.contextMenu : ""} - ${
+                  command.description
+                } 
           `)
               )
               .join(""),
