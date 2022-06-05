@@ -10,7 +10,7 @@
 
 </div>
 
-## Features like no other! [¹](a "ok maybe not") ![bap](https://cdn.discordapp.com/emojis/785701845300412436.png?size=32)
+## Features ![bap](https://cdn.discordapp.com/emojis/785701845300412436.png?size=32)
 
 ### Moderation ![bap](https://cdn.discordapp.com/emojis/785674459083964466.png?size=32)
 
