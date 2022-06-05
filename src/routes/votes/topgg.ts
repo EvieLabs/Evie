@@ -1,4 +1,4 @@
-import { EvieEvent } from "#root/Enums";
+import { Emojis, EvieEvent } from "#root/Enums";
 import { getSecret } from "#root/utils/parsers/envUtils";
 import { VotePayload } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -31,6 +31,10 @@ export class TopggVote extends Route {
 
     const payload = new VotePayload({
       userSnowflake: body.user,
+      test: body.type === "test",
+      serviceName: "Top.gg",
+      voteLink: "https://top.gg/bot/807543126424158238/vote",
+      emoji: Emojis.topgg,
     });
 
     await payload.init();
