@@ -18,7 +18,7 @@ export class ForceVote extends Command {
     const payload = new VotePayload({
       userSnowflake: user.id,
       test,
-      serviceName: "`ev!testvote`",
+      serviceName: "Internal",
       voteLink: message.url,
       emoji: Emojis.slashCommand,
     });
