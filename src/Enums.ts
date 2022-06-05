@@ -12,6 +12,7 @@ export enum Emojis {
   contextMenu = "<:contextMenu:982631122074755124>",
   topgg = "<:topgg:982864774012485683>",
   discordListSpace = "<:discordlistspace:982903545068150794>",
+  discordBotList = "<:dbl:982959680693354516>",
 }
 
 export enum EvieEvent {
