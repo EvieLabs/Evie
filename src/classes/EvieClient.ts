@@ -1,6 +1,8 @@
+import type { EvieEvent } from "#root/Enums";
 import { PrismaClient } from ".prisma/client";
 import { EvieClientOptions } from "@evie/config";
 import { ReacordDiscordJs } from "@evie/reacord";
+import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient } from "@sapphire/framework";
 import { Airport } from "./Airport";
@@ -67,5 +69,6 @@ declare module "discord.js" {
     readonly stats: Stats;
     readonly reacord: ReacordDiscordJs;
     readonly startedAt: Date;
+    emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

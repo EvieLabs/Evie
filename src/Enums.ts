@@ -12,6 +12,10 @@ export enum Emojis {
   contextMenu = "<:contextMenu:982631122074755124>",
 }
 
+export enum EvieEvent {
+  Vote = "vote",
+}
+
 export enum ModActionType {
   Kick = 0,
   Softban = 1,

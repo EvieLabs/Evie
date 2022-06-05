@@ -14,7 +14,8 @@
     "@evie/reacord": "dist/lib/reacord/library/main.js",
     "@evie/fetch": "dist/lib/fetch/fetch.js",
     "@evie/valorant": "dist/lib/valorant/index.js",
-    "@evie/config": "dist/lib/config/index.js"
+    "@evie/config": "dist/lib/config/index.js",
+    "@evie/shapers": "dist/lib/shapers/index.js"
   },
   "husky": {
     "hooks": {
