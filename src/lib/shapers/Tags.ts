@@ -3,7 +3,7 @@ import type {
   AutocompleteInteraction,
 } from "discord.js";
 
-export default async function (
+export async function ShapeTagsToChoices(
   interaction: AutocompleteInteraction
 ): Promise<ApplicationCommandOptionChoiceData[]> {
   if (!interaction.guild)

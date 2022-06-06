@@ -1,6 +1,6 @@
 import { EvieEmbed } from "#root/classes/EvieEmbed";
-import ShapeTagsToChoices from "#root/utils/database/ShapeTagsToChoices";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ShapeTagsToChoices } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
