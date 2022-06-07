@@ -1,4 +1,4 @@
-import type { EvieEvent } from "#root/Enums";
+import { EvieEvent, PrismaAction } from "#root/Enums";
 import { getSecret } from "#root/utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
 import { EvieClientOptions } from "@evie/config";
@@ -7,6 +7,7 @@ import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient } from "@sapphire/framework";
+import { Collection } from "discord.js";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
 import { DatabaseTools } from "./DatabaseTools";
@@ -57,8 +58,38 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override kennel = new Kennel(getSecret("KENNEL_ID"));
 
+  public override dbCache = new Collection<string, unknown>();
+
   public constructor() {
     super(EvieClientOptions);
+
+    this.prisma.$use(async (params, next) => {
+      if (!params.model) return await next(params);
+      const keyCacheKey = `${params.model}:${JSON.stringify(params.args)}`;
+
+      if (
+        params.action === PrismaAction.update ||
+        params.action === PrismaAction.delete ||
+        params.action === PrismaAction.create ||
+        params.action === PrismaAction.upsert ||
+        params.action === PrismaAction.updateMany ||
+        params.action === PrismaAction.deleteMany ||
+        params.action === PrismaAction.createMany
+      ) {
+        const outdatedKeys = this.dbCache.filter((_, key) =>
+          key.startsWith(`${params.model}`)
+        );
+
+        outdatedKeys.forEach((_, key) => this.dbCache.delete(key));
+      }
+
+      if (this.dbCache.has(keyCacheKey)) {
+        return this.dbCache.get(keyCacheKey);
+      }
+      const result = await next(params);
+      this.dbCache.set(keyCacheKey, result);
+      return result;
+    });
   }
 }
 
@@ -75,6 +106,7 @@ declare module "discord.js" {
     readonly reacord: ReacordDiscordJs;
     readonly startedAt: Date;
     readonly kennel: Kennel;
+    readonly dbCache: Collection<string, unknown>;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

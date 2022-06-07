@@ -37,3 +37,21 @@ export const OppositeModActionType = (type: ModActionType) => {
   }
   return null;
 };
+
+export enum PrismaAction {
+  findUnique = "findUnique",
+  findMany = "findMany",
+  findFirst = "findFirst",
+  create = "create",
+  createMany = "createMany",
+  update = "update",
+  updateMany = "updateMany",
+  upsert = "upsert",
+  delete = "delete",
+  deleteMany = "deleteMany",
+  executeRaw = "executeRaw",
+  queryRaw = "queryRaw",
+  aggregate = "aggregate",
+  count = "count",
+  runCommandRaw = "runCommandRaw",
+}
