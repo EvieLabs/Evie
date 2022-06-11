@@ -1,6 +1,6 @@
 {
   "name": "evie-bot",
-  "version": "1.0.2",
+  "version": "1.1.2",
   "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
   "main": "dist/index.js",
   "imports": {
