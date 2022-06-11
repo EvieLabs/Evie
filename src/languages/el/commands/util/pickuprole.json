@@ -1,0 +1,12 @@
+{
+  "roleNotInDatabase": "Couldn't find that pickup role.",
+  "roleNotInGuild": "Sorry, this role no longer exists in the server!",
+  "failedToAddRole": "Sorry, I failed to give you <@&{{role.id}}>. Try again later. (make sure my role is above <@&{{role.id}}>)",
+  "failedToRemoveRole": "Sorry, I failed to take away <@&{{role.id}}>. Try again later.",
+  "successAdd": "Successfully gave you <@&{{role.id}}>!",
+  "successRemove": "Successfully took away <@&{{role.id}}>!",
+  "manageFailedToRemoveRole": "Failed to remove role from the list of pick-up-able roles.",
+  "manageFailedToAddRole": "Failed to add role to the list of pick-up-able roles.",
+  "manageSuccessRemove": "Successfully removed <@&{{role.id}}> from the list of pick-up-able roles.",
+  "manageSuccessAdd": "Successfully added <@&{{role.id}}> to the list of pick-up-able roles."
+}
