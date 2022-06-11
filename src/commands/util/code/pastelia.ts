@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -21,7 +21,7 @@ export class Pastelia extends Command {
 
     if (!message) {
       return void (await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `Please provide a valid message.`,
         interaction
       ));
@@ -47,7 +47,7 @@ export class Pastelia extends Command {
     } catch (e) {
       captureException(e);
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `An error occured while uploading your code.`,
         interaction
       );

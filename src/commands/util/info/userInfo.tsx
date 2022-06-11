@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import MemberInfoComponent from "#root/components/info/MemberInfoComponent";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -21,11 +21,7 @@ export class UserInfo extends Command {
   public override async messageRun(message: Message, args: Args) {
     const member = await args.pick("member").catch(() => message.member);
     if (!member)
-      return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Failed to pick a member.",
-        message
-      );
+      return void ReplyStatusEmbed(false, "Failed to pick a member.", message);
 
     return void message.client.reacord.send(
       message.channelId,
@@ -40,7 +36,7 @@ export class UserInfo extends Command {
 
     if (!member)
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Failed to pick a member.",
         interaction
       );

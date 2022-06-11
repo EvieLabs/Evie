@@ -1,7 +1,6 @@
 import {
   EditReplyStatusEmbed,
   ReplyStatusEmbed,
-  StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import ValorantStatsComponent from "#root/components/stats/ValorantStatsComponent";
 import { registeredGuilds } from "#utils/parsers/envUtils";
@@ -27,7 +26,7 @@ export class ValorantStats extends Command {
 
     if (!username || !tag)
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Missing username or tag argument.",
         interaction
       );
@@ -46,11 +45,7 @@ export class ValorantStats extends Command {
       );
     } catch (e) {
       captureException(e);
-      return void EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "No account found.",
-        interaction
-      );
+      return void EditReplyStatusEmbed(false, "No account found.", interaction);
     }
   }
 

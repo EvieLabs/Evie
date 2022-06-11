@@ -1,4 +1,4 @@
-import { StatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { StatusEmbed } from "#root/classes/EvieEmbed";
 import { Schedule } from "#root/classes/Schedule";
 import { ModActionType } from "#root/Enums";
 import { container } from "@sapphire/framework";
@@ -30,7 +30,7 @@ export class TempBans extends Schedule {
           .catch(() =>
             client.guildLogger.sendEmbedToLogChannel(
               guild,
-              new StatusEmbed(StatusEmoji.FAIL, `Failed to unban ${user.tag}`)
+              new StatusEmbed(false, `Failed to unban ${user.tag}`)
             )
           );
 

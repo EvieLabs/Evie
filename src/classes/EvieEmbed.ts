@@ -26,17 +26,19 @@ export class EvieEmbed extends MessageEmbed {
 }
 
 export class StatusEmbed extends MessageEmbed {
-  constructor(public status: StatusEmoji, public statusMessage: string) {
+  constructor(public success: boolean, public statusMessage: string) {
     super({
-      color: status === StatusEmoji.SUCCESS ? EvieColors.evieGrey : 0xff0000,
+      color: success ? EvieColors.evieGrey : 0xff0000,
       timestamp: Date.now().toString(),
-      description: `${status} ${statusMessage}`,
+      description: `${
+        success ? StatusEmoji.SUCCESS : StatusEmoji.FAIL
+      } ${statusMessage}`,
     });
   }
 }
 
 export async function ReplyStatusEmbed(
-  status: StatusEmoji,
+  success: boolean,
   description: string,
   i:
     | CommandInteraction
@@ -47,7 +49,7 @@ export async function ReplyStatusEmbed(
     | MessageComponentInteraction,
   allowedMentions?: MessageMentionOptions
 ): Promise<Message | Message<boolean> | APIMessage | void> {
-  const embed = new StatusEmbed(status, description);
+  const embed = new StatusEmbed(success, description);
 
   if (i instanceof Message)
     return i.reply({ embeds: [embed], allowedMentions: allowedMentions });
@@ -66,7 +68,7 @@ export async function ReplyStatusEmbed(
 }
 
 export async function EditReplyStatusEmbed(
-  status: StatusEmoji,
+  success: boolean,
   description: string,
   i:
     | CommandInteraction
@@ -77,7 +79,7 @@ export async function EditReplyStatusEmbed(
     | MessageComponentInteraction,
   allowedMentions?: MessageMentionOptions
 ): Promise<Message | Message<boolean> | APIMessage | void> {
-  const embed = new StatusEmbed(status, description);
+  const embed = new StatusEmbed(success, description);
 
   if (i instanceof Message)
     return i.edit({ embeds: [embed], allowedMentions: allowedMentions });

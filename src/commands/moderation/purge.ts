@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -23,7 +23,7 @@ export class Purge extends Command {
 
     if (!messages || messages < 1 || messages > 100) {
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "You must specify an amount messages to purge below 100.",
         interaction
       );
@@ -48,14 +48,14 @@ export class Purge extends Command {
         await interaction.channel.bulkDelete(filteredMessages);
 
         return void (await ReplyStatusEmbed(
-          StatusEmoji.SUCCESS,
+          true,
           `${filteredMessages.size} messages purged.`,
           interaction
         ));
       } catch (e) {
         captureException(e);
         return void (await ReplyStatusEmbed(
-          StatusEmoji.FAIL,
+          false,
           `Failed to purge messages.`,
           interaction
         ));
@@ -66,14 +66,14 @@ export class Purge extends Command {
       await interaction.channel.bulkDelete(messages);
 
       return void (await ReplyStatusEmbed(
-        StatusEmoji.SUCCESS,
+        true,
         `${messages} messages purged.`,
         interaction
       ));
     } catch (e) {
       captureException(e);
       return void (await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `Failed to purge ${messages} messages.`,
         interaction
       ));

@@ -1,7 +1,6 @@
 import {
   EditReplyStatusEmbed,
   ReplyStatusEmbed,
-  StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
@@ -39,7 +38,7 @@ export class Ban extends Command {
 
     if (!userToBeBanned) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "You must specify a user to ban.",
         interaction
       );
@@ -58,7 +57,7 @@ export class Ban extends Command {
         interaction.member
       );
       await EditReplyStatusEmbed(
-        StatusEmoji.SUCCESS,
+        true,
         `Banned ${userToBeBanned} (${userToBeBanned.id}) ${
           expiresAt ? time(expiresAt, "R") : `indefinitely`
         } for \`${reason ?? "no reason :("}\`.`,
@@ -68,11 +67,7 @@ export class Ban extends Command {
     } catch (e) {
       Sentry.captureException(e);
       console.log(e);
-      EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Failed to ban user.",
-        interaction
-      );
+      EditReplyStatusEmbed(false, "Failed to ban user.", interaction);
       return;
     }
   }

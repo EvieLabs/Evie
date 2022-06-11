@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   Events,
@@ -11,6 +11,6 @@ import {
 @ApplyOptions<ListenerOptions>({ event: Events.MessageCommandDenied })
 export class MessageCommandDeniedListener extends Listener {
   public run(error: UserError, { message }: MessageCommandDeniedPayload) {
-    return void ReplyStatusEmbed(StatusEmoji.FAIL, `${error.message}`, message);
+    return void ReplyStatusEmbed(false, `${error.message}`, message);
   }
 }

@@ -1,7 +1,6 @@
 import {
   EditReplyStatusEmbed,
   ReplyStatusEmbed,
-  StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
@@ -32,7 +31,7 @@ export class UnBan extends Command {
 
     if (!target) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "You must specify a user to ban.",
         interaction
       );
@@ -50,18 +49,14 @@ export class UnBan extends Command {
       );
 
       await EditReplyStatusEmbed(
-        StatusEmoji.SUCCESS,
+        true,
         `Successfully unbanned ${user?.username}#${user?.discriminator}`,
         interaction
       );
       return;
     } catch (e) {
       Sentry.captureException(e);
-      EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Failed to un-ban user.",
-        interaction
-      );
+      EditReplyStatusEmbed(false, "Failed to un-ban user.", interaction);
       return;
     }
   }
