@@ -142,6 +142,19 @@ export class DatabaseTools {
     }
   }
 
+  public async FetchPickupRoles(guild: Guild) {
+    try {
+      return await guild.client.prisma.pickupRole.findMany({
+        where: {
+          guildID: guild?.id,
+        },
+      });
+    } catch (error) {
+      Sentry.captureException(error);
+      throw error;
+    }
+  }
+
   public async FetchGuildProperty(
     guild: Guild,
     property: keyof GuildSettings
