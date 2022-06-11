@@ -12,7 +12,7 @@ import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 
 @ApplyOptions<Command.Options>({
   description: "Manage pick-up-able roles.",
-  requiredUserPermissions: ["MANAGE_GUILD"],
+  requiredUserPermissions: ["ADMINISTRATOR"],
   preconditions: ["GuildOnly"],
 })
 export class ManagePickupRoles extends Command {
