@@ -20,9 +20,9 @@ export class Git extends Command {
               `**Running Commit**: [${Stats.commitSha.slice(
                 0,
                 7
-              )}](${GitHubRepo}/commit/${Stats.commitSha}) (${name}) #${
-                Stats.commitNumber
-              }
+              )}](${GitHubRepo}/commit/${Stats.commitSha}) (${
+                Stats.commitName
+              }) #${Stats.commitNumber}
               **Branch**: [${Stats.currentBranch}](${GitHubRepo}/tree/${
                 Stats.currentBranch
               })`
