@@ -1,8 +1,4 @@
-import {
-  EvieEmbed,
-  ReplyStatusEmbed,
-  StatusEmoji,
-} from "#root/classes/EvieEmbed";
+import { EvieEmbed, ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import ShapeGlobalCommandsToChoices from "#root/utils/misc/ShapeGlobalCommandsToChoices";
 import { adminGuilds } from "#utils/parsers/envUtils";
 import { time } from "@discordjs/builders";
@@ -31,11 +27,7 @@ export class GlobalCommandInfo extends Command {
       query
     );
     if (!command)
-      return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "No command found.",
-        interaction
-      );
+      return void ReplyStatusEmbed(false, "No command found.", interaction);
     const a = "➤";
     const embed = new EvieEmbed();
     embed.setTitle(command.name);

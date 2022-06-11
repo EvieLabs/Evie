@@ -1,7 +1,6 @@
 import {
   EditReplyStatusEmbed,
   ReplyStatusEmbed,
-  StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import PaginateComponent from "#root/components/info/PaginateComponent";
 import {
@@ -35,7 +34,7 @@ export class Cases extends Command {
 
     if (!moderator && !target) {
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         await resolveKey(interaction, "commands/mod/cases:noModOrTarget"),
         interaction
       );
@@ -85,11 +84,7 @@ export class Cases extends Command {
       );
     } catch (e) {
       Sentry.captureException(e);
-      EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Failed to pull up cases.",
-        interaction
-      );
+      EditReplyStatusEmbed(false, "Failed to pull up cases.", interaction);
       return;
     }
   }

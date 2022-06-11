@@ -1,4 +1,4 @@
-import { EditReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { EditReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -18,7 +18,7 @@ export class Setup extends Command {
       !(await checkPerm(interaction.member, Permissions.FLAGS.ADMINISTRATOR))
     ) {
       await EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "You do not have the required permissions to use this command. (admin)",
         interaction
       );
@@ -40,7 +40,7 @@ export class Setup extends Command {
     const targetRole = interaction.options.getRole("role");
     if (!targetRole || !guild)
       return await EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Something went wrong... (missing role and/or guild)",
         interaction
       );
@@ -54,14 +54,14 @@ export class Setup extends Command {
         },
       });
       return await EditReplyStatusEmbed(
-        StatusEmoji.SUCCESS,
+        true,
         `Successfully set the staff role to ${targetRole}`,
         interaction
       );
     } catch (e) {
       Sentry.captureException(e);
       return await EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Something went wrong... (database error)",
         interaction
       );
@@ -78,7 +78,7 @@ export class Setup extends Command {
       !guild.me
     )
       return await EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Something went wrong... (missing channel and/or guild)",
         interaction
       );
@@ -89,7 +89,7 @@ export class Setup extends Command {
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       return await EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "I do not have permission to send messages in chosen log channel.",
         interaction
       );
@@ -109,14 +109,14 @@ export class Setup extends Command {
         },
       });
       return await EditReplyStatusEmbed(
-        StatusEmoji.SUCCESS,
+        true,
         `Successfully set the log channel to ${targetChannel}`,
         interaction
       );
     } catch (e) {
       Sentry.captureException(e);
       return await EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Something went wrong... (database error)",
         interaction
       );

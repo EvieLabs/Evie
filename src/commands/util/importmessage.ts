@@ -1,8 +1,4 @@
-import {
-  EvieEmbed,
-  ReplyStatusEmbed,
-  StatusEmoji,
-} from "#root/classes/EvieEmbed";
+import { EvieEmbed, ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
@@ -43,7 +39,7 @@ export class ImportMessage extends Command {
 
     if (!(channel instanceof TextChannel)) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Please provide a valid text channel.",
         interaction
       );
@@ -60,7 +56,7 @@ export class ImportMessage extends Command {
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "You do not have permission to send messages in this channel.",
         interaction
       );
@@ -73,7 +69,7 @@ export class ImportMessage extends Command {
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "I do not have permission to send messages in this channel.",
         interaction
       );
@@ -93,7 +89,7 @@ export class ImportMessage extends Command {
 
     if (!message) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `Please provide a valid message.`,
         interaction
       );
@@ -102,7 +98,7 @@ export class ImportMessage extends Command {
 
     if (message.author.id !== interaction.client.user?.id) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `Please Provide a message that was sent by me.
         This context menu is used to edit messages you made me send.
         For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,
@@ -117,7 +113,7 @@ export class ImportMessage extends Command {
       )
     ) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `Please don't try and edit a message that is not user-generated.`,
         interaction
       );
@@ -137,7 +133,7 @@ export class ImportMessage extends Command {
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "You do not have permission to send messages in this channel.",
         interaction
       );
@@ -150,7 +146,7 @@ export class ImportMessage extends Command {
         .has(Permissions.FLAGS.SEND_MESSAGES)
     ) {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "I do not have permission to edit messages in this channel.",
         interaction
       );
@@ -221,7 +217,7 @@ export class ImportMessage extends Command {
       );
     });
     collector.on("end", async () => {
-      ReplyStatusEmbed(StatusEmoji.FAIL, `Import Timed Out`, interaction);
+      ReplyStatusEmbed(false, `Import Timed Out`, interaction);
     });
   }
 
@@ -237,7 +233,7 @@ export class ImportMessage extends Command {
         time: 100000,
       })
       .catch(() => {
-        ReplyStatusEmbed(StatusEmoji.FAIL, `Import Timed Out`, interaction);
+        ReplyStatusEmbed(false, `Import Timed Out`, interaction);
       })) as ModalSubmitInteraction;
 
     if (!submit) return;
@@ -255,7 +251,7 @@ export class ImportMessage extends Command {
           await miscDB.addImportedMessage(message);
 
           return ReplyStatusEmbed(
-            StatusEmoji.SUCCESS,
+            true,
             `Imported [here](<${message.url}>)!`,
             submit
           );
@@ -266,7 +262,7 @@ export class ImportMessage extends Command {
           await miscDB.addImportedMessage(message);
 
           return ReplyStatusEmbed(
-            StatusEmoji.SUCCESS,
+            true,
             `Imported [here](<${message.url}>)!`,
             submit
           );
@@ -274,14 +270,14 @@ export class ImportMessage extends Command {
       } catch (e) {
         Sentry.captureException(e);
         await ReplyStatusEmbed(
-          StatusEmoji.FAIL,
+          false,
           `Failed to import. For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,
           submit
         );
       }
     } else {
       await ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         `Missing JSON Data. For more information, read the [documentation on this feature](https://docs.eviebot.rocks/commands/import-message.html).`,
         submit
       );

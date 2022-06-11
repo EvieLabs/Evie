@@ -1,4 +1,4 @@
-import FunComponent from "#root/components/fun/FunComponent";
+import DogMenu from "#root/components/fun/dog/DogMenu";
 import { registeredGuilds } from "#utils/parsers/envUtils";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -11,13 +11,13 @@ import type { CommandInteraction } from "discord.js";
 import React from "react";
 
 @ApplyOptions<ChatInputCommand.Options>({
-  description: "Fun Commands",
+  description: "View pictures of dogs",
 })
-export class Fun extends Command {
+export class Dog extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     interaction.client.reacord.reply(
       interaction,
-      <FunComponent user={interaction.user} />
+      <DogMenu user={interaction.user} />
     );
   }
 

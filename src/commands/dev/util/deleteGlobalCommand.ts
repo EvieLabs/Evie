@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import ShapeGlobalCommandsToChoices from "#root/utils/misc/ShapeGlobalCommandsToChoices";
 import { adminGuilds } from "#utils/parsers/envUtils";
 import { inlineCode } from "@discordjs/builders";
@@ -23,22 +23,18 @@ export class DeleteGlobalCommand extends Command {
       query
     );
     if (!command)
-      return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "No command found.",
-        interaction
-      );
+      return void ReplyStatusEmbed(false, "No command found.", interaction);
 
     try {
       await command.delete();
       return void ReplyStatusEmbed(
-        StatusEmoji.SUCCESS,
+        true,
         `Deleted command ${command.name} (${inlineCode(command.id)})`,
         interaction
       );
     } catch (err) {
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         "Error deleting command.",
         interaction
       );

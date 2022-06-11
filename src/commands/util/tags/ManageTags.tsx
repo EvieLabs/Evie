@@ -2,11 +2,10 @@ import { CreateTagModal } from "#constants/modals";
 import {
   EditReplyStatusEmbed,
   ReplyStatusEmbed,
-  StatusEmoji,
 } from "#root/classes/EvieEmbed";
 import EditTagMenu from "#root/components/config/EditTagMenu";
-import ShapeTagsToChoices from "#root/utils/database/ShapeTagsToChoices";
 import { registeredGuilds } from "#utils/parsers/envUtils";
+import { ShapeTagsToChoices } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -57,11 +56,7 @@ export class ManageTags extends Command {
       tags.find((tag) => tag.name === query.split(" ")[0]);
 
     if (!tag)
-      return void EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Tag not found.",
-        interaction
-      );
+      return void EditReplyStatusEmbed(false, "Tag not found.", interaction);
 
     return void interaction.client.reacord.editReply(
       interaction,
@@ -82,11 +77,7 @@ export class ManageTags extends Command {
       tags.find((tag) => tag.name === query.split(" ")[0]);
 
     if (!tag)
-      return void EditReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        "Tag not found.",
-        interaction
-      );
+      return void EditReplyStatusEmbed(false, "Tag not found.", interaction);
 
     return void (await interaction.client.prisma.evieTag
       .delete({
@@ -96,14 +87,14 @@ export class ManageTags extends Command {
       })
       .catch(() => {
         return void EditReplyStatusEmbed(
-          StatusEmoji.FAIL,
+          false,
           "Failed to delete tag.",
           interaction
         );
       })
       .then(() => {
         return void EditReplyStatusEmbed(
-          StatusEmoji.SUCCESS,
+          true,
           `Deleted tag ${tag.name}`,
           interaction
         );
@@ -144,7 +135,7 @@ export class ManageTags extends Command {
       const { guild } = interaction;
       if (!guild) {
         ReplyStatusEmbed(
-          StatusEmoji.FAIL,
+          false,
           "You must be in a guild to create a tag.",
           submit
         );
@@ -163,17 +154,13 @@ export class ManageTags extends Command {
           },
         })
         .catch(() => {
-          return ReplyStatusEmbed(
-            StatusEmoji.FAIL,
-            "Failed to create tag.",
-            submit
-          );
+          return ReplyStatusEmbed(false, "Failed to create tag.", submit);
         })
         .then(() => {
-          ReplyStatusEmbed(StatusEmoji.SUCCESS, `Created tag ${tag}`, submit);
+          ReplyStatusEmbed(true, `Created tag ${tag}`, submit);
         });
     } else {
-      ReplyStatusEmbed(StatusEmoji.FAIL, "Tag creation failed.", submit);
+      ReplyStatusEmbed(false, "Tag creation failed.", submit);
     }
   }
 

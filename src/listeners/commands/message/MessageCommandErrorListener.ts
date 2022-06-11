@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ArgumentError,
@@ -15,17 +15,13 @@ import { captureException } from "@sentry/node";
 export class MessageCommandErrorListener extends Listener {
   public async run(error: Error, { message }: MessageCommandErrorPayload) {
     if (error instanceof UserError || error instanceof ArgumentError) {
-      return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
-        `${error.message}`,
-        message
-      );
+      return void ReplyStatusEmbed(false, `${error.message}`, message);
     } else if (typeof error === "string") {
-      return void ReplyStatusEmbed(StatusEmoji.FAIL, error, message);
+      return void ReplyStatusEmbed(false, error, message);
     } else {
       captureException(error);
       return void ReplyStatusEmbed(
-        StatusEmoji.FAIL,
+        false,
         await resolveKey(message, "errors:commandError"),
         message
       );

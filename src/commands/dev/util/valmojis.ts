@@ -5,6 +5,7 @@ import type { Message } from "discord.js";
 
 @ApplyOptions<Command.Options>({
   name: "valmojis",
+  description: "Upload all VALORANT competitive icons as emojis.",
   preconditions: ["OwnerOnly"],
 })
 export class ValMojis extends Command {

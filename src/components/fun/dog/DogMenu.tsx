@@ -3,7 +3,7 @@ import type { User } from "discord.js";
 import React, { useState } from "react";
 import EvieComponent from "./EvieComponent";
 
-export default function FunComponent(props: { user: User }) {
+export default function DogMenu(props: { user: User }) {
   const [value, setValue] = useState<string>();
   const [component, setComponent] = useState<JSX.Element | undefined>();
   return (

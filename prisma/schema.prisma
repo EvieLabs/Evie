@@ -81,3 +81,8 @@ model ModAction {
   moderatorName String?
   targetName    String    @default("Unknown")
 }
+
+model PickupRole {
+  roleID  String @id
+  guildID String
+}

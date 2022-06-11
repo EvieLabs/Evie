@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed, StatusEmoji } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ChangeSlugModal } from "#root/constants/modals";
 import { EvieColors } from "#root/Enums";
 import { boostsEvie } from "#root/utils/misc/permChecks";
@@ -53,7 +53,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
         onClick={async (i) => {
           if (!(await boostsEvie(i.interaction.user)))
             return ReplyStatusEmbed(
-              StatusEmoji.FAIL,
+              false,
               await resolveKey(i.interaction, "permissions:boost"),
               i.interaction
             );
@@ -105,15 +105,11 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
       const redirect = submit.fields.getTextInputValue("redirect");
 
       if (!slug)
-        return void ReplyStatusEmbed(
-          StatusEmoji.FAIL,
-          "No slug provided.",
-          submit
-        );
+        return void ReplyStatusEmbed(false, "No slug provided.", submit);
 
       if (slug.match(/^[a-zA-Z0-9-]{1,32}$/) === null)
         return void ReplyStatusEmbed(
-          StatusEmoji.FAIL,
+          false,
           "Slug must be alphanumeric and no more than 32 characters long.",
           submit
         );
@@ -131,7 +127,7 @@ export default function EditTagMenu(props: { user: User; _tag: EvieTag }) {
         <EditTagMenu _tag={newTag} user={interaction.user} />
       );
     } catch (e) {
-      ReplyStatusEmbed(StatusEmoji.FAIL, "Something went wrong.", submit);
+      ReplyStatusEmbed(false, "Something went wrong.", submit);
       return void captureException(e);
     }
   }
