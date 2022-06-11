@@ -47,7 +47,7 @@
     "@discordjs/rest": "^0.3.0",
     "@influxdata/influxdb-client": "^1.26.0",
     "@prisma/client": "latest",
-    "@sapphire/decorators": "^4.3.4",
+    "@sapphire/decorators": "^4.3.5",
     "@sapphire/framework": "next",
     "@sapphire/plugin-api": "^3.2.1",
     "@sapphire/plugin-hmr": "^1.2.0",
