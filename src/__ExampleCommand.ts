@@ -1,7 +1,7 @@
+import { registeredGuilds } from "@evie/config";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { ApplicationCommandType } from "discord-api-types/v9";
 import type { CommandInteraction, ContextMenuInteraction } from "discord.js";
-import { registeredGuilds } from "./utils/parsers/envUtils";
 
 export class Boop extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {

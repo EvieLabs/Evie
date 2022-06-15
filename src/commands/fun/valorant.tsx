@@ -3,7 +3,7 @@ import {
   ReplyStatusEmbed,
 } from "#root/classes/EvieEmbed";
 import ValorantStatsComponent from "#root/components/stats/ValorantStatsComponent";
-import { registeredGuilds } from "#utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { fetchAccountData } from "@evie/valorant";
 import { ApplyOptions } from "@sapphire/decorators";
 import {

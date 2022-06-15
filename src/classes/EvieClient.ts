@@ -1,7 +1,6 @@
 import type { EvieEvent } from "#root/Enums";
-import { getSecret } from "#root/utils/parsers/envUtils";
 import { PrismaClient } from ".prisma/client";
-import { EvieClientOptions } from "@evie/config";
+import { EvieClientOptions, getSecret } from "@evie/config";
 import { Kennel } from "@evie/home";
 import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";

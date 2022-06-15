@@ -1,4 +1,4 @@
-import { getSecret } from "#root/utils/parsers/envUtils";
+import { getSecret } from "@evie/config";
 import { container, Events } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
 import type { MessageOptions, Snowflake, TextBasedChannel } from "discord.js";

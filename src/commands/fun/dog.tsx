@@ -1,5 +1,5 @@
 import DogMenu from "#root/components/fun/dog/DogMenu";
-import { registeredGuilds } from "#utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

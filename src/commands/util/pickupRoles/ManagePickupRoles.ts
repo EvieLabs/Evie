@@ -1,6 +1,6 @@
 import { EditReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ShapePickupRolesToChoices } from "#root/lib/shapers/PickupRoles";
-import { registeredGuilds } from "#utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

@@ -8,7 +8,7 @@ import {
 
 import HelpComponent from "#root/components/info/HelpComponent";
 import { Emojis } from "#root/Enums";
-import { registeredGuilds } from "#root/utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import type { CommandInteraction, Message } from "discord.js";
 import React from "react";

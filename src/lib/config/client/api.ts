@@ -1,5 +1,5 @@
 import { transformOauthGuildsAndUser } from "#utils/api/transformers";
-import { getNumberSecret, getSecret } from "#utils/parsers/envUtils";
+import { getNumberSecret, getSecret } from "@evie/config";
 import type { ClientOptions } from "discord.js";
 
 export const APIOptions: ClientOptions["api"] = {

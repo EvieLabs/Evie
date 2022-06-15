@@ -1,4 +1,4 @@
-import { botAdmins } from "#root/utils/parsers/envUtils";
+import { botAdmins } from "@evie/config";
 import { Precondition } from "@sapphire/framework";
 import type { CommandInteraction, Message } from "discord.js";
 

@@ -1,4 +1,4 @@
-import { getSecret, prefixes } from "#utils/parsers/envUtils";
+import { getSecret, prefixes } from "@evie/config";
 import { LogLevel } from "@sapphire/framework";
 import { ClientOptions, Intents, Options } from "discord.js";
 import { APIOptions } from "./client/api";

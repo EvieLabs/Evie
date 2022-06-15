@@ -1,6 +1,6 @@
 import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import MemberInfoComponent from "#root/components/info/MemberInfoComponent";
-import { registeredGuilds } from "#utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

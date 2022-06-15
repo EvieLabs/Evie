@@ -14,6 +14,20 @@ export const prefixes = process.env.CMD_PREFIXES
   ? process.env.CMD_PREFIXES.split(",")
   : ["dev!"];
 
+export const googleAssistantCredentials = process.env.GOOGLE_ASSISTANT_CREDS
+  ? (JSON.parse(
+      process.env.GOOGLE_ASSISTANT_CREDS
+    ) as GoogleAssistantCredentials)
+  : null;
+
+export interface GoogleAssistantCredentials {
+  refresh_token: string;
+  token_uri: string;
+  client_id: string;
+  client_secret: string;
+  scopes: string[];
+}
+
 export function getSecret(key: string, required = true): string {
   const value = process.env[key];
   if (required && !value)

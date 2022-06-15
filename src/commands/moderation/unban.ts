@@ -3,7 +3,7 @@ import {
   ReplyStatusEmbed,
 } from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
-import { registeredGuilds } from "#utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

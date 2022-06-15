@@ -1,5 +1,5 @@
 import { Emojis, EvieEvent } from "#root/Enums";
-import { getSecret } from "#root/utils/parsers/envUtils";
+import { getSecret } from "@evie/config";
 import { VotePayload } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
 import {

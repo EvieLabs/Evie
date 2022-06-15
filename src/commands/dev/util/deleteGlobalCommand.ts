@@ -1,7 +1,7 @@
 import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import ShapeGlobalCommandsToChoices from "#root/utils/misc/ShapeGlobalCommandsToChoices";
-import { adminGuilds } from "#utils/parsers/envUtils";
 import { inlineCode } from "@discordjs/builders";
+import { adminGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

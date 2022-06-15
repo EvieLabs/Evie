@@ -2,7 +2,7 @@ import { EvieEmbed, ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { informNeedsPerms, PermissionLang } from "#root/utils/misc/perms";
-import { registeredGuilds } from "#utils/parsers/envUtils";
+import { registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

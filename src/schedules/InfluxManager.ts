@@ -1,5 +1,5 @@
 import { Schedule } from "#root/classes/Schedule";
-import { getSecret } from "#root/utils/parsers/envUtils";
+import { getSecret } from "@evie/config";
 import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import { container } from "@sapphire/framework";
 import * as Sentry from "@sentry/node";
