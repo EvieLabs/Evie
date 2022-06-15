@@ -13,6 +13,7 @@ export enum Emojis {
   topgg = "<:topgg:982864774012485683>",
   discordListSpace = "<:discordlistspace:982903545068150794>",
   discordBotList = "<:dbl:982959680693354516>",
+  evie = "<:Evie:940139203222716426>",
 }
 
 export enum EvieEvent {

@@ -1,11 +1,16 @@
-import PaginateComponent from "#root/components/info/PaginateComponent";
-import { Emojis } from "#root/Enums";
-import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { ApplyOptions } from "@sapphire/decorators";
-import { Command, container } from "@sapphire/framework";
-import { resolveKey } from "@sapphire/plugin-i18next";
+import {
+  ApplicationCommandRegistry,
+  Command,
+  container,
+  RegisterBehavior,
+} from "@sapphire/framework";
 
-import type { Message } from "discord.js";
+import HelpComponent from "#root/components/info/HelpComponent";
+import { Emojis } from "#root/Enums";
+import { registeredGuilds } from "#root/utils/parsers/envUtils";
+import { resolveKey } from "@sapphire/plugin-i18next";
+import type { CommandInteraction, Message } from "discord.js";
 import React from "react";
 
 @ApplyOptions<Command.Options>({
@@ -38,38 +43,62 @@ export class Help extends Command {
       container.stores.get("commands").map((command) => command)
     );
 
-    const disclaimer = [
-      "Thanks for using Evie! All moderation and some of our most used commands are slash commands, the rest are text-based.",
-      "My prefixes are `evie ` and `ev!`.",
-      "",
-      "p.s This page will have patch-notes and other updates in the future.",
-    ].join("\n");
+    const description = await resolveKey(message, "commands/help:description");
+    const title = await resolveKey(message, "commands/help:title", {
+      emoji: Emojis.evie,
+    });
 
     message.client.reacord.messageReply(
       message,
-      <PaginateComponent
+      <HelpComponent
+        infoEmbed={{
+          title,
+          description,
+        }}
         user={message.author}
-        pages={[
-          {
-            title: await resolveKey(message, "commands/help:welcome"),
-            description: disclaimer,
-          },
-          ...Object.keys(commands).map((category) => ({
-            title: category,
-            description: commands[category]
-              .map((command) =>
-                removeIndents(`
-                • ${command.messageRun ? "ev!" : ""}\`${command.name}\` ${
-                  command.chatInputRun ? Emojis.slashCommand : ""
-                }${command.contextMenuRun ? Emojis.contextMenu : ""} - ${
-                  command.description
-                } 
-          `)
-              )
-              .join(""),
-          })),
-        ]}
+        commands={commands}
       />
+    );
+  }
+
+  public override async chatInputRun(interaction: CommandInteraction) {
+    const commands = this.categorizeCommands(
+      container.stores.get("commands").map((command) => command)
+    );
+
+    const description = await resolveKey(
+      interaction,
+      "commands/help:description"
+    );
+    const title = await resolveKey(interaction, "commands/help:title", {
+      emoji: Emojis.evie,
+    });
+
+    interaction.client.reacord.ephemeralReply(
+      interaction,
+      <HelpComponent
+        infoEmbed={{
+          title,
+          description,
+        }}
+        user={interaction.user}
+        commands={commands}
+      />
+    );
+  }
+
+  public override registerApplicationCommands(
+    registry: ApplicationCommandRegistry
+  ) {
+    registry.registerChatInputCommand(
+      (builder) =>
+        builder
+          .setName("about")
+          .setDescription("Hey I'm Evie, Ready to get started with me?"),
+      {
+        guildIds: registeredGuilds,
+        behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+      }
     );
   }
 }
