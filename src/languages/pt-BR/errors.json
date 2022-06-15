@@ -2,5 +2,6 @@
   "notInCachedGuild": "This server doesn't seem to be cached, try re-running the command.",
   "commandError": "An error occurred while running the command. Please try again later.",
   "queryMissing": "Query is missing. Please try again.",
-  "missingCommandOption": "Missing a required option. Please try again."
+  "missingCommandOption": "Missing a required option. Please try again.",
+  "interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
 }
