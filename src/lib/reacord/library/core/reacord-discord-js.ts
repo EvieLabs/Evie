@@ -462,7 +462,17 @@ function getDiscordMessageOptions(reacordOptions: MessageOptions): any {
             };
           }
 
-          raise(`Unsupported component type: ${component.type}`);
+          if (component.type === "link") {
+            return {
+              type: "BUTTON",
+              label: component.label ?? "",
+              url: component.url,
+              emoji: component.emoji,
+              style: "LINK",
+            };
+          }
+
+          raise(`Unsupported component type: ${component}`);
         }
       ),
     })),
