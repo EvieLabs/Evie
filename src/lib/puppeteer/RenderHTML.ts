@@ -9,7 +9,7 @@ export async function RenderHTML(html: string): Promise<Buffer> {
         getSecret("NODE_ENV", false) === "production"
           ? "/usr/bin/google-chrome"
           : undefined,
-      ignoreDefaultArgs: ["--disable-extensions"],
+      ignoreDefaultArgs: ["--disable-extensions", "--no-sandbox"],
     });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
