@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { container } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import * as Discord from "discord.js";
 import type { ReactNode } from "react";
@@ -19,6 +20,7 @@ import type {
   MessageInfo,
   UserInfo,
 } from "./component-event";
+import ComponentStore from "./ComponentStore";
 import type { ReacordInstance } from "./instance";
 import type { ReacordConfig } from "./reacord";
 import { Reacord } from "./reacord";
@@ -31,24 +33,28 @@ export class ReacordDiscordJs extends Reacord {
   constructor(private client: Discord.Client, config: ReacordConfig = {}) {
     super(config);
 
-    client.on("interactionCreate", (interaction) => {
-      if (interaction.isButton()) {
-        if (!interaction.customId.startsWith("reacord-")) return;
+    client.on("interactionCreate", async (interaction) => {
+      if (
+        !(
+          (interaction.isButton() || interaction.isSelectMenu()) &&
+          interaction.isMessageComponent() &&
+          interaction.customId.startsWith("reacord-")
+        )
+      )
+        return;
 
-        if (interaction.isMessageComponent()) {
-          this.handleComponentInteraction(
-            this.createReacordComponentInteraction(interaction)
-          );
-        }
-      } else if (interaction.isSelectMenu()) {
-        if (!interaction.customId.startsWith("reacord-")) return;
+      if (!ComponentStore.componentExists(interaction.customId))
+        return void interaction.reply({
+          ephemeral: true,
+          content: await resolveKey(
+            interaction,
+            "errors:interactionNotRegistered"
+          ),
+        });
 
-        if (interaction.isMessageComponent()) {
-          this.handleComponentInteraction(
-            this.createReacordComponentInteraction(interaction)
-          );
-        }
-      }
+      return void this.handleComponentInteraction(
+        this.createReacordComponentInteraction(interaction)
+      );
     });
   }
 

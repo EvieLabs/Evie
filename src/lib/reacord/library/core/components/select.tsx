@@ -14,6 +14,7 @@ import type {
 } from "../../internal/message";
 import { Node } from "../../internal/node.js";
 import type { ComponentEvent } from "../component-event";
+import ComponentStore from "../ComponentStore";
 import { OptionNode } from "./option-node";
 
 /**
@@ -89,6 +90,8 @@ export type SelectChangeEvent = ComponentEvent & {
  * @category Select
  */
 export function Select(props: SelectProps) {
+  const customId = `reacord-${nanoid()}`;
+  ComponentStore.addComponent(customId);
   useEffect(() => {
     container.logger.debug(
       `Created a select with props: ${JSON.stringify({
@@ -99,16 +102,19 @@ export function Select(props: SelectProps) {
     );
   }, []);
   return (
-    <ReacordElement props={props} createNode={() => new SelectNode(props)}>
+    <ReacordElement
+      props={props}
+      createNode={() => new SelectNode(props, customId)}
+    >
       {props.children}
     </ReacordElement>
   );
 }
 
 class SelectNode extends Node<SelectProps> {
-  readonly customId = `reacord-${nanoid()}`;
-
   override modifyMessageOptions(message: MessageOptions): void {
+    if (!this.customId) throw new Error("No customId");
+
     const actionRow: ActionRow = [];
     message.actionRows.push(actionRow);
 

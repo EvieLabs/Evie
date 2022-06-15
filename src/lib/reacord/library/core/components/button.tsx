@@ -9,6 +9,7 @@ import type { MessageOptions } from "../../internal/message";
 import { getNextActionRow } from "../../internal/message";
 import { Node } from "../../internal/node.js";
 import type { ComponentEvent } from "../component-event";
+import ComponentStore from "../ComponentStore.js";
 import type { ButtonSharedProps } from "./button-shared-props";
 
 /**
@@ -41,7 +42,9 @@ export type ButtonClickEvent = ComponentEvent;
  * @category Button
  */
 export function Button(props: ButtonProps) {
+  const customId = `reacord-${nanoid()}`;
   useEffect(() => {
+    ComponentStore.addComponent(customId);
     container.logger.debug(
       `Created a button with props: ${JSON.stringify({
         user: `${props.user?.username}(${props.user?.id})`,
@@ -53,14 +56,17 @@ export function Button(props: ButtonProps) {
     );
   }, []);
   return (
-    <ReacordElement props={props} createNode={() => new ButtonNode(props)} />
+    <ReacordElement
+      props={props}
+      createNode={() => new ButtonNode(props, customId)}
+    />
   );
 }
 
 class ButtonNode extends Node<ButtonProps> {
-  private customId = `reacord-${nanoid()}`;
-
   override modifyMessageOptions(options: MessageOptions): void {
+    if (!this.customId) throw new Error("No customId");
+
     getNextActionRow(options).push({
       type: "button",
       customId: this.customId,

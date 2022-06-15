@@ -8,7 +8,7 @@ import type { MessageOptions } from "./message";
 export abstract class Node<Props> {
   readonly children = new Container<Node<unknown>>();
 
-  constructor(public props: Props) {}
+  constructor(public props: Props, public customId?: string) {}
 
   // @ts-expect-error no-unused-vars
   modifyMessageOptions(options: MessageOptions) {}
