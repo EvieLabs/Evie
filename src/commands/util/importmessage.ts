@@ -167,7 +167,7 @@ export class ImportMessage extends Command {
           new MessageButton()
             .setLabel("Continue")
             .setStyle("PRIMARY")
-            .setCustomId(`countinue_msg_import_${generatedState}`)
+            .setCustomId(`continue_msg_import_${generatedState}`)
         ),
       ],
       ephemeral: true,
@@ -185,7 +185,7 @@ export class ImportMessage extends Command {
     if (!existingMessage) return;
 
     const filter = (i: MessageComponentInteraction) =>
-      i.customId === `countinue_msg_import_${stateflake}` &&
+      i.customId === `continue_msg_import_${stateflake}` &&
       i.type === "MESSAGE_COMPONENT";
 
     const collector = interaction.channel.createMessageComponentCollector({
@@ -247,8 +247,6 @@ export class ImportMessage extends Command {
           const json = JSON.parse(jsonData);
 
           const message = await existingMessage.edit(json);
-
-          await miscDB.addImportedMessage(message);
 
           return ReplyStatusEmbed(
             true,
