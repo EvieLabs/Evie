@@ -1,3 +1,4 @@
+import { StatusEmbed } from "#root/classes/EvieEmbed";
 import { googleAssistantCredentials, registeredGuilds } from "@evie/config";
 import { RenderHTML } from "@evie/puppeteer";
 import {
@@ -5,6 +6,7 @@ import {
   Command,
   RegisterBehavior,
 } from "@sapphire/framework";
+import { resolveKey } from "@sapphire/plugin-i18next";
 import { captureException } from "@sentry/node";
 import { CommandInteraction, MessageAttachment } from "discord.js";
 import {
@@ -75,7 +77,15 @@ export class Google extends Command {
       files.push(new MessageAttachment(response.audio, "audio.mp3"));
 
     interaction.editReply({
-      content: files.length === 0 ? "There was an error owo." : undefined,
+      embeds:
+        files.length === 0
+          ? [
+              new StatusEmbed(
+                false,
+                await resolveKey(interaction, "commands/fun:noResponse")
+              ),
+            ]
+          : undefined,
       files: files,
     });
   }
