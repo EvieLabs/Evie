@@ -1,4 +1,5 @@
 import { EvieColors } from "#root/Enums";
+import type { APIMessage } from "discord-api-types/v9";
 import {
   ButtonInteraction,
   CommandInteraction,
@@ -9,7 +10,6 @@ import {
   MessageMentionOptions,
   ModalSubmitInteraction,
 } from "discord.js";
-import type { APIMessage } from "discord.js/node_modules/discord-api-types/v9";
 
 export enum StatusEmoji {
   SUCCESS = "<a:success:952340083418230874>",
