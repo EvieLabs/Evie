@@ -5,6 +5,10 @@ import { APIOptions } from "./client/api";
 import { i18nOptions } from "./client/i18n";
 
 export const EvieClientOptions: ClientOptions = {
+  presence: {
+    status: "online",
+    activities: [{ name: "/getstarted", type: "LISTENING" }],
+  },
   api: APIOptions,
   i18n: i18nOptions,
   defaultPrefix: prefixes,

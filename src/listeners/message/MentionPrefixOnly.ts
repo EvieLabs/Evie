@@ -10,7 +10,7 @@ export class MentionPrefixOnly extends Listener {
   public async run(message: Message) {
     const help = this.container.stores
       .get("commands")
-      .find((command) => command.name === "help");
+      .find((command) => command.name === "getstarted");
 
     if (!help || !help.messageRun) return;
 
