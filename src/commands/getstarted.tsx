@@ -14,7 +14,7 @@ import { CommandInteraction, Message } from "discord.js";
 import React from "react";
 
 @ApplyOptions<Command.Options>({
-  description: "Show command list",
+  description: "Ready to get started with Evie?",
   name: "getstarted",
   aliases: ["cmds", "commands", "help", "getstarted"],
 })
@@ -80,10 +80,7 @@ export class GetStarted extends Command {
     registry: ApplicationCommandRegistry
   ) {
     registry.registerChatInputCommand(
-      (builder) =>
-        builder
-          .setName(this.name)
-          .setDescription("Ready to get started with Evie?"),
+      (builder) => builder.setName(this.name).setDescription(this.description),
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
