@@ -14,6 +14,8 @@ export enum Emojis {
   discordListSpace = "<:discordlistspace:982903545068150794>",
   discordBotList = "<:dbl:982959680693354516>",
   evie = "<:Evie:940139203222716426>",
+  enabled = "<:enabled:986868008750305311>",
+  disabled = "<:disabled:986868010507698216>",
 }
 
 export enum EvieEvent {
