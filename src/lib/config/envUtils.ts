@@ -10,6 +10,10 @@ export const adminGuilds = process.env.ADMIN_GUILD_IDS
   ? process.env.ADMIN_GUILD_IDS.split(",")
   : ["0"];
 
+export const astralGuilds = process.env.ASTRAL_GUILD_IDS
+  ? process.env.ASTRAL_GUILD_IDS.split(",")
+  : ["0"];
+
 export const prefixes = process.env.CMD_PREFIXES
   ? process.env.CMD_PREFIXES.split(",")
   : ["dev!"];
