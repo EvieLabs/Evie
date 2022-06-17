@@ -17,7 +17,8 @@
     "@evie/config": "dist/lib/config/index.js",
     "@evie/shapers": "dist/lib/shapers/index.js",
     "@evie/home": "dist/lib/home/index.js",
-    "@evie/puppeteer": "dist/lib/puppeteer/index.js"
+    "@evie/puppeteer": "dist/lib/puppeteer/index.js",
+    "@astral/utils": "dist/lib/astral/utils/index.js"
   },
   "husky": {
     "hooks": {
