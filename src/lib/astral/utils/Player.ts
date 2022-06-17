@@ -1,6 +1,7 @@
 import type { AstralPlayer } from "@astral/types";
 import { container } from "@sapphire/framework";
 import type { GuildMember } from "discord.js";
+import { calculateLevel } from "./Levelling";
 
 export async function getAstralPlayer(
   member: GuildMember
@@ -14,7 +15,8 @@ export async function getAstralPlayer(
   if (!player) throw "Player not found. (try again)";
 
   return {
+    ...player,
+    level: calculateLevel(player.xp),
     member,
-    player,
   };
 }

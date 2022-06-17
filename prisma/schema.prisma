@@ -90,8 +90,7 @@ model PickupRole {
 model AstralPlayer {
   id String @id
 
-  xp    Int @default(0)
-  level Int @default(1)
+  xp Int @default(0)
 
   created DateTime @default(now())
 }

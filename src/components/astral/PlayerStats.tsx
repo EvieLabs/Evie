@@ -20,7 +20,7 @@ export default function PlayerStats(props: { player: AstralPlayer }) {
         fields={[
           {
             name: "Level",
-            value: `${player.player.level} (${player.player.xp} XP)`,
+            value: `${player.level} (${player.xp} XP)`,
           },
         ]}
       >
