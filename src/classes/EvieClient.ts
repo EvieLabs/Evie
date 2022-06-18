@@ -6,12 +6,12 @@ import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient } from "@sapphire/framework";
-import { Collection } from "discord.js";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
 import { DatabaseTools } from "./DatabaseTools";
 import { EvieGuildLogger } from "./EvieGuildLogger";
 import { EviePunish } from "./EviePunish";
+import Handbook from "./Handbook";
 import { Phisherman } from "./Phisherman";
 import { Stats } from "./Stats";
 
@@ -57,7 +57,8 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override kennel = new Kennel(getSecret("KENNEL_ID"));
 
-  public override dbCache = new Collection<string, unknown>();
+  @Enumerable(false)
+  public override handbook = new Handbook();
 
   public constructor() {
     super(EvieClientOptions);
@@ -105,7 +106,7 @@ declare module "discord.js" {
     readonly reacord: ReacordDiscordJs;
     readonly startedAt: Date;
     readonly kennel: Kennel;
-    readonly dbCache: Collection<string, unknown>;
+    readonly handbook: Handbook;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }
