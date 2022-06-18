@@ -37,6 +37,8 @@ export default class Handbook {
   }
 
   private async loadHandbook() {
+    this.pages.clear();
+
     glob(`${rootFolder}/Handbook/**/*.md`, (err, files) => {
       if (err) {
         container.logger.error(err);
