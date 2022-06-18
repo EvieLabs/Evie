@@ -1,0 +1,5 @@
+{
+  "title": "{{emoji}} Welcome to Evie!",
+  "description": "Evie is a feature rich all-in-one bot for Discord to help manage your community with ease. Want more detailed information? Check out the handbook! `/handbook`",
+  "onlyShowingCommandsYouHavePermsFor": "Note: Only showing commands you have permissions for."
+}
