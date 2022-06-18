@@ -17,20 +17,38 @@ import React from "react";
 })
 export class GetStarted extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
+    const ephemeral = !interaction.options.getBoolean("show") ?? false;
+
     const basePage = container.client.handbook.pages.get("Welcome");
     if (!basePage) throw "Handbook unavailable!";
 
-    interaction.client.reacord.reply(
-      interaction,
-      <HandbookComponent user={interaction.user} basePage={basePage} />
-    );
+    return ephemeral
+      ? void interaction.client.reacord.ephemeralReply(
+          interaction,
+          <HandbookComponent user={interaction.user} basePage={basePage} />
+        )
+      : void interaction.client.reacord.reply(
+          interaction,
+          <HandbookComponent user={interaction.user} basePage={basePage} />
+        );
   }
 
   public override registerApplicationCommands(
     registry: ApplicationCommandRegistry
   ) {
     registry.registerChatInputCommand(
-      (builder) => builder.setName(this.name).setDescription(this.description),
+      {
+        name: this.name,
+        description: this.description,
+        options: [
+          {
+            name: "show",
+            description: "Send the message non-ephemerally",
+            type: "BOOLEAN",
+            required: false,
+          },
+        ],
+      },
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
