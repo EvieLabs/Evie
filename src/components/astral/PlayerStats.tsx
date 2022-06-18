@@ -1,6 +1,6 @@
 import { EvieColors } from "#root/Enums";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
-import type { AstralPlayer } from "@astral/types";
+import type { AstralPlayer } from "@astral/utils";
 import { time } from "@discordjs/builders";
 import { Embed } from "@evie/reacord";
 import React from "react";

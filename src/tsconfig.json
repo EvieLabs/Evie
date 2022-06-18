@@ -21,7 +21,6 @@
       "@evie/shapers": ["lib/shapers/index.ts"],
       "@evie/home": ["lib/home/index.ts"],
       "@evie/puppeteer": ["lib/puppeteer/index.ts"],
-      "@astral/types": ["lib/astral/types/index.ts"],
       "@astral/utils": ["lib/astral/utils/index.ts"]
     }
   },
