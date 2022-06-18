@@ -5,6 +5,7 @@ import type { GuildMember } from "discord.js";
 
 export class AstralPlayer {
   public id = this.raw.id;
+  public balance = this.raw.balance;
   public xp = this.raw.xp;
   public level = this.calculateLevel(this.xp);
 

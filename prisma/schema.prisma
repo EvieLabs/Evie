@@ -90,7 +90,9 @@ model PickupRole {
 model AstralPlayer {
   id String @id
 
-  xp Int @default(0)
+  xp        Int      @default(0)
+  balance   Int      @default(0)
+  inventory String[]
 
   created DateTime @default(now())
 }
