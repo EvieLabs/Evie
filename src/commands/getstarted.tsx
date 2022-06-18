@@ -98,6 +98,8 @@ export class GetStarted extends Command {
     const categories: { [key: string]: Command[] } = {};
     for (const command of commandStore) {
       if (command.category) {
+        if (command.category === "astral") continue;
+
         const parsedCategory = `${command.category}${
           command.subCategory ? `/${command.subCategory}` : ""
         }`;
