@@ -71,7 +71,7 @@
     "node-cron": "^3.0.1",
     "nodejs-assistant": "^0.8.0",
     "pm2": "^5.2.0",
-    "puppeteer": "^14.4.0",
+    "puppeteer": "^14.4.1",
     "react": "^18.0.0",
     "react-reconciler": "^0.27.0",
     "rxjs": "^7.5.5",
