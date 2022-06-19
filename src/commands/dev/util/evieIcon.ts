@@ -2,6 +2,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import { Args, Command } from "@sapphire/framework";
 import { Message, TextChannel } from "discord.js";
+import { camelCase } from "lodash";
 
 @ApplyOptions<Command.Options>({
   name: "evieicon",
@@ -35,7 +36,14 @@ export class EvieIcon extends Command {
     const sentMessage = await idChannel.send(`\\${icon}`);
 
     await message.reply(
-      `Uploaded ${icon} \`${icon}\` to [Evie Icons](${sentMessage.url}).`
+      `Uploaded ${icon} \`${icon}\` to Evie Icons.
+\`\`\`ts
+// append this to the beautiful emoji enum ${message.author.username}
+export enum Emojis {
+  ${camelCase(icon.name || "someEmoji")} = "${icon}",
+}
+\`\`\`
+Evie Icons ID List: <${sentMessage.url}>`
     );
   }
 }
