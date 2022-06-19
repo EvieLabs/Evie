@@ -3,7 +3,7 @@ import type { Message } from "discord.js";
 import { Configuration, OpenAIApi } from "openai";
 
 const noResponse =
-  "https://cdn.discordapp.com/attachments/942228368517120051/987950055015194664/no_response.jpg";
+  "https://cdn.discordapp.com/attachments/877795126615879750/987963420580130826/speechless-shocked.gif";
 
 export class GPT extends Command {
   private openai: OpenAIApi | null = null;
