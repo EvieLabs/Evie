@@ -26,7 +26,7 @@ export class GPT extends Command {
   public override async messageRun(message: Message, args: Args) {
     if (!this.openai) throw "OpenAI not configured.";
     const prompt = await args.pick("string").catch(() => "hi");
-    const max_tokens = await args.pick("number").catch(() => 360);
+    const max_tokens = await args.pick("number").catch(() => 60);
 
     const response = await this.openai.createCompletion({
       model: "text-davinci-002",
