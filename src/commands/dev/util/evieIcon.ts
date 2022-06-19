@@ -16,6 +16,10 @@ export class EvieIcon extends Command {
       throw "You must specify an emoji to upload.";
     });
 
+    const name = await args
+      .pick("string")
+      .catch(() => camelCase(emoji.name || "anEmoji"));
+
     const emojiBuffer = await fetch(
       `https://cdn.discordapp.com/emojis/${emoji.id}.${
         emoji.animated ? "gif" : "png"
@@ -27,7 +31,7 @@ export class EvieIcon extends Command {
       "971372192203952148"
     );
 
-    const icon = await evieIcons.emojis.create(emojiBuffer, emoji.name || "_");
+    const icon = await evieIcons.emojis.create(emojiBuffer, name);
 
     const idChannel = await evieIcons.channels.fetch("971373746218729472");
 
@@ -40,7 +44,7 @@ export class EvieIcon extends Command {
 \`\`\`ts
 // append this to the beautiful emoji enum ${message.author.username}
 export enum Emojis {
-  ${camelCase(icon.name || "someEmoji")} = "${icon}",
+  ${name} = "${icon}",
 }
 \`\`\`
 Evie Icons ID List: <${sentMessage.url}>`
