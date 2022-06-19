@@ -18,7 +18,8 @@
     "@evie/shapers": "dist/lib/shapers/index.js",
     "@evie/home": "dist/lib/home/index.js",
     "@evie/puppeteer": "dist/lib/puppeteer/index.js",
-    "@astral/utils": "dist/lib/astral/utils/index.js"
+    "@astral/utils": "dist/lib/astral/utils/index.js",
+    "@evie/utils": "dist/lib/utils/index.js"
   },
   "husky": {
     "hooks": {
@@ -50,6 +51,7 @@
     "@influxdata/influxdb-client": "^1.26.0",
     "@prisma/client": "latest",
     "@sapphire/decorators": "^4.3.6",
+    "@sapphire/fetch": "^2.4.0",
     "@sapphire/framework": "next",
     "@sapphire/plugin-api": "^3.2.1",
     "@sapphire/plugin-hmr": "^1.2.0",
@@ -70,6 +72,7 @@
     "nanoid": "^3.3.4",
     "node-cron": "^3.0.1",
     "nodejs-assistant": "^0.8.0",
+    "openai": "^3.0.0",
     "pm2": "^5.2.0",
     "puppeteer": "^14.4.1",
     "react": "^18.0.0",

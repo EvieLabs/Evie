@@ -615,6 +615,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sapphire/fetch@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@sapphire/fetch@npm:2.4.0"
+  dependencies:
+    cross-fetch: ^3.1.5
+  checksum: be03ec367ef1b49b38bfe06c3cf7fa507eefb4635bcccf3c5330857bddefd40c7a98c15e102deae8d78ebfbd816a94b5c9040d77b30a7742fd17506186f993b7
+  languageName: node
+  linkType: hard
+
 "@sapphire/framework@next":
   version: 3.0.0-next.98b2a8b.0
   resolution: "@sapphire/framework@npm:3.0.0-next.98b2a8b.0"
@@ -1634,7 +1643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.26.1":
+"axios@npm:^0.26.0, axios@npm:^0.26.1":
   version: 0.26.1
   resolution: "axios@npm:0.26.1"
   dependencies:
@@ -2108,7 +2117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-fetch@npm:3.1.5":
+"cross-fetch@npm:3.1.5, cross-fetch@npm:^3.1.5":
   version: 3.1.5
   resolution: "cross-fetch@npm:3.1.5"
   dependencies:
@@ -2741,6 +2750,7 @@ __metadata:
     "@prisma/client": latest
     "@sapphire/decorators": ^4.3.6
     "@sapphire/eslint-config": ^4.3.7
+    "@sapphire/fetch": ^2.4.0
     "@sapphire/framework": next
     "@sapphire/plugin-api": ^3.2.1
     "@sapphire/plugin-hmr": ^1.2.0
@@ -2777,6 +2787,7 @@ __metadata:
     nanoid: ^3.3.4
     node-cron: ^3.0.1
     nodejs-assistant: ^0.8.0
+    openai: ^3.0.0
     pm2: ^5.2.0
     prettier: ^2.7.1
     prisma: latest
@@ -4522,6 +4533,16 @@ __metadata:
   dependencies:
     mimic-fn: ^2.1.0
   checksum: 2478859ef817fc5d4e9c2f9e5728512ddd1dbc9fb7829ad263765bb6d3b91ce699d6e2332eef6b7dff183c2f490bd3349f1666427eaba4469fba0ac38dfd0d34
+  languageName: node
+  linkType: hard
+
+"openai@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "openai@npm:3.0.0"
+  dependencies:
+    axios: ^0.26.0
+    form-data: ^4.0.0
+  checksum: bdfc41a3aa9b58dd1e42774708ec9db764f61c7d25e749473383356c5fbd2d434f9ecab11f73ba0cdac4d24c0859f71d3eeabea38773043cb0df9a6fd2abd434
   languageName: node
   linkType: hard
 
