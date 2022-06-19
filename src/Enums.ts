@@ -16,6 +16,7 @@ export enum Emojis {
   evie = "<:Evie:940139203222716426>",
   enabled = "<:enabled:986868008750305311>",
   disabled = "<:disabled:986868010507698216>",
+  bulletPoint = "<:bulletPoint:987974786401579038>",
 }
 
 export enum EvieEvent {
