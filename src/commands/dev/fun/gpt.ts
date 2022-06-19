@@ -34,12 +34,11 @@ export class GPT extends Command {
     const response = await this.openai.createCompletion({
       model: "text-davinci-002",
       prompt,
-      temperature: 0,
-      max_tokens: 64,
-      top_p: 1,
-      best_of: 50,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+temperature: 0.7,
+  max_tokens: 256,
+  top_p: 1,
+  frequency_penalty: 0,
+  presence_penalty: 0,
     });
 
     if (!response.data.choices) return void (await message.reply(noResponse));
