@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  BuildBot:
-    name: Building Bot
+  BuildBackend:
+    name: Building Backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
@@ -22,5 +22,7 @@ jobs:
           cache: yarn
       - name: Install Dependencies
         run: yarn --immutable
+        working-directory: ./services/backend
       - name: Build code
         run: yarn build
+        working-directory: ./services/backend
