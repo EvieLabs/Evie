@@ -1,5 +1,7 @@
 import "dotenv/config";
-import "module-alias/register";
+import moduleAlias from "module-alias";
+
+moduleAlias(__dirname + "../../package.json");
 
 import { EvieClient } from "#classes/EvieClient";
 import {

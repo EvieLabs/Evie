@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { ReactNode } from "react";
 import React from "react";
 import type { ComponentInteraction } from "../internal/interaction";
@@ -50,6 +51,7 @@ export abstract class Reacord {
 
     this.renderers.push(renderer);
 
+    // @ts-ignore Invalid Types
     const container = reconciler.createContainer(renderer, 0, false, {});
 
     const instance: ReacordInstance = {

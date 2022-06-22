@@ -25,17 +25,16 @@ RUN apt-get update && apt-get install curl gnupg -y \
 # Fetch dependencies
 COPY yarn.lock .
 COPY package.json .
-COPY .yarnrc.yml .
-COPY .yarn/ .yarn/
-
+COPY services/backend/package.json services/backend/package.json 
 RUN yarn install
 
 # Compile
 COPY tsconfig.base.json tsconfig.base.json
-COPY src/ src/
-COPY prisma/schema.prisma prisma/schema.prisma
+COPY services/backend/ services/backend/
 COPY .git/ .git/
 
+# Go into backend dir
+WORKDIR /usr/src/app/services/backend
 RUN yarn build
 
 # Production mode

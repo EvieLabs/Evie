@@ -1,0 +1,97 @@
+{
+  "name": "@evie/client",
+  "description": "Bot client for Evie",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "private": true,
+  "imports": {
+    "#root/*": "./dist/*.js",
+    "#types/*": "./dist/types/*.js",
+    "#utils/*": "./dist/utils/*.js",
+    "#constants/*": "./dist/constants/*.js",
+    "#classes/*": "./dist/classes/*.js"
+  },
+  "_moduleAliases": {
+    "@evie/reacord": "dist/lib/reacord/library/main.js",
+    "@evie/fetch": "dist/lib/fetch/fetch.js",
+    "@evie/valorant": "dist/lib/valorant/index.js",
+    "@evie/config": "dist/lib/config/index.js",
+    "@evie/shapers": "dist/lib/shapers/index.js",
+    "@evie/home": "dist/lib/home/index.js",
+    "@evie/puppeteer": "dist/lib/puppeteer/index.js",
+    "@astral/utils": "dist/lib/astral/utils/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
+  "lint-staged": {
+    "apps/bot/src/**/*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",
+    "start": "node dist/index.js",
+    "start:withdbupdate": "yarn pushdb:force && node dist/index.js",
+    "build": "yarn prisma generate && tsc -p src",
+    "pushdb": "yarn prisma db push",
+    "pushdb:force": "yarn prisma db push --accept-data-loss",
+    "lint": "yarn eslint --fix --ext ts src",
+    "clean": "yarn rimraf dist"
+  },
+  "keywords": [],
+  "author": "Tristan Camejo <contact@tristancamejo.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@discordjs/builders": "^0.15.0",
+    "@discordjs/rest": "^0.5.0",
+    "@influxdata/influxdb-client": "^1.26.0",
+    "@prisma/client": "latest",
+    "@sapphire/decorators": "^4.3.6",
+    "@sapphire/fetch": "^2.4.0",
+    "@sapphire/framework": "next",
+    "@sapphire/plugin-api": "^3.2.1",
+    "@sapphire/plugin-hmr": "^1.2.0",
+    "@sapphire/plugin-i18next": "next",
+    "@sapphire/plugin-logger": "^2.2.1",
+    "@sentry/integrations": "^6.19.7",
+    "@sentry/node": "^6.19.7",
+    "@sentry/tracing": "^6.19.7",
+    "@swc/core": "^1.2.204",
+    "axios": "^0.26.1",
+    "bufferutil": "^4.0.6",
+    "canvas": "^2.9.1",
+    "discord.js": "^13.8.0",
+    "dotenv": "^10.0.0",
+    "glob": "^8.0.3",
+    "lodash": "^4.17.21",
+    "module-alias": "^2.2.2",
+    "nanoid": "^3.3.4",
+    "node-cron": "^3.0.1",
+    "nodejs-assistant": "^0.8.0",
+    "openai": "^3.0.0",
+    "puppeteer": "^14.4.1",
+    "react": "^18.0.0",
+    "react-reconciler": "^0.27.0",
+    "rxjs": "^7.5.5",
+    "strongly-typed-events": "^2.1.16",
+    "tslib": "^2.4.0",
+    "undici": "^5.5.1",
+    "utf-8-validate": "^5.0.9",
+    "uuid": "^8.3.2",
+    "zlib-sync": "^0.1.7"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4",
+    "@types/module-alias": "^2",
+    "@types/node": "^17.0.21",
+    "@types/node-cron": "^3.0.1",
+    "@types/react": "^18",
+    "@types/react-reconciler": "^0",
+    "@types/rimraf": "^3",
+    "rimraf": "^3.0.2"
+  }
+}

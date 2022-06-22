@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import type { HostConfig } from "react-reconciler";
@@ -23,6 +24,7 @@ const config: HostConfig<
   number // NoTimeout,
 > = {
   // config
+  // @ts-ignore Invalid Types
   now: Date.now,
   supportsMutation: true,
   supportsPersistence: false,
