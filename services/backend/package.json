@@ -21,17 +21,6 @@
     "@evie/puppeteer": "dist/lib/puppeteer/index.js",
     "@astral/utils": "dist/lib/astral/utils/index.js"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
-  "lint-staged": {
-    "apps/bot/src/**/*.ts": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
   "scripts": {
     "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",
     "start": "node dist/index.js",
