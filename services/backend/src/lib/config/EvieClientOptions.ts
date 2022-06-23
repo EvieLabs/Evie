@@ -9,7 +9,7 @@ export const EvieClientOptions: ClientOptions = {
     status: "online",
     activities: [{ name: "/getstarted", type: "LISTENING" }],
   },
-  api: APIOptions,
+  api: process.env.DISABLE_API ? undefined : APIOptions,
   i18n: i18nOptions,
   defaultPrefix: prefixes,
   caseInsensitivePrefixes: true,

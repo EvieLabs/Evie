@@ -6,6 +6,7 @@ import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient } from "@sapphire/framework";
+import axios, { AxiosInstance } from "axios";
 import { Airport } from "./Airport";
 import { BlockedWords } from "./BlockedWords";
 import { DatabaseTools } from "./DatabaseTools";
@@ -60,6 +61,11 @@ export class EvieClient extends SapphireClient {
   @Enumerable(false)
   public override handbook = new Handbook();
 
+  @Enumerable(false)
+  public override park = axios.create({
+    baseURL: getSecret("PARK_URL", false),
+  });
+
   public constructor() {
     super(EvieClientOptions);
 
@@ -107,6 +113,7 @@ declare module "discord.js" {
     readonly startedAt: Date;
     readonly kennel: Kennel;
     readonly handbook: Handbook;
+    readonly park: AxiosInstance;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

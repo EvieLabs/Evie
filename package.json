@@ -6,6 +6,9 @@
   "workspaces": [
     "services/*"
   ],
+  "scripts": {
+    "build": "cd services/backend && yarn build && cd ../park && yarn build && cd ../../"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint"

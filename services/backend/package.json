@@ -18,7 +18,6 @@
     "@evie/config": "dist/lib/config/index.js",
     "@evie/shapers": "dist/lib/shapers/index.js",
     "@evie/home": "dist/lib/home/index.js",
-    "@evie/puppeteer": "dist/lib/puppeteer/index.js",
     "@astral/utils": "dist/lib/astral/utils/index.js"
   },
   "scripts": {
@@ -62,7 +61,6 @@
     "node-cron": "^3.0.1",
     "nodejs-assistant": "^0.8.0",
     "openai": "^3.0.0",
-    "puppeteer": "^14.4.1",
     "react": "^18.0.0",
     "react-reconciler": "^0.27.0",
     "rxjs": "^7.5.5",

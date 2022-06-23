@@ -7,7 +7,6 @@ import type {
   OfflineServerResponse,
   OnlineServerResponse,
 } from "@evie/interfaces";
-import { minecraftStyling, RenderHTML } from "@evie/puppeteer";
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import {
   ApplicationCommandRegistry,
@@ -61,16 +60,17 @@ export class Ping extends Command {
         const embed = new EvieEmbed();
 
         try {
-          const image = await RenderHTML(
-            [minecraftStyling, html.join("<br />")].join("\n"),
+          const { data: image } = await this.container.client.park.post(
+            "/minecraft/motd",
             {
-              width: 640,
-              height: 80,
-              omitBackground: true,
+              lines: html,
+            },
+            {
+              responseType: "arraybuffer",
             }
           );
 
-          files.push(new MessageAttachment(image, `motd.png`));
+          files.push(new MessageAttachment(Buffer.from(image), `motd.png`));
           embed.setImage(`attachment://motd.png`);
 
           const iconBuffer = Buffer.from(

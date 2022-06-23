@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../dist",
+    "lib": ["dom"],
+    "rootDir": ".",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/"
+  },
+  "paths": {
+    "#routes/*": ["routes/*.ts"],
+    "shared": ["../../shared/src/index.ts"],
+    "environment": ["environment/index.ts"],
+    "modules": ["modules/index.ts"]
+  },
+  "include": [".", "./**/*.json"]
+}
