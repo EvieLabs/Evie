@@ -11,22 +11,16 @@ import type { Message } from "discord.js";
 })
 export class Update extends Command {
   public override async messageRun(message: Message) {
-    if (!process.env.KENNEL_URL || !process.env.KENNEL_TOKEN)
-      return message.reply("Kennel URL or Token not set!");
-    await message.reply("Sending a request to update and restart me!");
+    if (!process.env.KENNEL_URL) return message.reply("blame doppler");
+    await message.reply(
+      "sending a request to kill me and replace me with a new pm2 process"
+    );
     try {
-      return void (await fetch(
-        process.env.KENNEL_URL,
-        {
-          headers: {
-            Authorization: process.env.KENNEL_TOKEN,
-          },
-        },
-        FetchResultTypes.Text
-      ));
+      return void (await fetch(process.env.KENNEL_URL, FetchResultTypes.Text));
     } catch (e) {
-      message.reply("Error! Check dms");
-      return void message.author.send(JSON.stringify(e, null, 2));
+      return void (await message.reply(
+        `something happened at ${new Date().toTimeString()} (gone bad) [somewhere here](https://github.com/TeamEvie/kennel/blob/main/main.go)`
+      ));
     }
   }
 }
