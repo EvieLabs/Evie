@@ -476,14 +476,6 @@
     psl "^1.8.0"
     tslib "^2.3.1"
 
-"@sapphire/plugin-hmr@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-hmr/-/plugin-hmr-1.2.0.tgz#ab4c2ab52f3061261b0e9128a5112c54a2d7e71e"
-  integrity sha512-wOUnaOsrLBgul9IBgKsx1Q748XvAC2sqenJxRROvjSU5WaMGEPXUAKUV+cJK4QVnos85+33EICYABzJgg4pOOg==
-  dependencies:
-    chokidar "^3.5.3"
-    tslib "2.x"
-
 "@sapphire/plugin-i18next@next":
   version "2.5.3-next.28f1e2b.0"
   resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-2.5.3-next.28f1e2b.0.tgz#e2b5b564b8f13b1173c6c823c2188e2c9743ed3d"
@@ -3715,15 +3707,15 @@ tsc-watch@^5.0.3:
     string-argv "^0.1.1"
     strip-ansi "^6.0.0"
 
-tslib@2.x, tslib@^2.1.0, tslib@^2.3.1, tslib@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
-
 tslib@^1.8.1, tslib@^1.9.3:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+tslib@^2.1.0, tslib@^2.3.1, tslib@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 tsutils@^3.21.0:
   version "3.21.0"
