@@ -9,15 +9,6 @@ services:
       - POSTGRES_PASSWORD=internalpassword
     volumes:
       - 'postgres:/var/lib/postgresql/data'
-  bot:
-    image: "ghcr.io/teamevie/evie:latest"
-    env_file:
-      - ".env"
-    environment:
-      - DATABASE_URL=postgresql://postgres:internalpassword@postgres:5432/bot?schema=public
-    restart: "always"
-    links:
-      - postgres
 volumes:
   postgres:
     external: true
