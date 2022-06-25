@@ -1,7 +1,12 @@
 import { getSecret } from "environment";
+import NodeCache from "node-cache";
 import puppeteer from "puppeteer";
 
 export class Puppeteer {
+  private static cache = new NodeCache({
+    stdTTL: 60 * 60,
+  });
+
   private static opts: puppeteer.LaunchOptions &
     puppeteer.BrowserLaunchArgumentOptions &
     puppeteer.BrowserConnectOptions = {
@@ -15,6 +20,27 @@ export class Puppeteer {
   };
 
   public static async RenderHTML(
+    html: string,
+    options: puppeteer.ScreenshotOptions & { width: number; height: number } = {
+      width: 1920,
+      height: 1080,
+    }
+  ): Promise<Buffer> {
+    const cacheKey = html.toLowerCase();
+    const cached = this.cache.get(cacheKey) as Buffer;
+
+    if (cached) return cached;
+
+    try {
+      const image = await Puppeteer.RenderHTMLToPNG(html, options);
+      this.cache.set(cacheKey, image);
+      return image;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  private static async RenderHTMLToPNG(
     html: string,
     options: puppeteer.ScreenshotOptions & { width: number; height: number } = {
       width: 1920,

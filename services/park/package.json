@@ -32,6 +32,7 @@
     "dotenv": "^16.0.1",
     "fastify": "^4.1.0",
     "module-alias": "^2.2.2",
+    "node-cache": "^5.1.2",
     "nodejs-assistant": "^0.8.0",
     "openai": "^3.0.0",
     "pino-pretty": "^8.1.0",
