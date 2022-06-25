@@ -51,7 +51,7 @@
     "@swc/core": "^1.2.205",
     "axios": "^0.26.1",
     "bufferutil": "^4.0.6",
-    "canvas": "^2.9.1",
+    "canvas": "^2.9.3",
     "discord.js": "^13.8.1",
     "dotenv": "^10.0.0",
     "glob": "^8.0.3",
