@@ -1,4 +1,5 @@
 import { EvieColors } from "#root/Enums";
+import { removeIndents } from "#root/utils/builders/stringBuilder";
 import type { APIMessage } from "discord-api-types/v9";
 import {
   ButtonInteraction,
@@ -17,6 +18,11 @@ export enum StatusEmoji {
 }
 
 export class EvieEmbed extends MessageEmbed {
+  public override setDescription(description: string): this {
+    this.description = removeIndents(description);
+    return this;
+  }
+
   public constructor() {
     super({
       color: EvieColors.evieGrey,
