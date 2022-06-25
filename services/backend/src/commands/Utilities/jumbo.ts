@@ -16,6 +16,7 @@ import type { CommandInteraction } from "discord.js";
 export class Jumbo extends Command {
   public override async chatInputRun(interaction: CommandInteraction) {
     const option = interaction.options.getString("emoji");
+    const ephemeral = !interaction.options.getBoolean("show") ?? false;
 
     if (!option)
       throw await resolveKey(interaction, "errors:missingCommandOption");
@@ -30,6 +31,7 @@ export class Jumbo extends Command {
       content: `[\`:${emoji.name}:\`](https://cdn.discordapp.com/emojis/${
         emoji.id
       }.${emoji.animated ? "gif" : "png"}?size=1024) | \`${emoji.id}\``,
+      ephemeral,
     }));
   }
 
@@ -46,6 +48,12 @@ export class Jumbo extends Command {
             description: "Emoji to jumbo-fy.",
             type: "STRING",
             required: true,
+          },
+          {
+            name: "show",
+            description: "Send the message non-ephemerally",
+            type: "BOOLEAN",
+            required: false,
           },
         ],
       },
