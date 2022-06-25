@@ -16,43 +16,49 @@ export class EvieUser {
   public static async fetch(user: User) {
     const { prisma } = container.client;
     try {
-      const evieUser = await prisma.evieUser.upsert({
+      const evieUser = await prisma.evieUser.findFirst({
         where: {
           id: user.id,
         },
-        create: {
-          id: user.id,
-        },
-        update: {},
         include: {
           eviePlus: true,
         },
       });
 
-      return this.manipulate(evieUser, user);
+      if (!evieUser) return null;
+
+      return await this.manipulate(evieUser, user);
     } catch (error) {
       Sentry.captureException(error);
       throw error;
     }
   }
 
-  private static manipulate(fetchedUser: FetchedEvieUser, user: User) {
-    const badges = [];
+  public static async getBadges(
+    user: User,
+    fetchedUser?: FetchedEvieUser
+  ): Promise<string> {
+    const badges: string[] = [];
 
-    user.flags && badges.push(this.userFlagsToEmoji(user.flags));
+    if (user.flags) badges.push(...this.userFlagsToEmojis(user.flags));
 
-    fetchedUser.flags &&
+    const evieUser = fetchedUser ?? (await this.fetch(user).catch(() => null));
+
+    if (!evieUser) return badges.join(" ");
+
+    if (evieUser.flags)
       badges.push(
-        fetchedUser.flags.map((flag) => this.evieUserFlagToEmoji(flag))
+        ...evieUser.flags.map((flag) => this.evieUserFlagToEmoji(flag))
       );
 
-    if (badges && fetchedUser.id === "97470053615673344")
-      badges.unshift(Emojis.evieCreator);
+    if (evieUser.id === "97470053615673344") badges.unshift(Emojis.evieCreator);
 
-    const badgesString = badges ? badges.join(" ") : null;
+    return badges.join(" ");
+  }
 
+  private static async manipulate(fetchedUser: FetchedEvieUser, user: User) {
     return {
-      badges: badgesString,
+      badges: await this.getBadges(user, fetchedUser),
       ...fetchedUser,
     };
   }
@@ -66,11 +72,11 @@ export class EvieUser {
     }
   }
 
-  private static userFlagsToEmoji(flags: UserFlags): string[] {
+  private static userFlagsToEmojis(flags: UserFlags): string[] {
     return flags.toArray().map((flag) => {
       switch (flag) {
         case "VERIFIED_BOT":
-          return Emojis.verifiedBot;
+          return Emojis.verified;
         case "DISCORD_CERTIFIED_MODERATOR":
           return Emojis.certifiedModerator;
         case "DISCORD_EMPLOYEE":
