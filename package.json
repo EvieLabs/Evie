@@ -7,7 +7,8 @@
     "services/*"
   ],
   "scripts": {
-    "build": "cd services/backend && yarn build && cd ../park && yarn build && cd ../../"
+    "build": "cd services/backend && yarn build && cd ../park && yarn build && cd ../../",
+    "pushdb": "cd services/backend && yarn pushdb"
   },
   "husky": {
     "hooks": {
