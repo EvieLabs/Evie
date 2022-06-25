@@ -20,7 +20,7 @@ export class MinecraftServer extends Command {
     super(context, {
       ...options,
       name: "mcserver",
-      description: "Get an insight on a Minecraft server.",
+      description: "View an overview of a Minecraft server.",
     });
   }
 
@@ -35,7 +35,8 @@ export class MinecraftServer extends Command {
 
     const mcServer = await this.pingMinecraftServer(destination);
 
-    if (mcServer) return void this.handleMinecraftServer(mcServer, interaction);
+    if (mcServer)
+      return void (await this.handleMinecraftServer(mcServer, interaction));
 
     throw "Couldn't resolve your destination. Does this server exist? Is it offline?";
   }
@@ -115,6 +116,10 @@ export class MinecraftServer extends Command {
         ]);
 
         embeds.push(embed);
+        break;
+      }
+      case false: {
+        throw "Couldn't resolve your destination. Does this server exist? Is it offline?";
       }
     }
 
