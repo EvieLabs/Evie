@@ -13,14 +13,12 @@ export class Update extends Command {
   public override async messageRun(message: Message) {
     if (!process.env.KENNEL_URL) return message.reply("blame doppler");
     await message.reply(
-      "sending a request to kill me and replace me with a new pm2 process"
+      "Sending a request to [kennel](https://github.com/TeamEvie/kennel/blob/main/main.go), to replace me with the latest commit."
     );
     try {
       return void (await fetch(process.env.KENNEL_URL, FetchResultTypes.Text));
     } catch (e) {
-      return void (await message.reply(
-        `something happened at ${new Date().toTimeString()} (gone bad) [somewhere here](https://github.com/TeamEvie/kennel/blob/main/main.go)`
-      ));
+      throw `Something went wrong [here](https://github.com/TeamEvie/kennel/blob/main/main.go)`;
     }
   }
 }
