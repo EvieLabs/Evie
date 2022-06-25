@@ -20,6 +20,17 @@ export enum Emojis {
   unknownBadge = "<:unknownBadge:990103624829009980>",
   evieContributor = "<:evieContributor:990103797143588927>",
   evieCreator = "<:evieCreator:990113153658540072>",
+  verifiedBot = "<:verifiedBot:990119398746517514>",
+  certifiedModerator = "<:certifiedModerator:990120551660007474>",
+  discordStaff = "<:discordStaff:990120781998608454>",
+  partner = "<:partner:990121125705031682>",
+  houseBalance = "<:houseBalance:990121358275010580>",
+  houseBravery = "<:houseBravery:990121496359878666>",
+  houseBrilliance = "<:houseBrilliance:990121600756101150>",
+  earlyVerifiedBotDeveloper = "<:earlyVerifiedBotDeveloper:990121766531772497>",
+  earlySupporter = "<:earlySupporter:990121881464086568>",
+  bugHunterLevel1 = "<:bugHunterLevel1:990122012859052032>",
+  bugHunterLevel2 = "<:bugHunterLevel2:990122136767172618>",
 }
 
 export enum EvieEvent {
