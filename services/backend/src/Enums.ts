@@ -17,6 +17,9 @@ export enum Emojis {
   enabled = "<:enabled:986868008750305311>",
   disabled = "<:disabled:986868010507698216>",
   bulletPoint = "<:bulletPoint:987974786401579038>",
+  unknownBadge = "<:unknownBadge:990103624829009980>",
+  evieContributor = "<:evieContributor:990103797143588927>",
+  evieCreator = "<:evieCreator:990113153658540072>",
 }
 
 export enum EvieEvent {

@@ -14,8 +14,29 @@ model CommandStats {
   uses Int
 }
 
+enum UserFlags {
+  CONTRIBUTOR
+}
+
+model EvieUser {
+  id       String      @id
+  flags    UserFlags[]
+  eviePlus EviePlus[]
+}
+
+model EviePlus {
+  id String @id @default(cuid())
+
+  owner   EvieUser @relation(fields: [ownerId], references: [id])
+  ownerId String
+
+  activeGuild   GuildSettings? @relation(fields: [activeGuildId], references: [id])
+  activeGuildId String
+}
+
 model GuildSettings {
-  id String @id
+  id       String     @id
+  eviePlus EviePlus[]
 
   moderationSettings ModerationSettings?
   airportSettings    AirportSettings?

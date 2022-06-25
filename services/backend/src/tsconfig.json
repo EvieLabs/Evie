@@ -22,7 +22,8 @@
       "@evie/shapers": ["lib/shapers/index.ts"],
       "@evie/home": ["lib/home/index.ts"],
       "@astral/utils": ["lib/astral/utils/index.ts"],
-      "@evie/interfaces": ["lib/interfaces/index.ts"]
+      "@evie/interfaces": ["lib/interfaces/index.ts"],
+      "@evie/internal": ["lib/internal/index.ts"]
     }
   },
   "include": [".", "./**/*.json"]
