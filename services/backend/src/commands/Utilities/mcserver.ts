@@ -14,6 +14,7 @@ import {
 } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
 import { CommandInteraction, MessageAttachment } from "discord.js";
+import { lang } from "../../lang";
 
 export class MinecraftServer extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -158,8 +159,8 @@ export class MinecraftServer extends Command {
             required: true,
           },
           {
-            name: "show",
-            description: "Send the message non-ephemerally",
+            name: lang.SHOW_COMMAND_OPTION_NAME,
+            description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
             type: "BOOLEAN",
             required: false,
           },

@@ -24,9 +24,9 @@ import {
   User,
 } from "discord.js";
 @ApplyOptions<Command.Options>({
-  description: "View info on a user",
+  description: "View an overview of a user.",
   name: "userinfo",
-  aliases: ["ui"],
+  aliases: ["ui", "user"],
   preconditions: ["GuildOnly"],
 })
 export class UserInfo extends Command {

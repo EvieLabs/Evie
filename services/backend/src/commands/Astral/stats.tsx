@@ -1,6 +1,6 @@
 import PlayerStats from "#root/components/astral/PlayerStats";
 import { getAstralPlayer } from "@astral/utils";
-import { astralGuilds } from "@evie/config";
+import { astralGuilds, lang } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -80,8 +80,8 @@ export class Stats extends Command {
             required: false,
           },
           {
-            name: "show",
-            description: "Send the message non-ephemerally",
+            name: lang.SHOW_COMMAND_OPTION_NAME,
+            description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
             type: "BOOLEAN",
             required: false,
           },

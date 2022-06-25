@@ -1,4 +1,4 @@
-import { registeredGuilds } from "@evie/config";
+import { lang, registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -50,8 +50,8 @@ export class Jumbo extends Command {
             required: true,
           },
           {
-            name: "show",
-            description: "Send the message non-ephemerally",
+            name: lang.SHOW_COMMAND_OPTION_NAME,
+            description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
             type: "BOOLEAN",
             required: false,
           },

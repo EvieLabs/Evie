@@ -8,7 +8,7 @@ import {
   removeIndents,
 } from "#root/utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
-import { registeredGuilds } from "@evie/config";
+import { lang, registeredGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -110,8 +110,8 @@ export class Cases extends Command {
             required: false,
           },
           {
-            name: "show",
-            description: "Send the message non-ephemerally",
+            name: lang.SHOW_COMMAND_OPTION_NAME,
+            description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
             type: "BOOLEAN",
             required: false,
           },

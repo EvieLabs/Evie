@@ -7,7 +7,7 @@ import {
 } from "@sapphire/framework";
 
 import HandbookComponent from "#root/components/info/HandbookComponent";
-import { registeredGuilds } from "@evie/config";
+import { lang, registeredGuilds } from "@evie/config";
 import type { CommandInteraction } from "discord.js";
 import React from "react";
 
@@ -42,8 +42,8 @@ export class GetStarted extends Command {
         description: this.description,
         options: [
           {
-            name: "show",
-            description: "Send the message non-ephemerally",
+            name: lang.SHOW_COMMAND_OPTION_NAME,
+            description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
             type: "BOOLEAN",
             required: false,
           },
