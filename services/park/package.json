@@ -25,7 +25,7 @@
     "@mgcrea/fastify-request-logger": "^0.6.1",
     "@sapphire/fetch": "^2.4.0",
     "@sapphire/pieces": "^3.3.4",
-    "@sentry/integrations": "^6.19.7",
+    "@sentry/integrations": "^7.2.0",
     "@sentry/node": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
     "canvas": "^2.9.1",
