@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",
     "start": "node dist/index.js",
-    "build": "tsc -p src",
+    "build": "yarn clean && tsc -p src",
     "lint": "yarn eslint --fix --ext ts src",
     "clean": "yarn rimraf dist"
   },
