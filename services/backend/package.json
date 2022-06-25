@@ -37,7 +37,7 @@
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
-    "@influxdata/influxdb-client": "^1.26.0",
+    "@influxdata/influxdb-client": "^1.27.0",
     "@prisma/client": "^3.15.2",
     "@sapphire/decorators": "^4.3.6",
     "@sapphire/fetch": "^2.4.0",
