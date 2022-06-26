@@ -26,6 +26,7 @@ import {
   Snowflake,
   SnowflakeUtil,
   TextChannel,
+  ThreadChannel,
 } from "discord.js";
 @ApplyOptions<Command.Options>({
   description: "Sends Discord Message JSON as a message",
@@ -39,7 +40,7 @@ export class ImportMessage extends Command {
 
     const channel = interaction.options.getChannel("channel");
 
-    if (!(channel instanceof TextChannel))
+    if (!(channel instanceof TextChannel || channel instanceof ThreadChannel))
       throw await resolveKey(
         interaction,
         "commands/util/importmessage:invalidChannelType"
@@ -202,7 +203,7 @@ export class ImportMessage extends Command {
 
   private async waitForModal(
     interaction: CommandInteraction | ButtonInteraction,
-    channel: TextChannel,
+    channel: TextChannel | ThreadChannel,
     stateflake: Snowflake,
     existingMessage?: Message
   ) {
