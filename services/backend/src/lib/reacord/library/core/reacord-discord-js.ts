@@ -122,7 +122,8 @@ export class ReacordDiscordJs extends Reacord {
     interaction:
       | Discord.CommandInteraction
       | Discord.ContextMenuInteraction
-      | Discord.ModalSubmitInteraction,
+      | Discord.ModalSubmitInteraction
+      | Discord.ButtonInteraction,
     initialContent?: React.ReactNode
   ): ReacordInstance {
     return this.createInstance(
