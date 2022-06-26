@@ -2,7 +2,7 @@ import { getAstralGuildConfig } from "@astral/utils";
 import { inlineCode } from "@discordjs/builders";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Args, Command } from "@sapphire/framework";
-import type { Message } from "discord.js";
+import { Message, MessageAttachment } from "discord.js";
 
 @ApplyOptions<Command.Options>({
   name: "editastralguild",
@@ -29,14 +29,15 @@ export class EditAstralGuild extends Command {
     if (!config) throw "No config found for that guild!";
 
     if (!configOption) {
-      return void (await message.reply(
-        [
-          `Astral Guild Config for ${inlineCode(guildId)}:`,
-          "```json",
-          JSON.stringify(config, null, 2),
-          "```",
-        ].join("\n")
-      ));
+      return void (await message.reply({
+        content: `Astral Guild Config for ${inlineCode(guildId)}`,
+        files: [
+          new MessageAttachment(
+            Buffer.from(JSON.stringify(config, null, 2)),
+            `astral-guild-config-${guildId}.json`
+          ),
+        ],
+      }));
     }
 
     if (!configValue) throw "You must provide a value!";
@@ -59,13 +60,14 @@ export class EditAstralGuild extends Command {
         ].join("\n");
       });
 
-    return void (await message.reply(
-      [
-        "Done! New Astral Guild Config:",
-        "```json",
-        JSON.stringify(newConfig, null, 2),
-        "```",
-      ].join("\n")
-    ));
+    return void (await message.reply({
+      content: `Astral Guild Config for ${inlineCode(guildId)}`,
+      files: [
+        new MessageAttachment(
+          Buffer.from(JSON.stringify(newConfig, null, 2)),
+          `astral-guild-config-${guildId}.json`
+        ),
+      ],
+    }));
   }
 }
