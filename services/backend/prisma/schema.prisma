@@ -115,3 +115,13 @@ model AstralPlayer {
 
   created DateTime @default(now())
 }
+
+model AstralConfig {
+  guildId String @id
+
+  rules Json @default("{ \"title\": \"rules\", \"type\": \"rich\",\"color\": 5793266, \"description\": \"No rules set yet!\" }")
+
+  roles Json?
+
+  feedbackChannel String?
+}

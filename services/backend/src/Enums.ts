@@ -31,6 +31,7 @@ export enum Emojis {
   earlySupporter = "<:earlySupporter:990121881464086568>",
   bugHunterLevel1 = "<:bugHunterLevel1:990122012859052032>",
   bugHunterLevel2 = "<:bugHunterLevel2:990122136767172618>",
+  loading = "<a:loading:877782934696919040>",
 }
 
 export enum EvieEvent {
