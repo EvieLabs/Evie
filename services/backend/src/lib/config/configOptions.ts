@@ -67,7 +67,14 @@ const evie: (
   },
   {
     name: "log-channel",
-    description: "The channel to send logs to.",
+    description: "The channel to send non-moderation-case logs to.",
+    required: false,
+    type: "CHANNEL",
+    channelTypes: ["GUILD_TEXT"],
+  },
+  {
+    name: "case-channel",
+    description: "The channel to send moderation-case logs to.",
     required: false,
     type: "CHANNEL",
     channelTypes: ["GUILD_TEXT"],

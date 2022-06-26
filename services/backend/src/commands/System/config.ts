@@ -39,6 +39,11 @@ export class Config extends Command {
         interaction.options.getRole("mod-role", false)?.id ?? undefined,
     };
 
+    const modOptions = {
+      logChannel:
+        interaction.options.getChannel("case-channel", false)?.id ?? undefined,
+    };
+
     const opts = await this.container.client.prisma.guildSettings.update({
       where: {
         id: interaction.guildId,
@@ -47,6 +52,16 @@ export class Config extends Command {
         ...options,
       },
     });
+
+    const modOpts =
+      await this.container.client.prisma.moderationSettings.update({
+        where: {
+          guildId: interaction.guildId,
+        },
+        data: {
+          ...modOptions,
+        },
+      });
 
     interaction.editReply({
       embeds: [
@@ -62,6 +77,10 @@ export class Config extends Command {
                 opts.moderatorRole
                   ? `**Moderator Role**: <@&${opts.moderatorRole}>`
                   : `**Arrive Message**: ${Emojis.disabled}`
+              }\n${
+                modOpts.logChannel
+                  ? `**Case Channel**: <#${modOpts.logChannel}>`
+                  : `**Case Channel**: ${Emojis.disabled}`
               }`
             )
           ),
