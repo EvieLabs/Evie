@@ -1,7 +1,7 @@
 import { EvieEmbed, ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
-import { registeredGuilds } from "@evie/config";
+import { botAdmins, registeredGuilds } from "@evie/config";
 import fetch from "@evie/fetch";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
@@ -178,6 +178,9 @@ export class ImportMessage extends Command {
             {
               content: existingMessage.content || null,
               embeds: existingMessage.embeds || null,
+              components: botAdmins.includes(interaction.user.id)
+                ? existingMessage.components || undefined
+                : undefined,
             },
             null,
             2
@@ -193,7 +196,7 @@ export class ImportMessage extends Command {
       );
     });
     collector.on("end", async () => {
-      ReplyStatusEmbed(false, `Import Timed Out`, interaction);
+      throw `Import Timed Out`;
     });
   }
 
@@ -209,7 +212,7 @@ export class ImportMessage extends Command {
         time: 100000,
       })
       .catch(() => {
-        ReplyStatusEmbed(false, `Import Timed Out`, interaction);
+        throw `Import Timed Out`;
       })) as ModalSubmitInteraction;
 
     const jsonData = submit.fields.getTextInputValue("json_data");
