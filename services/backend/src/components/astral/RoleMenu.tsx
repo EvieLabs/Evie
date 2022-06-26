@@ -14,6 +14,7 @@ export type SelectRole = {
 export default function RoleMenu(props: {
   member: GuildMember;
   roles: SelectRole[];
+  roleDivider?: string;
 }) {
   const { member, roles } = props;
 
@@ -23,9 +24,14 @@ export default function RoleMenu(props: {
       <Select
         user={member.user}
         onChangeValue={async (value, interaction) => {
+          if (props.roleDivider && !member.roles.cache.has(props.roleDivider)) {
+            await member.roles.add(props.roleDivider);
+          }
+
           member.roles.cache.has(value)
             ? await member.roles.remove(value)
             : await member.roles.add(value);
+
           interaction.ephemeralReply(
             <Embed
               color={EvieColors.evieGrey}

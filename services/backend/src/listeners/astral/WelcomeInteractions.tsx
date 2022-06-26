@@ -34,6 +34,7 @@ export class WelcomeInteractions extends Listener {
           <RoleMenu
             member={interaction.member}
             roles={config.roles as SelectRole[]}
+            roleDivider={config.roleDividerId ?? undefined}
           />
         );
       }

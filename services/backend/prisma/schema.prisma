@@ -123,5 +123,7 @@ model AstralConfig {
 
   roles Json?
 
+  roleDividerId String?
+
   feedbackChannel String?
 }
