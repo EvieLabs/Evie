@@ -8,6 +8,7 @@ export type SelectRole = {
   name: string;
   id: string;
   emoji: string;
+  description: string | undefined;
 };
 
 export default function RoleMenu(props: {
@@ -48,6 +49,7 @@ export default function RoleMenu(props: {
             key={role.id}
             value={role.id}
             label={role.name}
+            description={role.description}
             emoji={role.emoji}
           />
         ))}
