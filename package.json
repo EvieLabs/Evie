@@ -27,8 +27,8 @@
   "devDependencies": {
     "@sapphire/eslint-config": "^4.3.7",
     "@sapphire/ts-config": "^3.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.28.0",
-    "@typescript-eslint/parser": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "babel-eslint": "^10.1.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "^8.5.0",
