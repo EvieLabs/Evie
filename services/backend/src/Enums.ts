@@ -19,7 +19,7 @@ export enum Emojis {
   bulletPoint = "<:bulletPoint:987974786401579038>",
   unknownBadge = "<:unknownBadge:990103624829009980>",
   evieContributor = "<:evieContributor:990103797143588927>",
-  evieCreator = "<:evieCreator:990113153658540072>",
+  evieCreator = "<:TeamEvie:991300227782942872>",
   verified = "<:verifiedBotMark:893287253898588180>",
   certifiedModerator = "<:certifiedModerator:990120551660007474>",
   discordStaff = "<:discordStaff:990120781998608454>",
