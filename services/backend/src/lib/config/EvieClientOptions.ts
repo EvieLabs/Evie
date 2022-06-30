@@ -35,6 +35,5 @@ export const EvieClientOptions: ClientOptions = {
         : LogLevel.Debug,
   },
   loadMessageCommandListeners: true,
-  shards: "auto",
   allowedMentions: { users: [], roles: [] },
 };
