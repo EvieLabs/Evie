@@ -22,7 +22,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
-    "@mgcrea/fastify-request-logger": "^0.6.1",
     "@sapphire/fetch": "^2.4.0",
     "@sapphire/pieces": "^3.3.4",
     "@sentry/integrations": "^7.2.0",

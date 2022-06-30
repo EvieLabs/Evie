@@ -6,7 +6,6 @@ config({
 moduleAlias(__dirname + "../../package.json");
 
 import fastifyAutoload from "@fastify/autoload";
-import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
 import { container } from "@sapphire/pieces";
 import { getNumberSecret } from "environment";
 import fastify, { FastifyInstance } from "fastify";
@@ -25,7 +24,6 @@ container.app = fastify({
   },
 });
 const { app } = container;
-app.register(fastifyRequestLogger);
 
 app.get("/", (_, res) => {
   res.send(`I'm alive! ${new Date()}`);
