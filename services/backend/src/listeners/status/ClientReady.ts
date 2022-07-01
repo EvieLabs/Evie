@@ -1,4 +1,3 @@
-import { InfluxManager } from "#root/schedules/InfluxManager";
 import { TempBans } from "#root/schedules/TempBans";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
@@ -10,6 +9,5 @@ import { Events, Listener } from "@sapphire/framework";
 export class ClientReadyListener extends Listener {
   public async run() {
     new TempBans("*/10 * * * *");
-    if (process.env.INFLUX_URL) new InfluxManager("*/15 * * * * *");
   }
 }
