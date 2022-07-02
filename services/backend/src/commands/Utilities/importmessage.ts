@@ -2,8 +2,8 @@ import { EvieEmbed, ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { botAdmins, registeredGuilds } from "@evie/config";
-import fetch from "@evie/fetch";
 import { ApplyOptions } from "@sapphire/decorators";
+import { fetch, FetchMethods, FetchResultTypes } from "@sapphire/fetch";
 import {
   ApplicationCommandRegistry,
   Command,
@@ -20,7 +20,6 @@ import {
   MessageActionRow,
   MessageButton,
   MessageComponentInteraction,
-  MessageEmbed,
   ModalSubmitInteraction,
   Permissions,
   Snowflake,
@@ -111,22 +110,21 @@ export class ImportMessage extends Command {
 
     const generatedState = SnowflakeUtil.generate();
 
-    const editLink = await fetch.post<
+    const editLink = await fetch<{
+      id: string;
+    }>(
+      "https://api.discord.club/messages/share",
       {
-        id: string;
+        method: FetchMethods.Post,
+        body: {
+          json: {
+            content: message.content || null,
+            embeds: message.embeds || null,
+          },
+        },
       },
-      {
-        json: {
-          content: string | null;
-          embeds: MessageEmbed[] | null;
-        };
-      }
-    >("https://api.discord.club/messages/share", {
-      json: {
-        content: message.content || null,
-        embeds: message.embeds || null,
-      },
-    });
+      FetchResultTypes.JSON
+    );
 
     await interaction.editReply({
       embeds: [
