@@ -28,25 +28,30 @@ export class StatsCommand extends Command {
 
     if (!shard) throw "no shard manager owo";
 
-    const { guilds } = this.container.client.stats;
-
-    const members = await shard.broadcastEval((c) =>
-      c.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
+    const { guilds, users } = (
+      await shard.broadcastEval((c) => c.stats.shardStats())
+    ).reduce(
+      (acc, cur) => {
+        acc.guilds += cur.guilds;
+        acc.users += cur.users;
+        return acc;
+      },
+      { guilds: 0, users: 0 }
     );
 
-    const growth = [`Users: ${members}`, `Servers: ${guilds}`].map(
+    const growth = [`Users: ${users}`, `Servers: ${guilds}`].map(
       (line) => `${Emojis.bulletPoint} ${line}`
     );
 
     embed.addFields([
       {
-        name: "Growth",
+        name: "Growth (all shards)",
         value: growth.join("\n"),
       },
     ]);
 
     embed.setFooter({
-      text: `Shard: ${shard.client.id}`,
+      text: `Shard: ${interaction.guild?.shardId ?? 0}`,
     });
 
     await interaction.editReply({ embeds: [embed] });

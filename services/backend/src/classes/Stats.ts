@@ -39,4 +39,13 @@ export class Stats {
     return container.client.guilds.cache.filter((guild) => !guild.available)
       .size;
   }
+
+  public shardStats() {
+    return {
+      users: this.users,
+      guilds: this.guilds,
+      wsPing: this.wsPing,
+      unavailableGuilds: this.unavailableGuilds,
+    };
+  }
 }
