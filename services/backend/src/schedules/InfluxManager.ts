@@ -1,4 +1,4 @@
-import { ShardManagerSchedule } from "#root/classes/ShardManagerSchedule";
+import { ShardManagerSchedule } from "#root/lib/internal/structures/schedules/ShardManagerSchedule";
 import { getSecret } from "@evie/config";
 import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import * as Sentry from "@sentry/node";

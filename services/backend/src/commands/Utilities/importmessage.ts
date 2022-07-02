@@ -1,7 +1,7 @@
-import { EvieEmbed, ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ImportMessageModal } from "#root/constants/modals";
 import { miscDB } from "#root/utils/database/misc";
 import { botAdmins, registeredGuilds } from "@evie/config";
+import { EvieEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { fetch, FetchMethods, FetchResultTypes } from "@sapphire/fetch";
 import {

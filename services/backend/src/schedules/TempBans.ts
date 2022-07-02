@@ -1,6 +1,6 @@
-import { StatusEmbed } from "#root/classes/EvieEmbed";
-import { Schedule } from "#root/classes/Schedule";
 import { ModActionType } from "#root/Enums";
+import { Schedule } from "#root/lib/internal/structures/schedules/Schedule";
+import { StatusEmbed } from "@evie/internal";
 import { container } from "@sapphire/framework";
 import { captureException } from "@sentry/node";
 import { Constants, DiscordAPIError } from "discord.js";

@@ -1,7 +1,7 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { Emojis } from "#root/Enums";
 import { inlineCode, time } from "@discordjs/builders";
 import { lang, registeredGuilds } from "@evie/config";
+import { EvieEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

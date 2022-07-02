@@ -1,4 +1,4 @@
-import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
+import { ReplyStatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   Events,

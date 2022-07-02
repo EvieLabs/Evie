@@ -1,7 +1,7 @@
-import { EditReplyStatusEmbed, EvieEmbed } from "#root/classes/EvieEmbed";
 import { Emojis } from "#root/Enums";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { configOptions, registeredGuilds } from "@evie/config";
+import { EditReplyStatusEmbed, EvieEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import type { CommandInteraction } from "discord.js";

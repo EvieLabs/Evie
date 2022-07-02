@@ -1,9 +1,6 @@
-import {
-  EditReplyStatusEmbed,
-  ReplyStatusEmbed,
-} from "#root/classes/EvieEmbed";
 import ValorantStatsComponent from "#root/components/stats/ValorantStatsComponent";
 import { registeredGuilds } from "@evie/config";
+import { EditReplyStatusEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { fetchAccountData } from "@evie/valorant";
 import { ApplyOptions } from "@sapphire/decorators";
 import {

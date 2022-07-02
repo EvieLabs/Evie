@@ -11,7 +11,7 @@ import {
   SnowflakeUtil,
   User,
 } from "discord.js";
-import { LogEmbed } from "./LogEmbed";
+import { LogEmbed } from "../../extensions/LogEmbed";
 export class EviePunish {
   public async createModAction(guild: Guild, options: ModActionOptions) {
     try {

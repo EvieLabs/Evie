@@ -1,7 +1,4 @@
-import {
-  EditReplyStatusEmbed,
-  ReplyStatusEmbed,
-} from "#root/classes/EvieEmbed";
+import { EditReplyStatusEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ArgumentError,

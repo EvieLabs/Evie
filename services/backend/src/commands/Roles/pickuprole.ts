@@ -1,6 +1,6 @@
-import { StatusEmbed } from "#root/classes/EvieEmbed";
 import { ShapePickupRolesToChoices } from "#root/lib/shapers/PickupRoles";
 import { registeredGuilds } from "@evie/config";
+import { StatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

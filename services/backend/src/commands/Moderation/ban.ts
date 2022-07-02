@@ -1,10 +1,7 @@
-import {
-  EditReplyStatusEmbed,
-  ReplyStatusEmbed,
-} from "#root/classes/EvieEmbed";
 import { checkPerm } from "#root/utils/misc/permChecks";
 import { time } from "@discordjs/builders";
 import { lang, registeredGuilds } from "@evie/config";
+import { EditReplyStatusEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

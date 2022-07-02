@@ -3,7 +3,7 @@ import moduleAlias from "module-alias";
 moduleAlias(__dirname + "../../package.json");
 config({ path: "../../.env" });
 
-import { EvieClient } from "#classes/EvieClient";
+import { EvieClient } from "@evie/internal";
 import {
   ApplicationCommandRegistries,
   container,

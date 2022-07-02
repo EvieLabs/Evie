@@ -1,10 +1,10 @@
-import type { EvieClient } from "#root/classes/EvieClient";
 import { flattenGuild } from "#root/utils/api/ApiTransformers";
 import type {
   OauthFlattenedGuild,
   PartialOauthFlattenedGuild,
   TransformedLoginData,
 } from "#root/utils/api/types";
+import type { EvieClient } from "@evie/internal";
 import { container } from "@sapphire/framework";
 import type { LoginData } from "@sapphire/plugin-api";
 import type { RESTAPIPartialCurrentUserGuild } from "discord-api-types/v9";

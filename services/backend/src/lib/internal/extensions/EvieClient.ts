@@ -8,11 +8,11 @@ import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient, StoreRegistry } from "@sapphire/framework";
 import axios, { AxiosInstance } from "axios";
-import { DatabaseTools } from "./DatabaseTools";
-import { EvieGuildLogger } from "./EvieGuildLogger";
-import { EviePunish } from "./EviePunish";
-import Handbook from "./Handbook";
-import { Stats } from "./Stats";
+import Handbook from "../structures/managers/Handbook";
+import { Stats } from "../structures/managers/Stats";
+import { DatabaseTools } from "../structures/tools/DatabaseTools";
+import { EvieGuildLogger } from "../structures/tools/EvieGuildLogger";
+import { EviePunish } from "../structures/tools/EviePunish";
 
 export class EvieClient extends SapphireClient {
   /** The EviePunish instance used for punishing people */

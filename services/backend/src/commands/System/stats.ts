@@ -1,6 +1,6 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { Emojis } from "#root/Enums";
 import { lang, registeredGuilds } from "@evie/config";
+import { EvieEmbed } from "@evie/internal";
 import {
   ApplicationCommandRegistry,
   Command,

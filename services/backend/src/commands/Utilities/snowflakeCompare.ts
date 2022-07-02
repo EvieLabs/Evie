@@ -1,6 +1,6 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
+import { EvieEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Args, Command } from "@sapphire/framework";
 import { Message, SnowflakeUtil } from "discord.js";

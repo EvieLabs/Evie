@@ -1,7 +1,7 @@
-import { ReplyStatusEmbed } from "#root/classes/EvieEmbed";
 import { ChangeSlugModal } from "#root/constants/modals";
 import { EvieColors } from "#root/Enums";
 import { boostsEvie } from "#root/utils/misc/permChecks";
+import { ReplyStatusEmbed } from "@evie/internal";
 import { Button, Embed } from "@evie/reacord";
 import type { EvieTag } from "@prisma/client";
 import { container } from "@sapphire/framework";

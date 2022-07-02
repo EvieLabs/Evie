@@ -1,6 +1,5 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import extractHostname from "#root/utils/parsers/extractHostname";
-import { EventHook, Module } from "@evie/internal";
+import { EventHook, EvieEmbed, Module } from "@evie/internal";
 import { container, Events } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";

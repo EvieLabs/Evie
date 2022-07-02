@@ -1,7 +1,3 @@
-import {
-  EditReplyStatusEmbed,
-  ReplyStatusEmbed,
-} from "#root/classes/EvieEmbed";
 import PaginateComponent from "#root/components/info/PaginateComponent";
 import {
   constructMessageLink,
@@ -9,6 +5,7 @@ import {
 } from "#root/utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
 import { lang, registeredGuilds } from "@evie/config";
+import { EditReplyStatusEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

@@ -1,7 +1,6 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import { time } from "@discordjs/builders";
-import { EventHook, Module } from "@evie/internal";
+import { EventHook, EvieEmbed, Module } from "@evie/internal";
 import type { AirportSettings } from "@prisma/client";
 import { Events } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";

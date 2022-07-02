@@ -1,5 +1,5 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { registeredGuilds } from "@evie/config";
+import { EvieEmbed } from "@evie/internal";
 import { ShapeTagsToChoices } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
 import {

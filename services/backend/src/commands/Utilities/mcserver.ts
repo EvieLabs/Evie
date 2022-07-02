@@ -1,4 +1,3 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { Emojis } from "#root/Enums";
 import { inlineCode, time } from "@discordjs/builders";
 import { registeredGuilds } from "@evie/config";
@@ -6,6 +5,7 @@ import type {
   OfflineServerResponse,
   OnlineServerResponse,
 } from "@evie/interfaces";
+import { EvieEmbed } from "@evie/internal";
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import {
   ApplicationCommandRegistry,

@@ -1,4 +1,3 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { Emojis } from "#root/Enums";
 import {
   capitalizeEachWord,
@@ -6,7 +5,7 @@ import {
 } from "#root/utils/builders/stringBuilder";
 import { time } from "@discordjs/builders";
 import { registeredGuilds } from "@evie/config";
-import { EvieUser } from "@evie/internal";
+import { EvieEmbed, EvieUser } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,

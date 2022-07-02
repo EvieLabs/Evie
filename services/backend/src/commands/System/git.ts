@@ -1,7 +1,6 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
-import { Stats } from "#root/classes/Stats";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { GitHubRepo } from "@evie/config";
+import { EvieEmbed, Stats } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Command } from "@sapphire/framework";
 import type { Message } from "discord.js";

@@ -1,5 +1,5 @@
-import { EvieEmbed } from "#root/classes/EvieEmbed";
 import { EvieEvent } from "#root/Enums";
+import { EvieEmbed } from "@evie/internal";
 import type { VotePayload } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener } from "@sapphire/framework";
