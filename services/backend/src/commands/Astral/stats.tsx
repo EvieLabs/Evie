@@ -1,6 +1,6 @@
 import PlayerStats from "#root/components/astral/PlayerStats";
 import { getAstralPlayer } from "@astral/utils";
-import { astralGuilds, lang } from "@evie/config";
+import { astralGuilds } from "@evie/config";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
   ApplicationCommandRegistry,
@@ -8,13 +8,13 @@ import {
   RegisterBehavior,
 } from "@sapphire/framework";
 import { ApplicationCommandType } from "discord-api-types/v9";
-import type { CommandInteraction, ContextMenuInteraction } from "discord.js";
+import type { ContextMenuInteraction } from "discord.js";
 import React from "react";
 @ApplyOptions<Command.Options>({
   description: "View a player's Astral stats",
-  name: "stats",
+  name: "astralstats",
 })
-export class Stats extends Command {
+export class AstralStats extends Command {
   public override async contextMenuRun(interaction: ContextMenuInteraction) {
     if (!interaction.inCachedGuild()) return;
 
@@ -34,25 +34,25 @@ export class Stats extends Command {
     );
   }
 
-  public override async chatInputRun(interaction: CommandInteraction) {
-    if (!interaction.inCachedGuild()) return;
-    const ephemeral = !interaction.options.getBoolean("show") ?? false;
+  // public override async chatInputRun(interaction: CommandInteraction) {
+  //   if (!interaction.inCachedGuild()) return;
+  //   const ephemeral = !interaction.options.getBoolean("show") ?? false;
 
-    await interaction.deferReply({ ephemeral });
+  //   await interaction.deferReply({ ephemeral });
 
-    const member = interaction.options.getMember("user") ?? interaction.member;
+  //   const member = interaction.options.getMember("user") ?? interaction.member;
 
-    if (!member) throw "Failed to fetch member. (try again)";
+  //   if (!member) throw "Failed to fetch member. (try again)";
 
-    const player = await getAstralPlayer(member).catch(() => {
-      throw "Failed to fetch player. (try again)";
-    });
+  //   const player = await getAstralPlayer(member).catch(() => {
+  //     throw "Failed to fetch player. (try again)";
+  //   });
 
-    return void interaction.client.reacord.editReply(
-      interaction,
-      <PlayerStats player={player} />
-    );
-  }
+  //   return void interaction.client.reacord.editReply(
+  //     interaction,
+  //     <PlayerStats player={player} />
+  //   );
+  // }
 
   public override registerApplicationCommands(
     registry: ApplicationCommandRegistry
@@ -68,29 +68,29 @@ export class Stats extends Command {
       }
     );
 
-    registry.registerChatInputCommand(
-      {
-        name: this.name,
-        description: this.description,
-        options: [
-          {
-            name: "user",
-            description: "The user to view stats for (defaults to you)",
-            type: "USER",
-            required: false,
-          },
-          {
-            name: lang.SHOW_COMMAND_OPTION_NAME,
-            description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
-            type: "BOOLEAN",
-            required: false,
-          },
-        ],
-      },
-      {
-        guildIds: astralGuilds,
-        behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
-      }
-    );
+    // registry.registerChatInputCommand(
+    //   {
+    //     name: this.name,
+    //     description: this.description,
+    //     options: [
+    //       {
+    //         name: "user",
+    //         description: "The user to view stats for (defaults to you)",
+    //         type: "USER",
+    //         required: false,
+    //       },
+    //       {
+    //         name: lang.SHOW_COMMAND_OPTION_NAME,
+    //         description: lang.SHOW_COMMAND_OPTION_DESCRIPTION,
+    //         type: "BOOLEAN",
+    //         required: false,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     guildIds: astralGuilds,
+    //     behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+    //   }
+    // );
   }
 }

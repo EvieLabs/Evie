@@ -2,36 +2,22 @@ import type { EvieEvent } from "#root/Enums";
 import { PrismaClient } from ".prisma/client";
 import { EvieClientOptions, getSecret } from "@evie/config";
 import { Kennel } from "@evie/home";
+import { ModuleStore } from "@evie/internal";
 import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
-import { SapphireClient } from "@sapphire/framework";
+import { SapphireClient, StoreRegistry } from "@sapphire/framework";
 import axios, { AxiosInstance } from "axios";
-import { Airport } from "./Airport";
-import { BlockedWords } from "./BlockedWords";
 import { DatabaseTools } from "./DatabaseTools";
 import { EvieGuildLogger } from "./EvieGuildLogger";
 import { EviePunish } from "./EviePunish";
 import Handbook from "./Handbook";
-import { Phisherman } from "./Phisherman";
 import { Stats } from "./Stats";
 
 export class EvieClient extends SapphireClient {
-  /** The phisherman instance used for checking domains */
-  @Enumerable(false)
-  public override phisherman = new Phisherman();
-
-  /** The blocked words instance used for checking messages for blocked words */
-  @Enumerable(false)
-  public override blockedWords = new BlockedWords();
-
   /** The EviePunish instance used for punishing people */
   @Enumerable(false)
   public override punishments = new EviePunish();
-
-  /** The Airport instance used for handling guild join and leave events */
-  @Enumerable(false)
-  public override airport = new Airport();
 
   /** The EvieGuildLogger instance used for logging events in a specified channel in a guild */
   @Enumerable(false)
@@ -66,8 +52,12 @@ export class EvieClient extends SapphireClient {
     baseURL: getSecret("PARK_URL", false),
   });
 
+  @Enumerable(false)
+  public override modules = this.stores.register(new ModuleStore());
+
   public constructor() {
     super(EvieClientOptions);
+    this.stores.registerPath("modules");
 
     // this.prisma.$use(async (params, next) => {
     //   if (!params.model) return await next(params);
@@ -101,11 +91,8 @@ export class EvieClient extends SapphireClient {
 
 declare module "discord.js" {
   interface Client {
-    readonly phisherman: Phisherman;
     readonly punishments: EviePunish;
     readonly guildLogger: EvieGuildLogger;
-    readonly blockedWords: BlockedWords;
-    readonly airport: Airport;
     readonly prisma: PrismaClient;
     readonly db: DatabaseTools;
     readonly stats: Stats;
@@ -114,6 +101,7 @@ declare module "discord.js" {
     readonly kennel: Kennel;
     readonly handbook: Handbook;
     readonly park: AxiosInstance;
+    readonly modules: StoreRegistry;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

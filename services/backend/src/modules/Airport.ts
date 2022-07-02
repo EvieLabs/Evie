@@ -1,13 +1,23 @@
+import { EvieEmbed } from "#root/classes/EvieEmbed";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import { time } from "@discordjs/builders";
+import { EventHook, Module } from "@evie/internal";
 import type { AirportSettings } from "@prisma/client";
+import { Events } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
-import { EvieEmbed } from "./EvieEmbed";
 
-export class Airport {
-  public async onJoin(member: GuildMember) {
+export class Airport extends Module {
+  public constructor(context: Module.Context, options: Module.Options) {
+    super(context, {
+      ...options,
+      name: "Airport",
+    });
+  }
+
+  @EventHook(Events.GuildMemberAdd)
+  public async onGuildMemberAdd(member: GuildMember) {
     const settings = await member.client.db.FetchGuildSettings(member.guild);
     if (settings?.airportSettings?.arriveMessage) {
       this.welcomeMember(member, settings.airportSettings);
@@ -33,7 +43,9 @@ export class Airport {
     }
   }
 
-  public async onLeave(member: GuildMember) {
+  @EventHook(Events.GuildMemberRemove)
+  public async onGuildMemberRemove(member: GuildMember) {
+    console.log("Member left", member.user.tag);
     const settings = await member.client.db.FetchGuildSettings(member.guild);
     if (settings?.airportSettings?.departs) {
       this.departMember(member, settings.airportSettings);
