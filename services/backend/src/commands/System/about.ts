@@ -59,7 +59,9 @@ export class AboutCommand extends Command {
       await this.container.client.prisma.commandStats.findMany();
 
     const formatted = commandStats
-      .sort((firstCommand, secondCommand) => secondCommand.uses - firstCommand.uses)
+      .sort(
+        (firstCommand, secondCommand) => secondCommand.uses - firstCommand.uses
+      )
       .map((command, index) => `${index + 1}. ${command.name}: ${command.uses}`)
       .filter((_, index) => index < 5);
 
