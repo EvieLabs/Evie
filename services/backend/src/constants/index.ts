@@ -154,3 +154,9 @@ export const ValorantTierEmojis = [
     identifier: "radiant:971675273911218196",
   },
 ];
+
+export const aboutButtons = {
+  privacyPolicy: "https://evie.pw/privacy",
+  tos: "https://evie.pw/terms",
+  support: "https://discord.gg/Sx9QzpVC7r",
+};
