@@ -62,7 +62,12 @@ export class AboutCommand extends Command {
       .sort(
         (firstCommand, secondCommand) => secondCommand.uses - firstCommand.uses
       )
-      .map((command, index) => `${index + 1}. ${command.name}: ${command.uses}`)
+      .map(
+        (command, index) =>
+          `${index + 1}. ${command.name}: ${command.uses.toLocaleString(
+            "en-US"
+          )}`
+      )
       .filter((_, index) => index < 5);
 
     embed.addFields([
