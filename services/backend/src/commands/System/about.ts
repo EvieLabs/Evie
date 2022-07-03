@@ -112,6 +112,7 @@ export class AboutCommand extends Command {
       {
         guildIds: registeredGuilds,
         behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+        idHints: ["992655610422235156"],
       }
     );
   }
