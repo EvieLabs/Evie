@@ -48,7 +48,7 @@ export class EvieClient extends SapphireClient {
   public override handbook = new Handbook();
 
   @Enumerable(false)
-  public override park = axios.create({
+  public override evieRest = axios.create({
     baseURL: getSecret("PARK_URL", false),
   });
 
@@ -100,7 +100,7 @@ declare module "discord.js" {
     readonly startedAt: Date;
     readonly kennel: Kennel;
     readonly handbook: Handbook;
-    readonly park: AxiosInstance;
+    readonly evieRest: AxiosInstance;
     readonly modules: StoreRegistry;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }

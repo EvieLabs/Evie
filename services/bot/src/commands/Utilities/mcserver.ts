@@ -60,7 +60,7 @@ export class MinecraftServer extends Command {
         const embed = new EvieEmbed();
 
         try {
-          const { data: image } = await this.container.client.park.post(
+          const { data: image } = await this.container.client.evieRest.post(
             "/minecraft/motd",
             {
               lines: html,

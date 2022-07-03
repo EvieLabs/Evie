@@ -1,12 +1,12 @@
 module.exports = {
   apps: [
     {
-      name: "backend",
+      name: "bot",
       cwd: "services/bot",
       script: "dist/index.js",
     },
     {
-      name: "park",
+      name: "api",
       cwd: "services/api",
       script: "dist/index.js",
     },

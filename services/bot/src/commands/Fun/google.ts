@@ -21,7 +21,7 @@ export class Google extends Command {
 
     await interaction.deferReply();
 
-    const { data: response } = await this.container.client.park.post<{
+    const { data: response } = await this.container.client.evieRest.post<{
       image: Buffer;
       audio: Buffer | null;
     }>("/gassistant/ask", {
