@@ -1,3 +1,4 @@
+import { aboutButtons } from "#root/constants/index";
 import { Emojis, EvieColors } from "#root/Enums";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { Embed, Link, Option, Select } from "@evie/reacord";
@@ -72,9 +73,9 @@ export default function HelpComponent(props: {
           />
         ))}
       </Select>
-      <Link label="Privacy Policy" url="https://evie.pw/privacy" />
-      <Link label="Terms of Service" url="https://evie.pw/terms" />
-      <Link label="Support/Community" url="https://discord.gg/Sx9QzpVC7r" />
+      <Link label="Privacy Policy" url={aboutButtons.privacyPolicy} />
+      <Link label="Terms of Service" url={aboutButtons.tos} />
+      <Link label="Support/Community" url={aboutButtons.support} />
     </>
   );
 }
