@@ -13,7 +13,7 @@ export function EventHook(event: string) {
       throw new Error("@EventHook can only be used on methods");
 
     container.logger.info(
-      `[${target.constructor.name}] Hooking Gateway event "${descriptor.value.name}" into method "${event}"`
+      `[${target.constructor.name}] Hooking Gateway event "${event}" into method "${descriptor.value.name}"`
     );
 
     container.client.on(event, descriptor.value.bind(target));
