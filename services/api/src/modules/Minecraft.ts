@@ -1,5 +1,5 @@
-import { minecraftStyling } from "environment";
-import { Puppeteer } from "modules";
+import { minecraftStyling } from "../constants/styles";
+import { Puppeteer } from "./Puppeteer";
 
 export class Minecraft {
   public static async renderMotd(lines: string[]) {

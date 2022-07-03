@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { Minecraft } from "modules";
+import { Minecraft } from "../modules/Minecraft";
 
 export default async function MinecraftRouter(fastify: FastifyInstance) {
   fastify.post<{

@@ -1,7 +1,7 @@
 import { container } from "@sapphire/pieces";
 import type { FastifyInstance } from "fastify";
 
-const { park } = container;
+const { assistant } = container;
 export default async function GoogleAssistantRouter(fastify: FastifyInstance) {
   fastify.post<{
     Body: {
@@ -12,7 +12,7 @@ export default async function GoogleAssistantRouter(fastify: FastifyInstance) {
     if (!query) return res.code(400).send("No query provided.");
 
     try {
-      const { image, audio } = await park.assistant.ask(query);
+      const { image, audio } = await assistant.ask(query);
       return res.status(200).send({
         image,
         audio: audio || null,

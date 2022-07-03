@@ -22,6 +22,13 @@ model EvieUser {
   id       String      @id
   flags    UserFlags[]
   eviePlus EviePlus[]
+
+  // Passport Authentication
+  username     String?
+  fetchedAt    DateTime?
+  avatar       String?
+  accessToken  String?
+  refreshToken String?
 }
 
 model EviePlus {
@@ -32,6 +39,9 @@ model EviePlus {
 
   activeGuild   GuildSettings? @relation(fields: [activeGuildId], references: [id])
   activeGuildId String
+
+  activeUntil DateTime?
+  createdAt   DateTime  @default(now())
 }
 
 model GuildSettings {

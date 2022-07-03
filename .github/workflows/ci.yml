@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  BuildBackend:
-    name: Build Backend
+  BuildBot:
+    name: Build Bot
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
@@ -22,13 +22,13 @@ jobs:
           cache: yarn
       - name: Install Dependencies
         run: yarn --immutable
-        working-directory: ./services/backend
+        working-directory: ./services/bot
       - name: Compile TypeScript
         run: yarn build
-        working-directory: ./services/backend
+        working-directory: ./services/bot
 
-  BuildPark:
-    name: Build Park
+  BuildApi:
+    name: Build Api
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
@@ -42,7 +42,7 @@ jobs:
           cache: yarn
       - name: Install Dependencies
         run: yarn --immutable
-        working-directory: ./services/park
+        working-directory: ./services/api
       - name: Compile TypeScript
         run: yarn build
-        working-directory: ./services/park
+        working-directory: ./services/api

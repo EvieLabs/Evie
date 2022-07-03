@@ -1,6 +1,6 @@
-import { getSecret } from "environment";
 import NodeCache from "node-cache";
 import puppeteer from "puppeteer";
+import { getSecret } from "../utils/env";
 
 export class Puppeteer {
   private static cache = new NodeCache({

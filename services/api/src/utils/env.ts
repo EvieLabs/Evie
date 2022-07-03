@@ -25,5 +25,3 @@ export interface GoogleAssistantCredentials {
   client_secret: string;
   scopes: string[];
 }
-
-export * from "./styles";

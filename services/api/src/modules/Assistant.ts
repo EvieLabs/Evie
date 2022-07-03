@@ -1,12 +1,12 @@
 import { captureException } from "@sentry/node";
-import { googleAssistantCredentials } from "environment";
-import { Puppeteer } from "modules";
 import NodeCache from "node-cache";
 import {
   Assistant as GAssistant,
   AssistantLanguage,
   AudioOutEncoding,
 } from "nodejs-assistant";
+import { googleAssistantCredentials } from "../utils/env";
+import { Puppeteer } from "./Puppeteer";
 
 export class Assistant {
   private assistant: GAssistant | null = null;
