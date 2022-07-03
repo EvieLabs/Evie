@@ -51,13 +51,17 @@ export class AboutCommand extends Command {
       (line) => `${Emojis.bulletPoint} ${line}`
     );
 
+    embed.setFooter({
+      text: `Shard: ${interaction.guild?.shardId ?? 0}`,
+    });
+
     const commandStats =
       await this.container.client.prisma.commandStats.findMany();
 
     const formatted = commandStats
-      .sort((a, b) => b.uses - a.uses)
-      .map((c, i) => `${i + 1}. ${c.name}: ${c.uses}`)
-      .filter((_, i) => i < 5);
+      .sort((firstCommand, secondCommand) => secondCommand.uses - firstCommand.uses)
+      .map((command, index) => `${index + 1}. ${command.name}: ${command.uses}`)
+      .filter((_, index) => index < 5);
 
     embed.addFields([
       {
