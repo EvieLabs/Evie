@@ -8,7 +8,7 @@ on:
 
 jobs:
   BuildBackend:
-    name: Building Backend
+    name: Build Backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
@@ -23,6 +23,26 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
         working-directory: ./services/backend
-      - name: Build code
+      - name: Compile TypeScript
         run: yarn build
         working-directory: ./services/backend
+
+  BuildPark:
+    name: Build Park
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Use Node.js v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+      - name: Install Dependencies
+        run: yarn --immutable
+        working-directory: ./services/park
+      - name: Compile TypeScript
+        run: yarn build
+        working-directory: ./services/park
