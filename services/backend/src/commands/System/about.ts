@@ -19,7 +19,7 @@ export class AboutCommand extends Command {
     super(context, {
       ...options,
       name: "about",
-      description: "View some info about evie!",
+      description: "View information about Evie and useful links.",
     });
   }
 
