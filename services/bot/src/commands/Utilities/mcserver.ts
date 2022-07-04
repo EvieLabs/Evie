@@ -61,7 +61,7 @@ export class MinecraftServer extends Command {
 
         try {
           const { data: image } = await this.container.client.evieRest.post(
-            "/minecraft/motd",
+            "/private/minecraft/motd",
             {
               lines: html,
             },

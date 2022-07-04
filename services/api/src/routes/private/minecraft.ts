@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { Minecraft } from "../modules/Minecraft";
+import { Minecraft } from "../../modules/Minecraft";
 
 export default async function MinecraftRouter(fastify: FastifyInstance) {
   fastify.post<{
@@ -19,4 +19,4 @@ export default async function MinecraftRouter(fastify: FastifyInstance) {
   });
 }
 
-export const autoPrefix = "/minecraft";
+export const autoPrefix = "/private/minecraft";

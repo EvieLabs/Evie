@@ -23,4 +23,4 @@ export default async function GoogleAssistantRouter(fastify: FastifyInstance) {
   });
 }
 
-export const autoPrefix = "/gassistant";
+export const autoPrefix = "/private/gassistant";

@@ -24,7 +24,7 @@ export class Google extends Command {
     const { data: response } = await this.container.client.evieRest.post<{
       image: Buffer;
       audio: Buffer | null;
-    }>("/gassistant/ask", {
+    }>("/private/gassistant/ask", {
       query,
     });
 
