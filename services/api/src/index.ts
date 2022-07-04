@@ -17,7 +17,6 @@ import { container } from "@sapphire/pieces";
 import fastify, { FastifyInstance } from "fastify";
 import { join } from "node:path";
 import { Strategy as DiscordStrategy } from "passport-discord";
-import { ParkManager } from "./managers/ParkManager";
 import { Assistant } from "./modules/Assistant";
 import { getNumberSecret, getSecret } from "./utils/env";
 
@@ -26,7 +25,6 @@ declare module "@sapphire/pieces" {
     app: FastifyInstance;
     assistant: Assistant;
     prisma: PrismaClient;
-    park: ParkManager;
   }
 }
 
@@ -37,7 +35,6 @@ declare module "fastify" {
 
 container.assistant = new Assistant();
 container.prisma = new PrismaClient();
-container.park = new ParkManager();
 
 container.app = fastify({
   logger: {

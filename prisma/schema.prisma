@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ShardStats {
+  id Int @id
+
+  users             Int
+  guilds            Int
+  wsPing            Int
+  unavailableGuilds Int
+}
+
 model CommandStats {
   name     String  @id
   category String?

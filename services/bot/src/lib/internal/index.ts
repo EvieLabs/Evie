@@ -10,7 +10,6 @@ export * from "./extensions/LogEmbed";
  * */
 // Managers
 export * from "./structures/managers/Handbook";
-export * from "./structures/managers/ParkClient";
 export * from "./structures/managers/Stats";
 // Modules
 export * from "./structures/modules/Module";

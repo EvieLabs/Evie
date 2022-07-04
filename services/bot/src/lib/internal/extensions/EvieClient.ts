@@ -2,7 +2,7 @@ import type { EvieEvent } from "#root/Enums";
 import { PrismaClient } from ".prisma/client";
 import { EvieClientOptions, getSecret } from "@evie/config";
 import { Kennel } from "@evie/home";
-import { ModuleStore, ParkClient } from "@evie/internal";
+import { ModuleStore } from "@evie/internal";
 import { ReacordDiscordJs } from "@evie/reacord";
 import type { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
@@ -58,11 +58,6 @@ export class EvieClient extends SapphireClient {
   public constructor() {
     super(EvieClientOptions);
     this.stores.registerPath("modules");
-    if (getSecret("API_URL", false) !== "") {
-      new ParkClient(
-        `${getSecret("API_URL", false).replace("http", "ws")}/park`
-      );
-    }
 
     // this.prisma.$use(async (params, next) => {
     //   if (!params.model) return await next(params);
