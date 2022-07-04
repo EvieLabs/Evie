@@ -20,6 +20,8 @@ import { Strategy as DiscordStrategy } from "passport-discord";
 import { Assistant } from "./modules/Assistant";
 import { getNumberSecret, getSecret } from "./utils/env";
 
+const PORT = getNumberSecret("PORT") ?? 3000;
+
 declare module "@sapphire/pieces" {
   interface Container {
     app: FastifyInstance;
@@ -74,7 +76,10 @@ fastifyPassport.use(
     {
       clientID: getSecret("DISCORD_CLIENT_ID"),
       clientSecret: getSecret("DISCORD_SECRET"),
-      callbackURL: getSecret("REDIRECT_URL"),
+      callbackURL:
+        getSecret("DISCORD_CB", false) !== ""
+          ? getSecret("DISCORD_CB")
+          : `http://localhost:${PORT}/auth/callback`,
       scope: scopes,
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -121,12 +126,9 @@ app.register(fastifyAutoload, {
   dir: join(__dirname, "./routes"),
 });
 
-app.listen(
-  { port: getNumberSecret("PORT") ?? 3000, host: "0.0.0.0" },
-  (err) => {
-    if (err) {
-      console.trace(err);
-      process.exit(1);
-    }
+app.listen({ port: PORT, host: "0.0.0.0" }, (err) => {
+  if (err) {
+    console.trace(err);
+    process.exit(1);
   }
-);
+});
