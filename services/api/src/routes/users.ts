@@ -10,7 +10,6 @@ export default async function UserRouter(fastify: FastifyInstance) {
       if (!user) {
         return reply.code(401).send({
           message: "Unauthorized, no session.",
-          session: request.user,
         });
       }
 
@@ -19,4 +18,4 @@ export default async function UserRouter(fastify: FastifyInstance) {
   );
 }
 
-export const autoPrefix = "/user";
+export const autoPrefix = "/users";
