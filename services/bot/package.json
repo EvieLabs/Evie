@@ -36,7 +36,7 @@
     "@influxdata/influxdb-client": "^1.27.0",
     "@sapphire/decorators": "^4.3.6",
     "@sapphire/fetch": "^2.4.0",
-    "@sapphire/framework": "next",
+    "@sapphire/framework": "^2.5.1",
     "@sapphire/plugin-api": "^3.2.1",
     "@sapphire/plugin-i18next": "next",
     "@sapphire/plugin-logger": "^2.2.1",
