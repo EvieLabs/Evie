@@ -18,7 +18,8 @@
     "@evie/shapers": "dist/lib/shapers/index.js",
     "@evie/home": "dist/lib/home/index.js",
     "@astral/utils": "dist/lib/astral/utils/index.js",
-    "@evie/internal": "dist/lib/internal/index.js"
+    "@evie/internal": "dist/lib/internal/index.js",
+    "@evie/grpc": "dist/lib/grpc/index.js"
   },
   "scripts": {
     "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+service GuildStore {
+    rpc CanManageGuildConfig(CanManageGuildConfigRequest) returns (CanManageGuildConfigResponse) {}
+}
+
+message CanManageGuildConfigRequest {
+    string guild_id = 1;
+    string user_id = 2;
+}
+
+message CanManageGuildConfigResponse {
+    bool can_manage = 1;
+}

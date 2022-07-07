@@ -2,6 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist",
+    "allowJs": true,
     "rootDir": ".",
     "baseUrl": ".",
     "jsx": "react",
@@ -22,7 +23,8 @@
       "@evie/home": ["lib/home/index.ts"],
       "@astral/utils": ["lib/astral/utils/index.ts"],
       "@evie/interfaces": ["lib/interfaces/index.ts"],
-      "@evie/internal": ["lib/internal/index.ts"]
+      "@evie/internal": ["lib/internal/index.ts"],
+      "@evie/grpc": ["lib/grpc/index.ts"]
     }
   },
   "include": [".", "./**/*.json"]

@@ -13,6 +13,7 @@ import { Stats } from "../structures/managers/Stats";
 import { DatabaseTools } from "../structures/tools/DatabaseTools";
 import { EvieGuildLogger } from "../structures/tools/EvieGuildLogger";
 import { EviePunish } from "../structures/tools/EviePunish";
+import { Gate } from "../structures/tools/Gate";
 
 export class EvieClient extends SapphireClient {
   /** The EviePunish instance used for punishing people */
@@ -46,6 +47,9 @@ export class EvieClient extends SapphireClient {
 
   @Enumerable(false)
   public override handbook = new Handbook();
+
+  @Enumerable(false)
+  public override gate = new Gate();
 
   @Enumerable(false)
   public override evieRest = axios.create({
@@ -102,6 +106,7 @@ declare module "discord.js" {
     readonly handbook: Handbook;
     readonly evieRest: AxiosInstance;
     readonly modules: StoreRegistry;
+    readonly gate: Gate;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

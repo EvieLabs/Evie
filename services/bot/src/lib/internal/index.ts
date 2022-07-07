@@ -3,12 +3,19 @@
  * */
 export * from "./extensions/EvieClient";
 export * from "./extensions/EvieEmbed";
+export * from "./extensions/EvieSharder";
 export * from "./extensions/EvieUser";
 export * from "./extensions/LogEmbed";
 /**
+ * gRPC
+ */
+export * from "./structures/grpc/GuildStoreServer";
+/**
  * Structures
  * */
-// Managers
+/*
+ *Managers
+ **/
 export * from "./structures/managers/Handbook";
 export * from "./structures/managers/Stats";
 // Modules
