@@ -34,8 +34,9 @@ declare module "@sapphire/pieces" {
 }
 
 declare module "fastify" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface PassportUser extends EvieUser {}
+  interface PassportUser extends EvieUser {
+    id: string;
+  }
 }
 
 const grpcConnection = `127.0.0.1:${
@@ -103,6 +104,7 @@ fastifyPassport.use(
           fetchedAt: profile.fetchedAt,
           accessToken,
           refreshToken,
+          guilds: profile.guilds as [],
         },
         update: {
           username: profile.username,
@@ -110,6 +112,7 @@ fastifyPassport.use(
           fetchedAt: profile.fetchedAt,
           accessToken,
           refreshToken,
+          guilds: profile.guilds as [],
         },
       });
 
