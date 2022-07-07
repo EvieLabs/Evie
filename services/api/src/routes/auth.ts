@@ -6,7 +6,7 @@ export default async function AuthRouter(fastify: FastifyInstance) {
     "/callback",
     {
       preValidation: fastifyPassport.authenticate("discord", {
-        successRedirect: "/",
+        successRedirect: process.env.SUCCESS_AUTH_REDIRECT ?? "/",
         authInfo: false,
       }),
     },
