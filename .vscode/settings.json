@@ -33,5 +33,6 @@
     "services/backend/src/languages/zh-CN": true,
     "services/backend/src/languages/cs": true,
     "services/backend/src/languages/no": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
