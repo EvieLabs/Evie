@@ -7,7 +7,8 @@
     "services/*"
   ],
   "scripts": {
-    "postinstall": "echo 'Building Dynamics' && yarn build:grpc",
+    "postinstall": "yarn dcg",
+    "dcg": "echo 'Building Dynamics' && yarn build:grpc",
     "build": "yarn build:grpc && cd services/bot && yarn build && cd ../api && yarn build && cd ../../",
     "build:grpc": "node scripts/build-grpc.mjs",
     "pushdb": "yarn prisma db push",
