@@ -4,6 +4,7 @@ import "google/protobuf/empty.proto";
 
 service GuildStore {
     rpc CanManageGuildConfig(CanManageGuildConfigRequest) returns (CanManageGuildConfigResponse) {}
+    rpc GetGuild(GetGuildRequest) returns (GetGuildResponse) {}
 }
 
 message CanManageGuildConfigRequest {
@@ -13,4 +14,16 @@ message CanManageGuildConfigRequest {
 
 message CanManageGuildConfigResponse {
     bool can_manage = 1;
+}
+
+message GetGuildRequest {
+    string guild_id = 1;
+}
+
+message GetGuildResponse {
+    string guild_id = 1;
+    string name = 2;
+    string icon = 3;
+    string owner_id = 4;
+    string description = 5;
 }

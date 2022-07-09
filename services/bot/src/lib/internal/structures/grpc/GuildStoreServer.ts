@@ -1,6 +1,8 @@
 import {
   CanManageGuildConfigRequest,
   CanManageGuildConfigResponse,
+  GetGuildRequest,
+  GetGuildResponse,
   IGuildStoreServer,
 } from "@evie/grpc";
 import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
@@ -40,6 +42,39 @@ export const GuildStoreServer: IGuildStoreServer = {
     } catch (error) {
       console.error(error);
       callback(null, res);
+    }
+  },
+  getGuild: async (
+    call: ServerUnaryCall<GetGuildRequest, Empty>,
+    callback: sendUnaryData<GetGuildResponse>
+  ): Promise<void> => {
+    const res = new GetGuildResponse();
+
+    try {
+      const { guildId } = call.request.toObject();
+
+      const mutualShard = EvieSharder.getInstance().shardForGuildId(guildId);
+
+      const data = await mutualShard.eval(
+        async (c, { guildId }) => {
+          const guild = await c.guilds.fetch(guildId);
+          return guild;
+        },
+        {
+          guildId,
+        }
+      );
+
+      res.setGuildId(data.id);
+      res.setName(data.name);
+      res.setIcon(data.icon || "");
+      res.setOwnerId(data.ownerId);
+      res.setDescription(data.description || "");
+
+      callback(null, res);
+    } catch (error) {
+      console.error(error);
+      callback(null);
     }
   },
 };
