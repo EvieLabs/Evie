@@ -6,6 +6,13 @@ import type {
   UserFlags,
 } from "@prisma/client";
 
+export type ProcessedStats = {
+  servers: number;
+  users: number;
+  shards: number;
+  shardAvgPing: number;
+};
+
 export type GetMe = {
   id: string;
   name: string;
