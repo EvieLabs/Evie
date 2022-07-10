@@ -61,7 +61,7 @@
     "rxjs": "^7.5.5",
     "strongly-typed-events": "^2.1.16",
     "tslib": "^2.4.0",
-    "undici": "^5.6.0",
+    "undici": "^5.6.1",
     "utf-8-validate": "^5.0.9",
     "uuid": "^8.3.2",
     "ws": "^8.8.0",
