@@ -1,7 +1,6 @@
 import { container } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import type { User } from "discord.js";
-import { nanoid } from "nanoid";
 import React, { useEffect } from "react";
 import { ReacordElement } from "../../internal/element.js";
 import type { ComponentInteraction } from "../../internal/interaction";
@@ -42,7 +41,10 @@ export type ButtonClickEvent = ComponentEvent;
  * @category Button
  */
 export function Button(props: ButtonProps) {
-  const customId = `reacord-${nanoid()}`;
+  const customId = `reacord-${
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  }`;
   useEffect(() => {
     ComponentStore.addComponent(customId);
     container.logger.debug(

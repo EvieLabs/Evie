@@ -531,18 +531,6 @@
     "@sapphire/utilities" "^3.6.2"
     tslib "^2.4.0"
 
-"@sapphire/plugin-api@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-api/-/plugin-api-3.2.1.tgz#2437600b363cb58e46ade85268d2e4e7e2675c71"
-  integrity sha512-J6Rg34IPkeCb+N/O5EKR/94cIkub7alT4VkFYrB8nfB2YSpP0sYS1/WpUTrLRI2o6IOf/Rvws6ymTkQXclnWtQ==
-  dependencies:
-    "@types/node-fetch" "2.6.1"
-    "@types/psl" "^1.1.0"
-    "@types/ws" "^8.5.3"
-    node-fetch "2.6.7"
-    psl "^1.8.0"
-    tslib "^2.3.1"
-
 "@sapphire/plugin-i18next@^2.5.2":
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-2.5.2.tgz#e3523210b4f16373eb6b02c08a319d8944b7e59e"
@@ -976,14 +964,6 @@
   resolved "https://registry.yarnpkg.com/@types/node-cron/-/node-cron-3.0.2.tgz#1a95877680f828817e395789ac2bf8d72a5df6af"
   integrity sha512-SK/4GYWiWvGLPl/yv+Tm5oLYbzMx1V3y7CsNTvOb3vF8O9oXH11U6/zckISHnBl4YH8MvXHFIUXbYoBONSdmzw==
 
-"@types/node-fetch@2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.1.tgz#8f127c50481db65886800ef496f20bbf15518975"
-  integrity sha512-oMqjURCaxoSIsHSr1E47QHzbmzNR5rK8McHuNb11BOM9cHcIK3Avy0s/b2JlXHoQGTYS3NsvWzV1M0iK7l0wbA==
-  dependencies:
-    "@types/node" "*"
-    form-data "^3.0.0"
-
 "@types/node-fetch@^2.6.1":
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.2.tgz#d1a9c5fd049d9415dce61571557104dec3ec81da"
@@ -1043,11 +1023,6 @@
   version "15.7.5"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
-
-"@types/psl@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/psl/-/psl-1.1.0.tgz#390c5df1613b166ce3c3eb9fda4d93dc3eeec7b5"
-  integrity sha512-HhZnoLAvI2koev3czVPzBNRYvdrzJGLjQbWZhqFmS9Q6a0yumc5qtfSahBGb5g+6qWvA8iiQktqGkwoIXa/BNQ==
 
 "@types/qs@*":
   version "6.9.7"
@@ -3171,11 +3146,6 @@ nan@^2.13.2, nan@^2.14.0, nan@^2.15.0:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.16.0.tgz#664f43e45460fb98faf00edca0bb0d7b8dce7916"
   integrity sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==
 
-nanoid@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-4.0.0.tgz#6e144dee117609232c3f415c34b0e550e64999a5"
-  integrity sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==
-
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
@@ -3604,11 +3574,6 @@ ps-tree@^1.2.0:
   integrity sha512-0VnamPPYHl4uaU/nSFeZZpR21QAWRz+sRv4iW9+v/GS/J5U5iZB5BNN6J0RMoOvdx2gWM2+ZFMIm58q24e4UYA==
   dependencies:
     event-stream "=3.3.4"
-
-psl@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/psl/-/psl-1.8.0.tgz#9326f8bcfb013adcc005fdff056acce020e51c24"
-  integrity sha512-RIdOzyoavK+hA18OGGWDqUTsCLhtA7IcZ/6NCs4fFJaHBDab+pDDmDIByWFRQJq2Cd7r1OoQxBGKOaztq+hjIQ==
 
 pump@^3.0.0:
   version "3.0.0"

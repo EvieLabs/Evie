@@ -1,7 +1,6 @@
 import { getSecret, prefixes } from "@evie/config";
 import { LogLevel } from "@sapphire/framework";
 import { ClientOptions, Intents, Options } from "discord.js";
-import { APIOptions } from "./client/api";
 import { i18nOptions } from "./client/i18n";
 
 export const EvieClientOptions: ClientOptions = {
@@ -9,7 +8,6 @@ export const EvieClientOptions: ClientOptions = {
     status: "online",
     activities: [{ name: "/getstarted", type: "LISTENING" }],
   },
-  api: process.env.DISABLE_API ? undefined : APIOptions,
   i18n: i18nOptions,
   defaultPrefix: prefixes,
   caseInsensitivePrefixes: true,
