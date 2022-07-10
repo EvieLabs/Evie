@@ -40,11 +40,11 @@ export default async function UserRouter(fastify: FastifyInstance) {
     "/dbl",
 
     async (request, response) => {
-      // if (
-      //   !request.headers.authorization ||
-      //   request.headers.authorization !== getSecret("DBL_VOTE_SECRET")
-      // )
-      //   return void response.status(403).send();
+      if (
+        !request.headers.authorization ||
+        request.headers.authorization !== getSecret("DBL_VOTE_SECRET")
+      )
+        return void response.status(403).send();
 
       await postVote({
         userSnowflake: request.body.id,
