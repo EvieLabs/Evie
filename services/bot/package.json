@@ -48,7 +48,7 @@
     "bufferutil": "^4.0.6",
     "canvas": "^2.9.3",
     "discord.js": "^13.8.1",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.1",
     "glob": "^8.0.3",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
