@@ -1,7 +1,8 @@
 import { rootFolder } from "#root/constants/paths";
-import { GuildStoreService } from "@evie/grpc";
+import { GuildStoreService, VoteManagerService } from "@evie/grpc";
 import { ShardingManager } from "discord.js";
 import { GuildStoreServer } from "../structures/grpc/GuildStoreServer";
+import { VoteManagerServer } from "../structures/grpc/VoteManagerServer";
 import { EvieRPC } from "./EvieRPC";
 
 export class EvieSharder extends ShardingManager {
@@ -9,6 +10,7 @@ export class EvieSharder extends ShardingManager {
 
   public override readonly grpc = new EvieRPC([
     [GuildStoreService, GuildStoreServer],
+    [VoteManagerService, VoteManagerServer],
   ]);
 
   private constructor() {

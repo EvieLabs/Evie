@@ -3,7 +3,27 @@ import {
   CanManageGuildConfigRequest,
   GetGuildRequest,
   GetGuildResponse,
+  PostVoteRequest,
+  PostVoteResponse,
 } from "../lib/grpc";
+
+export async function postVote(body: PostVoteRequest.AsObject) {
+  const req = new PostVoteRequest()
+    .setUserSnowflake(body.userSnowflake)
+    .setTest(body.test)
+    .setServiceName(body.serviceName)
+    .setVoteLink(body.voteLink);
+
+  const res = await new Promise<PostVoteResponse.AsObject>((resolve, reject) =>
+    container.voteManager.postVote(req, (err, res) =>
+      err ? reject(err) : resolve(res.toObject())
+    )
+  ).catch((err) => {
+    throw err;
+  });
+
+  return res;
+}
 
 export async function canManageGuild(userId: string, guildId: string) {
   const req = new CanManageGuildConfigRequest()

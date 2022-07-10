@@ -4,7 +4,7 @@ import { EvieClientOptions, getSecret } from "@evie/config";
 import { Kennel } from "@evie/home";
 import { ModuleStore } from "@evie/internal";
 import { ReacordDiscordJs } from "@evie/reacord";
-import type { VotePayload } from "@evie/shapers";
+import { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient, StoreRegistry } from "@sapphire/framework";
 import axios, { AxiosInstance } from "axios";
@@ -57,6 +57,9 @@ export class EvieClient extends SapphireClient {
   });
 
   @Enumerable(false)
+  public override votePayload = VotePayload;
+
+  @Enumerable(false)
   public override modules = this.stores.register(new ModuleStore());
 
   public constructor() {
@@ -107,6 +110,7 @@ declare module "discord.js" {
     readonly evieRest: AxiosInstance;
     readonly modules: StoreRegistry;
     readonly gate: Gate;
+    readonly votePayload: typeof VotePayload;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

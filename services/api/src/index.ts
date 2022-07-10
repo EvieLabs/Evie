@@ -18,7 +18,7 @@ import { container } from "@sapphire/pieces";
 import fastify, { FastifyInstance } from "fastify";
 import { join } from "node:path";
 import { Strategy as DiscordStrategy } from "passport-discord";
-import { GuildStoreClient } from "./lib/grpc";
+import { GuildStoreClient, VoteManagerClient } from "./lib/grpc";
 import { Assistant } from "./modules/Assistant";
 import { getNumberSecret, getSecret } from "./utils/env";
 
@@ -30,6 +30,7 @@ declare module "@sapphire/pieces" {
     assistant: Assistant;
     prisma: PrismaClient;
     guildStore: GuildStoreClient;
+    voteManager: VoteManagerClient;
   }
 }
 
@@ -47,6 +48,7 @@ const grpcAuth = credentials.createInsecure();
 container.assistant = new Assistant();
 container.prisma = new PrismaClient();
 container.guildStore = new GuildStoreClient(grpcConnection, grpcAuth);
+container.voteManager = new VoteManagerClient(grpcConnection, grpcAuth);
 
 container.app = fastify({
   logger: {
