@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+service GuildStore {
+    rpc CanManageGuildConfig(CanManageGuildConfigRequest) returns (CanManageGuildConfigResponse) {}
+    rpc GetGuild(GetGuildRequest) returns (GetGuildResponse) {}
+}
+
+service VoteManager {
+    rpc PostVote(PostVoteRequest) returns (PostVoteResponse) {}
+}
+
+message PostVoteRequest {
+    string user_snowflake = 1;
+    bool   test = 2;
+    string service_name = 3;
+    string vote_link = 4;
+}
+
+message PostVoteResponse {
+    bool ok = 1;
+}
+
+message CanManageGuildConfigRequest {
+    string guild_id = 1;
+    string user_id = 2;
+}
+
+message CanManageGuildConfigResponse {
+    bool can_manage = 1;
+}
+
+message GetGuildRequest {
+    string guild_id = 1;
+}
+
+message GetGuildResponse {
+    string guild_id = 1;
+    string name = 2;
+    string icon = 3;
+    string owner_id = 4;
+    string description = 5;
+}

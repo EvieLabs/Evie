@@ -2,7 +2,6 @@
 import { container } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import type { User } from "discord.js";
-import { nanoid } from "nanoid";
 import React, { ReactNode, useEffect } from "react";
 import { isInstanceOf } from "../../../helpers/is-instance-of";
 import { ReacordElement } from "../../internal/element.js";
@@ -90,7 +89,10 @@ export type SelectChangeEvent = ComponentEvent & {
  * @category Select
  */
 export function Select(props: SelectProps) {
-  const customId = `reacord-${nanoid()}`;
+  const customId = `reacord-${
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  }`;
   ComponentStore.addComponent(customId);
   useEffect(() => {
     container.logger.debug(

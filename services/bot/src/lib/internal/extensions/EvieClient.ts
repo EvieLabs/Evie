@@ -4,7 +4,7 @@ import { EvieClientOptions, getSecret } from "@evie/config";
 import { Kennel } from "@evie/home";
 import { ModuleStore } from "@evie/internal";
 import { ReacordDiscordJs } from "@evie/reacord";
-import type { VotePayload } from "@evie/shapers";
+import { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient, StoreRegistry } from "@sapphire/framework";
 import axios, { AxiosInstance } from "axios";
@@ -13,6 +13,7 @@ import { Stats } from "../structures/managers/Stats";
 import { DatabaseTools } from "../structures/tools/DatabaseTools";
 import { EvieGuildLogger } from "../structures/tools/EvieGuildLogger";
 import { EviePunish } from "../structures/tools/EviePunish";
+import { Gate } from "../structures/tools/Gate";
 
 export class EvieClient extends SapphireClient {
   /** The EviePunish instance used for punishing people */
@@ -48,9 +49,15 @@ export class EvieClient extends SapphireClient {
   public override handbook = new Handbook();
 
   @Enumerable(false)
+  public override gate = new Gate();
+
+  @Enumerable(false)
   public override evieRest = axios.create({
     baseURL: getSecret("API_URL", false),
   });
+
+  @Enumerable(false)
+  public override votePayload = VotePayload;
 
   @Enumerable(false)
   public override modules = this.stores.register(new ModuleStore());
@@ -102,6 +109,8 @@ declare module "discord.js" {
     readonly handbook: Handbook;
     readonly evieRest: AxiosInstance;
     readonly modules: StoreRegistry;
+    readonly gate: Gate;
+    readonly votePayload: typeof VotePayload;
     emit(event: EvieEvent.Vote, data: VotePayload): boolean;
   }
 }

@@ -12,11 +12,13 @@ import helmet from "@fastify/helmet";
 import fastifyPassport from "@fastify/passport";
 import fastifySecureSession from "@fastify/secure-session";
 import websocket from "@fastify/websocket";
+import { credentials } from "@grpc/grpc-js";
 import type { EvieUser } from "@prisma/client";
 import { container } from "@sapphire/pieces";
 import fastify, { FastifyInstance } from "fastify";
 import { join } from "node:path";
 import { Strategy as DiscordStrategy } from "passport-discord";
+import { GuildStoreClient, VoteManagerClient } from "./lib/grpc";
 import { Assistant } from "./modules/Assistant";
 import { getNumberSecret, getSecret } from "./utils/env";
 
@@ -27,16 +29,26 @@ declare module "@sapphire/pieces" {
     app: FastifyInstance;
     assistant: Assistant;
     prisma: PrismaClient;
+    guildStore: GuildStoreClient;
+    voteManager: VoteManagerClient;
   }
 }
 
 declare module "fastify" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface PassportUser extends EvieUser {}
+  interface PassportUser extends EvieUser {
+    id: string;
+  }
 }
+
+const grpcConnection = `127.0.0.1:${
+  getNumberSecret("guildStorePort") ?? "50051"
+}`;
+const grpcAuth = credentials.createInsecure();
 
 container.assistant = new Assistant();
 container.prisma = new PrismaClient();
+container.guildStore = new GuildStoreClient(grpcConnection, grpcAuth);
+container.voteManager = new VoteManagerClient(grpcConnection, grpcAuth);
 
 container.app = fastify({
   logger: {
@@ -94,6 +106,7 @@ fastifyPassport.use(
           fetchedAt: profile.fetchedAt,
           accessToken,
           refreshToken,
+          guilds: profile.guilds as [],
         },
         update: {
           username: profile.username,
@@ -101,6 +114,7 @@ fastifyPassport.use(
           fetchedAt: profile.fetchedAt,
           accessToken,
           refreshToken,
+          guilds: profile.guilds as [],
         },
       });
 

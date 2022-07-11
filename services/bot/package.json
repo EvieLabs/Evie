@@ -18,7 +18,8 @@
     "@evie/shapers": "dist/lib/shapers/index.js",
     "@evie/home": "dist/lib/home/index.js",
     "@astral/utils": "dist/lib/astral/utils/index.js",
-    "@evie/internal": "dist/lib/internal/index.js"
+    "@evie/internal": "dist/lib/internal/index.js",
+    "@evie/grpc": "dist/lib/grpc/index.js"
   },
   "scripts": {
     "dev": "yarn clean && tsc-watch -p src --onSuccess \"node .\"",
@@ -37,7 +38,6 @@
     "@sapphire/decorators": "^4.3.6",
     "@sapphire/fetch": "^2.4.0",
     "@sapphire/framework": "next",
-    "@sapphire/plugin-api": "^3.2.1",
     "@sapphire/plugin-i18next": "^2.5.2",
     "@sapphire/plugin-logger": "^2.2.1",
     "@sentry/integrations": "^6.19.7",
@@ -52,7 +52,6 @@
     "glob": "^8.0.3",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
-    "nanoid": "^4.0.0",
     "node-cron": "^3.0.1",
     "nodejs-assistant": "^0.8.0",
     "openai": "^3.0.0",

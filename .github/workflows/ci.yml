@@ -22,7 +22,6 @@ jobs:
           cache: yarn
       - name: Install Dependencies
         run: yarn --immutable
-        working-directory: ./services/bot
       - name: Compile TypeScript
         run: yarn build
         working-directory: ./services/bot
@@ -42,7 +41,6 @@ jobs:
           cache: yarn
       - name: Install Dependencies
         run: yarn --immutable
-        working-directory: ./services/api
       - name: Compile TypeScript
         run: yarn build
         working-directory: ./services/api

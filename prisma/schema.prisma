@@ -38,6 +38,7 @@ model EvieUser {
   avatar       String?
   accessToken  String?
   refreshToken String?
+  guilds       Json[]
 }
 
 model EviePlus {
