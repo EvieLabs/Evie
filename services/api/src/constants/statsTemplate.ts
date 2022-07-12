@@ -2,7 +2,7 @@ import type { ProcessedStats } from "../types";
 import { numberPrettifier } from "../utils/formatters";
 
 export function statsTemplate(stats: ProcessedStats) {
-  return `<head>
+	return `<head>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@2.18.1/dist/full.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
   </head>

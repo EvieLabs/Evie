@@ -12,7 +12,8 @@
     "build": "yarn build:grpc && cd services/bot && yarn build && cd ../api && yarn build && cd ../../",
     "build:grpc": "node scripts/build-grpc.mjs",
     "pushdb": "yarn prisma db push",
-    "pushdb:force": "yarn prisma db push --accept-data-loss"
+    "pushdb:force": "yarn prisma db push --accept-data-loss",
+    "lint": "cd services/bot && yarn lint && cd ../api && yarn lint"
   },
   "husky": {
     "hooks": {
