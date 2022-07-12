@@ -2,7 +2,7 @@ import { setTimeout } from "timers/promises";
 
 const maxTime = 1000;
 
-export async function waitFor<Result>(predicate: () => Result): Promise<Awaited<Result>> {
+export async function waitFor<Result>(predicate: () => Result): Promise<Result> {
 	const startTime = Date.now();
 	let lastError: unknown;
 
