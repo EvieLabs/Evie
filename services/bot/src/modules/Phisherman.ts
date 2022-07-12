@@ -1,6 +1,8 @@
+import { LinkRegex } from "#root/Constants";
 import extractHostname from "#root/utils/parsers/extractHostname";
+import { getSecret } from "@evie/config";
 import { EventHook, EvieEmbed, Module } from "@evie/internal";
-import { container, Events } from "@sapphire/framework";
+import { Events } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import axios from "axios";
@@ -13,11 +15,9 @@ export class Phisherman extends Module {
 		});
 	}
 
-	private readonly URL_REGEX = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-
 	@EventHook(Events.MessageCreate)
 	public async scan(message: Message) {
-		const links = this.URL_REGEX.exec(message.content);
+		const links = LinkRegex.exec(message.content);
 		if (!links) return;
 
 		for (const element of links) {
@@ -41,11 +41,11 @@ export class Phisherman extends Module {
 		}
 	}
 
-	private readonly TOKEN = process.env.PHISHERMAN_TOKEN ?? null;
-
 	private async checkDomain(domain: string): Promise<boolean> {
-		if (!this.TOKEN) {
-			container.logger.warn("WARNING `PHISHERMAN_TOKEN` IS NULL! PHISHING SCAMS WILL BE NOT SCANNED!");
+		const token = getSecret("PHISHERMAN_TOKEN");
+
+		if (!token) {
+			this.container.logger.warn("WARNING `PHISHERMAN_TOKEN` IS NULL! PHISHING SCAMS WILL BE NOT SCANNED!");
 			return false;
 		}
 
@@ -54,9 +54,15 @@ export class Phisherman extends Module {
 			{
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${this.TOKEN}`,
+					Authorization: `Bearer ${token}`,
 				},
 			},
+		);
+
+		this.container.logger.info(
+			`[Phisherman] Scanned ${domain} with classification of ${res.data.classification} (phish: ${
+				res.data.verifiedPhish ? "true" : "false"
+			})`,
 		);
 
 		return res.data.verifiedPhish;

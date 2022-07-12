@@ -56,3 +56,5 @@ export const MessageSchema = s.object({
 		}),
 	),
 });
+
+export const LinkRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
