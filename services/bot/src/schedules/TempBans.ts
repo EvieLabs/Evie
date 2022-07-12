@@ -6,6 +6,7 @@ import { captureException } from "@sentry/node";
 import { Constants, DiscordAPIError } from "discord.js";
 
 export class TempBans extends Schedule {
+	// @ts-expect-error Not all code paths return a value.
 	override async execute() {
 		const { client } = container;
 		const tempbans = await client.prisma.modAction.findMany({
