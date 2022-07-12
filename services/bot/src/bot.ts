@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import moduleAlias from "module-alias";
-moduleAlias(`${__dirname}../../package.json`);
 config({ path: "../../.env" });
+moduleAlias(`${__dirname}../../package.json`);
 
 import { EvieClient } from "@evie/internal";
 import { ApplicationCommandRegistries, container, RegisterBehavior } from "@sapphire/framework";

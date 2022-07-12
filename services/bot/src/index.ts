@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { config } from "dotenv";
 import moduleAlias from "module-alias";
-moduleAlias(`${__dirname}../../package.json`);
 config({ path: "../../.env" });
+moduleAlias(`${__dirname}../../package.json`);
 
 import { InfluxManager } from "#root/schedules/InfluxManager";
 import { blue, magenta } from "colorette";
