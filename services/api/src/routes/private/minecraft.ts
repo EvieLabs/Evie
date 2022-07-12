@@ -12,7 +12,7 @@ export default async function MinecraftRouter(fastify: FastifyInstance) {
 
     try {
       const image = await Minecraft.renderMotd(lines);
-      return res.status(200).header("Content-Type", "image/png").send(image);
+      return await res.status(200).header("Content-Type", "image/png").send(image);
     } catch (e) {
       throw e;
     }

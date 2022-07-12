@@ -18,8 +18,7 @@ export default async function AuthRouter(fastify: FastifyInstance) {
       },
     });
 
-    if (!tag || !tag.guildId)
-      return response.code(404).send({ error: "Tag not found" });
+    if (!tag || !tag.guildId) return response.code(404).send({ error: "Tag not found" });
 
     const guild = await fetchGuild(tag.guildId);
 

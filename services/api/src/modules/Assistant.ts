@@ -1,16 +1,12 @@
 import { captureException } from "@sentry/node";
 import NodeCache from "node-cache";
-import {
-  Assistant as GAssistant,
-  AssistantLanguage,
-  AudioOutEncoding,
-} from "nodejs-assistant";
-import { googleAssistantCredentials } from "../utils/env";
+import { Assistant as GAssistant, AssistantLanguage, AudioOutEncoding } from "nodejs-assistant";
 import { Puppeteer } from "./Puppeteer";
+import { googleAssistantCredentials } from "../utils/env";
 
 export class Assistant {
-  private assistant: GAssistant | null = null;
-  private cache = new NodeCache({
+  private readonly assistant: GAssistant | null = null;
+  private readonly cache = new NodeCache({
     stdTTL: 60 * 60,
   });
 
@@ -33,10 +29,7 @@ export class Assistant {
 
   public async ask(query: string) {
     const cacheKey = query.toLowerCase();
-    const cached = this.cache.get(cacheKey) as {
-      image: Buffer;
-      audio: Buffer | undefined;
-    };
+    const cached = this.cache.get(cacheKey)!;
 
     if (cached) return cached;
 

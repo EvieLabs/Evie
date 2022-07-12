@@ -4,215 +4,182 @@ import { registeredGuilds } from "@evie/config";
 import { EditReplyStatusEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { ShapeTagsToChoices } from "@evie/shapers";
 import { ApplyOptions } from "@sapphire/decorators";
+import { ApplicationCommandRegistry, Command, RegisterBehavior } from "@sapphire/framework";
 import {
-  ApplicationCommandRegistry,
-  Command,
-  RegisterBehavior,
-} from "@sapphire/framework";
-import {
-  AutocompleteInteraction,
-  CommandInteraction,
-  ModalSubmitInteraction,
-  Snowflake,
-  SnowflakeUtil,
+	AutocompleteInteraction,
+	CommandInteraction,
+	ModalSubmitInteraction,
+	Snowflake,
+	SnowflakeUtil,
 } from "discord.js";
 import React from "react";
 
 @ApplyOptions<Command.Options>({
-  description: "Manage tags",
-  requiredUserPermissions: ["MANAGE_GUILD"],
-  preconditions: ["GuildOnly"],
+	description: "Manage tags",
+	requiredUserPermissions: ["MANAGE_GUILD"],
+	preconditions: ["GuildOnly"],
 })
 export class ManageTags extends Command {
-  public override async chatInputRun(
-    interaction: CommandInteraction
-  ): Promise<void> {
-    switch (interaction.options.getSubcommand()) {
-      case "create": {
-        return void this.createTag(interaction);
-      }
-      case "delete": {
-        return void this.deleteTag(interaction);
-      }
-      case "edit": {
-        return void this.editTag(interaction);
-      }
-    }
-  }
+	public override async chatInputRun(interaction: CommandInteraction): Promise<void> {
+		switch (interaction.options.getSubcommand()) {
+			case "create": {
+				return void this.createTag(interaction);
+			}
+			case "delete": {
+				return void this.deleteTag(interaction);
+			}
+			case "edit": {
+				return void this.editTag(interaction);
+			}
+		}
+	}
 
-  private async editTag(interaction: CommandInteraction) {
-    await interaction.deferReply({ ephemeral: true });
-    if (!interaction.guild) return;
-    const query = interaction.options.getString("query");
-    if (!query) return;
+	private async editTag(interaction: CommandInteraction) {
+		await interaction.deferReply({ ephemeral: true });
+		if (!interaction.guild) return;
+		const query = interaction.options.getString("query");
+		if (!query) return;
 
-    const tags = await interaction.client.db.FetchTags(interaction.guild);
+		const tags = await interaction.client.db.FetchTags(interaction.guild);
 
-    const tag =
-      tags.find((tag) => tag.id === query) ??
-      tags.find((tag) => tag.name === query.split(" ")[0]);
+		const tag = tags.find((tag) => tag.id === query) ?? tags.find((tag) => tag.name === query.split(" ")[0]);
 
-    if (!tag)
-      return void EditReplyStatusEmbed(false, "Tag not found.", interaction);
+		if (!tag) return void EditReplyStatusEmbed(false, "Tag not found.", interaction);
 
-    return void interaction.client.reacord.editReply(
-      interaction,
-      <EditTagMenu _tag={tag} user={interaction.user} />
-    );
-  }
+		return void interaction.client.reacord.editReply(interaction, <EditTagMenu _tag={tag} user={interaction.user} />);
+	}
 
-  private async deleteTag(interaction: CommandInteraction) {
-    await interaction.deferReply({ ephemeral: true });
-    if (!interaction.guild) return;
-    const query = interaction.options.getString("query");
-    if (!query) return;
+	private async deleteTag(interaction: CommandInteraction) {
+		await interaction.deferReply({ ephemeral: true });
+		if (!interaction.guild) return;
+		const query = interaction.options.getString("query");
+		if (!query) return;
 
-    const tags = await interaction.client.db.FetchTags(interaction.guild);
+		const tags = await interaction.client.db.FetchTags(interaction.guild);
 
-    const tag =
-      tags.find((tag) => tag.id === query) ??
-      tags.find((tag) => tag.name === query.split(" ")[0]);
+		const tag = tags.find((tag) => tag.id === query) ?? tags.find((tag) => tag.name === query.split(" ")[0]);
 
-    if (!tag)
-      return void EditReplyStatusEmbed(false, "Tag not found.", interaction);
+		if (!tag) return void EditReplyStatusEmbed(false, "Tag not found.", interaction);
 
-    return void (await interaction.client.prisma.evieTag
-      .delete({
-        where: {
-          id: tag.id,
-        },
-      })
-      .catch(() => {
-        return void EditReplyStatusEmbed(
-          false,
-          "Failed to delete tag.",
-          interaction
-        );
-      })
-      .then(() => {
-        return void EditReplyStatusEmbed(
-          true,
-          `Deleted tag ${tag.name}`,
-          interaction
-        );
-      }));
-  }
+		return void (await interaction.client.prisma.evieTag
+			.delete({
+				where: {
+					id: tag.id,
+				},
+			})
+			.catch(() => {
+				return void EditReplyStatusEmbed(false, "Failed to delete tag.", interaction);
+			})
+			.then(() => {
+				return void EditReplyStatusEmbed(true, `Deleted tag ${tag.name}`, interaction);
+			}));
+	}
 
-  private async createTag(interaction: CommandInteraction) {
-    const generatedState = SnowflakeUtil.generate();
-    const embed = interaction.options.getBoolean("embed") ?? false;
-    await interaction.showModal(CreateTagModal(generatedState));
-    this.waitForModal(interaction, embed, generatedState);
-  }
+	private async createTag(interaction: CommandInteraction) {
+		const generatedState = SnowflakeUtil.generate();
+		const embed = interaction.options.getBoolean("embed") ?? false;
+		await interaction.showModal(CreateTagModal(generatedState));
+		this.waitForModal(interaction, embed, generatedState);
+	}
 
-  private async waitForModal(
-    interaction: CommandInteraction,
-    embed: boolean,
-    state: Snowflake
-  ) {
-    const submit = (await interaction
-      .awaitModalSubmit({
-        filter: (i) => i.customId === `create_tag_${state}`,
-        time: 100000,
-      })
-      .catch(() => {
-        interaction.followUp({
-          content: "Tag Creation timed out.",
-          ephemeral: true,
-        });
-      })) as ModalSubmitInteraction;
+	private async waitForModal(interaction: CommandInteraction, embed: boolean, state: Snowflake) {
+		const submit = (await interaction
+			.awaitModalSubmit({
+				filter: (i) => i.customId === `create_tag_${state}`,
+				time: 100000,
+			})
+			.catch(() => {
+				interaction.followUp({
+					content: "Tag Creation timed out.",
+					ephemeral: true,
+				});
+			})) as ModalSubmitInteraction;
 
-    if (!submit) return;
-    if (!submit.fields) return;
+		if (!submit) return;
+		if (!submit.fields) return;
 
-    const tag = submit.fields.getTextInputValue("tag_name");
-    const content = submit.fields.getTextInputValue("tag_content");
+		const tag = submit.fields.getTextInputValue("tag_name");
+		const content = submit.fields.getTextInputValue("tag_content");
 
-    if (tag && content) {
-      const { guild } = interaction;
-      if (!guild) {
-        ReplyStatusEmbed(
-          false,
-          "You must be in a guild to create a tag.",
-          submit
-        );
+		if (tag && content) {
+			const { guild } = interaction;
+			if (!guild) {
+				ReplyStatusEmbed(false, "You must be in a guild to create a tag.", submit);
 
-        return;
-      }
+				return;
+			}
 
-      return await interaction.client.prisma.evieTag
-        .create({
-          data: {
-            id: SnowflakeUtil.generate(),
-            name: tag,
-            content: content,
-            embed: embed,
-            guildId: guild.id,
-          },
-        })
-        .catch(() => {
-          return ReplyStatusEmbed(false, "Failed to create tag.", submit);
-        })
-        .then(() => {
-          ReplyStatusEmbed(true, `Created tag ${tag}`, submit);
-        });
-    } else {
-      ReplyStatusEmbed(false, "Tag creation failed.", submit);
-    }
-  }
+			return await interaction.client.prisma.evieTag
+				.create({
+					data: {
+						id: SnowflakeUtil.generate(),
+						name: tag,
+						content: content,
+						embed: embed,
+						guildId: guild.id,
+					},
+				})
+				.catch(() => {
+					return ReplyStatusEmbed(false, "Failed to create tag.", submit);
+				})
+				.then(() => {
+					ReplyStatusEmbed(true, `Created tag ${tag}`, submit);
+				});
+		} else {
+			ReplyStatusEmbed(false, "Tag creation failed.", submit);
+		}
+	}
 
-  public override async autocompleteRun(interaction: AutocompleteInteraction) {
-    await interaction.respond(await ShapeTagsToChoices(interaction));
-  }
+	public override async autocompleteRun(interaction: AutocompleteInteraction) {
+		await interaction.respond(await ShapeTagsToChoices(interaction));
+	}
 
-  public override registerApplicationCommands(
-    registry: ApplicationCommandRegistry
-  ) {
-    registry.registerChatInputCommand(
-      (builder) =>
-        builder //
-          .setName(this.name)
-          .setDescription(this.description)
-          .addSubcommand((createSub) =>
-            createSub //
-              .setName("create")
-              .setDescription("Create a tag")
-              .addBooleanOption((embed) =>
-                embed //
-                  .setName("embed")
-                  .setDescription("Whether the tag should be an embed")
-                  .setRequired(true)
-              )
-          )
-          .addSubcommand((deleteSub) =>
-            deleteSub //
-              .setName("delete")
-              .setDescription("Delete a tag")
-              .addStringOption((query) =>
-                query //
-                  .setName("query")
-                  .setDescription("The name of the tag")
-                  .setRequired(true)
-                  .setAutocomplete(true)
-              )
-          )
-          .addSubcommand((deleteSub) =>
-            deleteSub //
-              .setName("edit")
-              .setDescription("Edit a tag")
-              .addStringOption((query) =>
-                query //
-                  .setName("query")
-                  .setDescription("The name of the tag")
-                  .setRequired(true)
-                  .setAutocomplete(true)
-              )
-          ),
-      {
-        guildIds: registeredGuilds,
-        behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
-        idHints: ["976395420555153438"],
-      }
-    );
-  }
+	public override registerApplicationCommands(registry: ApplicationCommandRegistry) {
+		registry.registerChatInputCommand(
+			(builder) =>
+				builder //
+					.setName(this.name)
+					.setDescription(this.description)
+					.addSubcommand((createSub) =>
+						createSub //
+							.setName("create")
+							.setDescription("Create a tag")
+							.addBooleanOption((embed) =>
+								embed //
+									.setName("embed")
+									.setDescription("Whether the tag should be an embed")
+									.setRequired(true),
+							),
+					)
+					.addSubcommand((deleteSub) =>
+						deleteSub //
+							.setName("delete")
+							.setDescription("Delete a tag")
+							.addStringOption((query) =>
+								query //
+									.setName("query")
+									.setDescription("The name of the tag")
+									.setRequired(true)
+									.setAutocomplete(true),
+							),
+					)
+					.addSubcommand((deleteSub) =>
+						deleteSub //
+							.setName("edit")
+							.setDescription("Edit a tag")
+							.addStringOption((query) =>
+								query //
+									.setName("query")
+									.setDescription("The name of the tag")
+									.setRequired(true)
+									.setAutocomplete(true),
+							),
+					),
+			{
+				guildIds: registeredGuilds,
+				behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+				idHints: ["976395420555153438"],
+			},
+		);
+	}
 }

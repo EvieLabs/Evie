@@ -1,3 +1,3 @@
 export function hexStringToHexNumber(rrggbb: string) {
-  return parseInt(rrggbb.replace("#", ""), 16);
+	return parseInt(rrggbb.replace("#", ""), 16);
 }

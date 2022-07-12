@@ -1,4 +1,4 @@
-export type AgentUsed = {
-  agentName: string;
-  timesUsed: number;
-};
+export interface AgentUsed {
+	agentName: string;
+	timesUsed: number;
+}

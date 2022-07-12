@@ -1,7 +1,7 @@
 {
-  "notInCachedGuild": "ऐसा लगता है कि यह सर्वर उपलब्ध नहीं है, आदेश को फिर से चलाने का प्रयास करें।",
-  "commandError": "आदेश चलाते समय एक गलती हुई। बाद में पुन: प्रयास करें।",
-  "queryMissing": "Query is missing. Please try again.",
-  "missingCommandOption": "Missing a required option. Please try again.",
-  "interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
+	"notInCachedGuild": "ऐसा लगता है कि यह सर्वर उपलब्ध नहीं है, आदेश को फिर से चलाने का प्रयास करें।",
+	"commandError": "आदेश चलाते समय एक गलती हुई। बाद में पुन: प्रयास करें।",
+	"queryMissing": "Query is missing. Please try again.",
+	"missingCommandOption": "Missing a required option. Please try again.",
+	"interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
 }

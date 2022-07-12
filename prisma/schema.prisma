@@ -57,6 +57,7 @@ model EviePlus {
 model GuildSettings {
   id       String     @id
   eviePlus EviePlus[]
+  modules  Json[]
 
   moderationSettings ModerationSettings?
   airportSettings    AirportSettings?

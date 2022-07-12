@@ -11,11 +11,11 @@ import { InstanceProvider } from "./instance-context";
  * @category Core
  */
 export type ReacordConfig = {
-  /**
-   * The max number of active instances.
-   * When this limit is exceeded, the oldest instances will be disabled.
-   */
-  maxInstances?: number;
+	/**
+	 * The max number of active instances.
+	 * When this limit is exceeded, the oldest instances will be disabled.
+	 */
+	maxInstances?: number;
 };
 
 /**
@@ -23,62 +23,59 @@ export type ReacordConfig = {
  * Only use this directly if you're making [a custom adapter](/guides/custom-adapters).
  */
 export abstract class Reacord {
-  private renderers: Renderer[] = [];
+	private renderers: Renderer[] = [];
 
-  constructor(private readonly config: ReacordConfig = {}) {}
+	constructor(private readonly config: ReacordConfig = {}) {}
 
-  abstract send(...args: unknown[]): ReacordInstance;
-  abstract messageReply(...args: unknown[]): ReacordInstance;
-  abstract reply(...args: unknown[]): ReacordInstance;
-  abstract editReply(...args: unknown[]): ReacordInstance;
-  abstract ephemeralReply(...args: unknown[]): ReacordInstance;
+	abstract send(...args: unknown[]): ReacordInstance;
+	abstract messageReply(...args: unknown[]): ReacordInstance;
+	abstract reply(...args: unknown[]): ReacordInstance;
+	abstract editReply(...args: unknown[]): ReacordInstance;
+	abstract ephemeralReply(...args: unknown[]): ReacordInstance;
 
-  protected handleComponentInteraction(interaction: ComponentInteraction) {
-    for (const renderer of this.renderers) {
-      if (renderer.handleComponentInteraction(interaction)) return;
-    }
-  }
+	protected handleComponentInteraction(interaction: ComponentInteraction) {
+		for (const renderer of this.renderers) {
+			if (renderer.handleComponentInteraction(interaction)) return;
+		}
+	}
 
-  private get maxInstances() {
-    return this.config.maxInstances ?? 50;
-  }
+	private get maxInstances() {
+		return this.config.maxInstances ?? 50;
+	}
 
-  protected createInstance(renderer: Renderer, initialContent?: ReactNode) {
-    if (this.renderers.length > this.maxInstances) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.deactivate(this.renderers[0]!);
-    }
+	protected createInstance(renderer: Renderer, initialContent?: ReactNode) {
+		if (this.renderers.length > this.maxInstances) {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			this.deactivate(this.renderers[0]!);
+		}
 
-    this.renderers.push(renderer);
+		this.renderers.push(renderer);
 
-    // @ts-ignore Invalid Types
-    const container = reconciler.createContainer(renderer, 0, false, {});
+		// @ts-ignore Invalid Types
+		const container = reconciler.createContainer(renderer, 0, false, {});
 
-    const instance: ReacordInstance = {
-      render: (content: ReactNode) => {
-        reconciler.updateContainer(
-          <InstanceProvider value={instance}>{content}</InstanceProvider>,
-          container
-        );
-      },
-      deactivate: () => {
-        this.deactivate(renderer);
-      },
-      destroy: () => {
-        this.renderers = this.renderers.filter((it) => it !== renderer);
-        renderer.destroy();
-      },
-    };
+		const instance: ReacordInstance = {
+			render: (content: ReactNode) => {
+				reconciler.updateContainer(<InstanceProvider value={instance}>{content}</InstanceProvider>, container);
+			},
+			deactivate: () => {
+				this.deactivate(renderer);
+			},
+			destroy: () => {
+				this.renderers = this.renderers.filter((it) => it !== renderer);
+				renderer.destroy();
+			},
+		};
 
-    if (initialContent !== undefined) {
-      instance.render(initialContent);
-    }
+		if (initialContent !== undefined) {
+			instance.render(initialContent);
+		}
 
-    return instance;
-  }
+		return instance;
+	}
 
-  private deactivate(renderer: Renderer) {
-    this.renderers = this.renderers.filter((it) => it !== renderer);
-    renderer.deactivate();
-  }
+	private deactivate(renderer: Renderer) {
+		this.renderers = this.renderers.filter((it) => it !== renderer);
+		renderer.deactivate();
+	}
 }

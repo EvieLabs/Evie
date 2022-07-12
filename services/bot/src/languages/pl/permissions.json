@@ -1,7 +1,7 @@
 {
-  "admin": "You do not have the required permissions to use this command. (admin)",
-  "mod": "This command is only available to moderators.",
-  "buttonNotYours": "This button is not for you!",
-  "selectNotYours": "This select menu is not for you!",
-  "boost": "This feature is only available to Evie+ members! Boost our [support/community server](https://discord.gg/Sx9QzpVC7r) or [Sponsor me on GitHub](https://github.com/sponsors/twisttaan). We strive to keep as many features as possible free of charge, but I would love to have something in return, whether it's from a GitHub sponsorship (to help pay for infrastructure and my work) or Discord server boosts (reward our community)."
+	"admin": "You do not have the required permissions to use this command. (admin)",
+	"mod": "This command is only available to moderators.",
+	"buttonNotYours": "This button is not for you!",
+	"selectNotYours": "This select menu is not for you!",
+	"boost": "This feature is only available to Evie+ members! Boost our [support/community server](https://discord.gg/Sx9QzpVC7r) or [Sponsor me on GitHub](https://github.com/sponsors/twisttaan). We strive to keep as many features as possible free of charge, but I would love to have something in return, whether it's from a GitHub sponsorship (to help pay for infrastructure and my work) or Discord server boosts (reward our community)."
 }

@@ -1,31 +1,31 @@
 {
-  "extends": "../../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "../dist",
-    "allowJs": true,
-    "rootDir": ".",
-    "baseUrl": ".",
-    "jsx": "react",
-    "sourceMap": true,
-    "inlineSources": true,
-    "sourceRoot": "/",
-    "paths": {
-      "#root/*": ["*"],
-      "@shared": ["../../shared/src/index.ts"],
-      "#types/*": ["types/*"],
-      "#utils/*": ["utils/*"],
-      "#classes/*": ["classes/*"],
-      "#constants/*": ["constants/*"],
-      "@evie/reacord": ["lib/reacord/library/main.ts"],
-      "@evie/valorant": ["lib/valorant/index.ts"],
-      "@evie/config": ["lib/config/index.ts"],
-      "@evie/shapers": ["lib/shapers/index.ts"],
-      "@evie/home": ["lib/home/index.ts"],
-      "@astral/utils": ["lib/astral/utils/index.ts"],
-      "@evie/interfaces": ["lib/interfaces/index.ts"],
-      "@evie/internal": ["lib/internal/index.ts"],
-      "@evie/grpc": ["lib/grpc/index.ts"]
-    }
-  },
-  "include": [".", "./**/*.json"]
+	"extends": "../../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "../dist",
+		"allowJs": true,
+		"rootDir": ".",
+		"baseUrl": ".",
+		"jsx": "react",
+		"sourceMap": true,
+		"inlineSources": true,
+		"sourceRoot": "/",
+		"paths": {
+			"#root/*": ["*"],
+			"@shared": ["../../shared/src/index.ts"],
+			"#types/*": ["types/*"],
+			"#utils/*": ["utils/*"],
+			"#classes/*": ["classes/*"],
+			"#constants/*": ["constants/*"],
+			"@evie/reacord": ["lib/reacord/library/main.ts"],
+			"@evie/valorant": ["lib/valorant/index.ts"],
+			"@evie/config": ["lib/config/index.ts"],
+			"@evie/shapers": ["lib/shapers/index.ts"],
+			"@evie/home": ["lib/home/index.ts"],
+			"@astral/utils": ["lib/astral/utils/index.ts"],
+			"@evie/interfaces": ["lib/interfaces/index.ts"],
+			"@evie/internal": ["lib/internal/index.ts"],
+			"@evie/grpc": ["lib/grpc/index.ts"]
+		}
+	},
+	"include": [".", "./**/*.json"]
 }

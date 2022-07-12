@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { container } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
@@ -13,13 +14,7 @@ import type { ComponentInteraction } from "../internal/interaction";
 import type { Message, MessageOptions } from "../internal/message";
 import { ChannelMessageRenderer } from "../internal/renderers/channel-message-renderer";
 import { InteractionReplyRenderer } from "../internal/renderers/interaction-reply-renderer";
-import type {
-  ChannelInfo,
-  GuildInfo,
-  GuildMemberInfo,
-  MessageInfo,
-  UserInfo,
-} from "./component-event";
+import type { ChannelInfo, GuildInfo, GuildMemberInfo, MessageInfo, UserInfo } from "./component-event";
 import ComponentStore from "./ComponentStore";
 import type { ReacordInstance } from "./instance";
 import type { ReacordConfig } from "./reacord";
@@ -30,458 +25,384 @@ import { Reacord } from "./reacord";
  * @category Core
  */
 export class ReacordDiscordJs extends Reacord {
-  constructor(private client: Discord.Client, config: ReacordConfig = {}) {
-    super(config);
+	constructor(private readonly client: Discord.Client, config: ReacordConfig = {}) {
+		super(config);
 
-    client.on("interactionCreate", async (interaction) => {
-      if (
-        !(
-          (interaction.isButton() || interaction.isSelectMenu()) &&
-          interaction.isMessageComponent() &&
-          interaction.customId.startsWith("reacord-")
-        )
-      )
-        return;
+		client.on("interactionCreate", async (interaction) => {
+			if (
+				!(
+					(interaction.isButton() || interaction.isSelectMenu()) &&
+					interaction.isMessageComponent() &&
+					interaction.customId.startsWith("reacord-")
+				)
+			)
+				return;
 
-      if (!ComponentStore.componentExists(interaction.customId))
-        return void interaction.reply({
-          ephemeral: true,
-          content: await resolveKey(
-            interaction,
-            "errors:interactionNotRegistered"
-          ),
-        });
+			if (!ComponentStore.componentExists(interaction.customId))
+				return void interaction.reply({
+					ephemeral: true,
+					content: await resolveKey(interaction, "errors:interactionNotRegistered"),
+				});
 
-      return void this.handleComponentInteraction(
-        this.createReacordComponentInteraction(interaction)
-      );
-    });
-  }
+			return void this.handleComponentInteraction(this.createReacordComponentInteraction(interaction));
+		});
+	}
 
-  /**
-   * Sends a message to a channel.
-   * @see https://reacord.mapleleaf.dev/guides/sending-messages
-   */
-  override send(
-    channelId: string,
-    initialContent?: React.ReactNode
-  ): ReacordInstance {
-    return this.createInstance(
-      this.createChannelRenderer(channelId),
-      initialContent
-    );
-  }
+	/**
+	 * Sends a message to a channel.
+	 * @see https://reacord.mapleleaf.dev/guides/sending-messages
+	 */
+	override send(channelId: string, initialContent?: React.ReactNode): ReacordInstance {
+		return this.createInstance(this.createChannelRenderer(channelId), initialContent);
+	}
 
-  /**
-   * Replys to a message in a channel.
-   * @see https://reacord.mapleleaf.dev/guides/sending-messages
-   */
-  override messageReply(
-    message: Discord.Message,
-    initialContent?: React.ReactNode
-  ): ReacordInstance {
-    return this.createInstance(
-      this.createChannelRenderer(message.channelId),
-      initialContent
-    );
-  }
+	/**
+	 * Replys to a message in a channel.
+	 * @see https://reacord.mapleleaf.dev/guides/sending-messages
+	 */
+	override messageReply(message: Discord.Message, initialContent?: React.ReactNode): ReacordInstance {
+		return this.createInstance(this.createChannelRenderer(message.channelId), initialContent);
+	}
 
-  /**
-   * Sends a message as a reply to a command interaction.
-   * @see https://reacord.mapleleaf.dev/guides/sending-messages
-   */
-  override reply(
-    interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction,
-    initialContent?: React.ReactNode
-  ): ReacordInstance {
-    return this.createInstance(
-      this.createInteractionReplyRenderer(interaction),
-      initialContent
-    );
-  }
+	/**
+	 * Sends a message as a reply to a command interaction.
+	 * @see https://reacord.mapleleaf.dev/guides/sending-messages
+	 */
+	override reply(
+		interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction,
+		initialContent?: React.ReactNode,
+	): ReacordInstance {
+		return this.createInstance(this.createInteractionReplyRenderer(interaction), initialContent);
+	}
 
-  /**
-   * Sends a message as a reply to a command interaction.
-   * @see https://reacord.mapleleaf.dev/guides/sending-messages
-   */
-  override editReply(
-    interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction,
-    initialContent?: React.ReactNode
-  ): ReacordInstance {
-    return this.createInstance(
-      this.createInteractionEditReplyRenderer(interaction),
-      initialContent
-    );
-  }
+	/**
+	 * Sends a message as a reply to a command interaction.
+	 * @see https://reacord.mapleleaf.dev/guides/sending-messages
+	 */
+	override editReply(
+		interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction,
+		initialContent?: React.ReactNode,
+	): ReacordInstance {
+		return this.createInstance(this.createInteractionEditReplyRenderer(interaction), initialContent);
+	}
 
-  /**
-   * Sends an ephemeral message as a reply to a command interaction.
-   * @see https://reacord.mapleleaf.dev/guides/sending-messages
-   */
-  override ephemeralReply(
-    interaction:
-      | Discord.CommandInteraction
-      | Discord.ContextMenuInteraction
-      | Discord.ModalSubmitInteraction
-      | Discord.ButtonInteraction,
-    initialContent?: React.ReactNode
-  ): ReacordInstance {
-    return this.createInstance(
-      this.createEphemeralInteractionReplyRenderer(interaction),
-      initialContent
-    );
-  }
+	/**
+	 * Sends an ephemeral message as a reply to a command interaction.
+	 * @see https://reacord.mapleleaf.dev/guides/sending-messages
+	 */
+	override ephemeralReply(
+		interaction:
+			| Discord.CommandInteraction
+			| Discord.ContextMenuInteraction
+			| Discord.ModalSubmitInteraction
+			| Discord.ButtonInteraction,
+		initialContent?: React.ReactNode,
+	): ReacordInstance {
+		return this.createInstance(this.createEphemeralInteractionReplyRenderer(interaction), initialContent);
+	}
 
-  private createChannelRenderer(channelId: string) {
-    return new ChannelMessageRenderer({
-      send: async (options) => {
-        const channel =
-          this.client.channels.cache.get(channelId) ??
-          (await this.client.channels.fetch(channelId)) ??
-          raise(`Channel ${channelId} not found`);
+	private createChannelRenderer(channelId: string) {
+		return new ChannelMessageRenderer({
+			send: async (options) => {
+				const channel =
+					this.client.channels.cache.get(channelId) ??
+					(await this.client.channels.fetch(channelId)) ??
+					raise(`Channel ${channelId} not found`);
 
-        if (!channel.isText()) {
-          raise(`Channel ${channelId} is not a text channel`);
-        }
+				if (!channel.isText()) {
+					raise(`Channel ${channelId} is not a text channel`);
+				}
 
-        // @ts-ignore v13.7 Moment
-        const message = await channel.send(getDiscordMessageOptions(options));
-        return createReacordMessage(message);
-      },
-    });
-  }
+				// @ts-expect-error v13.7 Moment
+				const message = await channel.send(getDiscordMessageOptions(options));
+				return createReacordMessage(message);
+			},
+		});
+	}
 
-  private createInteractionReplyRenderer(
-    interaction:
-      | Discord.CommandInteraction
-      | Discord.ContextMenuInteraction
-      | Discord.MessageComponentInteraction
-  ) {
-    return new InteractionReplyRenderer({
-      type: "command",
-      id: interaction.id,
-      reply: async (options) => {
-        const message = await interaction.reply({
-          ...getDiscordMessageOptions(options),
-          fetchReply: true,
-        });
-        return createReacordMessage(message as Discord.Message);
-      },
-      followUp: async (options) => {
-        const message = await interaction.followUp({
-          ...getDiscordMessageOptions(options),
-          fetchReply: true,
-        });
-        return createReacordMessage(message as Discord.Message);
-      },
-    });
-  }
+	private createInteractionReplyRenderer(
+		interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction | Discord.MessageComponentInteraction,
+	) {
+		return new InteractionReplyRenderer({
+			type: "command",
+			id: interaction.id,
+			reply: async (options) => {
+				const message = await interaction.reply({
+					...getDiscordMessageOptions(options),
+					fetchReply: true,
+				});
+				return createReacordMessage(message as Discord.Message);
+			},
+			followUp: async (options) => {
+				const message = await interaction.followUp({
+					...getDiscordMessageOptions(options),
+					fetchReply: true,
+				});
+				return createReacordMessage(message as Discord.Message);
+			},
+		});
+	}
 
-  private createInteractionEditReplyRenderer(
-    interaction:
-      | Discord.CommandInteraction
-      | Discord.ContextMenuInteraction
-      | Discord.MessageComponentInteraction
-  ) {
-    return new InteractionReplyRenderer({
-      type: "command",
-      id: interaction.id,
-      reply: async (options) => {
-        const message = await interaction.editReply({
-          ...getDiscordMessageOptions(options),
-        });
-        return createReacordMessage(message as Discord.Message);
-      },
-      followUp: async (options) => {
-        const message = await interaction.followUp({
-          ...getDiscordMessageOptions(options),
-          fetchReply: true,
-        });
-        return createReacordMessage(message as Discord.Message);
-      },
-    });
-  }
+	private createInteractionEditReplyRenderer(
+		interaction: Discord.CommandInteraction | Discord.ContextMenuInteraction | Discord.MessageComponentInteraction,
+	) {
+		return new InteractionReplyRenderer({
+			type: "command",
+			id: interaction.id,
+			reply: async (options) => {
+				const message = await interaction.editReply({
+					...getDiscordMessageOptions(options),
+				});
+				return createReacordMessage(message as Discord.Message);
+			},
+			followUp: async (options) => {
+				const message = await interaction.followUp({
+					...getDiscordMessageOptions(options),
+					fetchReply: true,
+				});
+				return createReacordMessage(message as Discord.Message);
+			},
+		});
+	}
 
-  private createEphemeralInteractionReplyRenderer(
-    interaction:
-      | Discord.CommandInteraction
-      | Discord.ContextMenuInteraction
-      | Discord.MessageComponentInteraction
-      | Discord.ModalSubmitInteraction
-  ) {
-    return new InteractionReplyRenderer({
-      type: "command",
-      id: interaction.id,
-      reply: async (options) => {
-        await interaction.reply({
-          ...getDiscordMessageOptions(options),
-          ephemeral: true,
-        });
-        return createEphemeralReacordMessage();
-      },
-      followUp: async (options) => {
-        await interaction.followUp({
-          ...getDiscordMessageOptions(options),
-          ephemeral: true,
-        });
-        return createEphemeralReacordMessage();
-      },
-    });
-  }
+	private createEphemeralInteractionReplyRenderer(
+		interaction:
+			| Discord.CommandInteraction
+			| Discord.ContextMenuInteraction
+			| Discord.MessageComponentInteraction
+			| Discord.ModalSubmitInteraction,
+	) {
+		return new InteractionReplyRenderer({
+			type: "command",
+			id: interaction.id,
+			reply: async (options) => {
+				await interaction.reply({
+					...getDiscordMessageOptions(options),
+					ephemeral: true,
+				});
+				return createEphemeralReacordMessage();
+			},
+			followUp: async (options) => {
+				await interaction.followUp({
+					...getDiscordMessageOptions(options),
+					ephemeral: true,
+				});
+				return createEphemeralReacordMessage();
+			},
+		});
+	}
 
-  private createReacordComponentInteraction(
-    interaction: Discord.MessageComponentInteraction
-  ): ComponentInteraction {
-    // todo please dear god clean this up
-    const channel: ChannelInfo = interaction.channel
-      ? {
-          ...pruneNullishValues(
-            pick(interaction.channel, [
-              "topic",
-              "nsfw",
-              "lastMessageId",
-              "ownerId",
-              "parentId",
-              "rateLimitPerUser",
-            ])
-          ),
-          id: interaction.channelId,
-        }
-      : raise("Non-channel interactions are not supported");
+	private createReacordComponentInteraction(interaction: Discord.MessageComponentInteraction): ComponentInteraction {
+		// todo please dear god clean this up
+		const channel: ChannelInfo = interaction.channel
+			? {
+					...pruneNullishValues(
+						pick(interaction.channel, ["topic", "nsfw", "lastMessageId", "ownerId", "parentId", "rateLimitPerUser"]),
+					),
+					id: interaction.channelId,
+			  }
+			: raise("Non-channel interactions are not supported");
 
-    const message: MessageInfo =
-      interaction.message instanceof Discord.Message
-        ? {
-            ...pick(interaction.message, [
-              "id",
-              "channelId",
-              "authorId",
-              "content",
-              "tts",
-              "mentionEveryone",
-            ]),
-            timestamp: new Date(
-              interaction.message.createdTimestamp
-            ).toISOString(),
-            editedTimestamp: interaction.message.editedTimestamp
-              ? new Date(interaction.message.editedTimestamp).toISOString()
-              : undefined,
-            mentions: interaction.message.mentions.users.map((u) => u.id),
-          }
-        : raise("Message not found");
+		const message: MessageInfo =
+			interaction.message instanceof Discord.Message
+				? {
+						...pick(interaction.message, ["id", "channelId", "authorId", "content", "tts", "mentionEveryone"]),
+						timestamp: new Date(interaction.message.createdTimestamp).toISOString(),
+						editedTimestamp: interaction.message.editedTimestamp
+							? new Date(interaction.message.editedTimestamp).toISOString()
+							: undefined,
+						mentions: interaction.message.mentions.users.map((u) => u.id),
+				  }
+				: raise("Message not found");
 
-    const member: GuildMemberInfo | undefined =
-      interaction.member instanceof Discord.GuildMember
-        ? {
-            ...pruneNullishValues(
-              pick(interaction.member, [
-                "id",
-                "nick",
-                "displayName",
-                "avatarUrl",
-                "displayAvatarUrl",
-                "color",
-                "pending",
-              ])
-            ),
-            displayName: interaction.member.displayName,
-            roles: [...interaction.member.roles.cache.map((role) => role.id)],
-            joinedAt: interaction.member.joinedAt?.toISOString(),
-            premiumSince: interaction.member.premiumSince?.toISOString(),
-            communicationDisabledUntil:
-              interaction.member.communicationDisabledUntil?.toISOString(),
-          }
-        : undefined;
+		const member: GuildMemberInfo | undefined =
+			interaction.member instanceof Discord.GuildMember
+				? {
+						...pruneNullishValues(
+							pick(interaction.member, [
+								"id",
+								"nick",
+								"displayName",
+								"avatarUrl",
+								"displayAvatarUrl",
+								"color",
+								"pending",
+							]),
+						),
+						displayName: interaction.member.displayName,
+						roles: [...interaction.member.roles.cache.map((role) => role.id)],
+						joinedAt: interaction.member.joinedAt?.toISOString(),
+						premiumSince: interaction.member.premiumSince?.toISOString(),
+						communicationDisabledUntil: interaction.member.communicationDisabledUntil?.toISOString(),
+				  }
+				: undefined;
 
-    const guild: GuildInfo | undefined = interaction.guild
-      ? {
-          ...pruneNullishValues(pick(interaction.guild, ["id", "name"])),
-          member: member ?? raise("unexpected: member is undefined"),
-        }
-      : undefined;
+		const guild: GuildInfo | undefined = interaction.guild
+			? {
+					...pruneNullishValues(pick(interaction.guild, ["id", "name"])),
+					member: member ?? raise("unexpected: member is undefined"),
+			  }
+			: undefined;
 
-    const user: UserInfo = {
-      ...pruneNullishValues(
-        pick(interaction.user, ["id", "username", "discriminator", "tag"])
-      ),
-      avatarUrl: interaction.user.avatarURL() ?? "",
-      accentColor: interaction.user.accentColor ?? undefined,
-    };
+		const user: UserInfo = {
+			...pruneNullishValues(pick(interaction.user, ["id", "username", "discriminator", "tag"])),
+			avatarUrl: interaction.user.avatarURL() ?? "",
+			accentColor: interaction.user.accentColor ?? undefined,
+		};
 
-    const baseProps: Except<ComponentInteraction, "type"> = {
-      raw: interaction,
-      id: interaction.id,
-      customId: interaction.customId,
-      update: async (options: MessageOptions) => {
-        // @ts-ignore yes
-        await interaction.update(getDiscordMessageOptions(options));
-      },
-      deferUpdate: async () => {
-        if (interaction.replied || interaction.deferred) return;
-        await interaction.deferUpdate();
-      },
-      reply: async (options) => {
-        try {
-          const message = interaction.replied
-            ? await interaction.followUp({
-                ...getDiscordMessageOptions(options),
-                fetchReply: true,
-                ephemeral: options.ephemeral,
-              })
-            : await interaction.reply({
-                ...getDiscordMessageOptions(options),
-                fetchReply: true,
-                ephemeral: options.ephemeral,
-              });
-          return createReacordMessage(message as Discord.Message);
-        } catch (e) {
-          // TODO: Handle this "better"
-          Sentry.captureException(e);
-          container.logger.debug(
-            `[Reacord] Ignoring failed reply due to render cycle`
-          );
-          return createReacordMessage({} as Discord.Message);
-        }
-      },
-      followUp: async (options) => {
-        const message = await interaction.followUp({
-          ...getDiscordMessageOptions(options),
-          fetchReply: true,
-          ephemeral: options.ephemeral,
-        });
-        return createReacordMessage(message as Discord.Message);
-      },
-      event: {
-        channel,
-        message,
-        user,
-        guild,
-        interaction,
+		const baseProps: Except<ComponentInteraction, "type"> = {
+			raw: interaction,
+			id: interaction.id,
+			customId: interaction.customId,
+			update: async (options: MessageOptions) => {
+				// @ts-expect-error yes
+				await interaction.update(getDiscordMessageOptions(options));
+			},
+			deferUpdate: async () => {
+				if (interaction.replied || interaction.deferred) return;
+				await interaction.deferUpdate();
+			},
+			reply: async (options) => {
+				try {
+					const message = interaction.replied
+						? await interaction.followUp({
+								...getDiscordMessageOptions(options),
+								fetchReply: true,
+								ephemeral: options.ephemeral,
+						  })
+						: await interaction.reply({
+								...getDiscordMessageOptions(options),
+								fetchReply: true,
+								ephemeral: options.ephemeral,
+						  });
+					return createReacordMessage(message as Discord.Message);
+				} catch (e) {
+					// TODO: Handle this "better"
+					Sentry.captureException(e);
+					container.logger.debug(`[Reacord] Ignoring failed reply due to render cycle`);
+					return createReacordMessage({} as Discord.Message);
+				}
+			},
+			followUp: async (options) => {
+				const message = await interaction.followUp({
+					...getDiscordMessageOptions(options),
+					fetchReply: true,
+					ephemeral: options.ephemeral,
+				});
+				return createReacordMessage(message as Discord.Message);
+			},
+			event: {
+				channel,
+				message,
+				user,
+				guild,
+				interaction,
 
-        reply: (content?: ReactNode) =>
-          this.createInstance(
-            this.createInteractionReplyRenderer(interaction),
-            content
-          ),
+				reply: (content?: ReactNode) => this.createInstance(this.createInteractionReplyRenderer(interaction), content),
 
-        ephemeralReply: (content: ReactNode) =>
-          this.createInstance(
-            this.createEphemeralInteractionReplyRenderer(interaction),
-            content
-          ),
-      },
-    };
+				ephemeralReply: (content: ReactNode) =>
+					this.createInstance(this.createEphemeralInteractionReplyRenderer(interaction), content),
+			},
+		};
 
-    if (interaction.isButton()) {
-      return {
-        ...baseProps,
-        type: "button",
-      };
-    }
+		if (interaction.isButton()) {
+			return {
+				...baseProps,
+				type: "button",
+			};
+		}
 
-    if (interaction.isSelectMenu()) {
-      return {
-        ...baseProps,
-        type: "select",
-        event: {
-          ...baseProps.event,
-          values: interaction.values,
-        },
-      };
-    }
+		if (interaction.isSelectMenu()) {
+			return {
+				...baseProps,
+				type: "select",
+				event: {
+					...baseProps.event,
+					values: interaction.values,
+				},
+			};
+		}
 
-    raise(`Unsupported component interaction type: ${interaction.type}`);
-  }
+		raise(`Unsupported component interaction type: ${interaction.type}`);
+	}
 }
 
 function createReacordMessage(message: Discord.Message): Message {
-  return {
-    edit: async (options) => {
-      // @ts-ignore v13.7 Moment
-      await message.edit(getDiscordMessageOptions(options));
-    },
-    delete: async () => {
-      await message.delete();
-    },
-  };
+	return {
+		edit: async (options) => {
+			// @ts-expect-error v13.7 Moment
+			await message.edit(getDiscordMessageOptions(options));
+		},
+		delete: async () => {
+			await message.delete();
+		},
+	};
 }
 
 function createEphemeralReacordMessage(): Message {
-  return {
-    edit: () => {
-      console.warn("Ephemeral messages can't be edited");
-      return Promise.resolve();
-    },
-    delete: () => {
-      console.warn("Ephemeral messages can't be deleted");
-      return Promise.resolve();
-    },
-  };
+	return {
+		edit: () => {
+			console.warn("Ephemeral messages can't be edited");
+			return Promise.resolve();
+		},
+		delete: () => {
+			console.warn("Ephemeral messages can't be deleted");
+			return Promise.resolve();
+		},
+	};
 }
 
-function getDiscordMessageOptions(
-  reacordOptions: MessageOptions
-): Discord.InteractionReplyOptions;
+function getDiscordMessageOptions(reacordOptions: MessageOptions): Discord.InteractionReplyOptions;
 
-function getDiscordMessageOptions(
-  reacordOptions: MessageOptions
-): Discord.InteractionUpdateOptions;
+function getDiscordMessageOptions(reacordOptions: MessageOptions): Discord.InteractionUpdateOptions;
 
-function getDiscordMessageOptions(
-  reacordOptions: MessageOptions
-): Discord.MessageEditOptions;
+function getDiscordMessageOptions(reacordOptions: MessageOptions): Discord.MessageEditOptions;
 
 // TODO: this could be a part of the core library,
 // and also handle some edge cases, e.g. empty messages
-function getDiscordMessageOptions(reacordOptions: MessageOptions): any {
-  const options: Discord.MessageOptions = {
-    content: reacordOptions.content || null,
-    embeds: reacordOptions.embeds,
-    components: reacordOptions.actionRows.map((row) => ({
-      type: "ACTION_ROW",
-      components: row.map(
-        (component): Discord.MessageActionRowComponentOptions => {
-          if (component.type === "button") {
-            return {
-              type: "BUTTON",
-              customId: component.customId,
-              label: component.label ?? "",
-              style: toUpper(component.style ?? "secondary"),
-              disabled: component.disabled,
-              emoji: component.emoji,
-            };
-          }
+function getDiscordMessageOptions(reacordOptions: MessageOptions): unknown {
+	const options: Discord.MessageOptions = {
+		content: reacordOptions.content || null,
+		embeds: reacordOptions.embeds,
+		components: reacordOptions.actionRows.map((row) => ({
+			type: "ACTION_ROW",
+			components: row.map((component): Discord.MessageActionRowComponentOptions => {
+				if (component.type === "button") {
+					return {
+						type: "BUTTON",
+						customId: component.customId,
+						label: component.label ?? "",
+						style: toUpper(component.style ?? "secondary"),
+						disabled: component.disabled,
+						emoji: component.emoji,
+					};
+				}
 
-          if (component.type === "select") {
-            return {
-              ...component,
-              type: "SELECT_MENU",
-              options: component.options.map((option) => ({
-                ...option,
-                default: component.values?.includes(option.value),
-              })),
-            };
-          }
+				if (component.type === "select") {
+					return {
+						...component,
+						type: "SELECT_MENU",
+						options: component.options.map((option) => ({
+							...option,
+							default: component.values?.includes(option.value),
+						})),
+					};
+				}
 
-          if (component.type === "link") {
-            return {
-              type: "BUTTON",
-              label: component.label ?? "",
-              url: component.url,
-              emoji: component.emoji,
-              style: "LINK",
-            };
-          }
+				return {
+					type: "BUTTON",
+					label: component.label ?? "",
+					url: component.url,
+					emoji: component.emoji,
+					style: "LINK",
+				};
+			}),
+		})),
+	};
 
-          raise(`Unsupported component type: ${component}`);
-        }
-      ),
-    })),
-  };
+	if (!options.content && !options.embeds?.length) {
+		options.content = "_ _";
+	}
 
-  if (!options.content && !options.embeds?.length) {
-    options.content = "_ _";
-  }
-
-  return options as any;
+	return options as unknown;
 }

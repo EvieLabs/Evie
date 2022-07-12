@@ -3,7 +3,7 @@ import moduleAlias from "module-alias";
 config({
   path: "../../.env",
 });
-moduleAlias(__dirname + "../../package.json");
+moduleAlias(`${__dirname  }../../package.json`);
 
 import { PrismaClient } from ".prisma/client";
 import fastifyAutoload from "@fastify/autoload";
@@ -40,9 +40,7 @@ declare module "fastify" {
   }
 }
 
-const grpcConnection = `127.0.0.1:${
-  getNumberSecret("guildStorePort") ?? "50051"
-}`;
+const grpcConnection = `127.0.0.1:${getNumberSecret("guildStorePort") ?? "50051"}`;
 const grpcAuth = credentials.createInsecure();
 
 container.assistant = new Assistant();
@@ -71,7 +69,7 @@ app.register(fastifyCors, {
 app.register(helmet);
 
 app.register(fastifySecureSession, {
-  key: Buffer.from(process.env.COOKIE_KEY as string, "hex"),
+  key: Buffer.from(process.env.COOKIE_KEY!, "hex"),
   cookie: {
     path: "/",
   },
@@ -89,9 +87,7 @@ fastifyPassport.use(
       clientID: getSecret("DISCORD_CLIENT_ID"),
       clientSecret: getSecret("DISCORD_SECRET"),
       callbackURL:
-        getSecret("DISCORD_CB", false) !== ""
-          ? getSecret("DISCORD_CB")
-          : `http://localhost:${PORT}/auth/callback`,
+        getSecret("DISCORD_CB", false) !== "" ? getSecret("DISCORD_CB") : `http://localhost:${PORT}/auth/callback`,
       scope: scopes,
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -128,11 +124,9 @@ fastifyPassport.use(
 );
 
 fastifyPassport.registerUserSerializer(async (user: EvieUser) => user.id);
-fastifyPassport.registerUserDeserializer(async (id: string) => {
-  return await prisma.evieUser.findFirst({
+fastifyPassport.registerUserDeserializer(async (id: string) => prisma.evieUser.findFirst({
     where: { id },
-  });
-});
+  }));
 
 app.register(websocket);
 

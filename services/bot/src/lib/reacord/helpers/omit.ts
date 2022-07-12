@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 export function omit<Subject extends object, Key extends PropertyKey>(
-  subject: Subject,
-  keys: Key[]
-  // hack: using a conditional type preserves union types
+	subject: Subject,
+	keys: Key[],
+	// hack: using a conditional type preserves union types
 ): Subject extends unknown ? Omit<Subject, Key> : never {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result: any = {};
-  for (const key in subject) {
-    if (!keys.includes(key as unknown as Key)) {
-      result[key] = subject[key];
-    }
-  }
-  return result;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const result: any = {};
+	for (const key in subject) {
+		if (!keys.includes(key as unknown as Key)) {
+			result[key] = subject[key];
+		}
+	}
+	return result;
 }

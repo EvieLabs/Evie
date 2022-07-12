@@ -16,9 +16,7 @@ export function statsTemplate(stats: ProcessedStats) {
           </svg>
         </div>
         <div class="stat-title">Servers</div>
-        <div class="stat-value text-secondary">${numberPrettifier(
-          stats.servers
-        )}</div>
+        <div class="stat-value text-secondary">${numberPrettifier(stats.servers)}</div>
       </div>
 
       <div class="stat">
@@ -28,9 +26,7 @@ export function statsTemplate(stats: ProcessedStats) {
           </svg>
         </div>
         <div class="stat-title">Users</div>
-        <div class="stat-value text-primary">${numberPrettifier(
-          stats.users
-        )}</div>
+        <div class="stat-value text-primary">${numberPrettifier(stats.users)}</div>
       </div>
 
       <div class="stat">
@@ -40,9 +36,7 @@ export function statsTemplate(stats: ProcessedStats) {
           </svg>
         </div>
         <div class="stat-title">Shards</div>
-        <div class="stat-value text-primary">${numberPrettifier(
-          stats.shards
-        )}</div>
+        <div class="stat-value text-primary">${numberPrettifier(stats.shards)}</div>
       </div>
     </div>
   </div>

@@ -3,18 +3,15 @@ import puppeteer from "puppeteer";
 import { getSecret } from "../utils/env";
 
 export class Puppeteer {
-  private static cache = new NodeCache({
+  private static readonly cache = new NodeCache({
     stdTTL: 60 * 60,
   });
 
-  private static opts: puppeteer.LaunchOptions &
+  private static readonly opts: puppeteer.LaunchOptions &
     puppeteer.BrowserLaunchArgumentOptions &
     puppeteer.BrowserConnectOptions = {
     headless: true,
-    executablePath:
-      getSecret("NODE_ENV", false) === "production"
-        ? "/usr/bin/google-chrome"
-        : undefined,
+    executablePath: getSecret("NODE_ENV", false) === "production" ? "/usr/bin/google-chrome" : undefined,
     ignoreDefaultArgs: ["--disable-extensions"],
     args: ["--no-sandbox"],
   };
@@ -27,7 +24,7 @@ export class Puppeteer {
     }
   ): Promise<Buffer> {
     const cacheKey = html.toLowerCase();
-    const cached = this.cache.get(cacheKey) as Buffer;
+    const cached = this.cache.get(cacheKey)!;
 
     if (cached) return cached;
 

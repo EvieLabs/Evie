@@ -13,7 +13,7 @@ export default async function GoogleAssistantRouter(fastify: FastifyInstance) {
 
     try {
       const { image, audio } = await assistant.ask(query);
-      return res.status(200).send({
+      return await res.status(200).send({
         image,
         audio: audio || null,
       });

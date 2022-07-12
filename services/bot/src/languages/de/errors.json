@@ -1,7 +1,7 @@
 {
-  "notInCachedGuild": "Dieser Server scheint nicht gecacht zu sein, bitte versuche den Befehl erneut.",
-  "commandError": "Beim Ausführen des Befehls ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
-  "queryMissing": "Query is missing. Please try again.",
-  "missingCommandOption": "Missing a required option. Please try again.",
-  "interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
+	"notInCachedGuild": "Dieser Server scheint nicht gecacht zu sein, bitte versuche den Befehl erneut.",
+	"commandError": "Beim Ausführen des Befehls ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
+	"queryMissing": "Query is missing. Please try again.",
+	"missingCommandOption": "Missing a required option. Please try again.",
+	"interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
 }

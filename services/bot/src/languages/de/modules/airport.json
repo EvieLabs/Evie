@@ -1,7 +1,7 @@
 {
-  "autoRoleReason": "Automatische Beitrittsrolle",
-  "leftServer": "{{name}} hat den Server verlassen",
-  "joinedOriginally": "{{name}} hat den Server früher betreten",
-  "unknownTime": "Zu einer unbekannten Zeit.",
-  "joinServer": "{{name}} hat den Server betreten"
+	"autoRoleReason": "Automatische Beitrittsrolle",
+	"leftServer": "{{name}} hat den Server verlassen",
+	"joinedOriginally": "{{name}} hat den Server früher betreten",
+	"unknownTime": "Zu einer unbekannten Zeit.",
+	"joinServer": "{{name}} hat den Server betreten"
 }

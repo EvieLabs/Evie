@@ -1,7 +1,7 @@
 {
-  "autoRoleReason": "ऑटो जॉइन रोल",
-  "leftServer": "{{name}} सर्वर छोड़ दिया",
-  "joinedOriginally": "{{name}} सर्वर मे आया था",
-  "unknownTime": "अज्ञात समय पर",
-  "joinServer": "{{name}} सर्वर में आया"
+	"autoRoleReason": "ऑटो जॉइन रोल",
+	"leftServer": "{{name}} सर्वर छोड़ दिया",
+	"joinedOriginally": "{{name}} सर्वर मे आया था",
+	"unknownTime": "अज्ञात समय पर",
+	"joinServer": "{{name}} सर्वर में आया"
 }

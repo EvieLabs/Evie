@@ -5,49 +5,45 @@ import { Message, TextChannel } from "discord.js";
 import { camelCase } from "lodash";
 
 @ApplyOptions<Command.Options>({
-  name: "evieicon",
-  description: "Upload an emoji to Evie Icons",
-  preconditions: ["OwnerOnly"],
-  aliases: ["ei"],
+	name: "evieicon",
+	description: "Upload an emoji to Evie Icons",
+	preconditions: ["OwnerOnly"],
+	aliases: ["ei"],
 })
 export class EvieIcon extends Command {
-  public override async messageRun(message: Message, args: Args) {
-    const emoji = await args.pick("emoji").catch(() => {
-      throw "You must specify an emoji to upload.";
-    });
+	public override async messageRun(message: Message, args: Args) {
+		const emoji = await args.pick("emoji").catch(() => {
+			throw "You must specify an emoji to upload.";
+		});
 
-    const name = await args
-      .pick("string")
-      .catch(() => camelCase(emoji.name || "anEmoji"));
+		const name = await args.pick("string").catch(() => camelCase(emoji.name ?? "anEmoji"));
 
-    const emojiBuffer = await fetch(
-      `https://cdn.discordapp.com/emojis/${emoji.id}.${
-        emoji.animated ? "gif" : "png"
-      }`,
-      FetchResultTypes.Buffer
-    );
+		if (!emoji.id) throw "regex (gone wrong)";
 
-    const evieIcons = await this.container.client.guilds.fetch(
-      "971372192203952148"
-    );
+		const emojiBuffer = await fetch(
+			`https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}`,
+			FetchResultTypes.Buffer,
+		);
 
-    const icon = await evieIcons.emojis.create(emojiBuffer, name);
+		const evieIcons = await this.container.client.guilds.fetch("971372192203952148");
 
-    const idChannel = await evieIcons.channels.fetch("971373746218729472");
+		const icon = await evieIcons.emojis.create(emojiBuffer, name);
 
-    if (!(idChannel instanceof TextChannel)) throw "Couldn't find the channel.";
+		const idChannel = await evieIcons.channels.fetch("971373746218729472");
 
-    const sentMessage = await idChannel.send(`\\${icon}`);
+		if (!(idChannel instanceof TextChannel)) throw "Couldn't find the channel.";
 
-    await message.reply(
-      `Uploaded ${icon} \`${icon}\` to Evie Icons.
+		const sentMessage = await idChannel.send(`\\${icon.toString()}`);
+
+		await message.reply(
+			`Uploaded ${icon.toString()} \`${icon.toString()}\` to Evie Icons.
 \`\`\`ts
 // append this to the beautiful emoji enum ${message.author.username}
 export enum Emojis {
-  ${name} = "${icon}",
+  ${name} = "${icon.toString()}",
 }
 \`\`\`
-Evie Icons ID List: <${sentMessage.url}>`
-    );
-  }
+Evie Icons ID List: <${sentMessage.url}>`,
+		);
+	}
 }

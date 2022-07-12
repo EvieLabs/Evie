@@ -6,35 +6,33 @@ import { AuditLogEvent } from "discord-api-types/v9";
 import { Constants, DiscordAPIError, GuildMember, User } from "discord.js";
 
 @ApplyOptions<Listener.Options>({
-  once: false,
-  event: Events.GuildMemberRemove,
+	once: false,
+	event: Events.GuildMemberRemove,
 })
 export class GuildKickListener extends Listener {
-  public async run({ guild, user }: GuildMember) {
-    try {
-      const auditLogs = await guild.fetchAuditLogs({
-        limit: 10,
-        type: AuditLogEvent.MemberKick,
-      });
-      const log = auditLogs.entries.find(
-        (log) => (log.target as User).id === user.id
-      );
-      if (!log) return;
-      if (log.executor?.id == this.container.client.user?.id) return;
+	public async run({ guild, user }: GuildMember) {
+		try {
+			const auditLogs = await guild.fetchAuditLogs({
+				limit: 10,
+				type: AuditLogEvent.MemberKick,
+			});
+			const log = auditLogs.entries.find((log) => (log.target as User).id === user.id);
+			if (!log) return;
+			if (log.executor?.id === this.container.client.user?.id) return;
 
-      return void this.container.client.punishments.createModAction(guild, {
-        action: "Manual Kick (Not via Evie)",
-        type: ModActionType.Kick,
-        target: user,
-        reason: log.reason ? log.reason : `No reason provided.`,
-        moderator: log?.executor || undefined,
-      });
-    } catch (error) {
-      if (!(error instanceof DiscordAPIError)) return captureException(error);
+			return void this.container.client.punishments.createModAction(guild, {
+				action: "Manual Kick (Not via Evie)",
+				type: ModActionType.Kick,
+				target: user,
+				reason: log.reason ? log.reason : `No reason provided.`,
+				moderator: log.executor ?? undefined,
+			});
+		} catch (error) {
+			if (!(error instanceof DiscordAPIError)) return captureException(error);
 
-      if (error.code === Constants.APIErrors.MISSING_PERMISSIONS) return;
+			if (error.code === Constants.APIErrors.MISSING_PERMISSIONS) return;
 
-      return captureException(error);
-    }
-  }
+			return captureException(error);
+		}
+	}
 }

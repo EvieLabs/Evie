@@ -13,8 +13,5 @@ export const InstanceProvider = Context.Provider;
  * @see https://reacord.mapleleaf.dev/guides/use-instance
  */
 export function useInstance(): ReacordInstance {
-  return (
-    React.useContext(Context) ??
-    raise("Could not find instance, was this component rendered via Reacord?")
-  );
+	return React.useContext(Context) ?? raise("Could not find instance, was this component rendered via Reacord?");
 }

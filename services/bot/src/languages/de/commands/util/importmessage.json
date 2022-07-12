@@ -1,8 +1,8 @@
 {
-  "editTip": "Before continuing, we recommend you use the [online editor for your message]({{editorLink}}).",
-  "invalidChannelType": "Please provide a valid text channel.",
-  "userNoPerms": "You do not have permission to send messages in this channel.",
-  "botNoPerms": "I do not have permission to send messages in this channel.",
-  "notImportedMessage": "Please provide a message that was sent using `/importmessage`, this context menu is used to edit messages you made me send with `/importmessage`.",
-  "imported": "Imported [here]({{messageUrl}})!"
+	"editTip": "Before continuing, we recommend you use the [online editor for your message]({{editorLink}}).",
+	"invalidChannelType": "Please provide a valid text channel.",
+	"userNoPerms": "You do not have permission to send messages in this channel.",
+	"botNoPerms": "I do not have permission to send messages in this channel.",
+	"notImportedMessage": "Please provide a message that was sent using `/importmessage`, this context menu is used to edit messages you made me send with `/importmessage`.",
+	"imported": "Imported [here]({{messageUrl}})!"
 }

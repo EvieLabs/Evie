@@ -10,9 +10,7 @@ export default async function StatsRouter(fastify: FastifyInstance) {
     };
   }>("/", async (req, res) => {
     const stats =
-      req.query.avg === "true" || !req.query.avg
-        ? await Stats.getStats()
-        : await prisma.shardStats.findMany();
+      req.query.avg === "true" || !req.query.avg ? await Stats.getStats() : await prisma.shardStats.findMany();
 
     return res.code(200).send(stats);
   });
@@ -20,7 +18,7 @@ export default async function StatsRouter(fastify: FastifyInstance) {
   fastify.get(".png", async (_, res) => {
     try {
       const image = await Stats.renderStats();
-      return res.status(200).header("Content-Type", "image/png").send(image);
+      return await res.status(200).header("Content-Type", "image/png").send(image);
     } catch (e) {
       throw e;
     }

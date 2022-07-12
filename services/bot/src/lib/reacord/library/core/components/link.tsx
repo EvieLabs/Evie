@@ -9,29 +9,27 @@ import type { ButtonSharedProps } from "./button-shared-props";
  * @category Link
  */
 export type LinkProps = ButtonSharedProps & {
-  /** The URL the link should lead to */
-  url: string;
-  /** The link text */
-  children?: string;
+	/** The URL the link should lead to */
+	url: string;
+	/** The link text */
+	children?: string;
 };
 
 /**
  * @category Link
  */
 export function Link(props: LinkProps) {
-  return (
-    <ReacordElement props={props} createNode={() => new LinkNode(props)} />
-  );
+	return <ReacordElement props={props} createNode={() => new LinkNode(props)} />;
 }
 
 class LinkNode extends Node<LinkProps> {
-  override modifyMessageOptions(options: MessageOptions): void {
-    getNextActionRow(options).push({
-      type: "link",
-      disabled: this.props.disabled,
-      emoji: this.props.emoji,
-      label: this.props.label || this.props.children,
-      url: this.props.url,
-    });
-  }
+	override modifyMessageOptions(options: MessageOptions): void {
+		getNextActionRow(options).push({
+			type: "link",
+			disabled: this.props.disabled,
+			emoji: this.props.emoji,
+			label: this.props.label || this.props.children,
+			url: this.props.url,
+		});
+	}
 }

@@ -15,9 +15,7 @@ export async function postVote(body: PostVoteRequest.AsObject) {
     .setVoteLink(body.voteLink);
 
   const res = await new Promise<PostVoteResponse.AsObject>((resolve, reject) =>
-    container.voteManager.postVote(req, (err, res) =>
-      err ? reject(err) : resolve(res.toObject())
-    )
+    container.voteManager.postVote(req, (err, res) => (err ? reject(err) : resolve(res.toObject())))
   ).catch((err) => {
     throw err;
   });
@@ -26,9 +24,7 @@ export async function postVote(body: PostVoteRequest.AsObject) {
 }
 
 export async function canManageGuild(userId: string, guildId: string) {
-  const req = new CanManageGuildConfigRequest()
-    .setUserId(userId)
-    .setGuildId(guildId);
+  const req = new CanManageGuildConfigRequest().setUserId(userId).setGuildId(guildId);
 
   const res = await new Promise<boolean>((resolve) =>
     container.guildStore.canManageGuildConfig(req, (err, res) =>
@@ -43,9 +39,7 @@ export async function fetchGuild(guildId: string) {
   const req = new GetGuildRequest().setGuildId(guildId);
 
   const res = await new Promise<GetGuildResponse.AsObject>((resolve, reject) =>
-    container.guildStore.getGuild(req, (err, res) =>
-      err ? reject(err) : resolve(res.toObject())
-    )
+    container.guildStore.getGuild(req, (err, res) => (err ? reject(err) : resolve(res.toObject())))
   ).catch((err) => {
     throw err;
   });

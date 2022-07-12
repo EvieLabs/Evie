@@ -1,7 +1,7 @@
 {
-  "notInCachedGuild": "이 서버는 캐시되지 않은 것 같아요. 명령을 다시 실행 해보세요.",
-  "commandError": "명령을 실행하는 동안 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
-  "queryMissing": "Query is missing. Please try again.",
-  "missingCommandOption": "Missing a required option. Please try again.",
-  "interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
+	"notInCachedGuild": "이 서버는 캐시되지 않은 것 같아요. 명령을 다시 실행 해보세요.",
+	"commandError": "명령을 실행하는 동안 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+	"queryMissing": "Query is missing. Please try again.",
+	"missingCommandOption": "Missing a required option. Please try again.",
+	"interactionNotRegistered": "Sorry this message is no longer registered, re-run the command."
 }

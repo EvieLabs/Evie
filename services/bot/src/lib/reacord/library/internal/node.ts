@@ -6,15 +6,15 @@ import type { ComponentInteraction } from "./interaction";
 import type { MessageOptions } from "./message";
 
 export abstract class Node<Props> {
-  readonly children = new Container<Node<unknown>>();
+	readonly children = new Container<Node<unknown>>();
 
-  constructor(public props: Props, public customId?: string) {}
+	constructor(public props: Props, public customId?: string) {}
 
-  // @ts-expect-error no-unused-vars
-  modifyMessageOptions(options: MessageOptions) {}
+	// @ts-expect-error no-unused-vars
+	modifyMessageOptions(options: MessageOptions) {}
 
-  // @ts-expect-error no-unused-vars
-  handleComponentInteraction(interaction: ComponentInteraction): boolean {
-    return false;
-  }
+	// @ts-expect-error no-unused-vars
+	handleComponentInteraction(interaction: ComponentInteraction): boolean {
+		return false;
+	}
 }
