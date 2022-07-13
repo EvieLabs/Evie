@@ -4,6 +4,12 @@ import { captureException } from "@sentry/node";
 import type { GuildMember } from "discord.js";
 
 export class AstralPlayer {
+	private readonly raw!: DBAstralPlayer;
+
+	public constructor(public member: GuildMember, raw: DBAstralPlayer) {
+		this.raw = raw;
+	}
+
 	public id = this.raw.id;
 	public xp = this.raw.xp;
 	public level = this.calculateLevel(this.xp);
@@ -31,8 +37,6 @@ export class AstralPlayer {
 	private calculateLevel(xp: number) {
 		return Math.floor(0.1 * Math.sqrt(xp));
 	}
-
-	public constructor(public member: GuildMember, private readonly raw: DBAstralPlayer) {}
 }
 
 export async function getAstralPlayer(member: GuildMember): Promise<AstralPlayer> {

@@ -2,6 +2,12 @@ import { ValorantTierEmojis } from "#root/constants/index";
 import type { MMRDataV2, Season } from "../types/types";
 
 export default class ShapedCompStats {
+	public raw!: MMRDataV2;
+
+	public constructor(raw: MMRDataV2) {
+		this.raw = raw;
+	}
+
 	private readonly rawPeakSeason: Season = this.getPeakSeason();
 
 	public readonly peakSeason = {
@@ -29,8 +35,6 @@ export default class ShapedCompStats {
 				? `+${this.raw.current_data.mmr_change_to_last_game}`
 				: this.raw.current_data.mmr_change_to_last_game,
 	};
-
-	public constructor(private readonly raw: MMRDataV2) {}
 
 	/**
 	 * Find the Season the player had the highest final_rank and return the season

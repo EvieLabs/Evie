@@ -2,15 +2,11 @@ import { container } from "@sapphire/framework";
 import type { Snowflake, User } from "discord.js";
 
 export class VotePayload {
-	constructor(
-		private readonly raw: {
-			userSnowflake: Snowflake;
-			test: boolean;
-			serviceName: string;
-			voteLink: string;
-			emoji: string;
-		},
-	) {}
+	private readonly raw!: VotePayload.Raw;
+
+	constructor(raw: VotePayload.Raw) {
+		this.raw = raw;
+	}
 
 	public user: User | null = null;
 	public readonly test: boolean = this.raw.test;
@@ -21,5 +17,15 @@ export class VotePayload {
 
 	public async init() {
 		this.user = await container.client.users.fetch(this.raw.userSnowflake).catch(() => null);
+	}
+}
+
+export namespace VotePayload {
+	export interface Raw {
+		userSnowflake: Snowflake;
+		test: boolean;
+		serviceName: string;
+		voteLink: string;
+		emoji: string;
 	}
 }
