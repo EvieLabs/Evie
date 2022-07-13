@@ -63,7 +63,7 @@ The official public hosted Evie is a completely free service (except for some "e
 5. Type `yarn build` to build the Prisma schema.
 6. Make a volume for the postgres database with `docker volume create --name=postgres`.
 7. Start the database with `docker-compose up --build postgres` this will only start the postgres container.
-8. Update the environment variable `DATABASE_URL` in `/apps/bot` with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
+8. Update the environment variable `DATABASE_URL` you made with `postgresql://postgres:internalpassword@localhost:5432/bot?schema=public`
 9. Before testing make sure to push the schema to the database with `yarn pushdb` (you will need to re-run this every time you make changes to `prisma/schema.prisma`)
 10. Test with `yarn dev`. Every time you save a file the running instance will automatically stop, build and restart.
 
