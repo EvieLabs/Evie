@@ -6,6 +6,7 @@ import { toString } from "lodash";
 
 export class ModuleConfigStore {
 	public constructor(public readonly options: ModuleConfigStore.Options) {
+		this.options.moduleName = options.moduleName.toLowerCase();
 		this.init();
 	}
 
