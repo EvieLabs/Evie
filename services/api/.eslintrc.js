@@ -9,5 +9,6 @@ module.exports = {
 		"@typescript-eslint/explicit-member-accessibility": "off",
 		"@typescript-eslint/no-throw-literal": "off",
 		"@typescript-eslint/method-signature-style": "off",
+		"@typescript-eslint/require-await": "off",
 	},
 };

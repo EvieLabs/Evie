@@ -1,7 +1,7 @@
 import fastifyPassport from "@fastify/passport";
 import type { FastifyInstance } from "fastify";
 
-export default function AuthRouter(fastify: FastifyInstance) {
+export default async function AuthRouter(fastify: FastifyInstance) {
 	fastify.get(
 		"/callback",
 		{
