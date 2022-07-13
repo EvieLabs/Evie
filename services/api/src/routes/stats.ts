@@ -2,7 +2,7 @@ import { container } from "@sapphire/pieces";
 import type { FastifyInstance } from "fastify";
 import { Stats } from "../modules/Stats";
 
-export default async function StatsRouter(fastify: FastifyInstance) {
+export default function StatsRouter(fastify: FastifyInstance) {
 	const { prisma } = container;
 	fastify.get<{
 		Querystring: {

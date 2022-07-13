@@ -2,7 +2,7 @@ import { container } from "@sapphire/pieces";
 import type { FastifyInstance } from "fastify";
 import { canManageGuild } from "../../utils/grpcWrapper";
 
-export default async function AuthRouter(fastify: FastifyInstance) {
+export default function AuthRouter(fastify: FastifyInstance) {
 	fastify.get<{
 		Params: {
 			id: string;

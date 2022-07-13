@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 
-export default async function UserRouter(fastify: FastifyInstance) {
+export default function UserRouter(fastify: FastifyInstance) {
 	fastify.get(
 		"/@me",
 
