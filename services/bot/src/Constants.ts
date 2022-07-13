@@ -59,7 +59,6 @@ export const MessageSchema = s.object({
 
 export const ModuleSchema = s.object({
 	name: s.string,
-	enabled: s.boolean,
 	config: s.any,
 });
 

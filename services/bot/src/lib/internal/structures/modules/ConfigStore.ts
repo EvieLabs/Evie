@@ -2,9 +2,8 @@
 import { ModuleSchema } from "#root/Constants";
 import { container, Events } from "@sapphire/framework";
 import type { Snowflake } from "discord.js";
-import { toString } from "lodash";
 
-export class ModuleConfigStore {
+export class ModuleConfigStore<ConfigType> {
 	public constructor(public readonly options: ModuleConfigStore.Options) {
 		this.options.moduleName = options.moduleName.toLowerCase();
 		this.init();
@@ -12,8 +11,10 @@ export class ModuleConfigStore {
 
 	private readonly cache = new Map<string, unknown>();
 
-	public get<T>(guildId: Snowflake, key: string): T | undefined {
-		return this.cache.get(`${guildId}-${key}`) as T | undefined;
+	public get(guildId: Snowflake): ModuleConfigStore.Output<ConfigType> | null {
+		const cached = this.cache.get(`${guildId}`);
+		if (cached) return cached as ModuleConfigStore.Output<ConfigType>;
+		return null;
 	}
 
 	private init() {
@@ -53,16 +54,14 @@ export class ModuleConfigStore {
 			for (const module of modules) {
 				if (module.name === this.options.moduleName) {
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					for (const [key, value] of Object.entries(module.config)) {
-						this.cache.set(`${guildId}-${key}`, value);
-					}
+					this.cache.set(`${guildId}`, module.config);
 					break;
 				}
 			}
 		}
 	}
 
-	public async set<T>(guildId: Snowflake, key: string, value: T): Promise<void> {
+	public async set(guildId: Snowflake, config: ModuleConfigStore.Output<ConfigType>): Promise<void> {
 		const { prisma } = container.client;
 		const { logger } = container;
 
@@ -74,13 +73,12 @@ export class ModuleConfigStore {
 
 		if (!guildSettings) throw new Error("Guild Settings not found!");
 
-		let newModules = guildSettings.modules.map((module) => ModuleSchema.parse(module));
+		const newModules = guildSettings.modules.map((module) => ModuleSchema.parse(module));
 
 		function createModule(name: string) {
 			newModules.push({
 				name,
-				enabled: true,
-				config: {},
+				config: config,
 			});
 		}
 
@@ -90,13 +88,7 @@ export class ModuleConfigStore {
 
 		for (const { index, module } of newModules.map((module, index) => ({ index, module }))) {
 			if (module.name === this.options.moduleName) {
-				logger.debug(`[ConfigStore] Setting ${key} to ${toString(value)}`);
-
-				newModules = newModules.filter((m) => m.name !== this.options.moduleName);
-
-				module.config[key] = value;
-
-				newModules.push(module);
+				newModules[index].config = config;
 				break;
 			}
 
@@ -120,7 +112,7 @@ export class ModuleConfigStore {
 
 		logger.debug(`[ConfigStore] Updated in database!`);
 
-		this.cache.set(`${guildId}-${key}`, value);
+		this.cache.set(`${guildId}`, newModules);
 	}
 }
 
@@ -128,4 +120,7 @@ export namespace ModuleConfigStore {
 	export interface Options {
 		moduleName: string;
 	}
+	export type Output<T> = {
+		[K in keyof T]: Output<T[K]> | null;
+	};
 }
