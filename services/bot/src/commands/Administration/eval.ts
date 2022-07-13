@@ -1,7 +1,7 @@
 /* eslint-disable no-eval */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getSecret } from "#root/lib/config";
+import { getSecret } from "@evie/config";
 import { ReplyStatusEmbed } from "@evie/internal";
 import { Args, Command } from "@sapphire/framework";
 import axios from "axios";
@@ -20,7 +20,7 @@ export class Eval extends Command {
 	}
 
 	public override async messageRun(message: Message, args: Args) {
-		if (getSecret("NODE_ENV") === "production") {
+		if (getSecret("NODE_ENV", false) === "production") {
 			return message.reply("This command is disabled in production.");
 		}
 
