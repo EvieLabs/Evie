@@ -16,10 +16,12 @@ export class ModuleConfigStore {
 	}
 
 	private init() {
-		container.client.once(Events.ClientReady, (c) => {
-			container.logger.debug("[ConfigStore] Initializing...");
-			void this.loadGuilds(c.guilds.cache.map((g) => g.id));
-		});
+		container.client.isReady()
+			? void this.loadGuilds(container.client.guilds.cache.map((g) => g.id))
+			: container.client.once(Events.ClientReady, (c) => {
+					container.logger.debug("[ConfigStore] Initializing...");
+					void this.loadGuilds(c.guilds.cache.map((g) => g.id));
+			  });
 
 		container.client.on(Events.GuildCreate, (guild) => {
 			console.log(`[ConfigStore] Guild ${guild.name} (${guild.id}) created.`);

@@ -20,8 +20,7 @@ export * from "./structures/managers/Handbook";
 export * from "./structures/managers/Stats";
 export * from "./structures/modules/ConfigStore";
 // Modules
-export * from "./structures/modules/Module";
-export * from "./structures/modules/ModuleStore";
+export * from "./structures/modules/ModuleUtils";
 // Tools
 export * from "./structures/tools/DatabaseTools";
 export * from "./structures/tools/EvieGuildLogger";
