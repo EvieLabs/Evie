@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { getSecret } from "../utils/env";
 import { postVote } from "../utils/grpcWrapper";
 
-export default function UserRouter(fastify: FastifyInstance) {
+export default async function VoteRouter(fastify: FastifyInstance) {
 	fastify.post<{
 		Body: {
 			bot: string;
