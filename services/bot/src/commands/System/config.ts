@@ -12,6 +12,13 @@ import type { CommandInteraction } from "discord.js";
 })
 export class Config extends Command {
 	public override async chatInputRun(interaction: CommandInteraction) {
+		return void interaction.reply({
+			content:
+				"This command is temporarily disabled due to configuration migration. For more questions join https://discord.gg/Sx9QzpVC7r",
+			ephemeral: true,
+		});
+
+		// @ts-expect-error Unreachable code error
 		await interaction.deferReply({ ephemeral: true });
 		const subcommand = interaction.options.getSubcommand();
 
