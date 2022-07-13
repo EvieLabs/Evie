@@ -4,9 +4,10 @@ import { EvieEmbed, ModuleConfigStore } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
+import type { InferType } from "@sapphire/shapeshift";
 import * as Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
-import type { Airport } from "./types";
+import { AirportConfigSchema } from "./config";
 
 @ApplyOptions<Listener.Options>({
 	once: false,
@@ -14,8 +15,9 @@ import type { Airport } from "./types";
 	name: "airportWelcome",
 })
 export class AirportWelcome extends Listener {
-	public config = new ModuleConfigStore<Airport.Config>({
+	public config = new ModuleConfigStore<InferType<typeof AirportConfigSchema>>({
 		moduleName: "airport",
+		schema: AirportConfigSchema,
 	});
 
 	public async run(member: GuildMember) {
@@ -40,7 +42,10 @@ export class AirportWelcome extends Listener {
 		}
 	}
 
-	private async welcomeMember(member: GuildMember, config: ModuleConfigStore.Output<Airport.Config>) {
+	private async welcomeMember(
+		member: GuildMember,
+		config: ModuleConfigStore.Nullish<InferType<typeof AirportConfigSchema>>,
+	) {
 		try {
 			if (!config.channel) return;
 
