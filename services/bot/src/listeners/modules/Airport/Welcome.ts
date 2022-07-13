@@ -1,29 +1,35 @@
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import { time } from "@discordjs/builders";
-import { EvieEmbed } from "@evie/internal";
-import type { AirportSettings } from "@prisma/client";
+import { EvieEmbed, ModuleConfigStore } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import { GuildMember, Role, TextChannel } from "discord.js";
+import type { Airport } from "./types";
 
 @ApplyOptions<Listener.Options>({
 	once: false,
 	event: Events.GuildMemberAdd,
+	name: "airportWelcome",
 })
 export class AirportWelcome extends Listener {
+	public config = new ModuleConfigStore<Airport.Config>({
+		moduleName: "airport",
+	});
+
 	public async run(member: GuildMember) {
-		const settings = await member.client.db.FetchGuildSettings(member.guild);
-		if (settings.airportSettings?.arriveMessage) {
-			void this.welcomeMember(member, settings.airportSettings);
+		const config = this.config.get(member.guild.id);
+
+		if (config?.arriveMessage) {
+			void this.welcomeMember(member, config);
 		}
 
-		if (settings.airportSettings?.giveJoinRole) {
+		if (config?.giveJoinRole) {
 			try {
-				if (member.user.bot || !settings.airportSettings.joinRole) return;
+				if (member.user.bot || !config.joinRole) return;
 
-				const role = await member.guild.roles.fetch(settings.airportSettings.joinRole);
+				const role = await member.guild.roles.fetch(config.joinRole);
 
 				if (!role || !(role instanceof Role)) return;
 
@@ -34,7 +40,7 @@ export class AirportWelcome extends Listener {
 		}
 	}
 
-	private async welcomeMember(member: GuildMember, config: AirportSettings) {
+	private async welcomeMember(member: GuildMember, config: ModuleConfigStore.Output<Airport.Config>) {
 		try {
 			if (!config.channel) return;
 
@@ -43,8 +49,6 @@ export class AirportWelcome extends Listener {
 			const discordWelcomeChannel = await member.client.channels.fetch(config.channel);
 
 			if (!discordWelcomeChannel || !(discordWelcomeChannel instanceof TextChannel)) return;
-
-			if (discordWelcomeChannel.guildId !== config.guildId) return;
 
 			const welcomeMessageEmbed = new EvieEmbed();
 

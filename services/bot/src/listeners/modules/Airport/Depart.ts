@@ -1,26 +1,32 @@
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import { time } from "@discordjs/builders";
-import { EvieEmbed } from "@evie/internal";
-import type { AirportSettings } from "@prisma/client";
+import { EvieEmbed, ModuleConfigStore } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import { GuildMember, TextChannel } from "discord.js";
+import type { Airport } from "./types";
 
 @ApplyOptions<Listener.Options>({
 	once: false,
 	event: Events.GuildMemberRemove,
+	name: "airportDepart",
 })
 export class AirportDepart extends Listener {
-	public async run(member: GuildMember) {
-		const settings = await member.client.db.FetchGuildSettings(member.guild);
-		if (settings.airportSettings?.departs) {
-			void this.departMember(member, settings.airportSettings);
+	public config = new ModuleConfigStore<Airport.Config>({
+		moduleName: "airport",
+	});
+
+	public run(member: GuildMember) {
+		const config = this.config.get(member.guild.id);
+
+		if (config?.departs) {
+			void this.departMember(member, config);
 		}
 	}
 
-	private async departMember(member: GuildMember, config: AirportSettings) {
+	private async departMember(member: GuildMember, config: ModuleConfigStore.Output<Airport.Config>) {
 		try {
 			if (!config.channel) return;
 
@@ -29,7 +35,6 @@ export class AirportDepart extends Listener {
 			const goodbyeChannel = await member.client.channels.fetch(config.channel);
 
 			if (!goodbyeChannel || !(goodbyeChannel instanceof TextChannel)) return;
-			if (goodbyeChannel.guildId !== config.guildId) return;
 
 			const goodbyeMessageEmbed = new EvieEmbed();
 			goodbyeMessageEmbed.setDescription(goodbyeMessage.toString());

@@ -1,7 +1,7 @@
 import { LinkRegex } from "#root/Constants";
 import extractHostname from "#root/utils/parsers/extractHostname";
 import { getSecret } from "@evie/config";
-import { EvieEmbed, ModuleUtils } from "@evie/internal";
+import { EvieEmbed, ModuleConfigStore, ModuleUtils } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
@@ -12,9 +12,16 @@ import type { Message } from "discord.js";
 @ApplyOptions<Listener.Options>({
 	once: false,
 	event: Events.MessageCreate,
+	name: "phisherman",
 })
 export class Phisherman extends Listener {
+	public config = new ModuleConfigStore<Phisherman.Config>({
+		moduleName: "phisherman",
+	});
+
 	public async run(message: Message) {
+		if (!(message.inGuild() && this.config.get(message.guildId)?.enabled)) return;
+
 		const links = LinkRegex.exec(message.content);
 		if (!links) return;
 
@@ -96,5 +103,11 @@ export class Phisherman extends Listener {
 				.addField(await resolveKey(phish.message.guild, "modules/phish:linkTrigger"), phish.url),
 			guild: phish.message.guild,
 		});
+	}
+}
+
+export namespace Phisherman {
+	export interface Config {
+		enabled: boolean;
 	}
 }
