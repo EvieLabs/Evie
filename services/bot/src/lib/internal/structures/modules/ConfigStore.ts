@@ -16,9 +16,47 @@ export class ModuleConfigStore {
 	}
 
 	private init() {
-		container.client.once(Events.ClientReady, () => {
+		container.client.once(Events.ClientReady, (c) => {
 			container.logger.debug("[ConfigStore] Initializing...");
+			void this.loadGuilds(c.guilds.cache.map((g) => g.id));
 		});
+
+		container.client.on(Events.GuildCreate, (guild) => {
+			console.log(`[ConfigStore] Guild ${guild.name} (${guild.id}) created.`);
+			void this.loadGuilds([guild.id]);
+		});
+	}
+
+	private async loadGuilds(guildIds: Snowflake[]) {
+		for (const guildId of guildIds) {
+			const { prisma } = container.client;
+			const { logger } = container;
+
+			const guildSettings = await prisma.guildSettings.findFirst({
+				where: {
+					id: guildId,
+				},
+			});
+
+			if (!guildSettings) {
+				logger.warn(
+					`[ConfigStore] Guild ${guildId} not found in database! (most likely first time using Evie, safely ignore if it is!) Skipping...`,
+				);
+				continue;
+			}
+
+			const modules = guildSettings.modules.map((module) => ModuleSchema.parse(module));
+
+			for (const module of modules) {
+				if (module.name === this.options.moduleName) {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+					for (const [key, value] of Object.entries(module.config)) {
+						this.cache.set(`${guildId}-${key}`, value);
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	public async set<T>(guildId: Snowflake, key: string, value: T): Promise<void> {
