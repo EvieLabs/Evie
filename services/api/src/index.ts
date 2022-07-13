@@ -61,84 +61,86 @@ container.app = fastify({
 
 const { app, prisma } = container;
 
-void app.register(fastifyCors, {
-	origin: [getSecret("ORIGIN_URL"), /^http:\/\/localhost:\d+$/],
-	credentials: true,
-});
+(async () => {
+	void (await app.register(fastifyCors, {
+		origin: [getSecret("ORIGIN_URL"), /^http:\/\/localhost:\d+$/],
+		credentials: true,
+	}));
 
-void app.register(helmet);
+	void (await app.register(helmet));
 
-void app.register(fastifySecureSession, {
-	key: Buffer.from(`${process.env.COOKIE_KEY ?? ""}`, "hex"),
-	cookie: {
-		path: "/",
-	},
-});
-
-void app.register(fastifyPassport.initialize());
-void app.register(fastifyPassport.secureSession());
-
-const scopes = ["identify", "guilds"];
-
-fastifyPassport.use(
-	"discord",
-	new DiscordStrategy(
-		{
-			clientID: getSecret("DISCORD_CLIENT_ID"),
-			clientSecret: getSecret("DISCORD_SECRET"),
-			callbackURL:
-				getSecret("DISCORD_CB", false) === "" ? `http://localhost:${PORT}/auth/callback` : getSecret("DISCORD_CB"),
-			scope: scopes,
+	void (await app.register(fastifySecureSession, {
+		key: Buffer.from(`${process.env.COOKIE_KEY ?? ""}`, "hex"),
+		cookie: {
+			path: "/",
 		},
-		async (accessToken, refreshToken, profile, done) => {
-			const user = await prisma.evieUser.upsert({
-				where: {
-					id: profile.id,
-				},
-				create: {
-					id: profile.id,
-					username: profile.username,
-					avatar: profile.avatar,
-					fetchedAt: profile.fetchedAt,
-					accessToken,
-					refreshToken,
-					guilds: profile.guilds as [],
-				},
-				update: {
-					username: profile.username,
-					avatar: profile.avatar,
-					fetchedAt: profile.fetchedAt,
-					accessToken,
-					refreshToken,
-					guilds: profile.guilds as [],
-				},
-			});
+	}));
 
-			if (user) {
-				done(null, user);
-			} else {
-				done(null);
-			}
-		},
-	),
-);
+	void (await app.register(fastifyPassport.initialize()));
+	void (await app.register(fastifyPassport.secureSession()));
 
-fastifyPassport.registerUserSerializer(async (user: EvieUser) => user.id);
-fastifyPassport.registerUserDeserializer(async (id: string) =>
-	prisma.evieUser.findFirst({
-		where: { id },
-	}),
-);
+	const scopes = ["identify", "guilds"];
 
-void app.register(websocket);
+	void fastifyPassport.use(
+		"discord",
+		new DiscordStrategy(
+			{
+				clientID: getSecret("DISCORD_CLIENT_ID"),
+				clientSecret: getSecret("DISCORD_SECRET"),
+				callbackURL:
+					getSecret("DISCORD_CB", false) === "" ? `http://localhost:${PORT}/auth/callback` : getSecret("DISCORD_CB"),
+				scope: scopes,
+			},
+			async (accessToken, refreshToken, profile, done) => {
+				const user = await prisma.evieUser.upsert({
+					where: {
+						id: profile.id,
+					},
+					create: {
+						id: profile.id,
+						username: profile.username,
+						avatar: profile.avatar,
+						fetchedAt: profile.fetchedAt,
+						accessToken,
+						refreshToken,
+						guilds: profile.guilds as [],
+					},
+					update: {
+						username: profile.username,
+						avatar: profile.avatar,
+						fetchedAt: profile.fetchedAt,
+						accessToken,
+						refreshToken,
+						guilds: profile.guilds as [],
+					},
+				});
 
-void app.register(fastifyAutoload, {
-	dir: join(__dirname, "./routes"),
-});
+				if (user) {
+					done(null, user);
+				} else {
+					done(null);
+				}
+			},
+		),
+	);
 
-void app.listen({ port: PORT, host: "0.0.0.0" }, (err) => {
-	if (err) {
-		console.trace(err);
-		process.exit(1);
-	}
-});
+	void fastifyPassport.registerUserSerializer(async (user: EvieUser) => user.id);
+	void fastifyPassport.registerUserDeserializer(async (id: string) =>
+		prisma.evieUser.findFirst({
+			where: { id },
+		}),
+	);
+
+	void (await app.register(websocket));
+
+	void (await app.register(fastifyAutoload, {
+		dir: join(__dirname, "./routes"),
+	}));
+
+	void app.listen({ port: PORT, host: "0.0.0.0" }, (err) => {
+		if (err) {
+			console.trace(err);
+			process.exit(1);
+		}
+	});
+})();
