@@ -1,4 +1,5 @@
 import { Emojis } from "#root/Enums";
+import type { AirportWelcome } from "#root/listeners/modules/Airport/Welcome";
 import { removeIndents } from "#root/utils/builders/stringBuilder";
 import { configOptions, registeredGuilds } from "@evie/config";
 import { EditReplyStatusEmbed, EvieEmbed } from "@evie/internal";
@@ -12,13 +13,6 @@ import type { CommandInteraction } from "discord.js";
 })
 export class Config extends Command {
 	public override async chatInputRun(interaction: CommandInteraction) {
-		return void interaction.reply({
-			content:
-				"This command is temporarily disabled due to configuration migration. For more questions join https://discord.gg/Sx9QzpVC7r",
-			ephemeral: true,
-		});
-
-		// @ts-expect-error Unreachable code error
 		await interaction.deferReply({ ephemeral: true });
 		const subcommand = interaction.options.getSubcommand();
 
@@ -86,25 +80,24 @@ export class Config extends Command {
 	private async Airport(interaction: CommandInteraction) {
 		if (!interaction.guildId) throw new Error();
 
-		const options = {
-			channel: interaction.options.getChannel("channel", false)?.id ?? undefined,
-			arrives: interaction.options.getBoolean("arrives", false) ?? undefined,
-			arriveMessage: interaction.options.getString("arrive-message", false) ?? undefined,
-			departs: interaction.options.getBoolean("departs", false) ?? undefined,
-			departMessage: interaction.options.getString("depart-message", false) ?? undefined,
-			joinRole: interaction.options.getRole("join-role", false)?.id ?? undefined,
-			giveJoinRole: interaction.options.getBoolean("give-join-role", false) ?? undefined,
-			ping: interaction.options.getBoolean("ping", false) ?? undefined,
+		const airportPiece = this.container.stores.get("listeners").find((piece) => piece.name === "airportWelcome") as
+			| AirportWelcome
+			| undefined;
+
+		if (!airportPiece) throw new Error();
+
+		const opts = {
+			channel: interaction.options.getChannel("channel", false)?.id ?? null,
+			arrives: interaction.options.getBoolean("arrives", false) ?? null,
+			arriveMessage: interaction.options.getString("arrive-message", false) ?? null,
+			departs: interaction.options.getBoolean("departs", false) ?? null,
+			departMessage: interaction.options.getString("depart-message", false) ?? null,
+			joinRole: interaction.options.getRole("join-role", false)?.id ?? null,
+			giveJoinRole: interaction.options.getBoolean("give-join-role", false) ?? null,
+			ping: interaction.options.getBoolean("ping", false) ?? null,
 		};
 
-		const opts = await this.container.client.prisma.airportSettings.update({
-			where: {
-				guildId: interaction.guildId,
-			},
-			data: {
-				...options,
-			},
-		});
+		await airportPiece.config.set(interaction.guildId, opts);
 
 		void interaction.editReply({
 			embeds: [
