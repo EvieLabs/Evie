@@ -3,7 +3,6 @@ import type { EvieEvent } from "#root/Enums";
 import { PrismaClient } from ".prisma/client";
 import { EvieClientOptions, getSecret } from "@evie/config";
 import { Kennel } from "@evie/home";
-import { ModuleStore } from "@evie/internal";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { VotePayload } from "@evie/shapers";
 import { Enumerable } from "@sapphire/decorators";
@@ -60,12 +59,8 @@ export class EvieClient extends SapphireClient {
 	@Enumerable(false)
 	public override votePayload = VotePayload;
 
-	@Enumerable(false)
-	public override modules = this.stores.register(new ModuleStore());
-
 	public constructor() {
 		super(EvieClientOptions);
-		this.stores.registerPath("modules");
 
 		// this.prisma.$use(async (params, next) => {
 		//   if (!params.model) return await next(params);

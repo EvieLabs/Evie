@@ -1,22 +1,27 @@
 import { LinkRegex } from "#root/Constants";
 import extractHostname from "#root/utils/parsers/extractHostname";
 import { getSecret } from "@evie/config";
-import { EventHook, EvieEmbed, Module } from "@evie/internal";
-import { Events } from "@sapphire/framework";
+import { EvieEmbed, ModuleConfigStore, ModuleUtils } from "@evie/internal";
+import { ApplyOptions } from "@sapphire/decorators";
+import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
 import axios from "axios";
 import type { Message } from "discord.js";
-export class Phisherman extends Module {
-	public constructor(context: Module.Context, options: Module.Options) {
-		super(context, {
-			...options,
-			name: "Phisherman",
-		});
-	}
 
-	@EventHook(Events.MessageCreate)
-	public async scan(message: Message) {
+@ApplyOptions<Listener.Options>({
+	once: false,
+	event: Events.MessageCreate,
+	name: "phisherman",
+})
+export class Phisherman extends Listener {
+	public config = new ModuleConfigStore<Phisherman.Config>({
+		moduleName: "phisherman",
+	});
+
+	public async run(message: Message) {
+		if (!(message.inGuild() && this.config.get(message.guildId)?.enabled)) return;
+
 		const links = LinkRegex.exec(message.content);
 		if (!links) return;
 
@@ -71,7 +76,7 @@ export class Phisherman extends Module {
 	private async onPhish(phish: { successfullyDeleted: boolean; message: Message; url: string }) {
 		if (!phish.message.guild) return;
 
-		void this.log({
+		void ModuleUtils.log({
 			embed: new EvieEmbed()
 				.setColor("#4e73df")
 				.setAuthor({
@@ -98,5 +103,11 @@ export class Phisherman extends Module {
 				.addField(await resolveKey(phish.message.guild, "modules/phish:linkTrigger"), phish.url),
 			guild: phish.message.guild,
 		});
+	}
+}
+
+export namespace Phisherman {
+	export interface Config {
+		enabled: boolean;
 	}
 }
