@@ -32,29 +32,23 @@ export class ModuleConfigStore<ConfigType> {
 	}
 
 	private async loadGuilds(guildIds: Snowflake[]) {
-		for (const guildId of guildIds) {
-			const { prisma } = container.client;
-			const { logger } = container;
+		const { prisma } = container.client;
 
-			const guildSettings = await prisma.guildSettings.findFirst({
-				where: {
-					id: guildId,
+		const guildSettingss = await prisma.guildSettings.findMany({
+			where: {
+				id: {
+					in: guildIds,
 				},
-			});
+			},
+		});
 
-			if (!guildSettings) {
-				logger.warn(
-					`[ConfigStore] Guild ${guildId} not found in database! (most likely first time using Evie, safely ignore if it is!) Skipping...`,
-				);
-				continue;
-			}
-
+		for (const guildSettings of guildSettingss) {
 			const modules = guildSettings.modules.map((module) => ModuleSchema.parse(module));
 
 			for (const module of modules) {
 				if (module.name === this.options.moduleName) {
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					this.cache.set(`${guildId}`, module.config);
+					this.cache.set(`${guildSettings.id}`, module.config);
 					break;
 				}
 			}
