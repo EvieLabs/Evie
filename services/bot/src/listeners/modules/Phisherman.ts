@@ -5,9 +5,14 @@ import { EvieEmbed, ModuleConfigStore, ModuleUtils } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
+import { InferType, s } from "@sapphire/shapeshift";
 import * as Sentry from "@sentry/node";
 import axios from "axios";
 import type { Message } from "discord.js";
+
+const PhishermanConfigSchema = s.object({
+	enabled: s.union(s.boolean, s.nullish),
+});
 
 @ApplyOptions<Listener.Options>({
 	once: false,
@@ -15,8 +20,9 @@ import type { Message } from "discord.js";
 	name: "phisherman",
 })
 export class Phisherman extends Listener {
-	public config = new ModuleConfigStore<Phisherman.Config>({
+	public config = new ModuleConfigStore<InferType<typeof PhishermanConfigSchema>>({
 		moduleName: "phisherman",
+		schema: PhishermanConfigSchema,
 	});
 
 	public async run(message: Message) {
@@ -103,11 +109,5 @@ export class Phisherman extends Listener {
 				.addField(await resolveKey(phish.message.guild, "modules/phish:linkTrigger"), phish.url),
 			guild: phish.message.guild,
 		});
-	}
-}
-
-export namespace Phisherman {
-	export interface Config {
-		enabled: boolean;
 	}
 }
