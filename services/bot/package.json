@@ -38,7 +38,7 @@
 		"@sapphire/decorators": "^4.3.8",
 		"@sapphire/fetch": "^2.4.1",
 		"@sapphire/framework": "next",
-		"@sapphire/plugin-i18next": "^2.5.2",
+		"@sapphire/plugin-i18next": "^2.5.4",
 		"@sapphire/plugin-logger": "^2.2.3",
 		"@sapphire/shapeshift": "^3.5.0",
 		"@sentry/integrations": "^6.19.7",
