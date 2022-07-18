@@ -500,15 +500,15 @@
     "@sapphire/utilities" "^3.6.2"
     tslib "^2.4.0"
 
-"@sapphire/plugin-i18next@^2.5.2":
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-2.5.2.tgz#e3523210b4f16373eb6b02c08a319d8944b7e59e"
-  integrity sha512-JryTQlwkeiKgWkZx4+eLupeU9PVz9FcSVpvD1++uQ6Q7OtorNxDmELnshqc0PXLRYQOqJP8u6OLmNEeE4GNEZw==
+"@sapphire/plugin-i18next@^2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-2.5.4.tgz#2b66e2e976c4f972d6b50a614fc5f85ce864f065"
+  integrity sha512-sWh3W7vu5wu5wzGf/bso9TM7eiirIGC6Ua0FyEqb2cK9pws1efF/h7z8pHiwiRO3My96Ba2+PLPL68NseTBbOA==
   dependencies:
-    "@sapphire/utilities" "^3.6.2"
-    "@skyra/i18next-backend" "^1.0.0"
+    "@sapphire/utilities" "^3.7.0"
+    "@skyra/i18next-backend" "^1.0.1"
     chokidar "^3.5.3"
-    i18next "^21.8.2"
+    i18next "^21.8.13"
     tslib "^2.4.0"
 
 "@sapphire/plugin-logger@^2.2.3":
@@ -576,6 +576,11 @@
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.6.2.tgz#ec238e3e789dd5b04009a5cefecd3a64a4bb985d"
   integrity sha512-Rmwq5QxWxuAYCrtIXo2a9UW1Fa5Pmmfc20QSRRp+rz/CXzel1R3171DjvT7iZTAfuxwUFp2FYG6IaywoSIyjFA==
+
+"@sapphire/utilities@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.7.0.tgz#ec08837324a91fe58790f2961f2e874a82203247"
+  integrity sha512-UTNEl01618p5z+bRlCxauoiK0uQ2VW6uxCV91Bj41soQwl+mbAduxyLj1W956Vk+Mvvm1UQfgjMhw3HYL+1SPQ==
 
 "@sentry/core@6.19.7":
   version "6.19.7"
@@ -760,10 +765,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
-"@skyra/i18next-backend@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@skyra/i18next-backend/-/i18next-backend-1.0.1.tgz#c739b5249070848c0fd61992983a0e5a0603e202"
-  integrity sha512-ThUAuZU31taGCfFH0KeE9ikvI6blvsvqU7C8W3wrI9+6dI32ZrLfNIjD1nhaK/FD7wVv+q8yiBQWFjKyG0iTjQ==
+"@skyra/i18next-backend@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@skyra/i18next-backend/-/i18next-backend-1.0.2.tgz#2eb215a98f5e4113fabe0e6c11dd896e291147e5"
+  integrity sha512-yRKrqLKVztkYkdcEW/aadE4InlkAz+PIYznaORg5ZjpUM0htGB8YQEbdlyx+12CPaYr0uMDy9C7/JOTLA5O26Q==
   dependencies:
     tslib "^2.4.0"
 
@@ -2801,10 +2806,10 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-i18next@^21.8.2:
-  version "21.8.13"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.8.13.tgz#e5583bfe333bc41716b5a14693615d94a3dfd2cf"
-  integrity sha512-DpzwrJq7Y8tjUHxx6ByOkUIjrGYdQI5Mfv4XEI7q2RWdknQ7TaO9bKi8hS/LqYD6pBV5YGxJLReyLkOCxIpouA==
+i18next@^21.8.13:
+  version "21.8.14"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.8.14.tgz#03a3a669ef4520aadd9d152c80596f600e287c6a"
+  integrity sha512-4Yi+DtexvMm/Yw3Q9fllzY12SgLk+Mcmar+rCAccsOPul/2UmnBzoHbTGn/L48IPkFcmrNaH7xTLboBWIbH6pw==
   dependencies:
     "@babel/runtime" "^7.17.2"
 
