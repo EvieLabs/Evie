@@ -65,7 +65,7 @@
 	"devDependencies": {
 		"@types/lodash": "^4",
 		"@types/module-alias": "^2",
-		"@types/node": "^18.0.3",
+		"@types/node": "^18.0.6",
 		"@types/node-cron": "^3.0.2",
 		"@types/react": "^18",
 		"@types/react-reconciler": "^0",
