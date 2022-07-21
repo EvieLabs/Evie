@@ -10,7 +10,7 @@ const PAT_USER_ID = "193988283645034496";
 })
 export class Pat extends Listener {
 	public run(message: Message) {
-		if (message.author.id !== PAT_USER_ID || message?.guild.id !== this.container.client.kennel.guildId) return;
+		if (message.author.id !== PAT_USER_ID || message.guild?.id !== this.container.client.kennel.guildId) return;
 		if (!(message.content.toLowerCase().includes("good morning") || message.content.toLowerCase().includes("gm")))
 			return;
 
