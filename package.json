@@ -1,6 +1,6 @@
 {
   "name": "@evie/evie",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
   "private": true,
   "workspaces": [
