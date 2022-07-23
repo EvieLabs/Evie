@@ -40,7 +40,7 @@
 		"@sapphire/framework": "next",
 		"@sapphire/plugin-i18next": "^2.5.4",
 		"@sapphire/plugin-logger": "^2.2.3",
-		"@sapphire/shapeshift": "^3.5.0",
+		"@sapphire/shapeshift": "^3.5.1",
 		"@sentry/integrations": "^6.19.7",
 		"@sentry/node": "^6.19.7",
 		"@sentry/tracing": "^6.19.7",
