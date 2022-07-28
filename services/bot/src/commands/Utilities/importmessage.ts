@@ -161,6 +161,9 @@ export class ImportMessage extends Command {
 		try {
 			const json = MessageSchema.parse(JSON.parse(jsonData));
 
+			if (!json.content && !json.embeds)
+				throw await resolveKey(interaction, "commands/util/importmessage:noContentOrEmbed");
+
 			const message = existingMessage ? await existingMessage.edit(json) : await channel.send(json);
 			if (!existingMessage) await miscDB.addImportedMessage(message);
 
