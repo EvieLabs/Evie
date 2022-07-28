@@ -17,6 +17,8 @@ import {
 	MessageActionRow,
 	MessageButton,
 	MessageComponentInteraction,
+	MessageEditOptions,
+	MessageOptions,
 	Permissions,
 	Snowflake,
 	SnowflakeUtil,
@@ -45,7 +47,7 @@ export class ImportMessage extends Command {
 		const generatedState = SnowflakeUtil.generate();
 
 		await interaction.showModal(ImportMessageModal(generatedState));
-		void this.waitForModal(interaction, channel, generatedState);
+		await this.waitForModal(interaction, channel, generatedState);
 	}
 
 	public override async contextMenuRun(interaction: ContextMenuInteraction) {
@@ -159,12 +161,16 @@ export class ImportMessage extends Command {
 		const jsonData = submit.fields.getTextInputValue("json_data");
 
 		try {
-			const json = MessageSchema.parse(JSON.parse(jsonData));
+			const json = botAdmins.includes(interaction.user.id)
+				? (JSON.parse(jsonData) as unknown as MessageOptions)
+				: MessageSchema.parse(JSON.parse(jsonData));
 
 			if (!json.content && !json.embeds)
 				throw await resolveKey(interaction, "commands/util/importmessage:noContentOrEmbed");
 
-			const message = existingMessage ? await existingMessage.edit(json) : await channel.send(json);
+			const message = existingMessage
+				? await existingMessage.edit(json as MessageEditOptions)
+				: await channel.send(json);
 			if (!existingMessage) await miscDB.addImportedMessage(message);
 
 			return await ReplyStatusEmbed(
