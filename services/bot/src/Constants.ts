@@ -1,7 +1,7 @@
 import { s } from "@sapphire/shapeshift";
 
 export const MessageSchema = s.object({
-	content: s.union(s.string, s.nullish),
+	content: s.string.optional,
 	embeds: s.array(
 		s.object({
 			title: s.union(s.string, s.nullish),
