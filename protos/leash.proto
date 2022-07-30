@@ -7,21 +7,6 @@ service GuildStore {
     rpc GetGuild(GetGuildRequest) returns (GetGuildResponse) {}
 }
 
-service VoteManager {
-    rpc PostVote(PostVoteRequest) returns (PostVoteResponse) {}
-}
-
-message PostVoteRequest {
-    string user_snowflake = 1;
-    bool   test = 2;
-    string service_name = 3;
-    string vote_link = 4;
-}
-
-message PostVoteResponse {
-    bool ok = 1;
-}
-
 message CanManageGuildConfigRequest {
     string guild_id = 1;
     string user_id = 2;
@@ -41,4 +26,19 @@ message GetGuildResponse {
     string icon = 3;
     string owner_id = 4;
     string description = 5;
+}
+
+service VoteManager {
+    rpc PostVote(PostVoteRequest) returns (PostVoteResponse) {}
+}
+
+message PostVoteRequest {
+    string user_snowflake = 1;
+    bool   test = 2;
+    string service_name = 3;
+    string vote_link = 4;
+}
+
+message PostVoteResponse {
+    bool ok = 1;
 }
