@@ -9,11 +9,14 @@ import "@sapphire/plugin-i18next/register";
 import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
+import { Intents } from "discord.js";
 import { rootFolder } from "./constants/paths";
 import { getSecret } from "./lib/config";
 
 /** The running EvieClient */
 const client = new EvieClient();
+
+console.log(Intents.resolve([Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_BANS, Intents.FLAGS.GUILD_MESSAGES]))
 
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(RegisterBehavior.Overwrite);
 
@@ -40,4 +43,4 @@ Sentry.init({
 client.on("debug", (m) => container.logger.debug(m));
 
 /** Login to the client */
-void client.login(process.env.CLIENT_TOKEN);
+void client.login(process.env.DISCORD_TOKEN);
