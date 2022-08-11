@@ -35,7 +35,7 @@
 		"module-alias": "^2.2.2",
 		"node-cache": "^5.1.2",
 		"passport-discord": "^0.1.4",
-		"pino-pretty": "^8.1.0",
+		"pino-pretty": "^9.0.0",
 		"puppeteer": "^15.3.0",
 		"tslib": "^2.4.0"
 	},
