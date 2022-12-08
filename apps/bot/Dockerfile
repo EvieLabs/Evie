@@ -2,7 +2,7 @@ FROM node:18-buster-slim AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
-    apt-get install -y --no-install-recommends build-essential python3 libfontconfig1 dumb-init && \
+    apt-get install -y --no-install-recommends build-essential python3 git libfontconfig1 dumb-init && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 # Set working directory
@@ -15,7 +15,7 @@ RUN turbo prune --scope=@evie/bot --docker
 FROM node:18-buster-slim AS installer
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
-    apt-get install -y --no-install-recommends build-essential python3 libfontconfig1 dumb-init && \
+    apt-get install -y --no-install-recommends build-essential python3 git libfontconfig1 dumb-init && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 WORKDIR /app
