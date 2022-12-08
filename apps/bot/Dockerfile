@@ -30,9 +30,17 @@ RUN yarn install
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY tsup.config.js tsup.config.js
+COPY .git .git
 RUN yarn turbo run build --filter=@evie/bot...
 
 FROM node:18-buster-slim AS runner
+
+RUN apt-get update && \
+    apt-get upgrade -y --no-install-recommends && \
+    apt-get install -y --no-install-recommends build-essential python3 git libfontconfig1 dumb-init && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Don't run production as root
