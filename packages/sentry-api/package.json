@@ -1,0 +1,30 @@
+{
+	"name": "@evie/sentry",
+	"version": "0.0.0",
+	"license": "Apache-2.0",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"source": "./src/index.ts",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"contributors": [
+		"Tristan Camejo <contact@tristancamejo.com>"
+	],
+	"homepage": "https://disploy.dev",
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"type-check": "tsc --noEmit && cd cli && tsc --noEmit",
+		"lint": "TIMING=1 eslint src/**/*.ts* --fix"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.12",
+		"eslint": "7.32.0",
+		"eslint-config-custom": "*",
+		"tsconfig": "*",
+		"typescript": "^4.5.2"
+	},
+	"dependencies": {}
+}

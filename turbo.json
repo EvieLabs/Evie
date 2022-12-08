@@ -1,0 +1,33 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
+		"lint": {
+			"outputs": []
+		},
+		"format": {
+			"outputs": []
+		},
+		"dev": {
+			"cache": false
+		}
+	},
+	"globalEnv": [
+		"CLIENT_TOKEN",
+		"SENTRY_URL",
+		"DISCORD_TOKEN",
+		"KENNEL_URL",
+		"OPENAI_API_KEY",
+		"INFLUX_URL",
+		"GUILD_IDS",
+		"BOT_ADMINS",
+		"ADMIN_GUILD_IDS",
+		"BOT_ADMINS",
+		"CMD_PREFIXES",
+		"GOOGLE_ASSISTANT_CREDS",
+		"ASTRAL_GUILD_IDS"
+	]
+}

@@ -1,14 +1,16 @@
+
+version: "3"
+
 services:
-  postgres:
-    container_name: postgres
-    image: 'postgres:latest'
-    ports:
-      - '127.0.0.1:5432:5432'
+  bot:
+    container_name: bot
+    build:
+      context: .
+      dockerfile: ./apps/bot/Dockerfile
     restart: always
-    environment:
-      - POSTGRES_PASSWORD=internalpassword
-    volumes:
-      - 'postgres:/var/lib/postgresql/data'
-volumes:
-  postgres:
+    networks:
+      - app_network
+
+networks:
+  app_network:
     external: true

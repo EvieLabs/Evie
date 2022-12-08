@@ -1,60 +1,31 @@
 {
-  "name": "@evie/evie",
-  "version": "3.3.0",
-  "description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
-  "private": true,
-  "workspaces": [
-    "services/*"
-  ],
-  "scripts": {
-    "postinstall": "yarn dcg",
-    "dcg": "echo 'Building Dynamics' && yarn build:grpc",
-    "build": "yarn build:grpc && cd services/bot && yarn build && cd ../api && yarn build && cd ../../",
-    "build:grpc": "node scripts/build-grpc.mjs",
-    "pushdb": "yarn prisma db push",
-    "pushdb:force": "yarn prisma db push --accept-data-loss",
-    "lint": "cd services/bot && yarn lint && cd ../api && yarn lint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
-  "lint-staged": {
-    "apps/bot/src/**/*.ts": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "keywords": [],
-  "author": "Tristan Camejo <contact@tristancamejo.com>",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@grpc/grpc-js": "^1.6.7",
-    "@prisma/client": "^4.0.0"
-  },
-  "devDependencies": {
-    "@sapphire/eslint-config": "^4.3.7",
-    "@sapphire/ts-config": "^3.3.4",
-    "@types/google-protobuf": "^3.15.6",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^8.19.0",
-    "eslint-config-marine": "^9.4.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "grpc-tools": "^1.11.2",
-    "grpc_tools_node_protoc_ts": "^5.3.2",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.5.0",
-    "prettier": "^2.7.1",
-    "prisma": "^3.15.2",
-    "rimraf": "^3.0.2",
-    "shelljs": "^0.8.5",
-    "tsc-watch": "^5.0.3",
-    "type-fest": "2.13.0",
-    "typescript": "^4.7.4"
-  }
+	"name": "@evie/evie",
+	"version": "3.3.0",
+	"description": "Evie is a feature-rich, easy to use Discord bot built to deliver the best experience of a bot on Discord!",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"build": "turbo run build",
+		"lint": "turbo run lint",
+		"dev": "turbo run dev",
+		"format": "turbo run format"
+	},
+	"keywords": [],
+	"author": "Tristan Camejo <contact@tristancamejo.com>",
+	"license": "Apache-2.0",
+	"devDependencies": {
+		"eslint-config-custom": "*",
+		"prettier": "latest",
+		"turbo": "latest",
+		"typescript": "^4.9.2-rc",
+		"tsup": "^6.3.0"
+	},
+	"packageManager": "yarn@1.22.19",
+	"engines": {
+		"npm": ">=7.0.0",
+		"node": ">=18.0.0"
+	}
 }
