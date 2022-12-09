@@ -22,7 +22,7 @@ export const EvieClientOptions: ClientOptions = {
 	},
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_BANS, Intents.FLAGS.GUILD_MESSAGES],
 	logger: {
-		level: getSecret("NODE_ENV", false) === "production" ? LogLevel.Info : LogLevel.Debug,
+		level: getSecret("LOG_LEVEL", false) === "production" ? LogLevel.Info : LogLevel.Debug,
 	},
 	loadMessageCommandListeners: true,
 	allowedMentions: { users: [], roles: [] },

@@ -7,7 +7,7 @@ import { SentryClient } from "@evie/sentry";
 import { VotePayload } from "@evie/shapers";
 import { PrismaClient } from "@prisma/client";
 import { Enumerable } from "@sapphire/decorators";
-import { SapphireClient, StoreRegistry } from "@sapphire/framework";
+import { container, SapphireClient, StoreRegistry } from "@sapphire/framework";
 import axios, { AxiosInstance } from "axios";
 import { SnowflakeUtil } from "discord.js";
 import { Stats } from "../structures/managers/Stats";
@@ -64,6 +64,10 @@ export class EvieClient extends SapphireClient {
 
 	public constructor() {
 		super(EvieClientOptions);
+		container.logger.info("Starting Evie...");
+
+		container.logger.debug("Connecting to database...");
+		this.prisma.$connect().then(() => container.logger.debug("Connected to database!"));
 
 		this.initSentryClient();
 	}
@@ -74,6 +78,8 @@ export class EvieClient extends SapphireClient {
 		const sentryProject = getSecret("SENTRY_PROJECT", false);
 
 		if (sentryToken !== "" && sentryOrg !== "" && sentryProject !== "") {
+			container.logger.debug("Initializing Sentry client...");
+
 			this.sentry = new SentryClient({
 				organizationSlug: sentryOrg,
 				token: sentryToken,

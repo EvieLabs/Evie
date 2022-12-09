@@ -15,7 +15,7 @@ const client = new EvieClient();
 
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(RegisterBehavior.Overwrite);
 
-container.logger.info(`Root folder: ${rootFolder}`);
+container.logger.debug("Initializing Sentry...");
 
 Sentry.init({
 	dsn: process.env.SENTRY_URL,
@@ -37,5 +37,6 @@ Sentry.init({
 
 client.on("debug", (m) => container.logger.debug(m));
 
+container.logger.debug("Logging in to Discord...");
 /** Login to the client */
 void client.login(process.env.DISCORD_TOKEN);
