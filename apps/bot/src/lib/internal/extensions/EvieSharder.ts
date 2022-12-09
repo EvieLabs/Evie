@@ -7,7 +7,7 @@ export class EvieSharder extends ShardingManager {
 
 	private constructor() {
 		super(`${rootFolder}/dist/bot.js`, {
-			token: process.env.CLIENT_TOKEN,
+			token: process.env.DISCORD_TOKEN,
 		});
 	}
 
