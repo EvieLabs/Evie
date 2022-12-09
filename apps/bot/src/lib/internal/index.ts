@@ -9,7 +9,6 @@ export * from "./extensions/LogEmbed";
 /**
  * Structures
  */
-export * from "./structures/managers/Handbook";
 export * from "./structures/managers/Stats";
 export * from "./structures/modules/ConfigStore";
 export * from "./structures/modules/ModuleUtils";
