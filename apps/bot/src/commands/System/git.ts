@@ -16,10 +16,8 @@ export class Git extends Command {
 				new EvieEmbed() //
 					.setDescription(
 						removeIndents(
-							`**Running Commit**: [${Stats.commitSha.slice(0, 7)}](${GitHubRepo}/commit/${Stats.commitSha}) (${
-								Stats.commitName
-							}) #${Stats.commitNumber}
-              **Branch**: [${Stats.currentBranch}](${GitHubRepo}/tree/${Stats.currentBranch})`,
+							`**Running Commit**: [${Stats.commitSha.slice(0, 7)}](${GitHubRepo}/commit/${Stats.commitSha})
+							**Branch**: [${Stats.currentBranch}](${GitHubRepo}/tree/${Stats.currentBranch})`,
 						),
 					),
 			],

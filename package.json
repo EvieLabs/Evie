@@ -11,7 +11,8 @@
 		"build": "turbo run build",
 		"lint": "turbo run lint",
 		"dev": "turbo run dev",
-		"format": "turbo run format"
+		"format": "turbo run format",
+		"test": "turbo run test"
 	},
 	"keywords": [],
 	"author": "Tristan Camejo <contact@tristancamejo.com>",
