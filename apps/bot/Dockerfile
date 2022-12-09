@@ -1,4 +1,4 @@
-FROM node:18-buster-slim AS builder
+FROM --platform=linux/amd64 node:18-buster-slim AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -12,7 +12,7 @@ COPY . .
 RUN turbo prune --scope=@evie/bot --docker
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM node:18-buster-slim AS installer
+FROM --platform=linux/amd64 node:18-buster-slim AS installer
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
     apt-get install -y --no-install-recommends build-essential python3 git libfontconfig1 dumb-init && \
@@ -33,7 +33,7 @@ COPY tsup.config.js tsup.config.js
 COPY .git .git
 RUN yarn turbo run build --filter=@evie/bot...
 
-FROM node:18-buster-slim AS runner
+FROM --platform=linux/amd64 node:18-buster-slim AS runner
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
