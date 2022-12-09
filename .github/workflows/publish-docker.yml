@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: {context}/apps/bot/Dockerfile
+          file: ./apps/bot/Dockerfile
           push: true
           tags: ${{ env.TAG }}
           cache-from: type=gha
