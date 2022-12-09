@@ -1,3 +1,4 @@
+import { AirportConfigSchema } from "#root/Constants";
 import placeholderParser from "#root/utils/parsers/placeholderParser";
 import { time } from "@discordjs/builders";
 import { EvieEmbed, ModuleConfigStore } from "@evie/internal";
@@ -7,7 +8,6 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import type { InferType } from "@sapphire/shapeshift";
 import * as Sentry from "@sentry/node";
 import { GuildMember, TextChannel } from "discord.js";
-import { AirportConfigSchema } from "./config";
 
 @ApplyOptions<Listener.Options>({
 	once: false,
