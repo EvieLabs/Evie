@@ -50,4 +50,4 @@ USER expressjs
 COPY --from=installer /app .
 
 WORKDIR /app/apps/bot
-CMD node dist/index.js
+CMD node dist/bot.js
