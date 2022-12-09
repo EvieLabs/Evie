@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/method-signature-style */
 import type { EvieEvent } from "#root/Enums";
 import { EvieClientOptions, getSecret } from "@evie/config";
-import { CoolifyConfig, ParseJwt } from "@evie/coolify-client";
 import { Kennel } from "@evie/home";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { SentryClient } from "@evie/sentry";
@@ -11,7 +10,6 @@ import { Enumerable } from "@sapphire/decorators";
 import { SapphireClient, StoreRegistry } from "@sapphire/framework";
 import axios, { AxiosInstance } from "axios";
 import { SnowflakeUtil } from "discord.js";
-import { Docker } from "node-docker-api";
 import { Stats } from "../structures/managers/Stats";
 import { DatabaseTools } from "../structures/tools/DatabaseTools";
 import { EvieGuildLogger } from "../structures/tools/EvieGuildLogger";
@@ -64,14 +62,10 @@ export class EvieClient extends SapphireClient {
 	@Enumerable(false)
 	public override session = SnowflakeUtil.generate();
 
-	@Enumerable(false)
-	public override coolify?: CoolifyConfig;
-
 	public constructor() {
 		super(EvieClientOptions);
 
 		this.initSentryClient();
-		this.initCoolifyConfig();
 	}
 
 	private initSentryClient() {
@@ -84,22 +78,6 @@ export class EvieClient extends SapphireClient {
 				organizationSlug: sentryOrg,
 				token: sentryToken,
 			});
-		}
-	}
-
-	private async initCoolifyConfig() {
-		const containerName = getSecret("CONTAINER_NAME", false);
-		if (containerName === "") return;
-
-		const docker = new Docker({ socketPath: "/var/run/docker.sock" });
-		const container = docker.container.get(containerName);
-
-		if ("Labels" in container.data) {
-			const labels = container.data.Labels as Record<string, string>;
-			if ("coolify.config" in labels) {
-				const config = await ParseJwt(labels["coolify.config"] as string);
-				this.coolify = config;
-			}
 		}
 	}
 }
@@ -120,7 +98,6 @@ declare module "discord.js" {
 		readonly votePayload: typeof VotePayload;
 		readonly sentry?: SentryClient;
 		readonly session: string;
-		readonly coolify?: CoolifyConfig;
 		emit(event: EvieEvent.Vote, data: VotePayload): boolean;
 	}
 }
