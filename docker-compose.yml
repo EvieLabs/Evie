@@ -10,6 +10,8 @@ services:
     restart: always
     networks:
       - app_network
+    env_file:
+      - .env
 
 networks:
   app_network:
