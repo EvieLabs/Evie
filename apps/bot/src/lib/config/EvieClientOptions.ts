@@ -26,4 +26,7 @@ export const EvieClientOptions: ClientOptions = {
 	},
 	loadMessageCommandListeners: true,
 	allowedMentions: { users: [], roles: [] },
+	ws: {
+		compress: true,
+	},
 };
