@@ -1,16 +1,19 @@
+import { Environment } from "#root/../../../packages/env/dist";
 import { ShardManagerSchedule } from "#root/lib/internal/structures/schedules/ShardManagerSchedule";
-import { getSecret } from "@evie/config";
 import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import * as Sentry from "@sentry/node";
 import type { ShardingManager } from "discord.js";
 
 export class InfluxManager extends ShardManagerSchedule {
 	private readonly influx = new InfluxDB({
-		url: getSecret("INFLUX_URL"),
-		token: getSecret("INFLUX_TOKEN"),
+		url: Environment.getString("INFLUX_URL"),
+		token: Environment.getString("INFLUX_TOKEN"),
 	});
 
-	private readonly writeApi = this.influx.getWriteApi(getSecret("INFLUX_ORG"), getSecret("INFLUX_BUCKET"));
+	private readonly writeApi = this.influx.getWriteApi(
+		Environment.getString("INFLUX_ORG"),
+		Environment.getString("INFLUX_BUCKET"),
+	);
 
 	override async execute(manager: ShardingManager) {
 		try {

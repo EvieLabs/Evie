@@ -4,6 +4,7 @@ import { config } from "dotenv";
 config({ path: "../../.env" });
 
 import { InfluxManager } from "#root/schedules/InfluxManager";
+import { Environment } from "@evie/env";
 import { blue, magenta } from "colorette";
 import { EvieSharder } from "./lib/internal";
 
@@ -14,7 +15,7 @@ manager.on("shardCreate", (shard) => console.log(magenta(`[${shard.id}]`), blue(
 manager
 	.spawn()
 	.then((shards) => {
-		if (process.env.INFLUX_URL) new InfluxManager("*/15 * * * * *", manager);
+		if (Environment.getString("INFLUX_URL", true)) new InfluxManager("*/15 * * * * *", manager);
 
 		shards.forEach((shard) => {
 			shard.on("message", (message) => {

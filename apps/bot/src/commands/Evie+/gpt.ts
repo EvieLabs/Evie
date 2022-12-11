@@ -1,3 +1,4 @@
+import { Environment } from "#root/../../../packages/env/dist";
 import { Args, Command } from "@sapphire/framework";
 import type { Message } from "discord.js";
 import { Configuration, OpenAIApi } from "openai";
@@ -16,9 +17,12 @@ export class GPT extends Command {
 			preconditions: ["OwnerOnly"],
 			aliases: ["ai"],
 		});
-		if (!process.env.OPENAI_API_KEY) return;
+
+		const apiKey = Environment.getString("OPENAI_API_KEY", true);
+
+		if (!apiKey) return;
 		const configuration = new Configuration({
-			apiKey: process.env.OPENAI_API_KEY,
+			apiKey,
 		});
 		this.openai = new OpenAIApi(configuration);
 	}

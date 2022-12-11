@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/method-signature-style */
+import { Environment } from "#root/../../../packages/env/dist";
 import type { EvieEvent } from "#root/Enums";
-import { EvieClientOptions, getSecret } from "@evie/config";
+import { EvieClientOptions } from "@evie/config";
 import { Kennel } from "@evie/home";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { SentryClient } from "@evie/sentry";
@@ -43,14 +44,14 @@ export class EvieClient extends SapphireClient {
 	public override startedAt = new Date();
 
 	@Enumerable(false)
-	public override kennel = new Kennel(getSecret("KENNEL_ID"));
+	public override kennel = new Kennel(Environment.getString("KENNEL_ID"));
 
 	@Enumerable(false)
 	public override gate = new Gate();
 
 	@Enumerable(false)
 	public override evieRest = axios.create({
-		baseURL: getSecret("API_URL", false),
+		baseURL: Environment.getString("API_URL"),
 	});
 
 	@Enumerable(false)
@@ -73,11 +74,11 @@ export class EvieClient extends SapphireClient {
 	}
 
 	private initSentryClient() {
-		const sentryToken = getSecret("SENTRY_TOKEN", false);
-		const sentryOrg = getSecret("SENTRY_ORG", false);
-		const sentryProject = getSecret("SENTRY_PROJECT", false);
+		const sentryToken = Environment.getString("SENTRY_TOKEN", true);
+		const sentryOrg = Environment.getString("SENTRY_ORG", true);
+		const sentryProject = Environment.getString("SENTRY_PROJECT", true);
 
-		if (sentryToken !== "" && sentryOrg !== "" && sentryProject !== "") {
+		if (sentryToken && sentryOrg && sentryProject) {
 			container.logger.debug("Initializing Sentry client...");
 
 			this.sentry = new SentryClient({

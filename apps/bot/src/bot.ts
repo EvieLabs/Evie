@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 config({ path: "../../.env" });
 
+import { Environment } from "@evie/env";
 import { EvieClient } from "@evie/internal";
 import { ApplicationCommandRegistries, container, RegisterBehavior } from "@sapphire/framework";
 import "@sapphire/plugin-i18next/register";
@@ -8,7 +9,7 @@ import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
 import { rootFolder } from "./constants/paths";
-import { getSecret } from "./lib/config";
+import { production } from "./lib/config";
 
 /** The running EvieClient */
 const client = new EvieClient();
@@ -18,7 +19,7 @@ ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(RegisterBehavior
 container.logger.debug("Initializing Sentry...");
 
 Sentry.init({
-	dsn: process.env.SENTRY_URL,
+	dsn: Environment.getString("SENTRY_URL", true) ?? undefined,
 	integrations: [
 		new Sentry.Integrations.Modules(),
 		new Sentry.Integrations.FunctionToString(),
@@ -28,7 +29,7 @@ Sentry.init({
 		new RewriteFrames({ root: rootFolder }),
 	],
 	beforeSend: (event) => {
-		if (getSecret("NODE_ENV", false) === "production") return event;
+		if (production) return event;
 		container.logger.error(event);
 		return null;
 	},
@@ -39,4 +40,4 @@ client.on("debug", (m) => container.logger.debug(m));
 
 container.logger.debug("Logging in to Discord...");
 /** Login to the client */
-void client.login(process.env.DISCORD_TOKEN);
+void client.login(Environment.getString("DISCORD_TOKEN"));

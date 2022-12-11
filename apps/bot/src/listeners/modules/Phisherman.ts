@@ -1,6 +1,6 @@
 import { LinkRegex } from "#root/Constants";
 import extractHostname from "#root/utils/parsers/extractHostname";
-import { getSecret } from "@evie/config";
+import { Environment } from "@evie/env";
 import { EvieEmbed, ModuleConfigStore, ModuleUtils } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
@@ -53,7 +53,7 @@ export class Phisherman extends Listener {
 	}
 
 	private async checkDomain(domain: string): Promise<boolean> {
-		const token = getSecret("PHISHERMAN_TOKEN");
+		const token = Environment.getString("PHISHERMAN_TOKEN", true);
 
 		if (!token) {
 			this.container.logger.warn("WARNING `PHISHERMAN_TOKEN` IS NULL! PHISHING SCAMS WILL BE NOT SCANNED!");

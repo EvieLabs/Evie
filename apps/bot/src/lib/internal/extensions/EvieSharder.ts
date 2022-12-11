@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+import { Environment } from "#root/../../../packages/env/dist";
 import { rootFolder } from "#root/constants/paths";
 import { ShardingManager } from "discord.js";
 
@@ -7,7 +8,7 @@ export class EvieSharder extends ShardingManager {
 
 	private constructor() {
 		super(`${rootFolder}/dist/bot.js`, {
-			token: process.env.DISCORD_TOKEN,
+			token: Environment.getString("DISCORD_TOKEN"),
 		});
 	}
 

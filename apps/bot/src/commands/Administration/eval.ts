@@ -1,7 +1,7 @@
 /* eslint-disable no-eval */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getSecret } from "@evie/config";
+import { Environment } from "@evie/env";
 import { ReplyStatusEmbed } from "@evie/internal";
 import { Args, Command } from "@sapphire/framework";
 import axios from "axios";
@@ -21,7 +21,7 @@ export class Eval extends Command {
 	}
 
 	public override async messageRun(message: Message, args: Args) {
-		if (getSecret("DISABLE_EVAL", false) === "true") {
+		if (Environment.getBoolean("DISABLE_EVAL", false)) {
 			return message.reply("Eval is disabled in production.");
 		}
 
