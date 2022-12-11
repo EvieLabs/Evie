@@ -25,6 +25,5 @@
 		"eslint-config-custom": "*",
 		"tsconfig": "*",
 		"typescript": "^4.5.2"
-	},
-	"dependencies": {}
+	}
 }

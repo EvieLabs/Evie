@@ -20,11 +20,11 @@
 	"devDependencies": {
 		"eslint-config-custom": "*",
 		"prettier": "latest",
+		"tsup": "^6.3.0",
 		"turbo": "latest",
-		"typescript": "^4.9.2-rc",
-		"tsup": "^6.3.0"
+		"typescript": "^4.9.2-rc"
 	},
-	"packageManager": "yarn@1.22.19",
+	"packageManager": "yarn@3.2.0",
 	"engines": {
 		"npm": ">=7.0.0",
 		"node": ">=18.0.0"
