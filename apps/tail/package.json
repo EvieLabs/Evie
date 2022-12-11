@@ -1,8 +1,24 @@
 {
-  "name": "@evie/tail",
-  "version": "0.0.0",
-  "main": "dist/index.js",
-  "author": "Tristan Camejo <contact@tristancamejo.com>",
-  "license": "Apache-2.0",
-  "private": true
+	"name": "@evie/tail",
+	"version": "0.0.0",
+	"main": "dist/index.mjs",
+	"author": "Tristan Camejo <contact@tristancamejo.com>",
+	"license": "Apache-2.0",
+	"private": true,
+	"scripts": {
+		"dev": "tsup --watch --onSuccess \"node .\""
+	},
+	"devDependencies": {
+		"@types/ws": "^8",
+		"tsconfig": "workspace:^",
+		"tsup": "^6.5.0",
+		"typescript": "^4.9.4"
+	},
+	"dependencies": {
+		"@evie/env": "workspace:^",
+		"@sapphire/plugin-logger": "^3.0.1",
+		"reflect-metadata": "^0.1.13",
+		"tsyringe": "^4.7.0",
+		"ws": "^8.11.0"
+	}
 }
