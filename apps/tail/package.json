@@ -1,23 +1,37 @@
 {
 	"name": "@evie/tail",
 	"version": "0.0.0",
-	"main": "dist/index.mjs",
+	"main": "dist/index.js",
+	"types": "dist/admin/routes/_app.d.ts",
 	"author": "Tristan Camejo <contact@tristancamejo.com>",
 	"license": "Apache-2.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
-		"dev": "tsup --watch --onSuccess \"node .\""
+		"dev": "envject -- tsup --watch --onSuccess \"node .\"",
+		"build": "prisma generate && tsup"
 	},
 	"devDependencies": {
+		"@meetuplol/envject": "^0.0.0",
+		"@types/express": "^4.17.14",
+		"@types/jsonwebtoken": "^8.5.9",
 		"@types/ws": "^8",
+		"prisma": "^4.7.1",
 		"tsconfig": "workspace:^",
 		"tsup": "^6.5.0",
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
 		"@evie/env": "workspace:^",
+		"@prisma/client": "^4.7.1",
 		"@sapphire/plugin-logger": "^3.0.1",
+		"@trpc/server": "^10.4.3",
+		"@vladfrangu/async_event_emitter": "^2.1.2",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^8.5.1",
 		"reflect-metadata": "^0.1.13",
+		"trpc-playground": "next",
+		"tslib": "^2.4.1",
 		"tsyringe": "^4.7.0",
 		"ws": "^8.11.0"
 	}
