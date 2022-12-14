@@ -1,0 +1,29 @@
+{
+	"name": "@evie/tail-bot-client",
+	"version": "0.0.0",
+	"main": "./dist/index.js",
+	"source": "./src/index.ts",
+	"types": "./dist/index.d.ts",
+	"scripts": {
+		"build": "rimraf dist && tsc",
+		"type-check": "tsc --noEmit",
+		"dev": "tsc -w",
+		"serve": "disploy dev",
+		"test-server": "disploy test-server"
+	},
+	"dependencies": {
+		"@trpc/client": "^10.5.0",
+		"discord-api-types": "^0.37.21",
+		"disploy": "dev",
+		"zod": "^3.20.2"
+	},
+	"devDependencies": {
+		"@evie/tail": "workspace:^",
+		"@types/node": "^18.11.11",
+		"eslint": "8.29.0",
+		"eslint-config-custom": "workspace:^",
+		"rimraf": "^3.0.2",
+		"tsconfig": "workspace:^",
+		"typescript": "^4.9.3"
+	}
+}

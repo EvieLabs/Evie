@@ -1,0 +1,8 @@
+{
+	"prebuild": "yarn run build",
+	"root": "dist",
+	"target": {
+		"type": "cloudflare",
+		"name": "tail-bot-client"
+	}
+}
