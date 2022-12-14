@@ -21,7 +21,7 @@
 		"@evie/grpc": "./dist/lib/grpc/index.js"
 	},
 	"scripts": {
-		"dev": "tsup --watch --onSuccess \"cp -a src/languages dist && node .\"",
+		"dev": "envject -- tsup --watch --onSuccess \"cp -a src/languages dist && node .\"",
 		"start": "node dist/index.js",
 		"build": "prisma generate && tsup && cp -a src/languages dist",
 		"lint": "eslint --fix --ext ts src",
@@ -36,6 +36,7 @@
 		"@discordjs/builders": "^0.15.0",
 		"@discordjs/rest": "^0.5.0",
 		"@evie/env": "workspace:^",
+		"@evie/pubsub": "workspace:^",
 		"@evie/sentry": "*",
 		"@influxdata/influxdb-client": "^1.27.0",
 		"@prisma/client": "^4.6.1",
@@ -51,6 +52,7 @@
 		"axios": "^0.27.2",
 		"bufferutil": "^4.0.6",
 		"cardinal": "^2.1.1",
+		"discord-api-types": "0.33.3",
 		"discord.js": "^13.8.1",
 		"dotenv": "^16.0.1",
 		"glob": "^8.0.3",

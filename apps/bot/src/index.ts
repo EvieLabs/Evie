@@ -14,13 +14,7 @@ manager.on("shardCreate", (shard) => console.log(magenta(`[${shard.id}]`), blue(
 
 manager
 	.spawn()
-	.then((shards) => {
+	.then(() => {
 		if (Environment.getString("INFLUX_URL", true)) new InfluxManager("*/15 * * * * *", manager);
-
-		shards.forEach((shard) => {
-			shard.on("message", (message) => {
-				console.log(magenta(`[${shard.id}]`), "📢", blue(message._eval ?? message._fetchProp));
-			});
-		});
 	})
 	.catch(console.error);

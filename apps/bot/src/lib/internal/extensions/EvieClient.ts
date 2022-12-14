@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/method-signature-style */
-import { Environment } from "#root/../../../packages/env/dist";
 import type { EvieEvent } from "#root/Enums";
 import { EvieClientOptions } from "@evie/config";
+import { Environment } from "@evie/env";
 import { Kennel } from "@evie/home";
+import { PubSubClient } from "@evie/pubsub";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { SentryClient } from "@evie/sentry";
-import { VotePayload } from "@evie/shapers";
+import type { VotePayload } from "@evie/shapers";
 import { PrismaClient } from "@prisma/client";
 import { Enumerable } from "@sapphire/decorators";
 import { container, SapphireClient, StoreRegistry } from "@sapphire/framework";
@@ -55,13 +56,13 @@ export class EvieClient extends SapphireClient {
 	});
 
 	@Enumerable(false)
-	public override votePayload = VotePayload;
-
-	@Enumerable(false)
 	public override sentry?: SentryClient;
 
 	@Enumerable(false)
 	public override session = SnowflakeUtil.generate();
+
+	@Enumerable(false)
+	public override pubsub: PubSubClient = new PubSubClient();
 
 	public constructor() {
 		super(EvieClientOptions);
@@ -102,9 +103,9 @@ declare module "discord.js" {
 		readonly evieRest: AxiosInstance;
 		readonly modules: StoreRegistry;
 		readonly gate: Gate;
-		readonly votePayload: typeof VotePayload;
 		readonly sentry?: SentryClient;
 		readonly session: string;
+		readonly pubsub: PubSubClient;
 		emit(event: EvieEvent.Vote, data: VotePayload): boolean;
 	}
 }

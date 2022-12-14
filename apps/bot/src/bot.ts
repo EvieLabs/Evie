@@ -1,6 +1,3 @@
-import { config } from "dotenv";
-config({ path: "../../.env" });
-
 import { Environment } from "@evie/env";
 import { EvieClient } from "@evie/internal";
 import { ApplicationCommandRegistries, container, RegisterBehavior } from "@sapphire/framework";
