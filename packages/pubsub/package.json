@@ -1,0 +1,34 @@
+{
+	"name": "@evie/pubsub",
+	"version": "0.0.0",
+	"license": "Apache-2.0",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"source": "./src/index.ts",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"contributors": [
+		"Tristan Camejo <contact@tristancamejo.com>"
+	],
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"type-check": "tsc --noEmit && cd cli && tsc --noEmit",
+		"lint": "TIMING=1 eslint src/**/*.ts* --fix"
+	},
+	"devDependencies": {
+		"@types/node": "^18.11.13",
+		"eslint": "7.32.0",
+		"eslint-config-custom": "*",
+		"tsconfig": "*",
+		"typescript": "^4.9.4"
+	},
+	"dependencies": {
+		"@evie/env": "workspace:^",
+		"@vladfrangu/async_event_emitter": "^2.1.2",
+		"redis": "^4.5.1",
+		"zod": "^3.19.1"
+	}
+}

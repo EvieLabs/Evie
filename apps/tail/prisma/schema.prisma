@@ -11,25 +11,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Service {
-  id      String @id @default(cuid())
-  name    String
-  jwtSalt String
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Webhook   Webhook[]
-}
-
 model Webhook {
   id String @id @default(cuid())
 
-  receiver   Service @relation(fields: [serviceId], references: [id])
-  receiverId String
-
-  jwtSalt String
+  tag      String
+  metadata Json?
+  jwtSalt  String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  serviceId String
 }
