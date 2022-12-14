@@ -18,8 +18,9 @@
 	"author": "Tristan Camejo <contact@tristancamejo.com>",
 	"license": "Apache-2.0",
 	"devDependencies": {
+		"@meetuplol/envject": "^0.0.0",
 		"eslint-config-custom": "*",
-		"prettier": "latest",
+		"prettier": "^2.8.1",
 		"tsup": "^6.3.0",
 		"turbo": "latest",
 		"typescript": "^4.9.2-rc"
