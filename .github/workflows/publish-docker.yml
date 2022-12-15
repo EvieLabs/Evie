@@ -6,7 +6,7 @@ on:
     branches:
       - main
 
-  jobs:
+jobs:
     build:
       name: Build & publish
       runs-on: ubuntu-latest
