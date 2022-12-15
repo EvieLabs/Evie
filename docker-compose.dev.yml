@@ -11,7 +11,28 @@ services:
     networks:
       - app_network
     env_file:
-      - .env
+      - ./apps/bot/.env
+  tail:
+    container_name: tail
+    build:
+      context: .
+      dockerfile: ./apps/tail/Dockerfile
+    restart: always
+    networks:
+      - app_network
+    env_file:
+      - ./apps/tail/.env
+    environment:
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - redis
+  redis:
+    container_name: evie-redis
+    image: redis:alpine
+    restart: always
+    networks:
+      - app_network
+    command: redis-server
 
 networks:
   app_network:

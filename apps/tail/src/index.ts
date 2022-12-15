@@ -2,9 +2,9 @@ import "reflect-metadata";
 
 import { PubSub, PubSubClientEvents } from "@evie/pubsub";
 import { PrismaClient } from "@prisma/client";
-import { Logger } from "@sapphire/plugin-logger";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
+import type { Logger } from "pino";
 import { expressHandler } from "trpc-playground/handlers/express";
 import { container } from "tsyringe";
 import { z } from "zod";
@@ -75,5 +75,5 @@ app.post("/webhooks/:token", async (req, res) => {
 });
 
 app.listen(container.resolve(Env).serverPort, () => {
-	container.resolve(Logger).info(`Admin server listening on port \`${container.resolve(Env).serverPort}\``);
+	container.resolve<Logger>("Logger").info(`Admin server listening on port \`${container.resolve(Env).serverPort}\``);
 });

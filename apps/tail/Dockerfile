@@ -5,11 +5,11 @@ WORKDIR /app
 COPY . .
 
 RUN --mount=type=cache,target=/app/.yarn/cache \
-    npx turbo prune --scope=@evie/bot && \
+    npx turbo prune --scope=@evie/tail && \
     cp -R .yarn .yarnrc.yml tsup.config.js out/ && \
     cd out && \
     yarn install && \
-    yarn turbo run build --filter=@evie/bot && \
+    yarn turbo run build --filter=@evie/tail && \
     rm -rf node_modules/.cache .yarn/cache
 
 
@@ -19,7 +19,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --chown=node:node --from=builder /app/out .
 
-WORKDIR /app/apps/bot
+WORKDIR /app/apps/tail
 USER 1000
 
 CMD ["yarn", "start"]

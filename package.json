@@ -19,7 +19,7 @@
 	"license": "Apache-2.0",
 	"devDependencies": {
 		"@meetuplol/envject": "^0.0.0",
-		"eslint-config-custom": "*",
+		"eslint-config-custom": "workspace:^",
 		"prettier": "^2.8.1",
 		"tsup": "^6.3.0",
 		"turbo": "latest",

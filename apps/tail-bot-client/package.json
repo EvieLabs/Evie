@@ -4,6 +4,7 @@
 	"main": "./dist/index.js",
 	"source": "./src/index.ts",
 	"types": "./dist/index.d.ts",
+	"private": true,
 	"scripts": {
 		"build": "rimraf dist && tsc",
 		"type-check": "tsc --noEmit",

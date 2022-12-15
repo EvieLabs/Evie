@@ -37,7 +37,7 @@
 		"@discordjs/rest": "^0.5.0",
 		"@evie/env": "workspace:^",
 		"@evie/pubsub": "workspace:^",
-		"@evie/sentry": "*",
+		"@evie/sentry": "workspace:^",
 		"@influxdata/influxdb-client": "^1.27.0",
 		"@prisma/client": "^4.6.1",
 		"@sapphire/decorators": "^4.3.8",
@@ -79,11 +79,11 @@
 		"@types/rimraf": "^3",
 		"@types/ws": "^8.5.3",
 		"eslint": "7.32.0",
-		"eslint-config-custom": "*",
+		"eslint-config-custom": "workspace:^",
 		"prisma": "^4.6.1",
 		"rimraf": "^3.0.2",
 		"tsc-watch": "^5.0.3",
-		"tsconfig": "*",
+		"tsconfig": "workspace:^",
 		"type-fest": "3.2.0"
 	}
 }
