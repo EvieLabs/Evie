@@ -60,13 +60,15 @@ app.post("/webhooks/:token", async (req, res) => {
 	}
 
 	try {
-		console.log(req.body);
-
-		await PubSub.getClient().publish(PubSubClientEvents.TailWebhook, {
+		const payload = {
 			metadata: MetaDataSchema.parse(webhook.metadata),
 			payload: req.body,
 			tag: webhook.tag,
-		});
+		};
+
+		container.resolve<Logger>("Logger").debug(payload, "Sending webhook payload to pubsub");
+
+		await PubSub.getClient().publish(PubSubClientEvents.TailWebhook, payload);
 
 		return res.status(200).send("ok");
 	} catch (error) {
