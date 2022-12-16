@@ -49,7 +49,7 @@ export class VoteHandler extends Listener {
 			bot: z.string(),
 			user: z.string(),
 			type: z.union([z.literal("upvote"), z.literal("test")]),
-			isWeekend: z.boolean(),
+			isWeekend: z.boolean().optional(),
 			query: z.string().optional(),
 		}),
 		tag: z.literal("vote/topgg"),
