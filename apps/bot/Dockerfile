@@ -22,4 +22,5 @@ COPY --chown=node:node --from=builder /app/out .
 WORKDIR /app/apps/bot
 USER 1000
 
+ENV NODE_OPTIONS="--enable-source-maps"
 CMD ["yarn", "start"]
