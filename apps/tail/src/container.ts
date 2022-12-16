@@ -7,7 +7,9 @@ export async function RegisterContainer() {
 	container.register<Env>(Env, { useValue: new Env() });
 
 	container.register<Logger>("Logger", {
-		useValue: pino(),
+		useValue: pino({
+			level: container.resolve(Env).logLevel,
+		}),
 	});
 
 	container.register<PrismaClient>(PrismaClient, {
