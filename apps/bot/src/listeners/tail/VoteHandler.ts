@@ -12,7 +12,7 @@ import { z } from "zod";
 	emitter: container.client.pubsub as unknown as EventEmitter,
 })
 export class VoteHandler extends Listener {
-	public run(raw: PubSubClientEventTypes[PubSubClientEvents.TailWebhook]) {
+	public async run(raw: PubSubClientEventTypes[PubSubClientEvents.TailWebhook]) {
 		const data = this.schema.parse(raw);
 
 		let payload: VotePayload;
@@ -40,6 +40,8 @@ export class VoteHandler extends Listener {
 				break;
 			}
 		}
+
+		await payload.init();
 
 		container.client.emit(EvieEvent.Vote, payload);
 	}
