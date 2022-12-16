@@ -2,18 +2,21 @@ import { container } from "@sapphire/framework";
 import type { Snowflake, User } from "discord.js";
 
 export class VotePayload {
-	private readonly raw!: RawVotePayload;
-
-	constructor(raw: RawVotePayload) {
-		this.raw = raw;
-	}
-
 	public user: User | null = null;
-	public readonly test: boolean = this.raw.test;
-	public readonly serviceName: string = this.raw.serviceName;
-	public readonly voteLink: string = this.raw.voteLink;
-	public readonly voteHyperlink: string = `[${this.serviceName}](${this.voteLink})`;
-	public readonly emoji: string = this.raw.emoji;
+
+	public readonly test: boolean;
+	public readonly serviceName: string;
+	public readonly voteLink: string;
+	public readonly voteHyperlink: string;
+	public readonly emoji: string;
+
+	constructor(private raw: RawVotePayload) {
+		this.test = raw.test;
+		this.serviceName = raw.serviceName;
+		this.voteLink = raw.voteLink;
+		this.emoji = raw.emoji;
+		this.voteHyperlink = `[${this.serviceName}](${this.voteLink})`;
+	}
 
 	public async init() {
 		this.user = await container.client.users.fetch(this.raw.userSnowflake).catch(() => null);
