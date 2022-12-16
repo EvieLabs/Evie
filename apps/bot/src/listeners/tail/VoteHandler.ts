@@ -45,23 +45,28 @@ export class VoteHandler extends Listener {
 	}
 
 	private topgg = z.object({
-		payload: z.object({
-			bot: z.string(),
-			user: z.string(),
-			type: z.union([z.literal("upvote"), z.literal("test")]),
-			isWeekend: z.boolean().optional(),
-			query: z.string().optional(),
-		}),
+		payload: z
+			.object({
+				bot: z.string(),
+				user: z.string(),
+				type: z.union([z.literal("upvote"), z.literal("test")]),
+				isWeekend: z.boolean().optional(),
+				query: z.string().optional(),
+			})
+			.passthrough(),
 		tag: z.literal("vote/topgg"),
 	});
 
 	private discordBotList = z.object({
-		payload: z.object({
-			admin: z.boolean(),
-			avatar: z.string(),
-			username: z.string(),
-			id: z.string(),
-		}),
+		payload: z
+			.object({
+				admin: z.boolean(),
+				avatar: z.string(),
+				username: z.string(),
+				discriminator: z.string(),
+				id: z.string(),
+			})
+			.passthrough(),
 		tag: z.literal("vote/discordbotlist"),
 	});
 
