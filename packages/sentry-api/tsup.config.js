@@ -1,5 +1,5 @@
-import { createTsupConfig } from "../../tsup.config.js";
+import { createPackageTsupConfig } from "../../tsup.config.js";
 
-export default createTsupConfig({
+export default createPackageTsupConfig({
 	entry: ["src/index.ts"],
 });
