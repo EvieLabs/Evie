@@ -4,6 +4,7 @@ export interface IBotService extends IMiscService {
 	data: {
 		shardId: number;
 		guildCount: number;
+		memberCount: number;
 	};
 }
 
@@ -18,12 +19,18 @@ export class BotService extends MiscService {
 	 */
 	public guildCount: number;
 
+	/**
+	 * The member count the shard is serving.
+	 */
+	public memberCount: number;
+
 	public override uuid: string;
 
 	public constructor(data: IBotService, ping: number) {
 		super(data, ping);
 		this.shardId = data.data.shardId;
 		this.guildCount = data.data.guildCount;
+		this.memberCount = data.data.memberCount;
 		this.uuid = `${this.name}:${this.shardId}`;
 	}
 
@@ -35,7 +42,7 @@ export class BotService extends MiscService {
 			`tail_service_guild_count{service="${this.uuid}"} ${this.guildCount}`,
 			`# HELP tail_service_members_count The members count of the service.`,
 			`# TYPE tail_service_members_count gauge`,
-			`tail_service_members_count{service="${this.uuid}"} ${this.guildCount}`,
+			`tail_service_members_count{service="${this.uuid}"} ${this.memberCount}`,
 		];
 	}
 }
