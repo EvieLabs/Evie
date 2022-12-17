@@ -33,6 +33,9 @@ export class BotService extends MiscService {
 			`# HELP tail_service_guild_count The guild count of the service.`,
 			`# TYPE tail_service_guild_count gauge`,
 			`tail_service_guild_count{service="${this.uuid}"} ${this.guildCount}`,
+			`# HELP tail_service_members_count The members count of the service.`,
+			`# TYPE tail_service_members_count gauge`,
+			`tail_service_members_count{service="${this.uuid}"} ${this.guildCount}`,
 		];
 	}
 }

@@ -16,6 +16,7 @@ export class DiscoveryHandler extends Listener {
 			data: {
 				shardId: container.client.shard?.ids[0] ?? 0,
 				guildCount: container.client.guilds.cache.size,
+				memberCount: container.client.stats.users,
 			},
 		});
 	}
