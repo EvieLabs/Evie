@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { PubSub, PubSubClientEvents } from "@evie/pubsub";
+import { PubSubClient, PubSubClientEvents } from "@evie/pubsub";
 import { PrismaClient } from "@prisma/client";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
@@ -10,6 +10,7 @@ import { container } from "tsyringe";
 import { z } from "zod";
 import { RegisterContainer } from "./container";
 import { createContext } from "./context";
+import { metrics } from "./routes/metrics";
 import { MetaDataSchema } from "./routes/webhooks";
 import { appRouter } from "./routes/_app";
 import { Env } from "./utils/Env";
@@ -18,6 +19,7 @@ import { verifyToken } from "./utils/utils";
 RegisterContainer();
 
 const app = express();
+container.register<express.Application>("express", { useValue: app });
 
 app.use(express.json());
 
@@ -39,6 +41,8 @@ app.use(
 		}),
 	);
 })();
+
+app.get("/metrics", metrics);
 
 app.post("/webhooks/:token", async (req, res) => {
 	const token = z.string().parse(req.params.token);
@@ -68,7 +72,7 @@ app.post("/webhooks/:token", async (req, res) => {
 
 		container.resolve<Logger>("Logger").debug(payload, "Sending webhook payload to pubsub");
 
-		await PubSub.getClient().publish(PubSubClientEvents.TailWebhook, payload);
+		await container.resolve(PubSubClient).publish(PubSubClientEvents.TailWebhook, payload);
 
 		return res.status(200).send("ok");
 	} catch (error) {

@@ -2,16 +2,19 @@ import { Environment } from "@evie/env";
 import { AsyncEventEmitter } from "@vladfrangu/async_event_emitter";
 import { createClient, RedisClientType } from "redis";
 import type { z } from "zod";
-import { TailWebhookSchema } from "./schemas/TailWebhook";
 import { EventSchemaMap } from "./schemas/types";
 import { deserialize, serialize } from "./schemas/_parser";
 
 type PubSubClientEETypes = {
 	[PubSubClientEvents.TailWebhook]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.TailWebhook]>];
+	[PubSubClientEvents.Discovery]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.Discovery]>];
+	[PubSubClientEvents.Discovered]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.Discovered]>];
 };
 
 export enum PubSubClientEvents {
 	TailWebhook = "tail:webhook",
+	Discovery = "discovery",
+	Discovered = "discovered",
 }
 
 export type PubSubClientEventTypes = {
@@ -41,13 +44,17 @@ export class PubSubClient extends AsyncEventEmitter<PubSubClientEETypes> {
 	}
 
 	private applyHooks() {
-		this.subClient.subscribe(PubSubClientEvents.TailWebhook, (message) => {
-			this.emit(PubSubClientEvents.TailWebhook, deserialize(TailWebhookSchema, message));
-		});
+		for (const event of Object.values(PubSubClientEvents)) {
+			this.subClient.subscribe(event, (message) => {
+				this.emit(event, deserialize(EventSchemaMap[event], message));
+			});
+		}
 	}
 
 	public async publish<T extends PubSubClientEvents>(channel: T, data: PubSubClientEventTypes[T]) {
-		const serialized = serialize(EventSchemaMap[channel], data);
+		const schema = EventSchemaMap[channel];
+
+		const serialized = serialize(schema, data);
 		await this.pubClient.publish(channel, serialized);
 	}
 }
