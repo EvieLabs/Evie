@@ -24,7 +24,7 @@ export const appRouter = router({
 							type: service.type,
 							name: service.name,
 							internalPing: service.ping,
-							discordPing: service.memberCount,
+							discordPing: service.discordPing,
 							guilds: service.guildCount,
 							members: service.memberCount,
 							shard: service.shardId,
