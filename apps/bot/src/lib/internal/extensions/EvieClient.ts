@@ -3,7 +3,7 @@ import type { EvieEvent } from "#root/Enums";
 import { EvieClientOptions } from "@evie/config";
 import { Environment } from "@evie/env";
 import { Kennel } from "@evie/home";
-import { PubSubClient } from "@evie/pubsub";
+import { PubSubClient, PubSubClientEvents } from "@evie/pubsub";
 import { ReacordDiscordJs } from "@evie/reacord";
 import { SentryClient } from "@evie/sentry";
 import type { VotePayload } from "@evie/shapers";
@@ -62,7 +62,7 @@ export class EvieClient extends SapphireClient {
 	public override session = SnowflakeUtil.generate();
 
 	@Enumerable(false)
-	public override pubsub: PubSubClient = new PubSubClient();
+	public override pubsub: PubSubClient = new PubSubClient({ intents: [PubSubClientEvents.TailWebhook] });
 
 	public constructor() {
 		super(EvieClientOptions);

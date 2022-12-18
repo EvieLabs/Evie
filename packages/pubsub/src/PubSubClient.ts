@@ -21,12 +21,28 @@ export type PubSubClientEventTypes = {
 	[T in PubSubClientEvents]: PubSubClientEETypes[T][0];
 };
 
+export interface PubSubClientOptions {
+	intents?: PubSubClientEvents[];
+	tail?: boolean;
+}
+
 export class PubSubClient extends AsyncEventEmitter<PubSubClientEETypes> {
 	public pubClient: RedisClientType;
 	public subClient: RedisClientType;
+	private intents: PubSubClientEvents[];
 
-	public constructor() {
+	public constructor(
+		opts: PubSubClientOptions = {
+			tail: false,
+		},
+	) {
 		super();
+
+		this.intents = opts.intents ?? [];
+
+		if (!opts.tail) {
+			this.intents.push(PubSubClientEvents.Discovery);
+		}
 
 		this.pubClient = createClient({
 			url: Environment.getString("REDIS_URL"),
@@ -44,7 +60,9 @@ export class PubSubClient extends AsyncEventEmitter<PubSubClientEETypes> {
 	}
 
 	private applyHooks() {
-		for (const event of Object.values(PubSubClientEvents)) {
+		const events = Object.values(PubSubClientEvents).filter((event) => this.intents.includes(event));
+
+		for (const event of events) {
 			this.subClient.subscribe(event, (message) => {
 				this.emit(event, deserialize(EventSchemaMap[event], message));
 			});

@@ -1,4 +1,4 @@
-import { PubSubClient } from "@evie/pubsub";
+import { PubSubClient, PubSubClientEvents } from "@evie/pubsub";
 import { PrismaClient } from "@prisma/client";
 import pino, { Logger } from "pino";
 import { container } from "tsyringe";
@@ -16,7 +16,12 @@ export async function RegisterContainer() {
 
 	container.register<PrismaClient>(PrismaClient, { useValue: new PrismaClient() });
 
-	container.register<PubSubClient>(PubSubClient, { useValue: new PubSubClient() });
+	container.register<PubSubClient>(PubSubClient, {
+		useValue: new PubSubClient({
+			intents: [PubSubClientEvents.Discovered],
+			tail: true,
+		}),
+	});
 
 	container.register<ServiceManager>(ServiceManager, { useValue: new ServiceManager() });
 }
