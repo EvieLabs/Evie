@@ -690,6 +690,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@evie/app-template@workspace:templates/app":
+  version: 0.0.0-use.local
+  resolution: "@evie/app-template@workspace:templates/app"
+  dependencies:
+    "@evie/env": "workspace:^"
+    "@evie/pubsub": "workspace:^"
+    "@meetuplol/envject": ^0.0.0
+    pino: ^8.7.0
+    tsconfig: "workspace:^"
+    tsup: ^6.5.0
+    typescript: ^4.9.4
+  languageName: unknown
+  linkType: soft
+
 "@evie/bot@workspace:apps/bot":
   version: 0.0.0-use.local
   resolution: "@evie/bot@workspace:apps/bot"
@@ -800,6 +814,20 @@ __metadata:
     eslint-config-custom: "workspace:^"
     tsconfig: "workspace:^"
     typescript: ^4.5.2
+  languageName: unknown
+  linkType: soft
+
+"@evie/tag@workspace:apps/tag":
+  version: 0.0.0-use.local
+  resolution: "@evie/tag@workspace:apps/tag"
+  dependencies:
+    "@evie/env": "workspace:^"
+    "@evie/pubsub": "workspace:^"
+    "@meetuplol/envject": ^0.0.0
+    pino: ^8.7.0
+    tsconfig: "workspace:^"
+    tsup: ^6.5.0
+    typescript: ^4.9.4
   languageName: unknown
   linkType: soft
 

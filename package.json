@@ -5,7 +5,8 @@
 	"private": true,
 	"workspaces": [
 		"apps/*",
-		"packages/*"
+		"packages/*",
+		"templates/*"
 	],
 	"scripts": {
 		"build": "turbo run build",

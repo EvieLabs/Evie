@@ -1,5 +1,6 @@
 {
 	"name": "@evie/app-template",
+	"private": true,
 	"version": "0.0.0",
 	"main": "dist/index.js",
 	"author": "Tristan Camejo <contact@tristancamejo.com>",

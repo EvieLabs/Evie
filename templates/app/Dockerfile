@@ -19,7 +19,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY --chown=node:node --from=builder /app/out .
 
-WORKDIR /app/apps/tail
+WORKDIR /app/apps/app-template
 USER 1000
 
 ENV NODE_OPTIONS="--enable-source-maps"
