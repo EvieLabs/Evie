@@ -21,16 +21,19 @@ export const appRouter = router({
 				switch (service.type) {
 					case ServiceType.Bot: {
 						services.push({
+							type: service.type,
 							name: service.name,
 							internalPing: service.ping,
 							discordPing: service.memberCount,
 							guilds: service.guildCount,
 							members: service.memberCount,
+							shard: service.shardId,
 						});
 						break;
 					}
 					case ServiceType.Misc: {
 						services.push({
+							type: service.type,
 							name: service.name,
 							internalPing: service.ping,
 						});
