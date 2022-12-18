@@ -15,8 +15,9 @@ export class DiscoveryHandler extends Listener {
 			name: "Evie",
 			data: {
 				shardId: container.client.shard?.ids[0] ?? 0,
-				guildCount: container.client.guilds.cache.size,
+				guildCount: container.client.stats.guilds,
 				memberCount: container.client.stats.users,
+				discordPing: container.client.stats.wsPing,
 			},
 		});
 	}

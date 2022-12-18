@@ -1,6 +1,8 @@
 import { container } from "tsyringe";
 import { z } from "zod";
 import { ServiceManager } from "../managers/ServiceManager";
+import { ServiceSchema } from "../schemas/serviceSchema";
+import { ServiceType } from "../structs/ServiceType";
 import { publicProcedure, router } from "../trpc";
 import { webhooksRouter } from "./webhooks";
 
@@ -9,22 +11,32 @@ export const appRouter = router({
 	health: publicProcedure
 		.output(
 			z.object({
-				services: z.array(
-					z.object({
-						name: z.string(),
-						ping: z.number(),
-					}),
-				),
+				services: z.array(ServiceSchema),
 			}),
 		)
 		.query(() => {
-			const services: { name: string; ping: number }[] = [];
+			const services: z.infer<typeof ServiceSchema>[] = [];
 
-			for (const [uuid, service] of container.resolve(ServiceManager).services) {
-				services.push({
-					name: uuid,
-					ping: service.ping,
-				});
+			for (const [_, service] of container.resolve(ServiceManager).services) {
+				switch (service.type) {
+					case ServiceType.Bot: {
+						services.push({
+							name: service.name,
+							internalPing: service.ping,
+							discordPing: service.memberCount,
+							guilds: service.guildCount,
+							members: service.memberCount,
+						});
+						break;
+					}
+					case ServiceType.Misc: {
+						services.push({
+							name: service.name,
+							internalPing: service.ping,
+						});
+						break;
+					}
+				}
 			}
 
 			return {

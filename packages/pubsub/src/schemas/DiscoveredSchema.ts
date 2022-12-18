@@ -8,6 +8,7 @@ export const DiscoveredSchema = z.union([
 			shardId: z.number(),
 			guildCount: z.number(),
 			memberCount: z.number(),
+			discordPing: z.number(),
 		}),
 	}),
 	z.object({

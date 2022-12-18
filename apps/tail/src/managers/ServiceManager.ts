@@ -2,9 +2,10 @@ import { PubSubClient, PubSubClientEvents, PubSubClientEventTypes } from "@evie/
 import { container } from "tsyringe";
 import { BotService } from "../structs/BotService";
 import { MiscService } from "../structs/MiscService";
+import type { Service } from "../structs/ServiceType";
 
 export class ServiceManager {
-	public services = new Map<string, MiscService>();
+	public services = new Map<string, Service>();
 
 	public constructor() {
 		this.discover();
@@ -25,8 +26,8 @@ export class ServiceManager {
 		const now = Date.now();
 		container.resolve(PubSubClient).publish(PubSubClientEvents.Discovery, null);
 
-		const services = await new Promise<Map<string, MiscService>>((resolve) => {
-			const services = new Map<string, MiscService>();
+		const services = await new Promise<Map<string, Service>>((resolve) => {
+			const services = new Map<string, Service>();
 
 			const listener = (data: PubSubClientEventTypes[PubSubClientEvents.Discovered]) => {
 				const service = this.constructService(data, Date.now() - now);
@@ -55,7 +56,7 @@ export class ServiceManager {
 	}
 
 	private constructService(data: PubSubClientEventTypes[PubSubClientEvents.Discovered], ping: number) {
-		let service = new MiscService(data, ping);
+		let service: Service = new MiscService(data, ping);
 
 		switch (data.type) {
 			case "bot": {

@@ -1,14 +1,19 @@
-import { IMiscService, MiscService } from "./MiscService";
+import { IService, Service } from "./Service";
+import { ServiceType } from "./ServiceType";
 
-export interface IBotService extends IMiscService {
+export interface IBotService extends IService {
+	type: "bot";
 	data: {
 		shardId: number;
 		guildCount: number;
 		memberCount: number;
+		discordPing: number;
 	};
 }
 
-export class BotService extends MiscService {
+export class BotService extends Service {
+	public declare type: typeof ServiceType[keyof typeof ServiceType];
+
 	/**
 	 * The shard ID of the bot.
 	 */
@@ -24,13 +29,20 @@ export class BotService extends MiscService {
 	 */
 	public memberCount: number;
 
+	/**
+	 * The ping from the shard to Discord.
+	 */
+	public discordPing: number;
+
 	public override uuid: string;
 
 	public constructor(data: IBotService, ping: number) {
 		super(data, ping);
+		this.type = ServiceType.Bot;
 		this.shardId = data.data.shardId;
 		this.guildCount = data.data.guildCount;
 		this.memberCount = data.data.memberCount;
+		this.discordPing = data.data.discordPing;
 		this.uuid = `${this.name}:${this.shardId}`;
 	}
 

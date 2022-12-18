@@ -1,22 +1,29 @@
 import type { ServiceType } from "./ServiceType";
 
 export interface IService {
-	type: string;
+	name: string;
 }
 
 export abstract class Service {
-	/**
-	 * The type of the service.
-	 */
+	public name: string;
+
 	public abstract type: ServiceType;
 
-	/**
-	 * A UUID for the service.
-	 */
-	public abstract uuid: string;
+	public uuid: string;
 
-	/**
-	 * The internal ping of the service.
-	 */
-	public abstract ping: number;
+	public ping: number;
+
+	public constructor(data: IService, ping: number) {
+		this.name = data.name;
+		this.uuid = data.name;
+		this.ping = ping;
+	}
+
+	public getMetrics(): string[] {
+		return [
+			`# HELP tail_service_ping The ping of the service.`,
+			`# TYPE tail_service_ping gauge`,
+			`tail_service_ping{service="${this.uuid}"} ${this.ping}`,
+		];
+	}
 }
