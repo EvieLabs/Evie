@@ -45,7 +45,7 @@ export class PubSubClient extends AsyncEventEmitter<PubSubClientEETypes> {
 		}
 
 		this.pubClient = createClient({
-			url: Environment.getString("REDIS_URL"),
+			url: Environment.getString("REDIS_URL", true) ?? "redis://127.0.0.1:6379",
 		});
 
 		this.subClient = this.pubClient.duplicate();
