@@ -47,6 +47,7 @@ app.use(async (ctx) => {
 			name: tag.name,
 			url: `https://tag.evie.pw/${slug}`,
 			description: tag.content,
+			redirect: tag.link,
 		},
 	});
 

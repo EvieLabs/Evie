@@ -9,5 +9,16 @@
 		<meta property="og:description" content="<%= tag.description %>" />
 		<meta property="theme-color" content="#2f3136" />
 	</head>
-	<body></body>
+	<body>
+		<% if (tag.redirect) { %>
+		<script>
+			window.location.href = "<%= tag.redirect %>";
+		</script>
+
+		<a href="<%= tag.redirect %>">Redirecting to <%= tag.redirect %></a>
+		<% } else { %>
+		<h1><%= tag.name %></h1>
+		<p><%= tag.description %></p>
+		<% } %>
+	</body>
 </html>
