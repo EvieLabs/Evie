@@ -8,7 +8,7 @@ import { Events, Listener } from "@sapphire/framework";
 	event: Events.ClientReady,
 })
 export class ClientReadyListener extends Listener {
-	public run() {
+	public async run() {
 		this.container.logger.info(
 			[
 				` > Logged in as ${this.container.client.user?.tag}! (${this.container.client.user?.id})`,
@@ -20,5 +20,11 @@ export class ClientReadyListener extends Listener {
 
 		new TempBans("*/10 * * * *");
 		new ShardStatsManager("*/15 * * * * *");
+
+		for (const guild of this.container.client.guilds.cache.values()) {
+			this.container.logger.debug(` * Upserting guild ${guild.id} (${guild.name})`);
+			await this.container.client.db.FetchGuildSettings(guild);
+			this.container.logger.debug(` > Upserted guild ${guild.id} (${guild.name})`);
+		}
 	}
 }
