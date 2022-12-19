@@ -9,12 +9,16 @@ type PubSubClientEETypes = {
 	[PubSubClientEvents.TailWebhook]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.TailWebhook]>];
 	[PubSubClientEvents.Discovery]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.Discovery]>];
 	[PubSubClientEvents.Discovered]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.Discovered]>];
+	[PubSubClientEvents.TagQuery]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.TagQuery]>];
+	[PubSubClientEvents.TagQueryResult]: [data: z.infer<typeof EventSchemaMap[PubSubClientEvents.TagQueryResult]>];
 };
 
 export enum PubSubClientEvents {
 	TailWebhook = "tail:webhook",
 	Discovery = "discovery",
 	Discovered = "discovered",
+	TagQuery = "tag:query",
+	TagQueryResult = "tag:query:result",
 }
 
 export type PubSubClientEventTypes = {
@@ -74,5 +78,30 @@ export class PubSubClient extends AsyncEventEmitter<PubSubClientEETypes> {
 
 		const serialized = serialize(schema, data);
 		await this.pubClient.publish(channel, serialized);
+	}
+
+	public async waitFor<T extends keyof PubSubClientEETypes>(
+		channel: T,
+		filter: (data: PubSubClientEETypes[T][0]) => boolean,
+	) {
+		if (!this.intents.includes(channel)) {
+			throw new Error(`Cannot wait for event ${channel} as it is not in the intents.`);
+		}
+
+		return new Promise<PubSubClientEETypes[T][0]>((resolve, reject) => {
+			const listener = (data: PubSubClientEETypes[T][0]) => {
+				if (filter(data)) {
+					this.off(channel, listener);
+					resolve(data);
+				}
+			};
+
+			this.on(channel, listener);
+
+			setTimeout(() => {
+				this.off(channel, listener);
+				reject(new Error(`Timed out waiting for event ${channel}`));
+			}, 10000);
+		});
 	}
 }

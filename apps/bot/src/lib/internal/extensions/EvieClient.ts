@@ -62,7 +62,9 @@ export class EvieClient extends SapphireClient {
 	public override session = SnowflakeUtil.generate();
 
 	@Enumerable(false)
-	public override pubsub: PubSubClient = new PubSubClient({ intents: [PubSubClientEvents.TailWebhook] });
+	public override pubsub: PubSubClient = new PubSubClient({
+		intents: [PubSubClientEvents.TailWebhook, PubSubClientEvents.TagQuery],
+	});
 
 	public constructor() {
 		super(EvieClientOptions);
