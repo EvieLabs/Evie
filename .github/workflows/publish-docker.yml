@@ -19,6 +19,9 @@ jobs:
           - context: .
             file: ./apps/tail/Dockerfile
             tag: ghcr.io/teamevie/tail
+          - context: .
+            file: ./apps/tag/Dockerfile
+            tag: ghcr.io/teamevie/tag
     steps:
       - name: Checkout
         uses: actions/checkout@v1
