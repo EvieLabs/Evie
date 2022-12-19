@@ -35,4 +35,9 @@ describe("Env Getters", () => {
 	test("getBoolean", () => {
 		expect(Environment.getBoolean("EXAMPLE_BOOLEAN", true)).toBe(false);
 	});
+
+	test("getBoolean (default)", () => {
+		expect(Environment.getBoolean("NON_EXISTENT", true)).toBe(true);
+		expect(Environment.getBoolean("NON_EXISTENT", false)).toBe(false);
+	});
 });

@@ -81,20 +81,11 @@ export function getJson<T>(key: string, ...args: any[]): T | null {
  * Gets a boolean from an environment variable.
  * @param key The environment variable key
  * @param defaultValue The default value to use if the environment variable is not defined
- * @param nullable Whether the environment variable can be null
  */
-export function getBoolean(key: string, defaultValue: boolean, nullable?: false): boolean;
-export function getBoolean(key: string, defaultValue: boolean, nullable?: boolean): boolean | null;
-export function getBoolean(key: string, defaultValue: boolean, nullable = false): boolean | null {
-	const value = getString(key, nullable);
+export function getBoolean(key: string, defaultValue: boolean): boolean {
+	const value = getString(key, true);
 	if (value === null) {
-		return null;
+		return defaultValue;
 	}
-	if (value === "true") {
-		return true;
-	}
-	if (value === "false") {
-		return false;
-	}
-	return defaultValue;
+	return value === "true";
 }
