@@ -4,7 +4,6 @@ import { miscDB } from "#root/utils/database/misc";
 import { botAdmins, registeredGuilds } from "@evie/config";
 import { EvieEmbed, ReplyStatusEmbed } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
-import { fetch, FetchMethods, FetchResultTypes } from "@sapphire/fetch";
 import { ApplicationCommandRegistry, Command, RegisterBehavior } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import * as Sentry from "@sentry/node";
@@ -15,6 +14,7 @@ import {
 	ContextMenuInteraction,
 	Message,
 	MessageActionRow,
+	MessageAttachment,
 	MessageButton,
 	MessageComponentInteraction,
 	MessageEditOptions,
@@ -70,30 +70,8 @@ export class ImportMessage extends Command {
 
 		const generatedState = SnowflakeUtil.generate();
 
-		const editLink = await fetch<{
-			id: string;
-		}>(
-			"https://api.discord.club/messages/share",
-			{
-				method: FetchMethods.Post,
-				body: {
-					json: {
-						content: message.content,
-						embeds: message.embeds,
-					},
-				},
-			},
-			FetchResultTypes.JSON,
-		);
-
 		await interaction.editReply({
-			embeds: [
-				new EvieEmbed().setDescription(
-					await resolveKey(interaction, "commands/util/importmessage:editTip", {
-						editorLink: `https://discord.club/share/${editLink.id}`,
-					}),
-				),
-			],
+			embeds: [new EvieEmbed().setDescription("(message editor is disabled, click continue to edit the raw json)")],
 			components: [
 				new MessageActionRow().addComponents(
 					new MessageButton()
@@ -102,6 +80,7 @@ export class ImportMessage extends Command {
 						.setCustomId(`continue_msg_import_${generatedState}`),
 				),
 			],
+			files: [new MessageAttachment(Buffer.from(JSON.stringify(message.toJSON())), "message.json")],
 		});
 
 		return void (await this.waitForButton(interaction, generatedState, message));
