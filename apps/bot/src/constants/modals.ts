@@ -54,7 +54,7 @@ export function CreateTagModal(state: Snowflake) {
 						label: "Tag Content",
 						style: 2,
 						min_length: 1,
-						max_length: 500,
+						max_length: 1500,
 						placeholder: "Tag Content",
 						required: true,
 					},
