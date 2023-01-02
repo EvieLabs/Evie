@@ -694,9 +694,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@evie/app-template@workspace:templates/app"
   dependencies:
-    "@evie/env": "workspace:^"
     "@evie/pubsub": "workspace:^"
     "@meetuplol/envject": ^0.0.0
+    "@teamevie/env": "workspace:^"
     pino: ^8.7.0
     tsconfig: "workspace:^"
     tsup: ^6.5.0
@@ -710,7 +710,6 @@ __metadata:
   dependencies:
     "@discordjs/builders": ^0.15.0
     "@discordjs/rest": ^0.5.0
-    "@evie/env": "workspace:^"
     "@evie/pubsub": "workspace:^"
     "@evie/sentry": "workspace:^"
     "@influxdata/influxdb-client": ^1.27.0
@@ -724,6 +723,7 @@ __metadata:
     "@sentry/integrations": ^6.19.7
     "@sentry/node": ^6.19.7
     "@sentry/tracing": ^6.19.7
+    "@teamevie/env": "workspace:^"
     "@types/lodash": ^4
     "@types/node": ^18.0.6
     "@types/node-cron": ^3.0.2
@@ -761,21 +761,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@evie/env@workspace:^, @evie/env@workspace:packages/env":
-  version: 0.0.0-use.local
-  resolution: "@evie/env@workspace:packages/env"
-  dependencies:
-    "@types/node": ^18.11.13
-    eslint: 7.32.0
-    eslint-config-custom: "workspace:^"
-    tsconfig: "workspace:^"
-    typescript: ^4.9.4
-    vite: ^4.0.0
-    vitest: ^0.25.7
-    zod: ^3.19.1
-  languageName: unknown
-  linkType: soft
-
 "@evie/evie@workspace:.":
   version: 0.0.0-use.local
   resolution: "@evie/evie@workspace:."
@@ -793,7 +778,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@evie/pubsub@workspace:packages/pubsub"
   dependencies:
-    "@evie/env": "workspace:^"
+    "@teamevie/env": "workspace:^"
     "@types/node": ^18.11.13
     "@vladfrangu/async_event_emitter": ^2.1.2
     eslint: 7.32.0
@@ -821,9 +806,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@evie/tag@workspace:apps/tag"
   dependencies:
-    "@evie/env": "workspace:^"
     "@evie/pubsub": "workspace:^"
     "@meetuplol/envject": ^0.0.0
+    "@teamevie/env": "workspace:^"
     "@types/ejs": ^3.1.1
     "@types/koa": ^2
     ejs: ^3.1.8
@@ -857,10 +842,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@evie/tail@workspace:apps/tail"
   dependencies:
-    "@evie/env": "workspace:^"
     "@evie/pubsub": "workspace:^"
     "@meetuplol/envject": ^0.0.0
     "@prisma/client": ^4.7.1
+    "@teamevie/env": "workspace:^"
     "@trpc/server": ^10.4.3
     "@types/express": ^4.17.14
     "@types/jsonwebtoken": ^8.5.9
@@ -1457,6 +1442,22 @@ __metadata:
   checksum: c29df3bcec6fc3bdec2b17981d89d9c9fc9bd7d0c9bcfe92821dc533f4440bc890ccde79971838b4ceed1921d456973c4180d7175ee1d0023ad0562240a58d95
   languageName: node
   linkType: hard
+
+"@teamevie/env@workspace:^, @teamevie/env@workspace:packages/env":
+  version: 0.0.0-use.local
+  resolution: "@teamevie/env@workspace:packages/env"
+  dependencies:
+    "@types/node": ^18.11.13
+    eslint: 7.32.0
+    eslint-config-custom: "workspace:^"
+    tsconfig: "workspace:^"
+    tsup: ^6.5.0
+    typescript: ^4.9.4
+    vite: ^4.0.0
+    vitest: ^0.25.7
+    zod: ^3.19.1
+  languageName: unknown
+  linkType: soft
 
 "@tootallnate/once@npm:2":
   version: 2.0.0

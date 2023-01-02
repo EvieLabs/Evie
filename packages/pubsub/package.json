@@ -26,7 +26,7 @@
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
-		"@evie/env": "workspace:^",
+		"@teamevie/env": "workspace:^",
 		"@vladfrangu/async_event_emitter": "^2.1.2",
 		"redis": "^4.5.1",
 		"zod": "^3.19.1"

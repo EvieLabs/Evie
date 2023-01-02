@@ -1,4 +1,4 @@
-import { Environment } from "@evie/env";
+import { Environment } from "@teamevie/env";
 
 export class Env {
 	public publicUrl = Environment.getString("PUBLIC_URL", true) || "http://localhost:9990";

@@ -1,9 +1,9 @@
 /* eslint-disable no-eval */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Environment } from "@evie/env";
 import { ReplyStatusEmbed } from "@evie/internal";
 import { Args, Command } from "@sapphire/framework";
+import { Environment } from "@teamevie/env";
 import axios from "axios";
 import { Message, MessageAttachment, ModalSubmitInteraction } from "discord.js";
 import lodash from "lodash";

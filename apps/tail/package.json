@@ -22,9 +22,9 @@
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
-		"@evie/env": "workspace:^",
 		"@evie/pubsub": "workspace:^",
 		"@prisma/client": "^4.7.1",
+		"@teamevie/env": "workspace:^",
 		"@trpc/server": "^10.4.3",
 		"@vladfrangu/async_event_emitter": "^2.1.2",
 		"express": "^4.18.2",

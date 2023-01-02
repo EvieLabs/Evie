@@ -1,4 +1,4 @@
-import { Environment } from "@evie/env";
+import { Environment } from "@teamevie/env";
 import { TRPCError } from "@trpc/server";
 import { middleware } from "../trpc";
 

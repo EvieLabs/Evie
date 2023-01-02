@@ -1,4 +1,4 @@
-import { Environment } from "@evie/env";
+import { Environment } from "@teamevie/env";
 import { z } from "zod";
 
 export const registeredGuilds = Environment.getArray("GUILD_IDS", true) || [];

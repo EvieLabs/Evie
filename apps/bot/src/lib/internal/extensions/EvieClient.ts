@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/method-signature-style */
 import type { EvieEvent } from "#root/Enums";
 import { EvieClientOptions } from "@evie/config";
-import { Environment } from "@evie/env";
 import { Kennel } from "@evie/home";
 import { PubSubClient, PubSubClientEvents } from "@evie/pubsub";
 import { ReacordDiscordJs } from "@evie/reacord";
@@ -10,6 +9,7 @@ import type { VotePayload } from "@evie/shapers";
 import { PrismaClient } from "@prisma/client";
 import { Enumerable } from "@sapphire/decorators";
 import { container, SapphireClient, StoreRegistry } from "@sapphire/framework";
+import { Environment } from "@teamevie/env";
 import axios, { AxiosInstance } from "axios";
 import { SnowflakeUtil } from "discord.js";
 import { Stats } from "../structures/managers/Stats";

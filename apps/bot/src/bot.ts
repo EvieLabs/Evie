@@ -1,10 +1,10 @@
-import { Environment } from "@evie/env";
 import { EvieClient } from "@evie/internal";
 import { ApplicationCommandRegistries, container, RegisterBehavior } from "@sapphire/framework";
 import "@sapphire/plugin-i18next/register";
 import "@sapphire/plugin-logger/register";
 import { RewriteFrames } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
+import { Environment } from "@teamevie/env";
 import { rootFolder } from "./constants/paths";
 import { production } from "./lib/config";
 

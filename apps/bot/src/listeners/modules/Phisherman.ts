@@ -1,12 +1,12 @@
 import { LinkRegex } from "#root/Constants";
 import extractHostname from "#root/utils/parsers/extractHostname";
-import { Environment } from "@evie/env";
 import { EvieEmbed, ModuleConfigStore, ModuleUtils } from "@evie/internal";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Events, Listener } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { InferType, s } from "@sapphire/shapeshift";
 import * as Sentry from "@sentry/node";
+import { Environment } from "@teamevie/env";
 import axios from "axios";
 import type { Message } from "discord.js";
 

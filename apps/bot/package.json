@@ -36,7 +36,6 @@
 	"dependencies": {
 		"@discordjs/builders": "^0.15.0",
 		"@discordjs/rest": "^0.5.0",
-		"@evie/env": "workspace:^",
 		"@evie/pubsub": "workspace:^",
 		"@evie/sentry": "workspace:^",
 		"@influxdata/influxdb-client": "^1.27.0",
@@ -50,6 +49,7 @@
 		"@sentry/integrations": "^6.19.7",
 		"@sentry/node": "^6.19.7",
 		"@sentry/tracing": "^6.19.7",
+		"@teamevie/env": "workspace:^",
 		"axios": "^0.27.2",
 		"bufferutil": "^4.0.6",
 		"cardinal": "^2.1.1",

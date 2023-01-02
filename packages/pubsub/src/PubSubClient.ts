@@ -1,4 +1,4 @@
-import { Environment } from "@evie/env";
+import { Environment } from "@teamevie/env";
 import { AsyncEventEmitter } from "@vladfrangu/async_event_emitter";
 import { createClient, RedisClientType } from "redis";
 import type { z } from "zod";

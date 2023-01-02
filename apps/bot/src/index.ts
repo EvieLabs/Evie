@@ -4,7 +4,7 @@ import { config } from "dotenv";
 config({ path: "../../.env" });
 
 import { InfluxManager } from "#root/schedules/InfluxManager";
-import { Environment } from "@evie/env";
+import { Environment } from "@teamevie/env";
 import { blue, magenta } from "colorette";
 import { EvieSharder } from "./lib/internal";
 
