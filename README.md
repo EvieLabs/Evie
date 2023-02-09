@@ -1,5 +1,5 @@
-> **Warning**: Evie is in midst of a large overhaul in features and internal implementations.
+> **Warning**: Production instance and project source code no longer maintained due to lack of interest of me (tristan) working on Discord related projects.
 
 # Evie
 
-Multi-purpose utility bot for Discord. [Learn more](https://evie.pw)
+Multi-purpose utility bot for Discord. 
